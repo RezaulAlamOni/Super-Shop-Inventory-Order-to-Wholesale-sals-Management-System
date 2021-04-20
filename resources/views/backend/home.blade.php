@@ -10,23 +10,23 @@
 	<div class="home_page">
 	<div class="page-header custom_header_bottom row no-gutters py-4 mb-3">
 	<div class="col-md-2">
-		<h4 class="owner_title">スーパー用</h4>
+		<h4 class="owner_title">問屋用</h4>
 	</div>
 		<div class="col-10 col-sm-10 text-center text-sm-right mb-15">
-			
+
 			<!-- <a href="#" class="btn btn-primary btn-lg" style="margin-right: 5px;">イメージテキスト</a>
 			<a href="#" class="btn btn-primary btn-lg" style="margin-right: 5px;">イメージファクス注文</a>
 			<a href="#" class="btn btn-primary btn-lg" style="margin-right: 5px;">音声</a>
 			<a href="#" class="btn btn-primary btn-lg" style="margin-right: 5px;">ファクス注文</a> -->
 			<a href="{{Config::get('app.url').'/android_home'}}" class="btn btn-info btn-lg" style="margin-right: 5px;">ハンディー</a>
 			<a href="{{Config::get('app.url').'/logout'}}" class="btn btn-danger btn-lg" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">終了</a>	
+                                        document.getElementById('logout-form').submit();">終了</a>
 										<form id="logout-form" action="{{Config::get('app.url').'/logout'}}" method="POST"
                         style="display: none;">
                         @csrf
                     </form>
 
-				
+
 		</div>
 	</div>
 	<!-- End Page Header -->
