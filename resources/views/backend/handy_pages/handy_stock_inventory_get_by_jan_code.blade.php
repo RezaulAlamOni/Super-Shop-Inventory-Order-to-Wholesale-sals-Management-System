@@ -82,7 +82,7 @@
                                            data_attr_v_item_id="{{$value->vendor_item_id}}"
                                            data_attr_v_id="{{$value->vendor_id}}"
                                            data_attr_rack_number="{{$value->rack_number}}"
-                                           data_attr_row_id="{{$value->stock_item_id}}" autofocus="true">
+                                           data_attr_row_id="{{$value->stock_item_id}}" autofocus="true"  readonly>
 
                                     <input type="tel"
                                            class="form-control cmn_num_formt case_law_qty case_inputs_"
@@ -97,7 +97,7 @@
                                            data_attr_v_item_id="{{$value->vendor_item_id}}"
                                            data_attr_v_id="{{$value->vendor_id}}"
                                            data_attr_rack_number="{{$value->rack_number}}"
-                                           data_attr_row_id="{{$value->stock_item_id}}">
+                                           data_attr_row_id="{{$value->stock_item_id}}"  readonly>
 
                                     <input type="tel" class="form-control cmn_num_formt bol_law_qty boll_inputs_"
                                            value="{{$value->ball_inputs}}" readonly hidden>
@@ -111,8 +111,8 @@
                                            data_attr_v_item_id="{{$value->vendor_item_id}}"
                                            data_attr_v_id="{{$value->vendor_id}}"
                                            data_attr_rack_number="{{$value->rack_number}}"
-                                           data_attr_row_id="{{$value->stock_item_id}}">
-                                    <div class="input-group rsinput_group" style="display: none;">
+                                           data_attr_row_id="{{$value->stock_item_id}}" readonly>
+                                    <div class="input-group rsinput_group" style="display: none;" >
                                         <div class="input-group-addon rsgrp_adon_handy">入数</div>
                                         <input type="tel" class="form-control cmn_num_formt sep_law_qty"
                                                value="" readonly></div>
