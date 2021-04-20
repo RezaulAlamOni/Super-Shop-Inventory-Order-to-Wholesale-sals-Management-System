@@ -1,0 +1,66 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.custom-btn {
+    height: 44px !important;
+    width: 135px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    line-height: 30px !important;
+}
+
+.custom-input {
+
+    padding: 0 5px !important;
+    height: 60px !important;
+    font-size: 19px !important;
+    margin: 10px 0px !important;
+}
+
+td> .custom-input {
+    margin: 0 !important;
+}
+
+td>input:focus {
+    background: #F3F885 !important;
+}
+
+.scan_tanarosi_sohin:focus, #tana-erako-button:focus, #order-place-button:focus, #next-receive:focus{
+    border: 3px solid rgb(240, 173, 78) !important;
+    box-shadow: none !important;
+    padding: 5px;
+}
+#handy-navi{
+    bottom: 5px !important;
+    #handy-navi-body{
+        font-size: 12px;
+        margin-bottom: 0px;
+    }
+}
+
+#handy_order_form_by_jan {
+    margin-top: -20px;
+}
+
+th{
+    font-size: 12px !important;
+}
+
+.product_name_aria{
+    min-height: 55px !important;
+    span{
+        font-size: 16px !important;
+    }
+}

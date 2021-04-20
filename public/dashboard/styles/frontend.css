@@ -1,0 +1,90 @@
+body{
+  background: #fff !important;
+}
+.jacos_logo {
+    width: 100%;
+}
+.logo_menu {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.user_loged{
+    color: #000;
+    font-size: 18px;
+}
+.user_loged:hover{
+    text-decoration: none;
+}
+.cmn_cl_border,.imgsection{
+    border:1px solid #ddd;
+    padding: 10px;
+}
+.custom_thums{
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.insert_nw{
+  float: right;
+}
+/* Remove default bullets */
+ul, #myUL {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer; 
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg); 
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}
+
+/*logout drpdown*/
+.uname {
+    margin: 0;
+    padding: 0;
+}
+.dropdown-menu{
+  right: 0!important;
+}
+.dropdown-menu a:hover {
+  text-decoration: none;
+}
+.dropdown-menu a {
+       padding-left:  10px;
+       padding-bottom: 10px;
+       }
+
+      .dropdown-menu > li{position:relative;}
+
+      .dropdown-menu > li > i{position:absolute;left:0;top:3px;}
+/*logout drpdown*/

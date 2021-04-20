@@ -1,0 +1,2686 @@
+        table thead th {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+
+        table tbody td {
+            vertical-align: middle !important;
+        }
+        /*inventory by suplier id list*/
+
+        .percent_price {
+            text-align: right;
+        }
+        /*inventory by suplier id 100&*/
+        .custom_header_bottom{
+            border-bottom: 3px solid #428bca;
+        }
+        .owner_title {
+            margin-bottom: 0;
+            font-size: 36px;
+        }
+        #inventory_details_qty_bysuplierid {
+            width: 100%;
+            overflow: hidden;
+            border: 5px solid #000;
+            -ms-overflow-style: none;
+        }
+
+        #inventory_details_qty_bysuplierid .table th {
+            text-align: center;
+        }
+
+        #inventory_details_qty_bysuplierid .table th,
+        #inventory_details_qty_bysuplierid .table td {
+            /* white-space: nowrap;*/
+            vertical-align: middle;
+        }
+        #inventory_details_qty_bysuplierid .table tbody tr td:last-child {
+            word-break: break-all;
+        }
+
+        #inventory_details_qty_bysuplierid .table tbody tr td.inventory_color {
+            background-color: #B3FFB3;
+            border-left: 5px solid #000 !important;
+        }
+
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(2),
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(6)
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(10)
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(14)
+        {
+            background-color: #B3FFB3;
+        }
+
+
+
+        #inventory_details_qty_bysuplierid .table td input {
+            box-shadow: none;
+            border: 0;
+            text-align: right;
+            padding: 0;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(1) {
+            width: 200px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(2) {
+            width: 90px;
+            vertical-align: middle;
+            background-color: #B3FFB3;
+            border-left: 5px solid #000 !important;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(3) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(4) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(5) {
+            width: 60px;
+            vertical-align: middle;
+
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(6) {
+            width: 90px;
+            vertical-align: middle;
+            background-color: #B3FFB3;
+            border-left: 5px solid #000 !important;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(7) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(8) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(9) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(10) {
+            width: 90px;
+            vertical-align: middle;
+            background-color: #B3FFB3;
+            border-left: 5px solid #000 !important;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(11) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(12) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(13) {
+            width: 60px;
+            vertical-align: middle;
+        }
+        
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(14) {
+            width: 90px;
+            vertical-align: middle;
+            background-color: #B3FFB3;
+            border-left: 5px solid #000 !important;
+        }
+        #inventory_details_qty_bysuplierid .table col:nth-child(15) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(16) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table td:nth-child(17) {
+            width: 60px;
+            vertical-align: middle;
+            /* border-right: 5px solid #000 !important; */
+        }
+
+        #inventory_details_qty_bysuplierid .table td:nth-child(18) {
+            width: 60px;
+            vertical-align: middle;
+        }
+       
+        #inventory_details_qty_bysuplierid .table col:nth-child(19) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(20) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(21) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(22) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(23) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(24) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(25) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(26) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(27) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_details_qty_bysuplierid .table col:nth-child(28) {
+            width: 120px;
+            vertical-align: middle;
+        }
+
+
+/*
+        #inventory_details_qty_bysuplierid .table col:nth-child(29) {
+            width: 140px;
+            vertical-align: middle;
+        }
+        */
+
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(3) input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(4) input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(5) input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(18) input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(19) input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(20) input {
+            padding-right: 8px;
+            padding-left: 7px;
+            height: 28px;
+        }
+
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(3) .rsinput_group,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(4) .rsinput_group,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(5) .rsinput_group,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(18) .rsinput_group,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(19) .rsinput_group,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(20) .rsinput_group {
+            padding-right: 8px;
+            padding-left: 7px;
+            /*background-color: #DAEEF3;*/
+            height: 28px;
+        }
+
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(3) .rsinput_group input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(4) .rsinput_group input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(5) .rsinput_group input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(18) .rsinput_group input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(19) .rsinput_group input,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(20) .rsinput_group input {
+            padding-right: 0;
+            padding-left: 0;
+            background-color: #E9E9EB;
+        }
+
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(3),
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(4),
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(5),
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(18),
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(19),
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(20) {
+            padding-bottom: 0px!important;
+            padding-top: 0px!important;
+            border-spacing: 0 !important;
+            vertical-align: bottom;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(18) input.cmn_delivr_recv,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(19) input.cmn_delivr_recv,
+        #inventory_details_qty_bysuplierid .table tbody tr td:nth-child(20) input.cmn_delivr_recv {
+            border: 1px solid #007E12!important;
+            border-radius: 0;
+            line-height: 2.0;
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(6) input.cmn_delivr_recv,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(7) input.cmn_delivr_recv,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(8) input.cmn_delivr_recv {
+            border: 1px solid #007E12!important;
+            border-radius: 0;
+        }
+        /*inventory by suplier id*/
+        /*for reck data*/
+
+        #inventory_dlvr_details_qty {
+            width: 100%;
+            overflow: hidden;
+            border: 5px solid #000;
+            -ms-overflow-style: none;
+        }
+
+        #inventory_dlvr_details_qty .table th {
+            text-align: center;
+        }
+
+        #inventory_dlvr_details_qty .table th,
+        #inventory_dlvr_details_qty .table td {
+            /* white-space: nowrap;*/
+            vertical-align: middle;
+            display: table-cell;
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr:first-child {
+            /*background-color: #FFFF99;*/
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr:first-child td input {
+            /*background-color: #FFFF99;*/
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr td .scks_qty {
+            background-color: #B3FFB3;
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr:first-child td {
+            /*background-color: #FFFF99 !important;*/
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(2),
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(6) {
+            background-color: #B3FFB3;
+        }
+
+        #inventory_dlvr_details_qty .table td input {
+            box-shadow: none;
+            border: 0;
+            text-align: right;
+            padding: 0;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(1) {
+            width: 200px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(2) {
+            width: 90px;
+            vertical-align: middle;
+            background-color: #B3FFB3;
+            border-right: 3px solid #000;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(3) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(4) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(5) {
+            width: 80px;
+            vertical-align: middle;
+            border-right: 3px dashed #000;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(6) {
+            width: 90px;
+            vertical-align: middle;
+            background-color: #B3FFB3;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(7) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(8) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(9) {
+            width: 80px;
+            vertical-align: middle;
+            border-right: 3px dashed #000;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(10) {
+            width: 50px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(11) {
+            width: 50px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(12) {
+            width: 50px;
+            vertical-align: middle;
+            border-right: 3px solid #000;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(13) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(14) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(15) {
+            width: 70px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(16) {
+            width: 50px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(17) {
+            width: 100px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(18) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(19) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(20) {
+            width: 60px;
+            vertical-align: middle;
+            overflow-wrap: break-word;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(21) {
+            width: 130px;
+            vertical-align: middle;
+        }
+
+        #inventory_dlvr_details_qty .table col:nth-child(22) {
+            width: 90px;
+            vertical-align: middle;
+        }
+
+        .rsgrp_adon {
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            line-height: 28px;
+        }
+
+        .rsgrp_adon_handy {
+            margin: 0;
+            padding: 5px;
+            background: none;
+            border: none;
+            line-height: 28px;
+        }
+
+        .rsinput_group {
+            min-width: 3.5rem!important;
+            background: #E9E9EB;
+        }
+
+        .order_receive_body tr td.form-control:disabled,
+        .order_receive_body tr td.form-control[readonly] {
+            background-color: #E9E9EB;
+        }
+        /*F3F885->99eaff*/
+
+        .insufficant_quantity {
+            background: #F3F885 !important;
+        }
+
+        .sufficant_quantity {
+            background: #99eaff !important;
+        }
+
+        .active_input {
+            border: 4px solid rgb(240, 173, 78) !important;
+            box-shadow: none !important;
+        }
+
+        .insufficant_quantity_ordered {
+            background: #B3FFB3 !important;
+        }
+
+        .change_rack {
+            padding-left: 7px;
+            padding-right: 7px;
+        }
+
+        .padding_0 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        tbody.physicaltbody tr td input {
+            border-radius: 0;
+        }
+
+        tbody.physicaltbody tr td {
+            padding: 0;
+            vertical-align: top !important;
+        }
+        /*dlvr*/
+        /*dlvr*/
+
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(3) input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(4) input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(5) input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(7) input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(8) input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(9) input {
+            padding-right: 8px;
+            padding-left: 7px;
+            height: 28px;
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(3) .rsinput_group,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(4) .rsinput_group,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(5) .rsinput_group,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(7) .rsinput_group,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(8) .rsinput_group,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(9) .rsinput_group {
+            padding-right: 8px;
+            padding-left: 7px;
+            background-color: #F5F6F8;
+            height: 28px;
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(3) .rsinput_group input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(4) .rsinput_group input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(5) .rsinput_group input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(7) .rsinput_group input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(8) .rsinput_group input,
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(9) .rsinput_group input {
+            padding-right: 0;
+            padding-left: 0;
+            background-color: #F5F6F8;
+        }
+
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(3),
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(4),
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(5),
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(7),
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(8),
+        #inventory_dlvr_details_qty .table tbody tr td:nth-child(9) {
+            padding-bottom: 0px!important;
+            padding-top: 0px!important;
+            border-spacing: 0 !important;
+            vertical-align: bottom;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        /*manual order table*/
+
+        .custom_online_order {
+            text-decoration: none !important;
+        }
+
+        #manual_order_table_entry {
+            width: 100%;
+            overflow: hidden;
+            border: 5px solid #000;
+        }
+
+        #manual_order_table_entry .table th,
+        #manual_order_table_entry .table td {
+            white-space: nowrap;
+        }
+
+        #manual_order_table_entry .table col {
+            width: 150px;
+        }
+
+        #manual_order_table_entry .table col:nth-child(1) {
+            width: 370px;
+        }
+
+        #manual_order_table_entry .table col:nth-child(2) {
+            width: 70px;
+        }
+
+        #manual_order_table_entry .table col:nth-child(n+3) {
+            width: 50px;
+        }
+
+        .warning_custom {
+            background-color: #CCC;
+        }
+
+        td.insufcients_stocks {
+            background: yellow;
+        }
+
+        td.sufcients_stocks {
+            background: #94c6f5;
+        }
+
+        .jcs_grp button {
+            font-size: 22px;
+            line-height: 20px;
+            cursor: context-menu !important;
+        }
+
+        .v_p_name {
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .smOfordrqty input,
+        .smOfcnfrmqty input {
+            text-align: right;
+        }
+
+        .smOfordrqty,
+        .smOfcnfrmqty {
+            padding: 0 !important;
+        }
+
+        .cmn_o_d_qty,
+        .edit_vendor_item,
+        .v_in_company_code,
+        .v_in_company_code:hover,
+        .v_in_company_code:active,
+        .v_in_company_code:focus,
+        .edit_customer_item,
+        .edit_vendor_item:hover,
+        .edit_vendor_item:active,
+        .edit_vendor_item:focus,
+        .cmn_o_d_qty:hover,
+        .cmn_o_d_qty:active,
+        .cmn_o_d_qty:focus,
+        .edit_customer_item:hover,
+        .edit_customer_item:active,
+        .edit_customer_item:focus {
+            background: none;
+            border: none;
+            box-shadow: none;
+            width: 100%;
+            padding-left: 0!important;
+            padding-right: 0!important;
+        }
+
+        .deflt_design_adjust,
+        .deflt_design_adjust:hover {
+            border: 0;
+            border-radius: 0;
+            background: #fff;
+            padding: 0;
+        }
+
+        .deflt_design_adjust {
+            padding: 0px !important;
+        }
+
+        .jcs_grp .deflt_design_adjust input {
+            margin-left: -1px;
+            border-radius: 0px;
+        }
+
+        .jan_inpts {
+            margin: 0;
+            margin-left: 5px;
+            padding: 0;
+            border: 0;
+            box-shadow: none;
+            color: #077BEF !important;
+            vertical-align: middle !important;
+            width: 210px;
+            height: 40px;
+        }
+
+        .shps_byrsplrs {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .jcs_main_hand_title {
+            border: 1px solid #6999D3;
+            padding-left: 45px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-right: 45px;
+            margin-right: 15px;
+            margin-left: 10px;
+        }
+        /*management table*/
+
+        .dynamic_mange_btn_left,
+        .dynamic_mange_btn_right {
+            font-size: 14px;
+        }
+
+        .from_dates,
+        .to_dates {
+            width: 150px;
+            float: left;
+        }
+
+        .custm_uls li {
+            float: left;
+            width: 100%;
+        }
+
+        .jcs_splyr_mngesmnet {
+            padding-left: 30px;
+            padding-right: 30px;
+            border-bottom: 1px solid #000;
+        }
+
+        .update_receive_order_point_qty,
+        .update_receive_order_lot_qty {
+            text-align: right;
+        }
+
+        #management_sheet_table {
+            width: 100%;
+            overflow: hidden;
+            border: 5px solid #000;
+            -ms-overflow-style: none;
+        }
+
+        #management_sheet_table .table th {
+            text-align: center;
+            font-size: 30px !important;
+            font-weight: normal !important;
+        }
+
+        #management_sheet_table .table th,
+        #management_sheet_table .table td {
+            /* white-space: nowrap;*/
+            vertical-align: middle;
+        }
+
+        #management_sheet_table .table tbody tr td {
+            padding: 7px;
+            font-size: 20px !important;
+        }
+
+
+        #management_sheet_table .table tbody tr:first-child {
+            /*background-color: #FFFF99;*/
+        }
+        /*#management_sheet_table .table tbody tr td .scks_qty{ background-color: #B3FFB3;}*/
+
+        #management_sheet_table .table tbody tr:first-child td {
+            /*background-color: #FFFF99 !important;*/
+        }
+        /*#management_sheet_table .table tbody tr td:nth-child(2){ background-color: #B3FFB3;}*/
+
+        #management_sheet_table .table tbody tr td input {
+            height: 34px;
+            padding: 0 !important;
+            margin: 0 !important;
+            font-size: 20px !important;
+        }
+
+        #management_sheet_table .table tbody tr:first-child td input {
+            /*background-color: #FFFF99;*/
+        }
+
+        #management_sheet_table .table td input {
+            box-shadow: none;
+            border: 0;
+            text-align: right;
+            padding: 0;
+        }
+
+        #management_sheet_table .table col:nth-child(1) {
+            width: 50px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        #management_sheet_table .table col:nth-child(2) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table .table col:nth-child(3) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table .table col:nth-child(4) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table .table col:nth-child(5) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table .table col:nth-child(6) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table .table col:nth-child(7) {
+            width: 60px;
+            vertical-align: middle;
+            border-right: 4px double #044f90;
+        }
+
+        #management_sheet_table .table col:nth-child(8) {
+            width: 300px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table_By_tonya {
+            width: 100%;
+            overflow: hidden;
+            border: 5px solid #000;
+            -ms-overflow-style: none;
+        }
+
+        #management_sheet_table_By_tonya .table th {
+            text-align: center;
+            font-size: 30px !important;
+            font-weight: normal !important;
+        }
+
+        #management_sheet_table_By_tonya .table th,
+        #management_sheet_table_By_tonya .table td {
+            /* white-space: nowrap;*/
+            vertical-align: middle;
+        }
+
+        #management_sheet_table_By_tonya .table tbody tr td {
+            padding: 7px;
+            font-size: 20px !important;
+        }
+
+
+        #management_sheet_table_By_tonya .table tbody tr:first-child {
+            /*background-color: #FFFF99;*/
+        }
+        /*#management_sheet_table_By_tonya .table tbody tr td .scks_qty{ background-color: #B3FFB3;}*/
+
+        #management_sheet_table_By_tonya .table tbody tr:first-child td {
+            /*background-color: #FFFF99 !important;*/
+        }
+        /*#management_sheet_table .table tbody tr td:nth-child(2){ background-color: #B3FFB3;}*/
+
+        #management_sheet_table_By_tonya .table tbody tr td input {
+            height: 34px;
+            padding: 0 !important;
+            margin: 0 !important;
+            font-size: 20px !important;
+        }
+
+        #management_sheet_table_By_tonya .table tbody tr:first-child td input {
+            /*background-color: #FFFF99;*/
+        }
+
+        #management_sheet_table_By_tonya .table td input {
+            box-shadow: none;
+            border: 0;
+            text-align: right;
+            padding: 0;
+        }
+
+        #management_sheet_table_By_tonya .table col:nth-child(1) {
+            width: 50px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        #management_sheet_table_By_tonya .table col:nth-child(2) {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        /* #management_sheet_table_By_tonya .table col:nth-child(3) {
+            width: 110px;
+            vertical-align: middle;
+        } */
+
+        #management_sheet_table_By_tonya .table col:nth-child(3) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table_By_tonya .table col:nth-child(4) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table_By_tonya .table col:nth-child(5) {
+            width: 60px;
+            vertical-align: middle;
+        }
+
+        #management_sheet_table_By_tonya .table col:nth-child(6) {
+            width: 60px;
+            vertical-align: middle;
+            border-right: 4px double #044f90;
+        }
+
+        #management_sheet_table_By_tonya .table col:nth-child(7) {
+            width: 320px;
+            vertical-align: middle;
+        }
+        .jcs_splyr_mngesmnet_date_shows{
+            color: #000;
+            font-size: 22px;
+        }
+        /*management table*/
+        /*table default style*/
+
+        .num_total {
+            float: right;
+            font-size: 18px;
+            color: #000;
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 300px;
+        }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: -1px;
+            background: #fff;
+        }
+
+        .filter_by_vnames {
+            width: 150px;
+            float: left;
+            margin-bottom: 15px;
+        }
+
+        .filter_by_jcodes {
+            width: 150px;
+            float: left;
+            margin-bottom: 15px;
+        }
+
+        table thead tr th,
+        table tbody tr td {
+            border: 1px solid #000 !important;
+        }
+
+        .bottom_page_btn_list_jacos {
+            padding: 0;
+            margin: 0;
+        }
+
+        .custom_u_name,
+        .custom_date_show {
+            font-size: 24px;
+            color: #000 !important;
+            font-weight: bold;
+        }
+
+        .top_page_btn_list_jacos li,
+        .bottom_page_btn_list_jacos li {
+            display: inline;
+        }
+
+        .byrs_syplr_titles {
+            border: 1px solid #ddd;
+            padding-top: 5px;
+            display: inline-block;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            margin-top: 5px;
+            width: 33%;
+            float: left;
+            height: 32px;
+        }
+
+        .jcs_splyr {
+            font-size: 24px;
+            padding-left: 70px;
+            padding-right: 70px;
+            border-bottom: 2px solid #000;
+        }
+
+        .jcs_jan_code,
+        .jcs_jan_code:active,
+        .jcs_jan_code:focus,
+        .jcs_jan_code:hover {
+            border: 0;
+            box-shadow: none;
+            color: #077BEF !important;
+            background-color: #F3F885;
+            margin-top: 4px;
+            width: 60%;
+            float: left;
+            margin-right: 15px;
+        }
+
+        .jancode,
+        .jancode:active,
+        .jancode:focus,
+        .jancode:hover {
+            color: #077BEF !important;
+            background-color: #F3F885;
+            width: 175px !important;
+        }
+
+        .order_confirm,
+        .order_confirm:hover {
+            color: #fff;
+        }
+
+        .page-header {
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+        }
+
+        .selected_row_tr {
+            background-color: #fff57a !important;
+            border: 3px solid #ffeb00 !important;
+        }
+
+        #main-logo {
+            width: 7%;
+            float: left;
+        }
+
+        .shipment_home {
+            background: #00b8d8 !important;
+            border-color: #00b8d8 !important;
+        }
+
+        .shipment_confirmation_page {
+            background: #007bff !important;
+            border-color: #007bff !important;
+        }
+
+        .manual_order_page {
+            background: #ffb400 !important;
+            border-color: #ffb400 !important;
+        }
+
+        .warehouse_page_title {
+            background: #007bff !important;
+            border-color: #007bff !important;
+        }
+        /*.home_logo_go_to {
+            width: 90%;
+        }*/
+
+        .main-navbar .navbar {
+            height: 2.75rem;
+        }
+
+        .custom_drp_dwn_design {
+            margin-left: -55px !important;
+        }
+
+        .btn {
+            border-radius: 0;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        .row_jan_code {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .custom_brder_top_right {
+            margin: 3px;
+            padding: 0px;
+            list-style: none;
+            display: inline-block;
+            float: right;
+            /*border: 3px solid #1C81C6;*/
+        }
+
+        .custom_brder_top_right li {
+            /*float: left;*/
+            text-align: center;
+            padding: 15px;
+        }
+
+        .custom_brder_top_right li:first-child {
+            /*border-right: 3px solid #1C81C6;
+            margin-right: 5px;*/
+            padding: 5px;
+            background: #9BCDFD;
+        }
+
+        .custom_brder_top_right li:last-child {
+            background: #E7FFFF;
+        }
+
+        footer.main-footer {
+            margin-top: 80px;
+        }
+
+        .modal-open .customEditablemodal {
+            width: 0px;
+            z-index: 1!important;
+        }
+
+        body .customEditablemodal {
+            width: 0px;
+            z-index: 1!important;
+        }
+
+        .customEditablemodal .modal-dialog {
+            width: 350px;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            margin: 0;
+        }
+
+        #vendor_show_modal .modal-dialog {
+            width: 100%;
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            margin: 0;
+        }
+
+        #customer_show_modal .modal-dialog {
+            width: 100%;
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            margin: 0;
+        }
+
+        .modal-dialog {
+            /* border: solid 2px rgb(56, 93, 138); */
+            border-radius: 10px;
+        }
+
+        .rsalrtconfirms {
+            background-color: #DCE6F2!important;
+            color: #000 !important;
+            border-color: #416490!important;
+            border-width: 3px !important;
+            text-shadow: none!important;
+        }
+
+        .custom_header_button li {
+            float: left;
+            margin-right: 5px;
+        }
+
+        .custom_header_button li:last-child {
+            margin-right: 0;
+        }
+
+        .custom_postion .modal-dialog {
+            width: 350px;
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            margin: 0;
+        }
+
+        .custom_postion_yes_no .modal-dialog {
+            width: 350px;
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            margin: 0;
+        }
+
+        .site_tourIcon {
+            position: absolute;
+            right: 115px;
+            top: 7px;
+            cursor: pointer;
+        }
+
+        .fa_site_tour {
+            font-size: 30px;
+        }
+
+        .vendor_item_popup_show .material-icons {
+            cursor: pointer;
+        }
+
+        .custom_edit_dropdown li {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            text-align: center;
+        }
+
+        .custom_edit_dropdown li:hover {
+            background: #ddd;
+        }
+
+        .custom_edit_dropdown li a,
+        .custom_edit_dropdown li a:hover {
+            text-decoration: none;
+        }
+
+        .loading_image {
+            position: absolute;
+            text-align: center;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
+        .loading_image_custom {
+            position: fixed;
+            text-align: center;
+            margin: 0 auto;
+            left: 0px;
+            right: 0;
+            top: 178px !important;
+            height: 90px !important;
+            z-index: 99999 !important;
+            display: none;
+        }
+        /*tootltip info*/
+
+        .tooltip-inner {
+            max-width: 200px;
+            padding: 3px 8px;
+            color: #fff!important;
+            text-align: center;
+            background-color: #000 !important;
+            border-radius: .25rem;
+        }
+
+        .tooltip.bs-tooltip-auto[x-placement^=left] .arrow::before,
+        .tooltip.bs-tooltip-left .arrow::before {
+            right: 0;
+            margin-top: -3px;
+            content: "";
+            border-width: 5px 0 5px 5px;
+            border-left-color: #000 !important;
+        }
+
+        .tooltip.bs-tooltip-auto[x-placement^=bottom] .arrow::before,
+        .tooltip.bs-tooltip-bottom .arrow::before {
+            margin-left: -3px;
+            content: "";
+            border-width: 0 5px 5px;
+            border-bottom-color: #000!important;
+        }
+
+        .tooltip.bs-tooltip-auto[x-placement^=right] .arrow::before,
+        .tooltip.bs-tooltip-right .arrow::before {
+            margin-top: -3px;
+            content: "";
+            border-width: 5px 5px 5px 0;
+            border-right-color: #000!important;
+        }
+
+        .tooltip.bs-tooltip-auto[x-placement^=top] .arrow::before,
+        .tooltip.bs-tooltip-top .arrow::before {
+            margin-left: -3px;
+            content: "";
+            border-width: 5px 5px 0;
+            border-top-color: #000!important;
+        }
+        /*tootip*/
+        /*home page css*/
+
+        .col-centereds {
+            margin: 0 auto;
+            float: none;
+        }
+
+        .commnbin {
+            width: 100%;
+            padding-top: 18px;
+            padding-bottom: 18px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .common_goto {
+            height: 55px;
+            margin-bottom: 25px;
+            width: 100%;
+            margin: 10px 0 10px 0;
+            font-size: 24px !important;
+            color: #fff;
+            padding: 6px 5px;
+            border: 2px solid #395F89 !important;
+            text-align: left;
+            vertical-align: middle;
+            line-height: 50px;
+        }
+
+        .receiveablebtn {
+            height: 40px;
+            margin-bottom: 25px;
+            width: 24%;
+            margin: 0;
+            font-size: 16px !important;
+            color: #fff;
+            padding: 6px 5px;
+            border: 2px solid #395F89 !important;
+            text-align: center;
+            background: #FF872A !important;
+            position: absolute;
+            right: 0;
+        }
+
+        .deliverablebtn {
+            height: 40px;
+            margin-bottom: 25px;
+            width: 24%;
+            margin: 0;
+            font-size: 16px !important;
+            color: #fff;
+            padding: 6px 5px;
+            border: 2px solid #395F89 !important;
+            text-align: center;
+            background: #550A8A !important;
+            position: absolute;
+            right: 0;
+        }
+
+        .common_goto:hover {
+            border: 2px solid #395F89;
+        }
+
+        .left_num {
+            position: absolute;
+        }
+
+        .submessg {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            line-height: 40px;
+            position: relative
+        }
+
+        .page_heading {
+            margin: 0 auto;
+        }
+
+        .customer_btn {
+            padding: 15px;
+            padding-right: 30px;
+        }
+
+        .change_table_top_title {
+            margin: 0;
+            padding: 15px;
+        }
+
+        .customnav li {
+            margin-right: 10px;
+        }
+
+        .customnav li:last-child {
+            margin-right: 0px;
+        }
+
+        .customnav li a {
+            color: #fff !important;
+            text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000 !important;
+            font-size: 1.5em !important;
+        }
+
+        #shipment_csv_form .btn {
+            color: #fff !important;
+            text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000 !important;
+            font-size: 1.5rem !important;
+        }
+
+        button.maker_list_show,
+        button.add_new_item,
+        button.customer_list_show,
+        button.add_customer_item {
+            color: #fff !important;
+        }
+
+        .buyrslisst_overflow thead tr th {
+            text-align: center;
+        }
+
+        .buyrslisst_overflow tbody tr td:last-child {
+            text-align: center;
+        }
+
+        .add_item_body input,
+        .buyer_reg_body input {
+            border: 1px solid #ddd;
+        }
+
+        .pg_left_btn {
+            border-right: 7px solid #107FC9;
+            border-left: 2px solid #107FC9;
+            border-bottom: 4px solid #107FC9;
+            border-top: 2px solid #107FC9;
+            float: left;
+            padding-right: 10px;
+            padding-top: 3px;
+            padding-left: 2px;
+            padding-bottom: 6px;
+        }
+
+        .ui-autocomplete-input,
+        .ui-menu,
+        .ui-menu-item {
+            z-index: 2006;
+        }
+
+        .input_grp_field {
+            margin: 0 !important;
+            /* padding-left: 0 !important;
+            padding-right: 0 !important; */
+            text-align: right;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .input_grp_field:focus {
+            margin: 0 !important;
+            /* padding-left: 0 !important;
+            padding-right: 0 !important; */
+            text-align: right;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .mlti_cl_td {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .dflt_qty {
+            border: none !important;
+            color: #000 !important;
+        }
+
+        .order_receive_body tr.arival_schedule_cls,
+        .order_receive_body tr.arival_schedule_cls span,
+        .order_receive_body tr.arival_schedule_cls .dflt_qty {
+            background-color: #FABF8E !important;
+        }
+
+        .order_receive_body tr:nth-of-type(odd),
+        .order_receive_body tr:nth-of-type(odd) span,
+        .order_receive_body tr:nth-of-type(odd) .dflt_qty {
+            background-color: #E9E9EB;
+        }
+
+        .order_receive_body tr:nth-of-type(even),
+        .order_receive_body tr:nth-of-type(even) span,
+        .order_receive_body tr:nth-of-type(even) .dflt_qty {
+            background-color: #E9E9EB;
+        }
+
+        .order_receive_body tr td {
+            vertical-align: middle;
+        }
+
+        .custom_brder {
+            border-bottom: 3px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        h2.titlle.handy_page_title {
+            font-size: 24px;
+            border: 1px solid #ddd;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-top: 15px !important;
+            margin-bottom: 30px !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100%;
+        }
+
+        .p_scn_form {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .customfiled {
+            float: left;
+            width: 67%;
+        }
+
+        .customlabel {
+            float: left;
+            width: 33%;
+        }
+        /*combo style*/
+
+        .custom-combobox {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .custom-combobox-toggle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin-left: -1px;
+            padding: 0;
+        }
+
+        .custom-combobox-input {
+            margin: 0;
+            padding: 5px 10px;
+            width: 90%;
+        }
+        /*combo style*/
+
+        .edit_order_lot_info {
+            font-size: 24px !important;
+        }
+
+        .remove_order_from_list i {
+            font-size: 36px !important;
+        }
+
+        .ordr_list_table thead th,
+        .newka_list tr td {
+            text-align: left;
+        }
+
+        .dflt_jacos_btn {
+            /*text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;*/
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: default;
+        }
+
+        .page-header .page-title {
+            color: #fff;
+            padding: 10px 15px !important;
+            border-bottom: 2px solid #ddd;
+            border-radius: 5px;
+            text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            font-size: 1.5em;
+            font-weight: bold;
+            background-color: #17c671;
+        }
+
+        .v_new_item_btn_top,
+        .v_new_item_btn_top:hover {
+            color: #FFF !important;
+        }
+
+        .add_new_item,
+        .edits_vendor_item,
+        #close_sup_list_msg,
+        .cancel_new_item,
+        .cmn_dft_dgn,
+        #close_yes_no_navi {
+            text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            font-size: 1.5em;
+            font-weight: bold;
+            line-height: 20px;
+        }
+
+        .panel-body center {
+            padding: 10px;
+        }
+
+        .panel-body center .btn:first-child {
+            margin-right: 15px;
+        }
+
+        .nav_popup .panel-body ul li button,
+        .nav_popup .panel-body ul li a {
+            text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .salesmaster_page {
+            background: #4866D6 !important;
+        }
+
+        .border_right_d {
+            /* border-right: 2px solid #D1BDD0 !important;
+            cursor: default !important;*/
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        .custom_grp_btns .btn,
+        .custom_grp_btns .btn:hover {
+            background: #DFE0DE !important;
+            color: #71A5B6 !important;
+            border-color: #DFE0DE;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .custom_grp_btns .btn:active,
+        .custom_grp_btns .btn:focus,
+        .custom_grp_btns .btn:visited {
+            background: #DFE0DE !important;
+            color: #71A5B6 !important;
+            border-color: #DFE0DE !important;
+            box-shadow: none !important;
+            outline: none;
+        }
+
+        .custom_grp_btns .btn.vendor_list_show {
+            background: #fff !important;
+            cursor: default !important;
+        }
+
+        .custom_grp_btns .btn.customer_list_show {
+            background: #fff!important;
+            border: 0;
+            cursor: default;
+        }
+
+        .anno-btn:focus {
+            outline: 0 !important;
+        }
+
+        .salesmaster_link {
+            background: #4866D6 !important;
+            border-color: #4866D6 !important;
+        }
+
+        .show_inline {
+            display: inline-block !important;
+        }
+
+        .hide_inline {
+            display: none !important;
+        }
+
+        .custom_stock_item_table thead th,
+        .custom_stock_item_table tbody td {
+            text-align: center;
+        }
+
+        .shipment_ordr_table thead th,
+        .shipment_ordr_table tbody td {
+            text-align: center;
+        }
+
+        #scan_by_bin_title {
+            width: 100%;
+            padding: 10px;
+            font-size: 24px;
+            color: #000;
+            margin-bottom: 15px !important;
+        }
+
+        .handy_menu_btn {
+            font-size: 24px !important;
+            padding-top: 20px !important;
+            padding-bottom: 20px !important;
+        }
+
+        .cinput_color {
+            background: #fffacd !important;
+        }
+        /* .table-bordered {
+            border: 6px solid #000 !important;
+        } */
+
+        .menual_order_forms {
+            width: 100%;
+        }
+        /*ime mode disabled*/
+
+        input[type=number] {
+            ime-mode: inactive !important;
+        }
+
+        input[type=tel] {
+            ime-mode: inactive !important;
+        }
+
+        input[type=tel] {
+            ime-mode: disabled !important;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            ime-mode: disabled !important;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+        /*ime mode disabled*/
+
+        .clear_date {
+            position: absolute !important;
+            right: 16px;
+            top: 5px !important;
+            font-size: 24px !important;
+            cursor: pointer;
+            color: green;
+        }
+        /* .selling_price {
+            background: rgb(248, 216, 190) !important;
+        } */
+
+        .customer_item_table_body tr td:last-child {
+            text-align: center;
+        }
+
+        .vendor_itemdata_table tr td:last-child,
+        .vendor_itemdata_table tr td:nth-child(2) {
+            text-align: center;
+        }
+
+        .vendor_itemdata_table tr td:nth-child(5),
+        .vendor_itemdata_table tr td:nth-child(6),
+        .vendor_itemdata_table tr td:nth-child(7),
+        .vendor_itemdata_table tr td:nth-child(8),
+        .vendor_itemdata_table tr td:nth-child(9),
+        .vendor_itemdata_table tr td:nth-child(10),
+        .vendor_itemdata_table tr td:nth-child(11) {
+            text-align: right;
+        }
+
+        .vendor_itemdata_table tr td:nth-child(12) {
+            text-align: left;
+        }
+
+        .shipment_confirmation_tble tr td:last-child {
+            text-align: center;
+        }
+
+        .gray_btn,
+        .gray_btn:hover {
+            background: #999999!important;
+            color: #fff;
+            border-color: #999999!important;
+        }
+
+        .vendor_itemdata_table tr td:nth-child(6) {
+            text-align: right;
+        }
+
+        .customer_item_table_body tr td:nth-child(5),
+        .customer_item_table_body tr td:nth-child(6),
+        .customer_item_table_body tr td:nth-child(7),
+        .customer_item_table_body tr td:nth-child(8),
+        .customer_item_table_body tr td:nth-child(9),
+        .customer_item_table_body tr td:nth-child(10),
+        .customer_item_table_body tr td:nth-child(11) {
+            text-align: right;
+        }
+
+        .customer_item_table_body tr td:nth-child(2),
+        .customer_item_table_body tr td:nth-child(4) {
+            text-align: center;
+        }
+
+        .customer_item_table_body tr td:nth-child(12) {
+            text-align: left;
+        }
+
+        .order_receive_body tr td:nth-child(2),
+        .order_receive_body tr td:nth-child(3),
+        .order_receive_body tr td:nth-child(4),
+        .order_receive_body tr td:nth-child(5),
+        .order_receive_body tr td:nth-child(6),
+        .order_receive_body tr td:nth-child(7),
+        .order_receive_body tr td:nth-child(8),
+        .order_receive_body tr td:nth-child(9),
+        .order_receive_body tr td:nth-child(10),
+        .order_receive_body tr td:nth-child(11),
+        .order_receive_body tr td:nth-child(12),
+        .order_receive_body tr td:nth-child(13),
+        .order_receive_body tr td:nth-child(14),
+        .order_shipment_body tr td:nth-child(4) {
+            text-align: right;
+        }
+
+        .shipment_confirmation_tble tr td:nth-child(3),
+        .shipment_confirmation_tble tr td:nth-child(8),
+        .shipment_confirmation_tble tr td:nth-child(9),
+        .shipment_confirmation_tble tr td:nth-child(10),
+        .shipment_confirmation_tble tr td:nth-child(11),
+        .shipment_confirmation_tble tr td:nth-child(12),
+        .shipment_confirmation_tble tr td:nth-child(14),
+        .shipment_confirmation_tble tr td:nth-child(15),
+        .shipment_confirmation_tble tr td:nth-child(15) input {
+            text-align: right;
+        }
+        /*design custom select field*/
+
+        .jacos_select_field .p_code {
+            width: 70px !important;
+            display: inline-block;
+            border-right: 2px solid #dadada;
+            margin-right: 5px;
+        }
+
+        .jacos_select_field .bootstrap-select .btn-light.dropdown-toggle {
+            box-shadow: none;
+            background-color: #fff;
+            padding-top: 0;
+            padding-bottom: 0;
+            line-height: 32px;
+            font-size: .9375rem;
+            font-weight: 300;
+            border: 1px solid #ddd;
+        }
+
+        .jacos_select_field .bootstrap-select .dropdown-menu li a.dropdown-item {
+            padding: 0 1rem;
+            line-height: 32px;
+        }
+
+        .jacos_select_field .bootstrap-select .dropdown-menu li a.dropdown-item:hover {
+            background-color: #EEEEEE!important;
+        }
+
+        .jacos_select_field .bootstrap-select .dropdown-menu {
+            margin: 0!important;
+            padding: 0!important;
+        }
+
+        .jacos_select_field .bootstrap-select .dropdown-menu .dropdown-item.active,
+        .dropdown-item:active {
+            color: #000 !important;
+        }
+
+        .jacos_select_field .bootstrap-select .dropdown-toggle:focus {
+            outline: none !important;
+            box-shadow: none;
+        }
+
+        .nav_popup ul {
+            padding: 0;
+            position: relative;
+            margin-bottom: 0em;
+            font-family: serif;
+        }
+
+        .nav_popup ul li {
+            color: #000;
+            background: #81d0cb;
+            line-height: 1.5;
+            padding: 0.5em 0.5em 0.5em 2em;
+            border-bottom: 2px solid #fff;
+            list-style-type: none !important;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .nav_popup ul li:before {
+            font-family: "Font Awesome 5 Free";
+            content: "\f14a";
+            position: absolute;
+            left: 0.5em;
+            color: #fff;
+        }
+
+        .panel-body>center>.btn {
+            text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+            font-size: 1.5em;
+            font-weight: bold;
+            line-height: 20px;
+        }
+
+        .btn-warning,
+        .btn-warning:hover {
+            color: #fff !important;
+        }
+        /*design custom select */
+
+        .navIcon {
+            position: fixed;
+            right: 0;
+            bottom: 0px;
+            z-index: 9999
+        }
+
+        .custom_hr {
+            background: #428bca;
+            border-width: 3px;
+        }
+
+        .homepage_body {
+            border: 5px solid #428bca;
+            padding: 20px;
+        }
+
+        .supplier_name_input {
+            font-size: 30px;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid #000;
+            min-width: 228px;
+            max-width: 228px;
+            text-align: left;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        .modal_cntent_body {
+            border: 3px solid #0069D9;
+        }
+
+        .modal_bottom_button {
+            display: inline !important;
+            border-top: 0 !important;
+        }
+
+        .modal_cntent_body .modal_bottom_button .btn-danger,
+        .modal_cntent_body .modal_bottom_button .btn-danger:hover {
+            border-radius: 0 !important;
+            padding: 2px 15px;
+        }
+
+        .modal_cntent_body .modal_bottom_button .btn-info,
+        .modal_cntent_body .modal_bottom_button .btn-info:hover {
+            border-radius: 0 !important;
+            background: #0069D9 !important;
+            border-color: #0069D9 !important;
+            padding: 2px 15px;
+        }
+
+        .message_body_content {
+            padding-bottom: 0 !important;
+            padding-top: 15px !important;
+            padding-left: 15px !important;
+            padding-right: 10px !important;
+        }
+        /*editable*/
+
+        .modal_bottom_button_editable {
+            display: inline !important;
+            border-top: 0 !important;
+        }
+
+        .modal_cntent_body .modal_bottom_button_editable .btn-danger,
+        .modal_cntent_body .modal_bottom_button_editable .btn-danger:hover {
+            border-radius: 0 !important;
+            padding: 2px 15px;
+        }
+
+        .modal_cntent_body .modal_bottom_button_editable .btn-info,
+        .modal_cntent_body .modal_bottom_button_editable .btn-info:hover {
+            border-radius: 0 !important;
+            background: #0069D9 !important;
+            border-color: #0069D9 !important;
+            padding: 2px 15px;
+        }
+
+        .message_body_content_editable {
+            padding-bottom: 0 !important;
+            padding-top: 15px !important;
+            padding-left: 15px !important;
+            padding-right: 10px !important;
+        }
+
+        .mesg_content {
+            margin-bottom: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            text-align: left;
+        }
+
+        #yes_no_confirmation_modal {
+            z-index: 9999;
+        }
+
+        .show {
+            display: block !important;
+        }
+
+        .productname {
+            text-align: left;
+        }
+
+        #shipment_csv_input,
+        #shipment_csv_input_nav {
+            position: absolute;
+            right: 15px;
+            top: 0px;
+            opacity: 0;
+            width: 126px;
+            height: 32px;
+        }
+
+        .shipment_date_div {
+            text-align: center;
+            margin: 0px;
+            padding: 0px;
+            height: 52px;
+        }
+
+        .shipment_date_p {
+            margin: 0px;
+            border: 1px solid gray;
+            width: 100%;
+        }
+
+        .shipment_date_sign {
+            width: 10%;
+            height: 52px;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .vendor_master_td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .nav_popup .btn-flat-border {
+            display: inline-block;
+            padding: 0.3em 1em;
+            text-decoration: none;
+            color: #67c5ff;
+            border: solid 2px #67c5ff;
+            border-radius: 3px;
+            transition: .4s;
+        }
+
+        .nav_popup .btn-flat-border:hover {
+            background: #67c5ff;
+            color: #fff;
+        }
+
+        #close_sup_list_msg {
+            margin: 10px;
+            border: solid 2px #67c5ff;
+        }
+        /*scroling table*/
+        /* table.scroll {
+            width: 100%;
+            border-spacing: 0;
+        }
+
+        table.scroll tbody,
+        table.scroll thead tr {
+            display: block;
+        }
+
+        table.scroll tbody {
+            height: 340px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        table.scroll tbody td,
+        table.scroll thead th {
+            width: 225px;
+        }
+
+        table.scroll thead th:last-child {
+            width: 156px;
+        }
+
+        .scroll thead tr th {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .scroll tbody {
+            border-top: 2px solid black;
+        }
+
+        .scroll tbody td:last-child,
+        thead th:last-child {
+            border-right: none !important;
+        } */
+        /*scroling table*/
+
+         ::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        .freeze-multi-scroll-table-head-inner {
+            width: 100% !important;
+        }
+        /*handy css*/
+
+        .handy_top_bar1 {
+            padding-left: 25px;
+            margin-bottom: 0;
+            padding-top: 5px;
+            vertical-align: middle;
+            padding-bottom: 5px;
+        }
+
+        .handy_top_bar2 {
+            padding-right: 25px;
+            margin-bottom: 0;
+            padding-top: 5px;
+            vertical-align: middle;
+            padding-bottom: 5px;
+        }
+
+        .numbering_col {
+            width: 20px;
+            float: left;
+            vertical-align: middle;
+            height: 36px;
+            line-height: 36px;
+            font-size: 20px;
+        }
+
+        .header {
+            background-color: #FFFF66;
+            color: #007BBB;
+            font-weight: bold;
+        }
+
+        .setting_main button {
+            width: 100%;
+            margin: 10px 0 10px 0;
+            /*margin-right: 10px;*/
+            font-size: 24px;
+            color: green;
+            padding: 6px 5px;
+            border: 2px solid green;
+            text-align: left;
+        }
+
+        .receive_quantity,
+        .receive_quantity:focus,
+        .receive_quantity:active,
+        .receive_quantity:visited {
+            padding: 0;
+            background: none;
+            border: 1px solid #000;
+            border-radius: 0;
+            padding: 3px;
+            box-shadow: none;
+            text-align: center;
+        }
+
+        .order_quantity,
+        .order_quantity:focus,
+        .order_quantity:active,
+        .order_quantity:visited {
+            padding: 0;
+            background: none;
+            border: 1px solid #000;
+            border-radius: 0;
+            padding: 3px;
+            box-shadow: none;
+            text-align: center;
+        }
+
+        .pullleft_custom_no_padding {
+            padding: 0 !important;
+            float: left;
+            margin-bottom: 5px;
+        }
+
+        .customvertical_btn {
+            width: 100px;
+        }
+
+        .custom_border_color {
+            border: 1px solid #000;
+            margin-left: -1px;
+        }
+
+        .handy_main button,
+        .handy_main a {
+            width: 100%;
+            margin: 10px 0 10px 0;
+            font-size: 18px;
+            color: #000;
+            padding: 6px 5px;
+            border: 2px solid red;
+            text-align: left;
+        }
+
+        .cstm_cl_label_icon {
+            padding-top: 7px;
+        }
+
+        .cstm_cl_label {
+            vertical-align: bottom !important;
+            padding-top: 13px;
+            float: right;
+            text-align: right;
+        }
+
+        .handy_btn_left {
+            /*margin-left: 0 !important;*/
+            padding-right: 10px !important;
+            ;
+        }
+
+        .handy_btn_right {
+            /*margin-left: 0 !important;*/
+            padding-left: 10px !important;
+            ;
+        }
+
+        .handy_main button:hover,
+        .handy_main a:hover {
+            background-color: #ffecec;
+            border: 2px solid red;
+        }
+
+        .scan_btn {
+            position: relative;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .handy_btn_aria {
+            padding: 0;
+        }
+
+        .well {
+            min-height: 20px;
+            padding: 8px;
+            margin-bottom: 0px;
+            background-color: #f5f5f5;
+            border: 1px solid #e3e3e3;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+            width: 100%;
+        }
+
+        .commnbin {
+            width: 100% !important;
+            padding-top: 18px !important;
+            padding-bottom: 18px !important;
+            font-size: 24px !important;
+            text-align: center !important;
+            border: none !important;
+        }
+
+        .content_popuparea {
+            border: 3px solid #428bca;
+            padding: 30px;
+            display: block;
+            position: absolute;
+            top: 60px;
+            left: 9px;
+            right: 9px;
+            background: #fff;
+            width: 95%;
+        }
+
+        .activelink {
+            background: yellow !important;
+            color: #007BBB !important;
+        }
+
+        .receive_ordered_color {
+            background: #FFFF99 !important;
+        }
+
+        .c_popu h2 {
+            font-size: 18px;
+        }
+
+        .marginboths {
+            margin: 0;
+        }
+
+        .order_receive_body tr td[contenteditable=true],
+        .vendor_itemdata_table tr td[contenteditable=true] {
+            -moz-appearance: textfield;
+            ime-mode: inactive !important;
+        }
+
+        .order_receive_body tr td[contenteditable=true],
+        .vendor_itemdata_table tr td[contenteditable=true] {
+            -moz-appearance: textfield;
+            ime-mode: disabled !important;
+        }
+
+        #jan_manter_handy_btn {
+            font-size: 18px;
+            padding: 0;
+        }
+
+        #jan_manter_handy_btn_delivery {
+            font-size: 18px;
+            padding: 0;
+        }
+
+        .product_name_aria {
+            display: block;
+            width: 100%;
+            min-height: 70px;
+            padding: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.42857143;
+            color: #000;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 0px 0px;
+        }
+
+        .jan_scaning {
+            position: absolute;
+            right: 1px;
+            top: 0;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            display: none !important;
+        }
+
+        .mobile_code p {
+            margin-bottom: 0;
+        }
+        /*handy css*/
+        /*delivery sheet*/
+
+        #inventory_perchase_qty_mangements_shets {
+            width: 100%;
+            overflow: hidden;
+            border: 3px solid #000;
+            -ms-overflow-style: none;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table th {
+            text-align: center;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table th,
+        #inventory_perchase_qty_mangements_shets .table td {
+            /* white-space: nowrap;*/
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table tbody tr:first-child {
+            /*background-color: #FFFF99;*/
+        }
+
+        #inventory_perchase_qty_mangements_shets .table tbody tr:first-child td input {
+            /*background-color: #FFFF99;*/
+        }
+
+        #inventory_perchase_qty_mangements_shets .table tbody tr td .scks_qty {
+            background-color: #B3FFB3;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table tbody tr:first-child td {
+            /*background-color: #FFFF99 !important;*/
+        }
+
+        #inventory_perchase_qty_mangements_shets .table tbody tr td:nth-child(3) {
+            background-color: #B3FFB3;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table td input {
+            box-shadow: none;
+            border: 0;
+            text-align: right;
+            padding: 0;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table col:nth-child(1) {
+            width: 120px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table col:nth-child(2) {
+            width: 150px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table col:nth-child(3) {
+            width: 100px;
+            vertical-align: middle;
+            background-color: #B3FFB3;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table col:nth-child(4) {
+            width: 100px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table col:nth-child(5) {
+            width: 100px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table col:nth-child(6) {
+            width: 100px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table col:nth-child(7) {
+            width: 120px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets .table col:nth-child(8) {
+            width: 150px;
+            vertical-align: middle;
+        }
+        /* receive sheet */
+
+        #inventory_perchase_qty_mangements_shets_receive {
+            width: 100%;
+            overflow: hidden;
+            border: 3px solid #000;
+            -ms-overflow-style: none;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table th {
+            text-align: center;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table th,
+        #inventory_perchase_qty_mangements_shets_receive .table td {
+            /* white-space: nowrap;*/
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table tbody tr:first-child {
+            /*background-color: #FFFF99;*/
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table tbody tr:first-child td input {
+            /*background-color: #FFFF99;*/
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table tbody tr td .scks_qty {
+            background-color: #B3FFB3;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table tbody tr:first-child td {
+            /*background-color: #FFFF99 !important;*/
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table tbody tr td:nth-child(3) {
+            background-color: #B3FFB3;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table td input {
+            box-shadow: none;
+            border: 0;
+            text-align: right;
+            padding: 0;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table col:nth-child(1) {
+            width: 120px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table col:nth-child(2) {
+            width: 150px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table col:nth-child(3) {
+            width: 100px;
+            vertical-align: middle;
+            background-color: #B3FFB3;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table col:nth-child(4) {
+            width: 100px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table col:nth-child(5) {
+            width: 100px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table col:nth-child(6) {
+            width: 100px;
+            vertical-align: middle;
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table col:nth-child(7) {
+            width: 120px;
+            vertical-align: middle;
+        }
+
+        .color_row_yes_color{
+            background-color: #F3F885 !important;
+        }
+
+        .color_row_new_color{
+            background-color: #fdb7cf !important
+        }
+
+        #inventory_perchase_qty_mangements_shets_receive .table col:nth-child(8) {
+            width: 150px;
+            vertical-align: middle;
+        }
+        .color_latest_item_yes,
+        .color_latest_item_yes input,
+        .color_latest_item_yes .rsinput_group,
+        .color_latest_item_yes .rsinput_group .rsgrp_adon
+         {
+            background: pink !important;
+        }
+        .shelf_stack{
+            padding-left: 0 !important;
+            padding-right: 0!important;
+            text-align: center!important;
+        }
+        .total_stock_jaiko,
+        .total_stock_rack{
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+        .insert_vendor_payments,
+        .insert_vendor_payments:focus,
+        .insert_vendor_payments:active
+        {
+            background: transparent;
+        }
+        .vendor_due_blance,
+        .vendor_due_blance:focus,
+        .vendor_due_blance:active {
+            background: transparent;
+        }
+
+        .customer_due_blance,
+        .customer_due_blance:focus,
+        .customer_due_blance:active {
+            background: transparent !important;
+        }
+
+        .customer_due_balance,
+        .customer_due_balance:focus,
+        .customer_due_balance:active {
+            background: transparent !important;
+        }
+        .form-control:disabled, .form-control[readonly]{
+            background: transparent !important;
+        }
+        .update_rack_code_exec{
+            color: #077BEF !important;
+            background-color: #F3F885 !important;
+        }
+        .voice_icon_group{
+            background: #007bff;
+            color: #fff;
+            vertical-align: middle;
+        }
+        .custom_voice_img{
+            padding: 5px;
+            cursor: pointer;
+        }
+        .voice_recoring{
+            padding-top: 6px;
+        }
+        .default_pop_up_template li{
+            list-style: none;
+            border-bottom: 1px solid #007bff!important;
+        }
+        .default_pop_up_template li:last-child{
+            border-bottom:0 !important;
+        }
+        .vendor_select2 .select2-container{
+            background: transparent!important ;
+            width: 100%;
+        }
+        .vendor_name_control .select2-selection,
+        .vendor_name_control .select2-container--default .select2-selection--single,
+        .vendor_name_control .select2-container--default .select2-selection--single:focus
+        {
+            background:transparent!important ;
+            border-radius: 0!important;
+            width: 100%;
+            border: none!important;
+            outline: none;
+        }
+        .filter_by_tonya_id a{
+            text-decoration: none;
+        }
+        .orderDate{
+            font-size: 24px;
+    font-weight: bold;
+    color: #000;
+        }
+        /* .haccu_list_by_tonya_table .table-striped>tbody>tr:nth-child(odd){
+            background-color:#F3F885 !important;
+         } */
+        /*flash button*/
+        .flash-button{
+            /* background:blue;
+            padding:5px 10px;
+            color:#fff;
+            border:none;
+            border-radius:5px; */
+
+            animation-name: flash;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+
+            -webkit-animation-name: flash;
+            -webkit-animation-duration: 1s;
+            -webkit-animation-timing-function: linear;
+            -webkit-animation-iteration-count: infinite;
+
+            -moz-animation-name: flash;
+            -moz-animation-duration: 1s;
+            -moz-animation-timing-function: linear;
+            -moz-animation-iteration-count: infinite;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+
+        @-webkit-keyframes flash {
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+
+        @-moz-keyframes flash {
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        /*flash button*/
+        @media (min-width: 320px) and (max-width: 767px) {
+            .handy_screen {
+                width: 50% !important;
+                float: left;
+            }
+            .handy_nav {
+                border-left: none!important;
+            }
+            .handy_nav li a {
+                padding-top: 20px !important;
+                padding-bottom: 20px !important;
+            }
+        }
+        .voice_text_c{
+            vertical-align: middle;
+            font-size: 22px;
+        }
+        .itemImagesContr{
+            height: 100px;
+            cursor: pointer;
+        }
+        .imgArea{
+            text-align: center;
+        }
+        .productImgZoomer{
+            width: auto;
+            height: 300px;;
+        }
+        .tr_hacchaccuColorRowForTodays,
+        .tr_hacchaccuColorRowForTodays td .rsinput_group,
+        .tr_hacchaccuColorRowForTodays td .form-control,
+        .tr_hacchaccuColorRowForTodays td .form-control:disabled,
+        .tr_hacchaccuColorRowForTodays td .form-control[readonly]
+        {
+            background: rgba(224, 252, 252, 0.9) !important;
+            /*background: rgba(253, 228, 218, 0.9) !important;*/
+        }

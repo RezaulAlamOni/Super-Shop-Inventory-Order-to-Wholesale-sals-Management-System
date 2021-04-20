@@ -1,0 +1,113 @@
+.jn {
+    position: fixed;
+    display: none;
+}
+
+.jn.nav_disp {
+    display: block;
+}
+
+.jn .card {
+    padding: 12px;
+}
+
+.jn .card-body {
+    padding: 0px;
+    font-size: 17px;
+    color: #000;
+}
+
+.jn .btn {
+    margin: 0.1em;
+    border-radius: 5px;
+    border: solid 2px rgb(56, 93, 138);
+    font-size: 17px;
+}
+
+.jn ul,
+.jn ol {
+    padding-inline-start: 20px;
+}
+
+.jn ul li,
+.jn ol li {
+    margin: 0.1em;
+    padding-left: 0.5em;
+}
+
+.jn_popup {
+    border-radius: 10px;
+    margin-bottom: 2px;
+    border: solid 2px rgb(56, 93, 138);
+    box-shadow: 0 2px 6px #31B0D5;
+    background: #dcf3f1;
+}
+
+.jn_popup .card-body ul li button,
+.jn_popup .card-body ul li a {
+    text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.jn_popup ul {
+    padding: 0;
+    position: relative;
+    margin-bottom: 0em;
+    font-family: serif;
+}
+
+.jn_popup ul li {
+    color: #000;
+    background: #81d0cb;
+    line-height: 1.5;
+    padding: 0.5em 0.5em 0.5em 2em;
+    border-bottom: 2px solid #fff;
+    list-style-type: none !important;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.jn_popup ul li:nth-child(1) {
+    border-radius: 8px 8px 0 0;
+}
+
+.jn_popup ul li:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f14a";
+    position: absolute;
+    left: 0.5em;
+    color: #fff;
+}
+
+.jn .modal-header,
+.jn .modal-body,
+.jn .modal-footer {
+    padding: 0;
+    border: none;
+}
+
+.jn .modal-content {
+    border-radius: 8px;
+}
+
+.jn_old_popup {
+    background-color: rgb(255, 235, 255);
+    border: solid 2px rgb(56, 93, 138);
+    border-radius: 4px;
+}
+
+.jn_old_popup ul {
+    padding: 0;
+}
+
+.jn_old_popup ul li {
+    list-style-type: none !important;
+}
+
+.card-body>center>.btn {
+    text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 20px;
+}
