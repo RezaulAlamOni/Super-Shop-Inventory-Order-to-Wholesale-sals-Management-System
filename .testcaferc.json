@@ -1,0 +1,10 @@
+{
+    "speed": 0.2,
+    "stopOnFirstFail": true,
+    "disablePageCaching": true,
+    "screenshots": {
+        "path": "./testcafe/screenshots",
+        "takeOnFails": true,
+        "pathPattern": "${DATE}_${TIME}/test-${TEST_INDEX}/${USERAGENT}/${FILE_INDEX}.png"
+    }
+}
