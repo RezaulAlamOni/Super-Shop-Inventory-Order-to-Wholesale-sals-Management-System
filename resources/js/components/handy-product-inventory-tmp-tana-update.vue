@@ -86,22 +86,25 @@
                                                         <template v-if="order_data.length > 0">
                                                             <tr v-for="(order,index) in order_data">
                                                                 <td>
-                                                                    <input type="tel"
-                                                                           :value="order.case_quantity" readonly
+                                                                    <input type="tel" @click="selectItem($event,'case')"
+                                                                           @keypress="pressEnterAndNext($event,'case',index)"
+                                                                           :value="order.case_quantity" :id="'case'+index"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
                                                                 </td>
 
                                                                 <td>
-                                                                    <input type="tel"
-                                                                           :value="order.ball_quantity" readonly
+                                                                    <input type="tel" @click="selectItem($event,'ball')"
+                                                                           @keypress="pressEnterAndNext($event,'ball',index)"
+                                                                           :value="order.ball_quantity" :id="'ball'+index"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
                                                                 </td>
 
                                                                 <td>
-                                                                    <input type="tel"
-                                                                           :value="order.unit_quantity" readonly
+                                                                    <input type="tel" @click="selectItem($event,'bara')"
+                                                                           @keypress="pressEnterAndNext($event,'bara',index)"
+                                                                           :value="order.unit_quantity" :id="'bara'+index"
                                                                            class="form-control cmn_num_formt bara_order inputs ">
                                                                 </td>
 
@@ -438,11 +441,38 @@ export default {
         },
         pressEnterAndSave(e, i) {
             if (e.keyCode == 13) {
-                $('#rack' + (i + 1)).focus()
-                $('#rack' + (i + 1)).select()
-                if ($('#rack' + (i + 1)).length <= 0) {
+                $('#case'+ (i+1)).focus()
+                $('#case'+ (i+1)).select()
+                // $('#rack' + (i + 1)).focus()
+                // $('#rack' + (i + 1)).select()
+                if ($('#case'+ (i+1)).length <= 0) {
                     $('#order-place-button').focus()
                 }
+            }
+        },
+        pressEnterAndNext(e,type, i) {
+            if (e.keyCode == 13) {
+
+                if (type == 'case') {
+                    $('#ball'+i).focus()
+                    $('#ball'+i).select()
+
+                    // this.input_type = 'ボール';
+
+                } else if (type == 'ball') {
+                    $('#bara'+i).focus()
+                    $('#bara'+i).select()
+                    // this.input_type = 'バラ';
+
+                } else {
+                    $('#rack' + i).focus()
+                }
+
+                // $('#rack' + (i + 1)).focus()
+                // $('#rack' + (i + 1)).select()
+                // if ($('#rack' + (i + 1)).length <= 0) {
+                //     $('#order-place-button').focus()
+                // }
             }
         },
         insertToJanList() {
@@ -572,7 +602,8 @@ export default {
             })
             this.order_data = data;
 
-        }
+        },
+
     },
     watch: {
         // jan_code: function (val) {
