@@ -1,7 +1,7 @@
 var cacheName = 'rv3-pwa-v1';
 var filesToCache = [
   // '/rv3_super',
-  '/rv3_super/android_home',
+  '/rv3_tonyav1/android_home',
   // '/css/style.css',
   // '/js/main.js'
 ];

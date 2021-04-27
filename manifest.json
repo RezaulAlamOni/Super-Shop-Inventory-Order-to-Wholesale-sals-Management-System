@@ -27,8 +27,8 @@
       "type": "image/png"
     }],
   "lang": "en-US",
-  "start_url": "/rv3_super/android_home",
-  "scope": "/rv3_super/android_home,/rv3_super/inventory-update,/rv3_super/*",
+  "start_url": "/rv3_tonyav1/android_home",
+  "scope": "/rv3_tonyav1/android_home,/rv3_tonyav1/inventory-update,/rv3_tonyav1/*",
   "display": "standalone",
   "background_color": "green",
   "theme_color": "orange"
