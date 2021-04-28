@@ -7350,7 +7350,14 @@ $(document).ready(function () {
         }
     });
     $(document).delegate(".jan_inpts", "blur", function (e) {
+
         var jancode = $(this).val();
+        if (!isNumeric(jancode)) {
+            if (jancode.length > 0) {
+                jan_list_search_by_name(jancode)
+            }
+            return false;
+        }
         var customer_id = $('.c_ids_v').val();
         var c_name = $('.jcs_main_hand_title').text();
         if (customer_id == 0) {
