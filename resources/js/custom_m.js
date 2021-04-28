@@ -3609,6 +3609,7 @@ function select_online_order(jan) {
     setTimeout(function () {
         $('.jan_inpts_online_order').trigger('blur')
     },200)
+    close_all_navi_msg();
 }
 
 function isNumeric(str) {
