@@ -15,7 +15,7 @@
                 <input type="tel" style="ime-mode: disabled;" name="jn_codes"
                        class="form-control recive_order_page_jn jcs_jan_code" value="" placeholder="JANまたはインストア入力">
 {{--                <span class="byrs_syplr_titles"></span>--}}
-                <bar-code-scan base_url="{{config('app.url')}}"></bar-code-scan>
+                <bar-code-scan base_url="{{config('app.url')}}" page="re"></bar-code-scan>
                 <input type="hidden" value="0" class="v_ids_v">
             </div>
             <div class="col-md-7 col-sm-7 pull-right text-right">

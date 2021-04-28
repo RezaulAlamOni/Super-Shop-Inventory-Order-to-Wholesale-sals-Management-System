@@ -50,7 +50,7 @@
 import {StreamBarcodeReader} from "vue-barcode-reader";
 
 export default {
-    props : ['base_url'],
+    props : ['base_url','page'],
     name: "barcode-scan",
     components: {StreamBarcodeReader},
     data() {
@@ -77,11 +77,20 @@ export default {
             this.barCodeScan ? $('#bar-code-scan-component').modal({backdrop: 'static', keyboard: false}) : $('#bar-code-scan-component').modal('hide');
         },
         setValue(value){
-            $('.recive_order_page_jn').val(value)
-            $('#new-id').val(value)
-            setTimeout(function () {
-                $('.recive_order_page_jn').trigger('blur')
-            },200)
+
+            if(this.page == 're'){
+                $('.recive_order_page_jn').val(value)
+                $('#new-id').val(value)
+                setTimeout(function () {
+                    $('.recive_order_page_jn').trigger('blur')
+                },200)
+            }  else {
+                console.log('from online order')
+                $('.jan_inpts_online_order').val(value)
+                setTimeout(function () {
+                    $('.jan_inpts_online_order').trigger('blur')
+                },200)
+            }
         },
         getText({lastSentence, transcription}) {
             // console.log({ lastSentence, transcription })

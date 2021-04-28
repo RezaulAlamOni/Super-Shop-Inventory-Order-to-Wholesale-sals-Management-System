@@ -19891,7 +19891,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['base_url'],
+  props: ['base_url', 'page'],
   name: "barcode-scan",
   components: {
     StreamBarcodeReader: vue_barcode_reader__WEBPACK_IMPORTED_MODULE_0__["StreamBarcodeReader"]
@@ -19920,11 +19920,19 @@ __webpack_require__.r(__webpack_exports__);
       }) : $('#bar-code-scan-component').modal('hide');
     },
     setValue: function setValue(value) {
-      $('.recive_order_page_jn').val(value);
-      $('#new-id').val(value);
-      setTimeout(function () {
-        $('.recive_order_page_jn').trigger('blur');
-      }, 200);
+      if (this.page == 're') {
+        $('.recive_order_page_jn').val(value);
+        $('#new-id').val(value);
+        setTimeout(function () {
+          $('.recive_order_page_jn').trigger('blur');
+        }, 200);
+      } else {
+        console.log('from online order');
+        $('.jan_inpts_online_order').val(value);
+        setTimeout(function () {
+          $('.jan_inpts_online_order').trigger('blur');
+        }, 200);
+      }
     },
     getText: function getText(_ref) {
       var lastSentence = _ref.lastSentence,
@@ -27927,7 +27935,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.text-record-button[data-v-e08acb16] {\r\n    width: 90px !important;\r\n    height: 30px !important;\r\n    margin-left: 15px;\r\n    line-height: 20px !important;\r\n    text-align: left !important;\n}\n.text-record-loader[data-v-e08acb16] {\r\n    height: 18px;\r\n    width: 25px;\r\n    margin: 5px;\r\n    margin-top: -3px;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.text-record-button[data-v-e08acb16] {\n    width: 90px !important;\n    height: 30px !important;\n    margin-left: 15px;\n    line-height: 20px !important;\n    text-align: left !important;\n}\n.text-record-loader[data-v-e08acb16] {\n    height: 18px;\n    width: 25px;\n    margin: 5px;\n    margin-top: -3px;\n}\n\n", ""]);
 
 // exports
 
@@ -66506,10 +66514,13 @@ if (false) {}
   name: 'vue-speech',
 
   props: {
-    lang: {
-      type: String,
-      default: 'en-US'
-    }
+      lang: {
+          type: String,
+          default: 'en-US'
+      },
+      resume: {
+          default: 0
+      }
   },
 
   data: () => ({
@@ -66518,50 +66529,56 @@ if (false) {}
   }),
 
   methods: {
-    checkApi() {
-      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      checkApi() {
+          window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-      if (!SpeechRecognition && "development" !== 'production') {
-        throw new Error('Speech Recognition does not exist on this browser. Use Chrome or Firefox');
-      }
+          if (!SpeechRecognition && "development" !== 'production') {
+              throw new Error('Speech Recognition does not exist on this browser. Use Chrome or Firefox');
+          }
 
-      if (!SpeechRecognition) {
-        return;
-      }
+          if (!SpeechRecognition) {
+              return;
+          }
 
-      const recognition = new SpeechRecognition();
+          const recognition = new SpeechRecognition();
 
-      recognition.lang = this.lang;
-      recognition.interimResults = true;
+          recognition.lang = this.lang;
+          recognition.interimResults = true;
 
-      recognition.addEventListener('result', event => {
-        const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('');
+          recognition.addEventListener('result', event => {
+              const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('');
 
-        this.runtimeTranscription = text;
-      });
-
-      recognition.addEventListener('end', () => {
-        if (this.runtimeTranscription !== '') {
-          this.transcription.push(this.runtimeTranscription);
-
-          this.$emit('onTranscriptionEnd', {
-            transcription: this.transcription,
-            lastSentence: this.runtimeTranscription
+              this.runtimeTranscription = text;
           });
-        }
+          recognition.start();
+          recognition.addEventListener('end', () => {
+              if (this.runtimeTranscription !== '') {
+                  this.transcription.push(this.runtimeTranscription);
 
-        this.runtimeTranscription = '';
+                  this.$emit('onTranscriptionEnd', {
+                      transcription: this.transcription,
+                      lastSentence: this.runtimeTranscription
+                  });
+              }
 
-        recognition.start();
-      });
+              this.runtimeTranscription = '';
+              recognition.stop();
+          });
 
-      recognition.start();
-    }
+
+      }
   },
 
   mounted() {
-    this.checkApi();
-  }
+    // this.checkApi();
+  },
+    watch: {
+        resume: function (val) {
+            if (val) {
+                this.checkApi();
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -66709,6 +66726,7 @@ if (false) {}
 /***/ })
 /******/ ]);
 });
+
 
 /***/ }),
 
