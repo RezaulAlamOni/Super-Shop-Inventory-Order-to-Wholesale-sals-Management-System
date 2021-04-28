@@ -10242,7 +10242,7 @@ function jan_list_search_by_name_from_master(name) {
             var btn = '';
             if (response.api_data.return==1 && response.api_data.data.product_list.length>0) {
                 for(var i=0;i<response.api_data.data.product_list.length;i++){
-                    msgHtml += `<li><a href="javascript:void(0)" class="pname_search" onclick="save_by_new_jan('${response.api_data.data.product_list[i].jan_code}')">` + response.api_data.data.product_list[i].name + `</a></li>`;
+                    msgHtml += `<li><a href="javascript:void(0)" class="pname_search" onclick="select_online_order('${response.api_data.data.product_list[i].jan_code}')">` + response.api_data.data.product_list[i].name + `</a></li>`;
                 }
                 btn = [{button: '<br><center><a href="javascript:close_default_page_navi(909)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}];
 
@@ -10270,6 +10270,13 @@ function jan_list_search_by_name_from_master(name) {
             show_hide_nav_icn(0);
         }
     });
+}
+
+function select_online_order(jan) {
+    $('.jan_inpts_online_order').val(value)
+    setTimeout(function () {
+        $('.jan_inpts_online_order').trigger('blur')
+    },200)
 }
 
 function isNumeric(str) {
