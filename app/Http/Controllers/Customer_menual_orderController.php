@@ -55,7 +55,7 @@ class Customer_menual_orderController extends Controller
         $jn= $request->jn;
         $customer_id= $request->customer_id;
         $jn_info = collect(\DB::select("SELECT jans.name,stock_items.case_quantity,stock_items.ball_quantity,stock_items.unit_quantity,customer_items.jan FROM `customer_items` join jans on jans.jan=customer_items.jan join vendor_items on vendor_items.jan = customer_items.jan left JOIN stock_items on stock_items.vendor_item_id = vendor_items.vendor_item_id WHERE customer_items.jan='".$jn."' and customer_items.customer_id='".$customer_id."'"))->first();
-        
+
         $result = response()->json(['jn_info' => $jn_info]);
         return $result;
     }
@@ -64,7 +64,7 @@ class Customer_menual_orderController extends Controller
         $jn_info = [];
         $customer_id= $request->customer_id;
         $jn_info = collect(\DB::select("SELECT jans.name,stock_items.case_quantity,stock_items.ball_quantity,stock_items.unit_quantity,customer_items.jan FROM `customer_items` join jans on jans.jan=customer_items.jan join vendor_items on vendor_items.jan = customer_items.jan left JOIN stock_items on stock_items.vendor_item_id = vendor_items.vendor_item_id WHERE customer_items.customer_id='".$customer_id."' group by customer_items.jan"));
-        
+
         $result = response()->json(['jn_info' => $jn_info]);
         return $result;
     }
@@ -81,7 +81,7 @@ class Customer_menual_orderController extends Controller
         $delivery_date = $request->delivery_date;
         $order_type = $request->order_type;
         $m_o_arr= $request->m_o_arr;
-       
+
         $customer_order_array=array();
         $customer_shipment_array=array();
         $curdate = date('Y-m-d');
@@ -112,7 +112,7 @@ class Customer_menual_orderController extends Controller
             'jan'=>$jans_code,'inputs'=>$value[1],'quantity'=>$value[2],
             'cost_price'=>$required_info['cost_price'],
             'selling_price'=>$required_info['selling_price']]);
-            
+
             $customer_shipment_array['customer_id']=$customer_id;
             $customer_shipment_array['customer_order_id']=$order_id;
             $customer_shipment_array['shipment_date']=date('Y-m-d');
@@ -124,8 +124,8 @@ class Customer_menual_orderController extends Controller
         }
         //return $customer_order_array;
         customer_order::where('customer_order_id', '=', $order_id)->update(['cost_price_total'=>$total_cost_price,'selling_price_total'=>$total_selling_price]);
-        // Session::flash('message', 'Menual order completed'); 
-        // Session::flash('class_name', 'alert-success'); 
+        // Session::flash('message', 'Menual order completed');
+        // Session::flash('class_name', 'alert-success');
         return response()->json(['message' => 'Menual order completed']);
     }
 
@@ -204,14 +204,14 @@ class Customer_menual_orderController extends Controller
         $wh = '';
         if($jan!=''){
             $wh = ' and customer_order_details.jan='.$jan.'';
-            
+
         }
         $manual_orderable = 0;
        if($id!=null){
            if($id>0){
             $shop_list =customer_shop::where('customer_id',$id)->orderBy('customer_shop_id', 'asc')->get();
-            
-            $online_order = collect(\DB::select("select customer_shipments.confirm_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity, stock_items.ball_quantity, stock_items.unit_quantity,jans.name from customer_orders inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id 
+
+            $online_order = collect(\DB::select("select customer_shipments.confirm_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity, stock_items.ball_quantity, stock_items.unit_quantity,jans.name from customer_orders inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id
             inner join jans on jans.jan = customer_order_details.jan
             inner join vendor_items on jans.jan=vendor_items.jan
 left join stock_items on vendor_items.vendor_item_id = stock_items.vendor_item_id
@@ -225,23 +225,23 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
                 }
             }
             if($shop_list){
-                
+
                 if($jan!='' && empty($order_array)){
 
                         $manual_orderable = 1;
                         $order_array = collect(\DB::select("select jans.jan,jans.name from customer_items inner join jans on jans.jan=customer_items.jan where customer_items.jan='".$jan."' and customer_items.customer_id='".$id."'"));
-                    
+
                 }
                 return $result = response()->json(['shop_list' => $shop_list,'success'=>1,'manual_orderable'=>$manual_orderable,'online_order'=>$order_array]);
             }else{
                 $result = response()->json(['shop_list' => $shop_list,'success'=>0,'manual_orderable'=>$manual_orderable,'online_order'=>$order_array]);
             }
-           
+
            }else{
-            $result = response()->json(['shop_list' => $shop_list,'success'=>0,'manual_orderable'=>$manual_orderable,'online_order'=>$order_array]); 
+            $result = response()->json(['shop_list' => $shop_list,'success'=>0,'manual_orderable'=>$manual_orderable,'online_order'=>$order_array]);
            }
        }else{
-        $result = response()->json(['shop_list' => $shop_list,'success'=>0,'manual_orderable'=>$manual_orderable,'online_order'=>$order_array]); 
+        $result = response()->json(['shop_list' => $shop_list,'success'=>0,'manual_orderable'=>$manual_orderable,'online_order'=>$order_array]);
        }
 
        return $result;
