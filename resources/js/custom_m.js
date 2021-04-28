@@ -686,7 +686,7 @@ $(document).ready(function () {
         var jancode = $(this).val();
         if (!isNumeric(jancode)) {
             if (jancode.length > 0) {
-                jan_list_search_by_name(jancode)
+                jan_list_search_by_name_from_master(jancode)
             }
             return false;
         }
@@ -3549,6 +3549,56 @@ function jan_list_search_by_name(name) {
             display_positionX = '15px';
             display_positionY = '15px';
             error_nav = view(tempmsg['voice_search'], def_center_mesg_html_template);
+            show_hide_nav_icn(0);
+        }
+    });
+}
+
+function jan_list_search_by_name_from_master(name) {
+    close_all_navi_msg();
+    show_hide_nav_icn(0);
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        url: "item_search_by_name_from_jan_master",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            name: name
+        },
+        success: function (response) {
+            close_all_navi_msg();
+            console.log(response.api_data.data);
+            var msgHtml = '';
+            var btn = '';
+            if (response.api_data.return==1 && response.api_data.data.product_list.length>0) {
+                for(var i=0;i<response.api_data.data.product_list.length;i++){
+                    msgHtml += `<li><a href="javascript:void(0)" class="pname_search" onclick="save_by_new_jan('${response.api_data.data.product_list[i].jan_code}')">` + response.api_data.data.product_list[i].name + `</a></li>`;
+                }
+                btn = [{button: '<br><center><a href="javascript:close_default_page_navi(909)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}];
+
+            } else {
+                msgHtml = '製品名が見つかりません<br>';
+                btn = [{
+                    button: '<br><center>' +
+                        '<a href="javascript:close_default_page_navi(909)" class="btn btn-primary rsalrtconfirms">戻る</a>' +
+                        '</center>'
+                }];
+
+            }
+            const tempmsg = {
+                exceed_over_qty: {
+                    message: [
+                        {message: msgHtml}
+                    ],
+                    buttons: btn
+                }
+            }
+            nav_width = '440px';
+            display_positionX = '15px';
+            display_positionY = '15px';
+            error_nav = view(tempmsg['exceed_over_qty'], def_center_mesg_html_template);
             show_hide_nav_icn(0);
         }
     });
