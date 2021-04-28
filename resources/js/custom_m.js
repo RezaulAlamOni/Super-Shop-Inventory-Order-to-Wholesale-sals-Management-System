@@ -3605,7 +3605,7 @@ function jan_list_search_by_name_from_master(name) {
 }
 
 function select_online_order(jan) {
-    $('.jan_inpts_online_order').val(value)
+    $('.jan_inpts_online_order').val(jan)
     setTimeout(function () {
         $('.jan_inpts_online_order').trigger('blur')
     },200)
