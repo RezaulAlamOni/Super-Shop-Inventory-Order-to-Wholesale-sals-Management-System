@@ -12,23 +12,24 @@
     <div class="col-md-5 col-sm-5 mb-0">
             <!-- <span class="text-uppercase page-subtitle">Dashboard</span>  -->
             <h2 class="new_page_title">棚卸在庫・出荷画面<span class="jcs_splyr"></span><span class="default_byr_syplr">殿</span></h2>
-            
+
             <input type="number" style="ime-mode: disabled;" name="jn_codes" class="form-control shipment_page_jn jcs_jan_code" value="" placeholder="JANまたはインストア入力">
-			
+
         </div>
         <div class="col-md-7 col-sm-7 pull-right text-right">
         <ul class="top_page_btn_list_jacos list-inline">
             <li class="custom_date_show"><span><?php echo date('Y');?></span>年<span><?php echo date('m');?></span>月<span><?php echo date('d');?></span>日</li>
             <!-- <li><a class="btn btn-lg btn-info" href="{{Config::get('app.url').'logout'}}">サインアウト</a></li> -->
         </ul>
-        <ul class="bottom_page_btn_list_jacos list-inline">				
+        <ul class="bottom_page_btn_list_jacos list-inline">
+            <li><a href="{{ route('brand') }}" class="btn btn-lg btn-info"> 手書</a></li>
             <li><a href="{{Config::get('app.url').'/onlineorder'}}" class="btn btn-lg btn-warning">オンライン受注</a></li>
             <!-- <li><a href="{{Config::get('app.url').'manualOrder'}}" class="btn btn-lg btn-warning">手書受注</a></li> -->
             <li><a href="#" delete_st="0" class="btn btn-lg btn-danger delete_entry">行削除</a></li>
             <li><button class="btn btn-lg customer_list_show_popup btn-primary">販売先</button></li>
             <li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
             <li><a href="#" id="right" class="btn btn-info btn-lg scroll_to_left">右へ移動</a></li>
-            <li><a href="{{Config::get('app.url').'/home'}}" class="btn btn-danger btn-lg">業務選択</a></li>				
+            <li><a href="{{Config::get('app.url').'/home'}}" class="btn btn-danger btn-lg">業務選択</a></li>
 		</ul>
 		</div>
     </div>
@@ -45,12 +46,12 @@
             <div class="input-group-prepend"><span class="input-group-text">JANコード検索</span></div> <input type="text" value=""
                 class="form-control get_jan_info_shipment">
         </div>
-            
+
         </div>
         <div class="col-md-2"></div>
 
         <div class="col-md-6 text-right">
-           
+
 
 
         </div>
@@ -71,17 +72,17 @@
 						<col>
 						<col>
 						<col>
-						<col>	
-						<col>	
-						<col>
-						<col>	
-						<col>	
 						<col>
 						<col>
-						<col>	
-						<col>	
 						<col>
-						<col>			
+						<col>
+						<col>
+						<col>
+						<col>
+						<col>
+						<col>
+						<col>
+						<col>
 					</colgroup>
                 <thead>
                 <tr>
@@ -92,7 +93,7 @@
 							<th colspan="3" style="width: 180px;">出荷内訳<br>（売掛金）</th>
 							<th colspan="3" style="width: 90px;">受注数<br>（出荷予定）</th>
 							<th rowspan="2" style="width: 80px;">a<br>原価<br>コスト</th>
-							
+
 							<th rowspan="2" style="width: 70px;">b<br>スパー<br>売価<br>セール</th>
 							<th rowspan="2" style="width: 90px;">ｃ<br>粗利</th>
 							<th rowspan="2" style="width: 50px;">%</th>

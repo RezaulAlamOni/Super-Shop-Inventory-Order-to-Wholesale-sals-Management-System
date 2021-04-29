@@ -190,6 +190,8 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/get_customer_order_details_by_customer_jan', 'ShipmentController@get_customer_order_details_by_customer_jan');
 
 
+//	brand order
+    Route::get('/brand-order/{id?}', 'BrandController@index')->name('brand');
 
 
 	/* shimpent order */
