@@ -38,7 +38,7 @@
                         <li><a href="shipment" class="btn btn-warning btn-lg">履歴</a></li>
                         <li><a href="#" class="btn btn-warning btn-lg">完了</a></li>
                         <li>
-                            <button class="btn customer_list_show_popup btn-warning btn-lg">販売先一覧</button>
+                            <button class="btn customer_list_show_popup btn-warning btn-lg">店舗</button>
                         </li>
                         <li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
                         <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left">右へ移動</a></li>
@@ -74,12 +74,7 @@
                         </thead>
                         <tbody class="brand_order_tble">
 
-                        @foreach ($brands as $key => $brand)
-                            <tr>
-                                <td width="100px" class="text-center">{{ $key+1 }}</td>
-                                <td>{{ $brand }}</td>
-                            </tr>
-                        @endforeach
+                        
 
 
                         </tbody>

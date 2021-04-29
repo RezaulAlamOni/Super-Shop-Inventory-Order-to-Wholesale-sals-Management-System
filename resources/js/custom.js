@@ -1409,7 +1409,6 @@ $(document).ready(function () {
                 if (customer_id == null) {
                     $(".customer_list_item").html("");
                     var htmls = '';
-                    //var htmls ='<tr><td colspan="3" data_customer_id="0" class="filter_by_customer_id" style="text-align:center;">全販売先</td></tr>';
                     $.each(response.all_customer_list, function (
                         idx,
                         obj
@@ -2292,6 +2291,10 @@ $(document).ready(function () {
             $('.c_ids_v').val(c_id);
             $('.jcs_main_hand_title').text(c_name);
             get_manual_order_item(c_id, c_name);
+        } else if (url_last_element == 'brand-order' || url_last_element == 'brand-order#') {
+            $('.c_ids_v').val(c_id);
+            $('.jcs_main_hand_title').text(c_name);
+            get_brand_item_list(c_id, c_name);
         } else {
             view_customer_master_by_customer_id(c_id, c_name);
         }
@@ -4995,6 +4998,21 @@ function get_manual_order_item(c_id = 0, c_name = '') {
     $('#customer_show_modal').modal('hide');
 
 
+}
+
+function get_brand_item_list(c_id = 0, c_name = ''){
+    var brand_name = '';
+    var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
+ var substr = currnt_brand_list.split(','); // array here
+ var p = 1;
+    for (var k = 0; k < substr.length; k++) {
+        brand_name +='<tr>';
+        brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
+        brand_name += '<td style="text-align: left;">' + substr[k] + '</td>';
+        brand_name +='</tr>';
+    }
+    $(".brand_order_tble").html(brand_name);
+    $('#customer_show_modal').modal('hide');
 }
 
 function close_all_navi_msg() {
