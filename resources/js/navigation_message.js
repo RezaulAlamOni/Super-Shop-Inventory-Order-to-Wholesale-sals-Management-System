@@ -265,6 +265,15 @@ function show_default_page_notifications() {
             display_positionX = '15px';
             vendor_master_default_nav = view(message_notify_default['vendor_master2'], def_old_nav_template);
             break;
+        case 'brand-order':
+            close_all_navi_msg();
+            show_hide_nav_icn(0);
+            get_customer_list();
+            $('#customer_message_success').html('');
+            $("#add_customer_message").html('');
+            $("#update_customer_message_fail").html('');
+            $("#customer_show_modal").modal("show");
+         break;
         case 'customer_master':
             nav_width = '280px';
             display_positionY = '15px';

@@ -75,12 +75,12 @@
                         <tbody class="brand_order_tble">
 
                         
-                        @foreach ($all_customer_list as $key => $customer)
+                        <!-- @foreach ($all_customer_list as $key => $customer)
                             <tr>
                                 <td width="100px" class="text-center">{{ $key+1 }}</td>
                                 <td><a href="{{config('app.url')}}/brand-order-detail/{{$customer->customer_id}}">{{ $customer->name }}</a></td>
                             </tr>
-                        @endforeach
+                        @endforeach -->
 
                         </tbody>
                     </table>

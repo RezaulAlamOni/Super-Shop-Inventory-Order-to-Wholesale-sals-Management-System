@@ -1392,117 +1392,6 @@ $(document).ready(function () {
         });
     }
 
-    function get_customer_list(customer_id = null) {
-
-
-        $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-            },
-            url: "get_customer_list",
-            type: "POST",
-            dataType: "JSON",
-            data: {
-                customer_id: customer_id
-            },
-            success: function (response) {
-                if (customer_id == null) {
-                    $(".customer_list_item").html("");
-                    var htmls = '';
-                    $.each(response.all_customer_list, function (
-                        idx,
-                        obj
-                    ) {
-                        htmls +=
-                            '<tr><td data_customer_id="' + obj.customer_id + '" class="filter_by_customer_id">' +
-                            obj.name +
-                            "</td><td>" +
-                            obj.phone +
-                            '</td><td>' + obj.partner_code + '</td></tr>';
-                    });
-                    var last_urls = url_search();
-                    if (last_urls != 'customer_master') {
-                        $('.add_new_customer').hide();
-                    }
-                    $(".customer_list_item").html(htmls);
-                } else {
-                    $(".delete_custmer_info").attr(
-                        "data_customer_delete_id",
-                        response.specific_customer_info
-                            .customer_id
-                    );
-                    $("#customer_id_update").val(
-                        response.specific_customer_info
-                            .customer_id
-                    );
-                    $("#customer_name_update").val(
-                        response.specific_customer_info
-                            .name
-                    );
-                    $("#customer_code_update").val(
-                        response.specific_customer_info
-                            .partner_code
-                    );
-                    $("#customer_phone_update").val(
-                        response.specific_customer_info
-                            .phone
-                    );
-                }
-            }
-        });
-    }
-
-    function get_vendor_list(vendor_id = null) {
-        $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-            },
-            url: "get_vendor_list",
-            type: "POST",
-            dataType: "JSON",
-            data: {
-                vendor_id: vendor_id
-            },
-            success: function (response) {
-                if (vendor_id == null) {
-                    $(".vendor_list_item").html("");
-                    var htmls = '';
-                    //var htmls ='<tr><td colspan="3" data_vendor_id="0" class="filter_by_vendor_id" style="text-align:center;">全仕入先</td></tr>';
-                    $.each(response.all_vendor_list, function (idx, obj) {
-                        htmls +=
-                            '<tr><td data_vendor_id="' +
-                            obj.vendor_id + '" class="filter_by_vendor_id">' +
-                            obj.name +
-                            "</td><td>" +
-                            obj.phone +
-                            '</td><td>' + obj.partner_code + '</td></tr>';
-                    });
-                    var last_urls = url_search();
-                    if (last_urls != 'vendor_master') {
-                        $('.add_new_vendor').hide();
-                    }
-                    $(".vendor_list_item").html(htmls);
-                } else {
-                    $(".delete_vendor_info").attr(
-                        "data_vendor_delete_id",
-                        response.specific_vendor_info.vendor_id
-                    );
-                    $("#vendor_id_update").val(
-                        response.specific_vendor_info.vendor_id
-                    );
-                    $("#vendor_name_update").val(
-                        response.specific_vendor_info.name
-                    );
-                    $("#vendor_code_update").val(
-                        response.specific_vendor_info.partner_code
-                    );
-                    $("#vendor_phone_update").val(
-                        response.specific_vendor_info.phone
-                    );
-                }
-            }
-        });
-    }
 
     function get_tonya_list(vendor_id = null) {
         $.ajax({
@@ -5002,13 +4891,14 @@ function get_manual_order_item(c_id = 0, c_name = '') {
 
 function get_brand_item_list(c_id = 0, c_name = ''){
     var brand_name = '';
-    var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
+    //var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
+    var currnt_brand_list= '店 A,店 B,店 C,店 D';
  var substr = currnt_brand_list.split(','); // array here
  var p = 1;
     for (var k = 0; k < substr.length; k++) {
         brand_name +='<tr>';
         brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
-        brand_name += '<td style="text-align: left;">' + substr[k] + '</td>';
+        brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
         brand_name +='</tr>';
     }
     $(".brand_order_tble").html(brand_name);
@@ -5919,6 +5809,118 @@ function get_vendor_master_item_list_num_of_order() {
                 }
             });
             /*vendor dynamic select*/
+        }
+    });
+}
+
+function get_customer_list(customer_id = null) {
+
+
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        url: "get_customer_list",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            customer_id: customer_id
+        },
+        success: function (response) {
+            if (customer_id == null) {
+                $(".customer_list_item").html("");
+                var htmls = '';
+                $.each(response.all_customer_list, function (
+                    idx,
+                    obj
+                ) {
+                    htmls +=
+                        '<tr><td data_customer_id="' + obj.customer_id + '" class="filter_by_customer_id">' +
+                        obj.name +
+                        "</td><td>" +
+                        obj.phone +
+                        '</td><td>' + obj.partner_code + '</td></tr>';
+                });
+                var last_urls = url_search();
+                if (last_urls != 'customer_master') {
+                    $('.add_new_customer').hide();
+                }
+                $(".customer_list_item").html(htmls);
+            } else {
+                $(".delete_custmer_info").attr(
+                    "data_customer_delete_id",
+                    response.specific_customer_info
+                        .customer_id
+                );
+                $("#customer_id_update").val(
+                    response.specific_customer_info
+                        .customer_id
+                );
+                $("#customer_name_update").val(
+                    response.specific_customer_info
+                        .name
+                );
+                $("#customer_code_update").val(
+                    response.specific_customer_info
+                        .partner_code
+                );
+                $("#customer_phone_update").val(
+                    response.specific_customer_info
+                        .phone
+                );
+            }
+        }
+    });
+}
+
+function get_vendor_list(vendor_id = null) {
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        url: "get_vendor_list",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+            vendor_id: vendor_id
+        },
+        success: function (response) {
+            if (vendor_id == null) {
+                $(".vendor_list_item").html("");
+                var htmls = '';
+                //var htmls ='<tr><td colspan="3" data_vendor_id="0" class="filter_by_vendor_id" style="text-align:center;">全仕入先</td></tr>';
+                $.each(response.all_vendor_list, function (idx, obj) {
+                    htmls +=
+                        '<tr><td data_vendor_id="' +
+                        obj.vendor_id + '" class="filter_by_vendor_id">' +
+                        obj.name +
+                        "</td><td>" +
+                        obj.phone +
+                        '</td><td>' + obj.partner_code + '</td></tr>';
+                });
+                var last_urls = url_search();
+                if (last_urls != 'vendor_master') {
+                    $('.add_new_vendor').hide();
+                }
+                $(".vendor_list_item").html(htmls);
+            } else {
+                $(".delete_vendor_info").attr(
+                    "data_vendor_delete_id",
+                    response.specific_vendor_info.vendor_id
+                );
+                $("#vendor_id_update").val(
+                    response.specific_vendor_info.vendor_id
+                );
+                $("#vendor_name_update").val(
+                    response.specific_vendor_info.name
+                );
+                $("#vendor_code_update").val(
+                    response.specific_vendor_info.partner_code
+                );
+                $("#vendor_phone_update").val(
+                    response.specific_vendor_info.phone
+                );
+            }
         }
     });
 }
