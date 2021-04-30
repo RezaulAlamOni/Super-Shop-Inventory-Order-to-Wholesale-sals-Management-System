@@ -192,6 +192,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 
 //	brand order
     Route::get('/brand-order/{id?}', 'BrandController@index')->name('brand');
+    Route::get('/brand-order-detail/{id?}', 'BrandController@brand_details')->name('brand');
 
 
 	/* shimpent order */

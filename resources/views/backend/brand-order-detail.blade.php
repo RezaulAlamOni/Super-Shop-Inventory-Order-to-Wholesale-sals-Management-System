@@ -23,13 +23,13 @@
                 </div>
                 <p class="hmdate">納品日　<?php echo date("m", time());?>月<?php echo date("d", time());?>日</p>
                 <div style="display: flex">
-                    <p class="shps_byrsplrs">販売先名<span class="jcs_main_hand_title"></span>殿 </p>
+                    <p class="shps_byrsplrs">販売先名<span class="jcs_main_hand_title">{{$specific_customer_info->name}}</span>殿 </p>
 {{--                    <bar-code-scan base_url="{{config('app.url')}}" page="online"></bar-code-scan>--}}
                 </div>
 
             </div>
             <div class="col-md-7 col-sm-7 mb-0 text-right">
-                <input type="hidden" value="0" class="c_ids_v">
+                <input type="hidden" value="{{$specific_customer_info->customer_id}}" class="c_ids_v">
                 <input type="hidden" value="0" class="customer_manual_order_status">
                 <div class="top_btn_list">
                     <ul class="top_page_btn_list_jacos list-inline">
@@ -68,17 +68,17 @@
                                style="background-color: #F5F6F8; color: #077BEF; font-size:15px; text-align: center;">
                         <tr>
                             <th width="100px">#</th>
-                            <th>店舗</th>
+                            <th>題名</th>
                         </tr>
 
                         </thead>
                         <tbody class="brand_order_tble">
 
                         
-                        @foreach ($all_customer_list as $key => $customer)
+                        @foreach ($brands as $key => $brand)
                             <tr>
                                 <td width="100px" class="text-center">{{ $key+1 }}</td>
-                                <td><a href="{{config('app.url')}}/brand-order-detail/{{$customer->customer_id}}">{{ $customer->name }}</a></td>
+                                <td>{{ $brand }}</td>
                             </tr>
                         @endforeach
 
