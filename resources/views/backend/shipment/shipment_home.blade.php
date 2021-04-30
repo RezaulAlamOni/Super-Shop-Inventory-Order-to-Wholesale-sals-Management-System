@@ -22,7 +22,7 @@
             <!-- <li><a class="btn btn-lg btn-info" href="{{Config::get('app.url').'logout'}}">サインアウト</a></li> -->
         </ul>
         <ul class="bottom_page_btn_list_jacos list-inline">
-            <li><a href="{{ route('brand') }}" class="btn btn-lg btn-info"> 手書</a></li>
+            <li><a href="{{Config::get('app.url').'/brand-order'}}" class="btn btn-lg btn-info"> 手書</a></li>
             <li><a href="{{Config::get('app.url').'/onlineorder'}}" class="btn btn-lg btn-warning">オンライン受注</a></li>
             <!-- <li><a href="{{Config::get('app.url').'manualOrder'}}" class="btn btn-lg btn-warning">手書受注</a></li> -->
             <li><a href="#" delete_st="0" class="btn btn-lg btn-danger delete_entry">行削除</a></li>
