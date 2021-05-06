@@ -42,6 +42,8 @@
                     <li><a href="#" class="btn btn-success btn-lg gotomanagementsht">売掛管理</a></li>-->
                     <li style="font-weight:bold;color:red;font-size:24px;">合計:<span class="TotalBlance"></span></li>
                     <li><a href="{{Config::get('app.url').'/home'}}" class="btn btn-lg btn-danger">業務選択</a></li>
+                    <li><a href="javascript:history.back();" class="btn btn-info btn-lg pull-right ml-1 ">戻る</a></li>
+
                 </ul>
 
             </div>

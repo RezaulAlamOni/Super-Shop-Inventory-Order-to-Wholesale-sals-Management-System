@@ -42,6 +42,8 @@
                         </li> -->
                         <li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
                         <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left">右へ移動</a></li>
+                        <li><a href="javascript:history.back();" class="btn btn-info btn-lg pull-right mt-1 ">戻る</a></li>
+
                     </ul>
 
 
@@ -74,7 +76,7 @@
                         </thead>
                         <tbody class="brand_order_tble">
 
-                        
+
                         <!-- @foreach ($all_customer_list as $key => $customer)
                             <tr>
                                 <td width="100px" class="text-center">{{ $key+1 }}</td>

@@ -28,9 +28,11 @@
             <li><a href="#" delete_st="0" class="btn btn-lg btn-danger delete_entry">行削除</a></li>
             <li><button class="btn btn-lg customer_list_show_popup btn-primary">販売先</button></li>
             <li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
-            <li><a href="#" id="right" class="btn btn-info btn-lg scroll_to_left">右へ移動</a></li>
-            <li><a href="{{Config::get('app.url').'/home'}}" class="btn btn-danger btn-lg">業務選択</a></li>
-		</ul>
+            <li><a href="#" id="right" class="btn btn-info btn-lg scroll_to_left mt-1">右へ移動</a></li>
+            <li><a href="{{Config::get('app.url').'/home'}}" class="btn btn-danger btn-lg mt-1">業務選択</a></li>
+            <li><a href="javascript:history.back();" class="btn btn-info btn-lg pull-right mt-1 ">戻る</a></li>
+
+        </ul>
 		</div>
     </div>
     <!-- End Page Header -->

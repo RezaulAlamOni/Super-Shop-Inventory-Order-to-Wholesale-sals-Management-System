@@ -46,7 +46,8 @@
                             <button class="btn customer_list_show_popup btn-warning btn-lg">販売先一覧</button>
                         </li>
                         <li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
-                        <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left">右へ移動</a></li>
+                        <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left mt-1">右へ移動</a></li>
+                        <li><a href="javascript:history.back();" class="btn btn-info btn-lg pull-right mt-1 ">戻る</a></li>
                     </ul>
 
 

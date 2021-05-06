@@ -41,6 +41,7 @@
                     <li><a href="#" class="btn btn-info btn-lg clcikstates">日付順</a></li>
                     <li><a href="#" class="btn btn-success btn-lg gotomanagementsht">買掛管理</a></li>
                     <li><a href="home" class="btn btn-lg btn-danger">業務選択</a></li>
+                    <li><a href="javascript:history.back();" class="btn btn-info btn-lg pull-right mt-1 ">戻る</a></li>
                 </ul>
 
             </div>
