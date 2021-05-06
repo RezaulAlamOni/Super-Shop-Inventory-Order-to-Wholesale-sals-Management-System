@@ -1252,7 +1252,12 @@
             right: 18px;
             margin: 0;
         }
-
+        #customer_shop_list_modal table thead tr th,
+        #customer_shop_list_modal table tbody tr td
+        {
+            font-size: 30px !important;
+            padding: 2px !important;
+        }
         .modal-dialog {
             /* border: solid 2px rgb(56, 93, 138); */
             border-radius: 10px;

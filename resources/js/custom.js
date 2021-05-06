@@ -4902,6 +4902,7 @@ function get_brand_item_list(c_id = 0, c_name = ''){
         brand_name += '<td>036587458</td>';
         brand_name +='</tr>';
     }
+    brand_name +='<tr><td colspan="3">店舗を選んで下さい </td></tr>';
     $(".customer_shop_list_item").html(brand_name);
     $('#customer_show_modal').modal('hide');
     $('#customer_shop_list_modal').modal('show');
