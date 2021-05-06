@@ -1131,7 +1131,8 @@
             margin: 0;
         }
 
-        #customer_show_modal .modal-dialog {
+        #customer_show_modal .modal-dialog,
+        #customer_shop_list_modal .modal-dialog{
             width: 100%;
             position: fixed;
             bottom: 18px;

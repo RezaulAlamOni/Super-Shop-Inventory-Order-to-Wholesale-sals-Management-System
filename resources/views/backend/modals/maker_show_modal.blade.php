@@ -559,3 +559,51 @@
     </div>
 </div>
 <!-- add edit vendor touroko modal -->
+<div class="modal fade" id="customer_shop_list_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="maker_modal_heading">店一覧</h5>
+                <ul class="list-inline custom_header_button">
+                        <button sup_buyer_type="1" class="btn btn-secondary pull-right customer_shop">店舗一覧</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">{{__('messages.close')}}</button>
+                </ul>
+            </div>
+            <div class="panel-heading">
+                <div id="customer_message_success"></div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-body">
+                <div class="panel-body buyrslisst_overflow">
+                    <table class="table table-striped table-bordered buyrslisst_overflow">
+                        <thead>
+                            <tr>
+                                <th class="change_table_th_title">店名</th>
+                                <th>電話</th>
+                                <th>コード</th>
+                            </tr>
+                        </thead>
+                        <tbody class="customer_shop_list_item">
+                            <tr class="shopListitem">
+                                <td>店 A</td>
+                                <td>0165685555</td>
+                                <td>2343221</td>
+                            </tr>
+                            <tr class="shopListitem">
+                                <td>店 B</td>
+                                <td>0165685555</td>
+                                <td>2343221</td>
+                            </tr>
+                            <tr class="shopListitem">
+                                <td>店 C</td>
+                                <td>0165685555</td>
+                                <td>2343221</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

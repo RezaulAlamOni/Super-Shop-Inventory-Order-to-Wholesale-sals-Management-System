@@ -371,6 +371,9 @@ $(document).ready(function () {
         }, 800);
     });
     /*yelow color order execute*/
+    $(document).delegate('.shopListitem', 'click', function (e) {
+        get_brand_shop_brand_list();
+    });
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
         e.preventDefault();
 
