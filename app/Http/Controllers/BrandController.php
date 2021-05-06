@@ -45,16 +45,16 @@ class BrandController extends Controller
         $all_customer_list=customer::where('is_deleted', 0)->get();
         $specific_customer_info=customer::where('customer_id',$id)->first();
         $brands = [
-            'コカ・コーラ(Coca-Cola)',
-            'ポカリスエット',
-            'スターバックス',
-            'ネスカフェ',
-            'アサヒビール',
-            'BOSS(ボス)',
-            '明治乳業',
-            'サントリー',
-            'カゴメ',
-            'ピカイチ野菜くん'
+'コカ・コーラ　コカ・コーラ', 
+'コカ・コーラ　アクエリアス', 
+'コカ・コーラ　ファンタ', 
+'コカ・コーラ　アクエリアス　経口補水液',
+'コカ・コーラ　いろはす', 
+'コカ・コーラ　綾鷹', 
+'コカ・コーラ　からだすこやか茶Ｗ', 
+'コカ・コーラ　リアルゴールド　', 
+'コカ・コーラ　ジョージア　グラン微糖',
+'コカ・コーラ　ジョージア　エメラルドマウンテン'
         ];
 
 
