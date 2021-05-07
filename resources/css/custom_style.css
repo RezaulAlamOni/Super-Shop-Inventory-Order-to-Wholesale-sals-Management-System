@@ -1130,7 +1130,9 @@
             right: 18px;
             margin: 0;
         }
-
+        #customer_show_modal .modal-body{
+            padding: 10px 5px !important;
+        }
         #customer_show_modal .modal-dialog,
         #customer_shop_list_modal .modal-dialog{
             width: 100%;
