@@ -2183,6 +2183,7 @@ $(document).ready(function () {
         } else if (url_last_element == 'brand-order' || url_last_element == 'brand-order#') {
             $('.c_ids_v').val(c_id);
             $('.jcs_main_hand_title').text(c_name);
+            $('.jcs_main_hand_title').attr('data_page_num',2);
             get_brand_item_list(c_id, c_name);
         } else {
             view_customer_master_by_customer_id(c_id, c_name);
@@ -4914,10 +4915,12 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
  var substr = currnt_brand_list.split(','); // array here
  var p = 1;
+ var numberOfOrder = 100;
     for (var k = 0; k < substr.length; k++) {
         brand_name +='<tr class="shopBrandListitem">';
         brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
-        brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
+        //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
+        brand_name += '<td style="text-align: left;">' + substr[k] + '('+ numberOfOrder-- +')</td>';
         brand_name +='</tr>';
     }
     $(".brand_order_tble").html(brand_name);

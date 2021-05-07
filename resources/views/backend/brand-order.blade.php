@@ -23,7 +23,7 @@
                 </div>
                 <p class="hmdate">納品日　<?php echo date("m", time());?>月<?php echo date("d", time());?>日</p>
                 <div style="display: flex">
-                    <p class="shps_byrsplrs">販売先名<span class="jcs_main_hand_title"></span>殿 </p>
+                    <p class="shps_byrsplrs">販売先名<span data_page_num="0" class="jcs_main_hand_title"></span>殿 </p>
 {{--                    <bar-code-scan base_url="{{config('app.url')}}" page="online"></bar-code-scan>--}}
                 </div>
 
@@ -42,7 +42,7 @@
                         </li> -->
                         <li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
                         <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left">右へ移動</a></li>
-                        <li><a href="javascript:history.back();" class="btn btn-info btn-lg pull-right mt-1 ">戻る</a></li>
+                        <li><button class="btn customBackBtn btn-info btn-lg pull-right mt-1 ">戻る</button></li>
 
                     </ul>
 
@@ -70,7 +70,7 @@
                                style="background-color: #F5F6F8; color: #077BEF; font-size:15px; text-align: center;">
                         <tr>
                             <th width="100px">#</th>
-                            <th>店舗</th>
+                            <th>頻度順</th>
                         </tr>
 
                         </thead>

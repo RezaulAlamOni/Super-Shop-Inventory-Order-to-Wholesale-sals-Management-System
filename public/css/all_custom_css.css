@@ -1253,7 +1253,9 @@
             margin: 0;
         }
         #customer_shop_list_modal table thead tr th,
-        #customer_shop_list_modal table tbody tr td
+        #customer_shop_list_modal table tbody tr td,
+        #customer_show_modal table thead tr th,
+        #customer_show_modal table tbody tr td
         {
             font-size: 30px !important;
             padding: 2px !important;
