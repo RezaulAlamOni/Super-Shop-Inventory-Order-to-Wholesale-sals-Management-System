@@ -22,10 +22,10 @@
 
                 </div>
                 <p class="hmdate">納品日　<?php echo date("m", time());?>月<?php echo date("d", time());?>日</p>
-                <div style="display: flex">
-                    <p class="shps_byrsplrs">販売先名<span data_page_num="0" class="jcs_main_hand_title"></span>殿 </p>
-                    <bar-code-scan base_url="{{config('app.url')}}" page="brand-order"></bar-code-scan>
-                </div>
+{{--                <div style="display: flex">--}}
+{{--                    <p class="shps_byrsplrs">販売先名<span data_page_num="0" class="jcs_main_hand_title"></span>殿 </p>--}}
+{{--                    <bar-code-scan base_url="{{config('app.url')}}" page="brand-order"></bar-code-scan>--}}
+{{--                </div>--}}
 
             </div>
             <div class="col-md-7 col-sm-7 mb-0 text-right">
@@ -47,6 +47,12 @@
                     </ul>
 
 
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-5 mb-0 text-left">
+                 <div style="display: flex">
+                    <p class="shps_byrsplrs">販売先名<span data_page_num="0" class="jcs_main_hand_title"></span>殿 </p>
+                    <bar-code-scan base_url="{{config('app.url')}}" page="brand-order"></bar-code-scan>
                 </div>
             </div>
         </div>

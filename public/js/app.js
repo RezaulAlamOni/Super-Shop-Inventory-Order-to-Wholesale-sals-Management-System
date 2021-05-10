@@ -60707,7 +60707,7 @@ var render = function() {
                 "div",
                 { staticClass: "main-content-container container-fluid pt-2" },
                 [
-                  _vm.barCodeScan
+                  _vm.barCodeScan && this.page != "brand-order"
                     ? _c("StreamBarcodeReader", {
                         on: {
                           decode: _vm.onDecode,
