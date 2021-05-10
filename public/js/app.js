@@ -19945,7 +19945,7 @@ __webpack_require__.r(__webpack_exports__);
       // console.log({ lastSentence, transcription })
       this.text = lastSentence;
       lastSentence = lastSentence.toString();
-      $('.brand-order-search').attr('text');
+      $('.brand-order-search').attr('data-type', 'text');
       this.setValue(lastSentence);
       console.log(this.text);
       this.speech_start = 0;
