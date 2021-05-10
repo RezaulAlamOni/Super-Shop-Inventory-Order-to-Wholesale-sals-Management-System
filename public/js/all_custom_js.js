@@ -1840,6 +1840,18 @@ $(document).ready(function () {
     });
     /*dele customr and vendor*/
 
+    // brand order
+    $('.brand-order-search').blur(function (e) {
+        let val = $(this).val();
+        let data_type = $(this).attr('data-type')
+        if (data_type == 'jan'){
+
+        } else {
+            searchBrandOrderByText(val)
+        }
+
+    })
+
 
     /*vendor add update delete*/
     $(".add_vendor_regs").click(function (e) {
@@ -3711,7 +3723,7 @@ $(document).ready(function () {
                         html += '<td class="digits_td existing_due_amount" id="amount_d' + response[i].vendor_invoice_id + '">' + amount_d + '</td>';
                        // html += '<td>'+response[i].arrival_case_quantity+'*'+response[i].case_inputs+'+'+response[i].arrival_ball_quantity+'*'+response[i].ball_inputs+'+'+response[i].arrival_unit_quantity+'='+response[i].quantity+'*'+response[i].unit_cost_price+'='+response[i].invoice_amount+'</td>';
                        html += '<td>原価'+response[i].unit_cost_price+'円ｘバラ数量'+response[i].quantity+'＝'+response[i].invoice_amount+'円</td>';
-                        
+
                        html += '</tr>';
                         j++;
 
@@ -5678,7 +5690,7 @@ function get_brand_item_list(c_id = 0, c_name = ''){
                 }
                 htmls +='<tr><td colspan="3">店舗を選んで下さい </td></tr>';
                 $(".customer_shop_list_item").html(htmls);
-            
+
         }
     });
 
@@ -5714,6 +5726,30 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
     $(".brand_order_tble").html(brand_name);
     $('#customer_shop_list_modal').modal('hide');
 }
+
+// brand order
+
+function searchBrandOrderByText(text) {
+    var brand_name = '';
+    var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
+    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
+    var substr = currnt_brand_list.split(','); // array here
+    var p = 1;
+    var numberOfOrder = 100;
+    for (var k = 0; k < substr.length; k++) {
+        if (substr[k].indexOf(text) > -1 ){
+            brand_name +='<tr class="shopBrandListitem">';
+            brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
+            //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
+            brand_name += '<td style="text-align: left;">' + substr[k] + '</td>';
+            brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';
+            brand_name +='</tr>';
+        }
+    }
+    $(".brand_order_tble").html(brand_name);
+    $('#customer_shop_list_modal').modal('hide');
+}
+
 
 function close_all_navi_msg() {
     for (let key in nav_list) {
@@ -6734,6 +6770,7 @@ function get_vendor_list(vendor_id = null) {
         }
     });
 }
+
 var error_nav;
 var success_nav;
 var delete_item_nav;
@@ -7118,7 +7155,7 @@ $(document).ready(function () {
             $('.jcs_main_hand_title').attr('data_page_num',2);
             get_brand_item_list(c_id, c_name);
         }else if(page_slug_check==2){
-           
+
             close_all_navi_msg();
             show_hide_nav_icn(0);
             get_customer_list();

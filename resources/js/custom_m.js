@@ -382,7 +382,7 @@ $(document).ready(function () {
             $('.jcs_main_hand_title').attr('data_page_num',2);
             get_brand_item_list(c_id, c_name);
         }else if(page_slug_check==2){
-           
+
             close_all_navi_msg();
             show_hide_nav_icn(0);
             get_customer_list();

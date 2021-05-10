@@ -84,11 +84,16 @@ export default {
                 setTimeout(function () {
                     $('.recive_order_page_jn').trigger('blur')
                 },200)
-            }  else {
+            }  else if(this.page == 'online') {
                 console.log('from online order')
                 $('.jan_inpts_online_order').val(value)
                 setTimeout(function () {
                     $('.jan_inpts_online_order').trigger('blur')
+                },200)
+            } else if (this.page == 'brand-order'){
+                $('.brand-order-search').val(value)
+                setTimeout(function () {
+                    $('.brand-order-search').trigger('blur')
                 },200)
             }
         },
@@ -96,6 +101,7 @@ export default {
             // console.log({ lastSentence, transcription })
             this.text = lastSentence;
             lastSentence = lastSentence.toString();
+            $('.brand-order-search').attr('text')
             this.setValue(lastSentence);
             console.log(this.text)
             this.speech_start = 0;

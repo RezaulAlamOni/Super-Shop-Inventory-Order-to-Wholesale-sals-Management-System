@@ -13,8 +13,8 @@
                 <div class="btn-group jcs_grp">
                     <button type="button" class="btn btn-success">オンライン受注画面</button>
                     <button type="button" class="btn btn-default deflt_design_adjust">
-                        <input type="tel" style="ime-mode: disabled;float:left;border:1px solid #ddd;"
-                               class="form-control jan_inpts_ jan_inpts_online_order_" placeholder="ＪＡＮまたはインストア入力">
+                        <input type="tel" style="ime-mode: disabled;float:left;border:1px solid #ddd;" data-type="jan"
+                               class="form-control jan_inpts_ jan_inpts_online_order_ brand-order-search" placeholder="ＪＡＮまたはインストア入力">
                     </button>
 
                     <button type="button" class="btn btn-info"><a class="page_manage custom_online_order"
@@ -24,7 +24,7 @@
                 <p class="hmdate">納品日　<?php echo date("m", time());?>月<?php echo date("d", time());?>日</p>
                 <div style="display: flex">
                     <p class="shps_byrsplrs">販売先名<span data_page_num="0" class="jcs_main_hand_title"></span>殿 </p>
-{{--                    <bar-code-scan base_url="{{config('app.url')}}" page="online"></bar-code-scan>--}}
+                    <bar-code-scan base_url="{{config('app.url')}}" page="brand-order"></bar-code-scan>
                 </div>
 
             </div>
