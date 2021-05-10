@@ -4894,17 +4894,43 @@ function get_brand_item_list(c_id = 0, c_name = ''){
     var brand_name = '';
     //var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
     var currnt_brand_list= '店 A,店 B,店 C,店 D';
- var substr = currnt_brand_list.split(','); // array here
- var p = 1;
-    for (var k = 0; k < substr.length; k++) {
-        brand_name +='<tr class="shopListitem">';
-        brand_name +='<td>'+ substr[k] +'</td>';
-        brand_name +='<td>12354</td>';
-        brand_name += '<td>036587458</td>';
-        brand_name +='</tr>';
-    }
-    brand_name +='<tr><td colspan="3">店舗を選んで下さい </td></tr>';
-    $(".customer_shop_list_item").html(brand_name);
+    var substr = currnt_brand_list.split(','); // array here
+
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        url: "get_shop_list_by_customer_id",
+        type: "POST",
+        dataType: "JSON",
+        data: {customer_id: c_id},
+        success: function (response) {
+                var htmls = '';
+                for (var i = 0; i < (response.shop_list.length); i++) {
+                    htmls += '<tr class="shopListitem" shop-id="' + response.shop_list[i].customer_shop_id + '" customer-id="' + response.shop_list[i].customer_id + '">';
+                   // htmls += '<td>' + response.shop_details[i].customer_name + '</td>';
+                   htmls += '<td>' + response.shop_list[i].shop_name + '</td>';
+                   htmls += '<td>' + response.shop_list[i].shop_no + '</td>';
+                   htmls += '<td>' + response.shop_list[i].phone + '</td>';
+                    htmls += '<td></td>';
+                    htmls += '</tr>';
+                }
+                htmls +='<tr><td colspan="3">店舗を選んで下さい </td></tr>';
+                $(".customer_shop_list_item").html(htmls);
+            
+        }
+    });
+
+    // var p = 1;
+    // for (var k = 0; k < substr.length; k++) {
+    //     brand_name +='<tr class="shopListitem">';
+    //     brand_name +='<td>'+ substr[k] +'</td>';
+    //     brand_name +='<td>12354</td>';
+    //     brand_name += '<td>036587458</td>';
+    //     brand_name +='</tr>';
+    // }
+    // brand_name +='<tr><td colspan="3">店舗を選んで下さい </td></tr>';
+    //$(".customer_shop_list_item").html(brand_name);
     $('#customer_show_modal').modal('hide');
     $('#customer_shop_list_modal').modal('show');
 }

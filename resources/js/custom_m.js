@@ -398,7 +398,7 @@ $(document).ready(function () {
     $(document).delegate('.shopListitem', 'click', function (e) {
         var cus_name =  $('.jcs_main_hand_title').text();
         var shpname = $(this).closest('tr').find('td:nth-child(1)').text();
-        var cus_shpneame = cus_name+' '+shpname;
+        var cus_shpneame = shpname+' '+cus_name;
         $('.jcs_main_hand_title').text('');
         $('.jcs_main_hand_title').text(cus_shpneame);
         $('.jcs_main_hand_title').attr('data_page_num',1);
