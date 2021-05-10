@@ -66,6 +66,7 @@ export default {
         onDecode(result) {
             console.log(result)
             result = result.toString();
+            $('.brand-order-search').attr('data-type','jan');
             this.setValue(result);
             this.getBarCodeScan()
         },

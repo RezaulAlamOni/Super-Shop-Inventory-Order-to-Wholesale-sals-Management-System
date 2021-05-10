@@ -19908,6 +19908,7 @@ __webpack_require__.r(__webpack_exports__);
     onDecode: function onDecode(result) {
       console.log(result);
       result = result.toString();
+      $('.brand-order-search').attr('data-type', 'jan');
       this.setValue(result);
       this.getBarCodeScan();
     },
