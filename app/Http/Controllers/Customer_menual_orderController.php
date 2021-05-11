@@ -152,6 +152,17 @@ class Customer_menual_orderController extends Controller
         $result = response()->json(['shop_list' => $shop_list]);
         return $result;
     }
+    public function get_shop_item_list_by_customer_id(Request $request)
+    {
+        $customer_id = $request->customer_id;
+        $shop_item_list = customer_item::Join('jans', 'jans.jan', '=', 'customer_items.jan');
+        if($customer_id!=0){
+            $shop_item_list = $shop_item_list->where('customer_items.customer_id',$customer_id);
+        }
+        $shop_item_list =$shop_item_list->groupBy('customer_items.jan')->get();
+        $result = response()->json(['shop_item_list' => $shop_item_list]);
+        return $result;
+    }
     public function get_customer_janinfo(Request $request)
     {
         $jancode = $request->jancode;

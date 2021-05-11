@@ -397,12 +397,13 @@ $(document).ready(function () {
     })
     $(document).delegate('.shopListitem', 'click', function (e) {
         var cus_name =  $('.jcs_main_hand_title').text();
+        var cId_val = $(this).closest('tr').attr('customer-id');
         var shpname = $(this).closest('tr').find('td:nth-child(1)').text();
-        var cus_shpneame = shpname+' '+cus_name;
+        var cus_shpneame = cus_name+' '+shpname;
         $('.jcs_main_hand_title').text('');
         $('.jcs_main_hand_title').text(cus_shpneame);
         $('.jcs_main_hand_title').attr('data_page_num',1);
-        get_brand_shop_brand_list();
+        get_brand_shop_brand_list(cId_val,cus_name);
     });
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
         e.preventDefault();

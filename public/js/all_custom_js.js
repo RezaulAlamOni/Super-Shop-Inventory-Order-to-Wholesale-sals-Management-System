@@ -5712,19 +5712,34 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
     var brand_name = '';
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
- var substr = currnt_brand_list.split(','); // array here
- var p = 1;
- var numberOfOrder = 100;
-    for (var k = 0; k < substr.length; k++) {
-        brand_name +='<tr class="shopBrandListitem">';
-        brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
-        //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
-        brand_name += '<td style="text-align: left;">' + substr[k] + '</td>';
-        brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';
-        brand_name +='</tr>';
+
+   $.ajax({
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    },
+    url: "get_shop_item_list_by_customer_id",
+    type: "POST",
+    dataType: "JSON",
+    data: {customer_id: c_id},
+    success: function (response) {
+            var brand_name = '';
+            var p = 1;
+            var numberOfOrder = 100;
+            for (var i = 0; i < (response.shop_item_list.length); i++) {
+                brand_name +='<tr class="shopBrandListitem">';
+                brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
+                //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
+                brand_name += '<td style="text-align: left;">' + response.shop_item_list[i].name + '</td>';
+                brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';
+                brand_name +='</tr>';
+            }
+            $(".brand_order_tble").html(brand_name);
+            $('#customer_shop_list_modal').modal('hide');
     }
-    $(".brand_order_tble").html(brand_name);
-    $('#customer_shop_list_modal').modal('hide');
+});
+
+ 
+   
 }
 
 // brand order
@@ -7170,12 +7185,13 @@ $(document).ready(function () {
     })
     $(document).delegate('.shopListitem', 'click', function (e) {
         var cus_name =  $('.jcs_main_hand_title').text();
+        var cId_val = $(this).closest('tr').attr('customer-id');
         var shpname = $(this).closest('tr').find('td:nth-child(1)').text();
-        var cus_shpneame = shpname+' '+cus_name;
+        var cus_shpneame = cus_name+' '+shpname;
         $('.jcs_main_hand_title').text('');
         $('.jcs_main_hand_title').text(cus_shpneame);
         $('.jcs_main_hand_title').attr('data_page_num',1);
-        get_brand_shop_brand_list();
+        get_brand_shop_brand_list(cId_val,cus_name);
     });
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
         e.preventDefault();

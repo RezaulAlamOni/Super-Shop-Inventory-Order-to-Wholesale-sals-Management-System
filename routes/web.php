@@ -220,6 +220,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::get('/onlineorder', 'Customer_menual_orderController@onlineorder');
 	Route::post('/get_customer_base_manual_order_item', 'Customer_menual_orderController@get_customer_base_manual_order_item');
 	Route::post('/get_shop_list_by_customer_id', 'Customer_menual_orderController@get_shop_list_by_customer_id');
+	Route::post('/get_shop_item_list_by_customer_id', 'Customer_menual_orderController@get_shop_item_list_by_customer_id');
 	Route::post('/get_jn_info_by_jn_code', 'Customer_menual_orderController@get_jn_info_by_jn_code');
 	Route::post('/shop_store', 'CustomerShopController@store');
 	Route::post('/item_search_by_name', 'VendorController@item_search_by_name');
