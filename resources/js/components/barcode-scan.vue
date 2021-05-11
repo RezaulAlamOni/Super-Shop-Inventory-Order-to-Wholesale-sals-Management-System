@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="main-content-container container-fluid pt-2">
-            <button type="button" @click="getBarCodeScan()"
+            <button type="button" @click="getBarCodeScan()" v-if="page != 'brand-order'"
                     class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"
                     style="padding:0;float: left;width: 50px !important;height: 30px !important;">
                 <i class="fa fa-barcode" style="font-size: 30px"></i>
@@ -23,7 +23,7 @@
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
                     <div class="modal-body p-0">
-                        <div class="main-content-container container-fluid pt-2">
+                        <div class="main-content-container container-fluid pt-2" >
                             <StreamBarcodeReader v-if="barCodeScan" @decode="onDecode"
                                                  @loaded="onLoad()"></StreamBarcodeReader>
 
