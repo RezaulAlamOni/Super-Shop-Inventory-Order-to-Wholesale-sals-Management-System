@@ -4985,7 +4985,9 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
 // brand order
 
 function searchBrandOrderByText(text) {
-
+    if (text.length <= 0) {
+        return 0;
+    }
     $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
