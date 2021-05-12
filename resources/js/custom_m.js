@@ -399,7 +399,7 @@ $(document).ready(function () {
         var cus_name =  $('.jcs_main_hand_title').text();
         var cId_val = $(this).closest('tr').attr('customer-id');
         var shpname = $(this).closest('tr').find('td:nth-child(1)').text();
-        var cus_shpneame = cus_name+' '+shpname;
+        var cus_shpneame = cus_name+' ・ '+shpname;
         $('.jcs_main_hand_title').text('');
         $('.jcs_main_hand_title').text(cus_shpneame);
         $('.jcs_main_hand_title').attr('data_page_num',1);

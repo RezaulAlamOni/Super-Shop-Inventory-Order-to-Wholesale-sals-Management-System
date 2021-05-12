@@ -72,7 +72,13 @@
 							id="size_setting_btn" style="margin-bottom: 0">
 							売掛
 						</a></p>
-						<h4 class="btom_content_home" style="padding-top:55px">③000000000</h4>
+						<br>
+						<p class="submessg">（受注・ 手書）<a href="{{Config::get('app.url').'/brand-order'}}"
+							class="btn btn-info btn-sm menualablebtn common_goto_sheet" data_num_link="12"
+							id="size_setting_btn" style="margin-bottom: 0">
+							手書
+						</a></p>
+						<!-- <h4 class="btom_content_home" style="padding-top:55px">③000000000</h4> -->
 				</div>
 
 			</div>
