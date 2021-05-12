@@ -558,6 +558,30 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="customer_shop_item_list_from_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document" style="position: absolute;right: 22px;bottom: -15px;">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 10px;padding-bottom: 0px">
+                <h5 class="modal-title" id="maker_modal_heading">店一覧</h5>
+                <ul class="list-inline custom_header_button">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">{{__('messages.close')}}</button>
+                </ul>
+            </div>
+            <div class="modal-body" style="padding: 10px;">
+                <div class="panel-body buyrslisst_overflow">
+                    <table class="table table-striped table-bordered buyrslisst_overflow">
+                        <tbody class="customer_shop_list_item_from_search">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- add edit vendor touroko modal -->
 <div class="modal fade" id="customer_shop_list_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">

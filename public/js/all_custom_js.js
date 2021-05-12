@@ -1844,10 +1844,11 @@ $(document).ready(function () {
     $('.brand-order-search').blur(function (e) {
         let val = $(this).val();
         let data_type = $(this).attr('data-type')
+        searchBrandOrderByText(val)
         if (data_type == 'jan'){
 
         } else {
-            searchBrandOrderByText(val)
+            // searchBrandOrderByText(val)
         }
 
     })
@@ -5738,33 +5739,69 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
     }
 });
 
- 
-   
+
+
 }
 
 // brand order
 
 function searchBrandOrderByText(text) {
-    var brand_name = '';
-    var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
-    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
-    var substr = currnt_brand_list.split(','); // array here
-    var p = 1;
-    var numberOfOrder = 100;
-    for (var k = 0; k < substr.length; k++) {
-        if (substr[k].indexOf(text) > -1 ){
-            brand_name +='<tr class="shopBrandListitem">';
-            brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
-            //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
-            brand_name += '<td style="text-align: left;">' + substr[k] + '</td>';
-            brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';
-            brand_name +='</tr>';
+
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        url: "get_shop_item_list_by_customer_id",
+        type: "POST",
+        dataType: "JSON",
+        data: {customer_id: 0,text : text},
+        success: function (response) {
+            var brand_name = '';
+            var p = 1;
+            var numberOfOrder = 100;
+            for (var i = 0; i < (response.shop_item_list.length); i++) {
+                brand_name +='<tr class="" onclick="searchByJan('+response.shop_item_list[i].jan+')">';
+                brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
+                //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
+                brand_name += '<td style="text-align: left;">' + response.shop_item_list[i].name + '</td>';
+                brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';
+                brand_name +='</tr>';
+            }
+            $(".customer_shop_list_item_from_search").html(brand_name);
+            $('#customer_shop_item_list_from_search').modal('show');
         }
-    }
-    $(".brand_order_tble").html(brand_name);
-    $('#customer_shop_list_modal').modal('hide');
+
+    })
+
 }
 
+function searchByJan(jan) {
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        url: "get_shop_item_list_by_customer_id",
+        type: "POST",
+        dataType: "JSON",
+        data: {jan : jan},
+        success: function (response) {
+            var brand_name = '';
+            var p = 1;
+            var numberOfOrder = 100;
+            for (var i = 0; i < (response.shop_item_list.length); i++) {
+                brand_name +='<tr class="shopBrandListitem">';
+                brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
+                //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
+                brand_name += '<td style="text-align: left;">' + response.shop_item_list[i].name + '</td>';
+                brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';
+                brand_name +='</tr>';
+            }
+            $(".brand_order_tble").html(brand_name);
+            $('#customer_shop_item_list_from_search').modal('hide');
+        }
+
+    })
+}
 
 function close_all_navi_msg() {
     for (let key in nav_list) {
