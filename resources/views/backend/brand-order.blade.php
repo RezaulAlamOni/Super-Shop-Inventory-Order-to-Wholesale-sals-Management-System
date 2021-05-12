@@ -49,17 +49,37 @@
 
                 </div>
             </div>
-            <div class="col-md-12 col-sm-5 mb-0 text-left">
+            <!-- <div class="col-md-12 col-sm-5 mb-0 text-left">
                  <div style="display: flex">
                     <p class="shps_byrsplrs">販売先名<span data_page_num="0" class="jcs_main_hand_title"></span>殿 </p>
-                    <bar-code-scan base_url="{{config('app.url')}}" page="brand-order"></bar-code-scan>
+                   <bar-code-scan base_url="{{config('app.url')}}" page="brand-order"></bar-code-scan> 
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- End Page Header -->
         <!-- Small Stats Blocks -->
         <div class="row">
-
+            <div class="col-md-5 text-left">
+            <p class="shps_byrsplrs">販売先名<span data_page_num="0" class="jcs_main_hand_title"></span>殿 </p>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="input-group">
+                            <input type="text" class="form-control voice_reading_text" placeholder="品名"
+                            aria-describedby="basic-addon2">
+                                                    <span class="input-group-addon voice_icon_group" id="basic-addon2">
+                                <span id="voice_reset_btn" class="material-icons show voice_start custom_voice_img">
+                                settings_voice
+                                </span>
+                                <span class="voice_recoding hide custom_voice_img" id="stop_rec_btn">
+                                <img src="{{Config::get('app.url').'/public/backend/images/voice_rec.gif'}}" class="voice_recoring">
+                                </span>
+                                </span>
+                        <span class="voice_text_c">音声</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
         </div>
         <br>
         <div class="row">
@@ -75,7 +95,7 @@
                         <thead class="brand_tble_header_content"
                                style="background-color: #F5F6F8; color: #077BEF; font-size:15px; text-align: center;">
                         <tr>
-                            <th width="100px">#</th>
+                            <!-- <th width="100px">#</th> -->
                             <th>題名</th>
                             <th>頻度順</th>
                         </tr>

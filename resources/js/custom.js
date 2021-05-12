@@ -4967,7 +4967,7 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
             var numberOfOrder = 100;
             for (var i = 0; i < (response.shop_item_list.length); i++) {
                 brand_name +='<tr class="shopBrandListitem">';
-                brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
+               // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
                 //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
                 brand_name += '<td style="text-align: left;">' + response.shop_item_list[i].name + '</td>';
                 brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';
@@ -5031,7 +5031,7 @@ function searchByJan(jan) {
             var numberOfOrder = 100;
             for (var i = 0; i < (response.shop_item_list.length); i++) {
                 brand_name +='<tr class="shopBrandListitem">';
-                brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
+               // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
                 //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
                 brand_name += '<td style="text-align: left;">' + response.shop_item_list[i].name + '</td>';
                 brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';

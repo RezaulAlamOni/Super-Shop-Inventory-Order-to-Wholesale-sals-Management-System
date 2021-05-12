@@ -3536,6 +3536,43 @@ function sortTable_by_jan(table_bodys, jan_code, coll_num) {
 
 
 }
+function sortTable_brand_ordertable(table_bodys, jan_code, coll_num) {
+
+        var rows = $('.menual_order_receive_table .table-freeze-multi-original .' + table_bodys + ' tr').get();
+
+
+    let is_exist = 0;
+
+    rows.sort(function (a, b) {
+        var A = $(a).children('td').eq(coll_num).text();
+        console.log(A);
+        console.log(jan_code);
+        if (A == jan_code) {
+            is_exist = 1;
+            return -1;
+        }
+        return 0;
+    });
+    $.each(rows, function (index, row) {
+        $('.' + table_bodys).append(row);
+    });
+
+   
+
+
+    close_all_navi_msg();
+    show_hide_nav_icn(0);
+    nav_width = '370px';
+    display_positionX = '15px';
+    display_positionY = '15px';
+    if (is_exist) {
+        success_nav = view(temporary_message['search_result_message'], def_old_nav_template_without_return_btn);
+    } else {
+        success_nav = view(temporary_message['search_result_message_else'], def_old_nav_template_without_return_btn);
+    }
+
+
+}
 
 function jan_list_search_by_name(name) {
     close_all_navi_msg();
@@ -3559,7 +3596,7 @@ function jan_list_search_by_name(name) {
             var mathod = "getProductFromJanMasterByName('" + name + "')";
             if (response.name_list.length > 0) {
                 for (var i = 0; i < response.name_list.length; i++) {
-                    msgHtml += `<li><a href="javascript:void(0)" class="pname_search" onclick="selectFromNameList('${response.name_list[i].jan}')">` + response.name_list[i].name + `</a></li>`;
+                    msgHtml += `<li><a href="javascript:void(0)" class="pname_search" onclick="selectFromNameList('${response.name_list[i].jan}','${response.name_list[i].name}')">` + response.name_list[i].name + `</a></li>`;
                 }
                 btn = [{button: '<center><a href="javascript:close_default_page_navi(909)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}];
             } else {
@@ -3652,12 +3689,20 @@ function isNumeric(str) {
         !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
 }
 
-function selectFromNameList(value) {
-    $('.recive_order_page_jn').val(value)
-    $('#new-id').val(value)
-    setTimeout(function () {
-        $('.recive_order_page_jn').trigger('blur')
-    }, 200)
+function selectFromNameList(value,name='') {
+    var page_url = url_search();
+    if(page_url=='receiveorder' || page_url=='receiveorder#'){
+        $('.recive_order_page_jn').val(value)
+        $('#new-id').val(value)
+        setTimeout(function () {
+            $('.recive_order_page_jn').trigger('blur')
+        }, 200)
+    }else if(page_url=='brand-order' || page_url=='brand-order#'){
+        
+        sortTable_brand_ordertable('brand_order_tble', name, 0);
+    }else{
+
+    }
 }
 
 // oni

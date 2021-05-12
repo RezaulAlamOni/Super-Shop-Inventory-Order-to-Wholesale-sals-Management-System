@@ -19867,6 +19867,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url', 'page'],
@@ -60716,7 +60722,7 @@ var render = function() {
           on: { click: _vm.startSpeech }
         },
         [
-          _vm._v("\n            音声\n            "),
+          _vm._v("\n                音声\n                "),
           _vm.speech_start === 0
             ? _c("img", {
                 staticClass: "text-record-loader",
@@ -60796,7 +60802,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                            次へ\n                        "
+                        "\n                                次へ\n                            "
                       )
                     ]
                   )
