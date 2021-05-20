@@ -59,8 +59,10 @@
                         <button sup_buyer_type="1" class="btn btn-danger pull-right delete_new_vendor">削除</button>
                         <button type="button" class="btn btn-warning" data-dismiss="modal">{{__('messages.close')}}</button>
                 </ul>
+               
             </div>
             <div class="panel-heading">
+            <div class="navigation_message_for_brand"></div>
                 <div id="customer_message_success"></div>
                 <div class="clearfix"></div>
             </div>

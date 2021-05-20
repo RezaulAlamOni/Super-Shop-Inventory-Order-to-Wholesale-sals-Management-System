@@ -5736,6 +5736,18 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
             }
             $(".brand_order_tble").html(brand_name);
             $('#customer_shop_list_modal').modal('hide');
+            const temps_messagessss = {
+
+                bran_item_list_show_message: {
+                    message: [
+                        {message: 'XXXXXXXXXXXXXXXXXXX'},
+                    ],
+                    buttons: [
+                        {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
+                    ]
+                },
+            }
+            success_nav = view(temps_messagessss['bran_item_list_show_message'], def_center_mesg_template);
     }
 });
 
@@ -6715,6 +6727,12 @@ function get_vendor_master_item_list_num_of_order() {
 
 function get_customer_list(customer_id = null) {
 
+    var page_url = url_search();
+    if(page_url=='brand-order' || page_url=='brand-order#'){
+        $('.navigation_message_for_brand').html('<p class="navpnavigation">ここは手書き受注画面です<br>スーパーを選んで下さい</p>');
+    }else{
+        $('.navigation_message_for_brand').html('');
+    }
 
     $.ajax({
         headers: {

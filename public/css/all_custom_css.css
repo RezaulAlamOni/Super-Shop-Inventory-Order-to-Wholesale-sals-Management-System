@@ -138,7 +138,12 @@
             border: 5px solid #000;
             -ms-overflow-style: none;
         }
-
+        p.navpnavigation {
+            margin-bottom: 0;
+            padding: 0 30px;
+            font-size: 24px;
+            color: #000;
+        }
         #inventory_details_qty_bysuplierid .table th {
             text-align: center;
         }
