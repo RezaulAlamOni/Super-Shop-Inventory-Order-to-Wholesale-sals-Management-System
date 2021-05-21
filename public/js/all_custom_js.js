@@ -952,7 +952,16 @@ $(document).ready(function () {
     $(document).delegate('.voice_reading_text', 'keypress', function (e) {
         if (e.keyCode == 13) {
             var name = $(this).val();
-            jan_list_search_by_name(name);
+            var page_url = url_search();
+            
+            if(page_url=='brand-order' || page_url=='brand-order#'){
+                var cId_val = $('.c_ids_v').val();
+                var cus_name = $('.c_ids_name').val();
+                get_brand_shop_brand_list(cId_val,cus_name,name);
+            }else{
+                jan_list_search_by_name(name);
+            }
+            
         }
     })
     $(document).delegate('.vendor_due_blance', 'blur', function () {
@@ -5709,7 +5718,7 @@ function get_brand_item_list(c_id = 0, c_name = ''){
     $('#customer_shop_list_modal').modal('show');
 }
 
-function get_brand_shop_brand_list(c_id = 0, c_name = ''){
+function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
     var brand_name = '';
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
@@ -5721,7 +5730,7 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
     url: "get_shop_item_list_by_customer_id",
     type: "POST",
     dataType: "JSON",
-    data: {customer_id: c_id},
+    data: {customer_id: c_id,voice_text:voice_text},
     success: function (response) {
             var brand_name = '';
             var p = 1;
@@ -7250,6 +7259,8 @@ $(document).ready(function () {
         $('.jcs_main_hand_title').text('');
         $('.jcs_main_hand_title').text(cus_shpneame);
         $('.jcs_main_hand_title').attr('data_page_num',1);
+        $('.c_ids_v').val(cId_val);
+        $('.c_ids_name').val(cus_shpneame);
         get_brand_shop_brand_list(cId_val,cus_name);
     });
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
@@ -14008,7 +14019,16 @@ function add_record_callback(data) {
 
             if (word_check(command)) return;
             //item_search(command);
-            jan_list_search_by_name(command);
+            var page_url = url_search();
+            
+            if(page_url=='brand-order' || page_url=='brand-order#'){
+                var cId_val = $('.c_ids_v').val();
+                var cus_name = $('.c_ids_name').val();
+                get_brand_shop_brand_list(cId_val,cus_name,command);
+            }else{
+                jan_list_search_by_name(command);
+            }
+            //jan_list_search_by_name(command);
             $('.voice_reading_text').val(command);
             reset_voice();
         } else {

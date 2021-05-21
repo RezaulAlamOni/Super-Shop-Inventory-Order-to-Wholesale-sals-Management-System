@@ -403,6 +403,8 @@ $(document).ready(function () {
         $('.jcs_main_hand_title').text('');
         $('.jcs_main_hand_title').text(cus_shpneame);
         $('.jcs_main_hand_title').attr('data_page_num',1);
+        $('.c_ids_v').val(cId_val);
+        $('.c_ids_name').val(cus_shpneame);
         get_brand_shop_brand_list(cId_val,cus_name);
     });
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {

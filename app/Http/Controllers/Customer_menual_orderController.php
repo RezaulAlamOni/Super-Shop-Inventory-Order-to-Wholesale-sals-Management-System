@@ -159,8 +159,9 @@ class Customer_menual_orderController extends Controller
         if($customer_id!=0){
             $shop_item_list = $shop_item_list->where('customer_items.customer_id',$customer_id);
         }
-        if (isset($request->text)){
-            $shop_item_list = $shop_item_list->where('jans.name','like','%'.$request->text.'%');
+        if (isset($request->voice_text)){
+           // $shop_item_list = $shop_item_list->orderByRaw('jans.name like %'.$request->voice_text.'%');
+            $shop_item_list = $shop_item_list->orderByRaw('jans.name like "%'.$request->voice_text.'%" desc');
         }
         $shop_item_list =$shop_item_list->groupBy('customer_items.jan')->get();
         $result = response()->json(['shop_item_list' => $shop_item_list]);
