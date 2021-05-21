@@ -4969,8 +4969,10 @@ function get_brand_shop_brand_list(c_id = 0, c_name = ''){
                 brand_name +='<tr class="shopBrandListitem">';
                // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
                 //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
-                brand_name += '<td style="text-align: left;">' + response.shop_item_list[i].name + '</td>';
-                brand_name += '<td style="text-align: left;">'+ numberOfOrder-- +'</td>';
+                brand_name += '<td style="text-align: left; width:70%">' + response.shop_item_list[i].name + '</td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
                 brand_name +='</tr>';
             }
             $(".brand_order_tble").html(brand_name);

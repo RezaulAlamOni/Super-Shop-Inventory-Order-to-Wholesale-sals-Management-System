@@ -96,8 +96,10 @@
                                style="background-color: #F5F6F8; color: #077BEF; font-size:15px; text-align: center;">
                         <tr>
                             <!-- <th width="100px">#</th> -->
-                            <th>題名</th>
-                            <th>頻度順</th>
+                            <th width="70%">品名・メーカー・規格 </th>
+                            <th width="10%"></th>
+                            <th width="10%"></th>
+                            <th width="10%">頻度順</th>
                         </tr>
 
                         </thead>
