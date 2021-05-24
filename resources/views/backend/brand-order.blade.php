@@ -11,7 +11,7 @@
         <div class="page-header row no-gutters py-1">
             <div class="col-md-5 col-sm-5 mb-0 text-left">
                 <div class="btn-group jcs_grp">
-                    <button type="button" class="btn btn-success">オンライン受注画面</button>
+                    <button type="button" class="btn btn-success">手書き受注</button>
                     <button type="button" class="btn btn-default deflt_design_adjust">
                         <input type="tel" style="ime-mode: disabled;float:left;border:1px solid #ddd;" data-type="jan"
                                class="form-control jan_inpts_ jan_inpts_online_order_ brand-order-search" placeholder="ＪＡＮまたはインストア入力">
@@ -97,9 +97,14 @@
                                style="background-color: #F5F6F8; color: #077BEF; font-size:15px; text-align: center;">
                         <tr>
                             <!-- <th width="100px">#</th> -->
-                            <th width="70%">品名・メーカー・規格 </th>
-                            <th width="10%"></th>
-                            <th width="10%"></th>
+                            <th width="40%">品名・メーカー・規格 </th>
+                            <th width="10%">数量</th>
+                            <th width="10%">売価</th>
+                            <th width="10%">原価</th>
+                            <th width="40%">品名・メーカー・規格</th>
+                            <th width="10%">数量</th>
+                            <th width="10%">売価</th>
+                            <th width="10%">原価</th>
                             <th width="10%">頻度順</th>
                         </tr>
 

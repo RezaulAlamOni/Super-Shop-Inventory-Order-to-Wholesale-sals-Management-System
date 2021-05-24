@@ -19473,7 +19473,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -19773,6 +19773,28 @@ module.exports = {
   extend: extend,
   trim: trim
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
 
 
 /***/ }),
@@ -27926,7 +27948,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.text-record-button[data-v-e08acb16] {\r\n    width: 90px !important;\r\n    height: 30px !important;\r\n    margin-left: 15px;\r\n    line-height: 20px !important;\r\n    text-align: left !important;\n}\n.text-record-loader[data-v-e08acb16] {\r\n    height: 18px;\r\n    width: 25px;\r\n    margin: 5px;\r\n    margin-top: -3px;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.text-record-button[data-v-e08acb16] {\n    width: 90px !important;\n    height: 30px !important;\n    margin-left: 15px;\n    line-height: 20px !important;\n    text-align: left !important;\n}\n.text-record-loader[data-v-e08acb16] {\n    height: 18px;\n    width: 25px;\n    margin: 5px;\n    margin-top: -3px;\n}\n\n", ""]);
 
 // exports
 
@@ -27945,7 +27967,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-7d72ea4c] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-7d72ea4c] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-7d72ea4c] {\r\n        display: block !important;\n}\n#handy-navi[data-v-7d72ea4c] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-7d72ea4c] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-7d72ea4c] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-7d72ea4c] {\n        display: block !important;\n}\n#handy-navi[data-v-7d72ea4c] {\n        top: 235px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -27964,7 +27986,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-0b6cdc33] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-0b6cdc33] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-0b6cdc33] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-0b6cdc33] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
 
 // exports
 
@@ -27983,7 +28005,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-69370b68] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-69370b68] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-69370b68] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-69370b68] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
 
 // exports
 
@@ -28002,7 +28024,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-45a7eee8] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-45a7eee8] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-45a7eee8] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-45a7eee8] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
 
 // exports
 
@@ -28021,7 +28043,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-699b886d] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-699b886d] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-699b886d] {\r\n        display: block !important;\n}\n#handy-navi[data-v-699b886d] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-699b886d] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-699b886d] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-699b886d] {\n        display: block !important;\n}\n#handy-navi[data-v-699b886d] {\n        top: 235px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -28129,28 +28151,6 @@ function toComment(sourceMap) {
 	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
 	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
 }
 
 
@@ -66603,49 +66603,49 @@ if (false) {}
 
   methods: {
     checkApi() {
-      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-      if (!SpeechRecognition && "development" !== 'production') {
-          throw new Error('Speech Recognition does not exist on this browser. Use Chrome or Firefox');
-      }
+        if (!SpeechRecognition && "development" !== 'production') {
+            throw new Error('Speech Recognition does not exist on this browser. Use Chrome or Firefox');
+        }
 
-      if (!SpeechRecognition) {
-          return;
-      }
+        if (!SpeechRecognition) {
+            return;
+        }
 
-      const recognition = new SpeechRecognition();
+        const recognition = new SpeechRecognition();
 
-      recognition.lang = this.lang;
-      recognition.interimResults = true;
+        recognition.lang = this.lang;
+        recognition.interimResults = true;
 
-      recognition.addEventListener('result', event => {
-          const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('');
+        recognition.addEventListener('result', event => {
+            const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('');
 
-          this.runtimeTranscription = text;
-      });
-      recognition.start();
-      recognition.addEventListener('end', () => {
-          if (this.runtimeTranscription !== '') {
-              this.transcription.push(this.runtimeTranscription);
+            this.runtimeTranscription = text;
+        });
+        recognition.start();
+        recognition.addEventListener('end', () => {
+            if (this.runtimeTranscription !== '') {
+                this.transcription.push(this.runtimeTranscription);
 
-              this.$emit('onTranscriptionEnd', {
-                  transcription: this.transcription,
-                  lastSentence: this.runtimeTranscription
-              });
-          }
+                this.$emit('onTranscriptionEnd', {
+                    transcription: this.transcription,
+                    lastSentence: this.runtimeTranscription
+                });
+            }
 
-          this.runtimeTranscription = '';
-          recognition.stop();
-      });
+            this.runtimeTranscription = '';
+            recognition.stop();
+        });
 
 
-  }
-  },
+    }
+},
 
-  mounted() {
-   // this.checkApi();
-  },
-  watch: {
+mounted() {
+    // this.checkApi();
+},
+watch: {
     resume: function (val) {
         if (val) {
             this.checkApi();
@@ -79671,8 +79671,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\newxampp\htdocs\rv3_tonyav1\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\newxampp\htdocs\rv3_tonyav1\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/rv3_tonyav1/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/rv3_tonyav1/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

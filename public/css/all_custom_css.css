@@ -692,7 +692,8 @@
 
         #manual_order_table_entry .table th,
         #manual_order_table_entry .table td {
-            white-space: nowrap;
+            white-space: normal;
+            font-size: 30px;
         }
 
         #manual_order_table_entry .table col {
