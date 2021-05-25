@@ -5737,8 +5737,8 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
             var numberOfOrder = 100;
 
             /*make array two arrays*/
-            var arrays1 = response.shop_item_list.slice(0, response.shop_item_list.length / 2);
-            var arrays2 = response.shop_item_list.slice(response.shop_item_list.length / 2);
+            var arrays1 = response.shop_item_list.slice(response.shop_item_list.length / 2);
+            var arrays2 = response.shop_item_list.slice(0,response.shop_item_list.length / 2);
             console.log(arrays1);
             console.log(arrays2);
             /*make array two arrays*/
