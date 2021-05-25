@@ -5791,14 +5791,18 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
 
                 bran_item_list_show_message: {
                     message: [
-                        {message: 'XXXXXXXXXXXXXXXXXXX'},
+                        {message: '１、前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています'},
+                        {message: '２、メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます'},
                     ],
                     buttons: [
                         {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
                     ]
                 },
             }
-            success_nav = view(temps_messagessss['bran_item_list_show_message'], def_center_mesg_template);
+            nav_width = '365px';
+            display_positionX = '15px';
+            display_positionY = '15px';
+            success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
     }
 });
 
