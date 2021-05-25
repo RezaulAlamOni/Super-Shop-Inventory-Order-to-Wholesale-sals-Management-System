@@ -4974,19 +4974,54 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
             var brand_name = '';
             var p = 1;
             var numberOfOrder = 100;
-            for (var i = 0; i < (response.shop_item_list.length); i++) {
+
+            /*make array two arrays*/
+            var arrays1 = response.shop_item_list.slice(0, response.shop_item_list.length / 2);
+            var arrays2 = response.shop_item_list.slice(response.shop_item_list.length / 2);
+            console.log(arrays1);
+            console.log(arrays2);
+            /*make array two arrays*/
+            if(arrays1.length>arrays2.length){
+                var largeArray=arrays1;
+                var smallArray=arrays2;
+            }else{
+                var largeArray=arrays2;
+                var smallArray=arrays1;
+            }
+            for (var i = 0; i < (largeArray.length); i++) {
+                var searchTextFound1 = 'searchTextNotFound';
+                var searchTextFound2 = 'searchTextNotFound';
+                if(voice_text!=''){
+                    if(largeArray[i].name.indexOf(voice_text) != -1){
+                        searchTextFound1 = 'searchTextFound';
+                    }
+                }
                 brand_name +='<tr class="shopBrandListitem">';
                // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
                 //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
-                brand_name += '<td style="text-align: left; width:40%">' + response.shop_item_list[i].name + '</td>';
+                brand_name += '<td class="'+searchTextFound1+'" style="text-align: left; width:40%">' + largeArray[i].name + '</td>';
                 brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
                 brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
                 brand_name += '<td style="text-align: right;width:10%"></td>';
-                brand_name += '<td style="text-align: left; width:40%">' + response.shop_item_list[i].name + '</td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
+                console.log(i+','+smallArray.length)
+                if(i<smallArray.length){
+                    if(voice_text!=''){
+                        if(smallArray[i].name.indexOf(voice_text) != -1){
+                            searchTextFound2 = 'searchTextFound';
+                        }
+                    }
+                    brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
+                }else{
+                    brand_name += '<td style="text-align: left; width:40%"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"></td>';
+                }
                 brand_name +='</tr>';
             }
             $(".brand_order_tble").html(brand_name);

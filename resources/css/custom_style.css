@@ -580,9 +580,11 @@
         #manual_order_table_entry .table th,
         #manual_order_table_entry .table td {
             white-space: normal;
-            font-size: 30px;
+            font-size: 20px;
         }
-
+        .searchTextFound{
+            color:red !important;
+        }
         #manual_order_table_entry .table col {
             width: 150px;
         }
