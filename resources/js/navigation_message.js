@@ -403,6 +403,10 @@ function close_default_page_navi(page_id) {
             nav_list[receive_order_step_3_nav].show();
             show_hide_nav_icn(0);
             break;
+        case 5000://brand nav
+        close_all_navi_msg();
+            show_hide_nav_icn(1);
+            break;
         default:
             break;
     }

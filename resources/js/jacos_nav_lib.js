@@ -102,6 +102,21 @@ const def_center_mesg_template = `
     </div>
 </div>
 `;
+
+const def_center_mesg_template_brand = `
+<div class="card card-warning jn_brand jn_popup" style="background:rgb(255, 235, 255)">
+    <div class="card-body">
+        <ul>
+            {{#message_list}}
+            <p class="text-center popup_center_message" style="margin-bottom:0;">{{{message}}}</p>
+            {{/message_list}}
+        </ul>
+        {{#button_list}}
+            {{{button}}}
+        {{/button_list}}
+    </div>
+</div>
+`;
 const def_center_mesg_html_template = `
 <div class="card card-warning jn_popup" style="background:rgb(255, 235, 255)">
     <div class="card-body default_pop_up_template">

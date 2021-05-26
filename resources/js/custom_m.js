@@ -291,16 +291,27 @@ $(document).ready(function () {
     $(document).mouseup(function (e) {
         //var hide_enter_outside = $(".nav_disp,.ui-datepicker");
         var is_id_1 = $('.nav_disp').attr('id');
+        var page_url = url_search();
         //console.log(is_id_1);
         var hide_enter_outside = $("#jn_0,.ui-datepicker");
+        var hide_enter_outside_brand = $("#jn_0,.ui-datepicker,.jn_brand");
         // console.log(hide_enter_outside);
         // console.log('divs');
 
-        if (!hide_enter_outside.is(e.target) && hide_enter_outside.has(e.target).length === 0 && is_id_1 == 'jn_0') {
+       if (!hide_enter_outside.is(e.target) && hide_enter_outside.has(e.target).length === 0 && is_id_1 == 'jn_0') {
+           
             close_all_navi_msg();
             show_hide_nav_icn(1);
             // console.log('divs out click');
         }
+    if(page_url=='brand-order' || page_url=='brand-order#'){
+        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0) {
+            setTimeout(function(){
+            close_all_navi_msg();
+            show_hide_nav_icn(1);
+        }, 6000);
+        }
+    }
     });
     /*case size setting handy*/
 

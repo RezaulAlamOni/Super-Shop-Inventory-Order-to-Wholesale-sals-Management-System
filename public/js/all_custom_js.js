@@ -4467,6 +4467,32 @@ $(document).ready(function () {
         $(this).removeClass('color_row_new_color');
     })
 
+    $(document).delegate(".brndOrderInputQty", "keypress", function (e) {
+        if (e.keyCode == 13) {
+           $(this).blur();
+        }
+    })
+
+    $(document).delegate(".brndOrderInputQty", "blur", function (e) {
+        const temps_messagesssssss = {
+
+            bran_item_list_input_message: {
+                message: [
+                    {message: '価値が成功を救った'},
+                ],
+                buttons: [
+                    {button: '<center><a href="javascript:close_default_page_navi(5000)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
+                ]
+            },
+        }
+        nav_width = '300px';
+        display_positionX = '15px';
+        display_positionY = '15px';
+        // def_center_mesg_template
+        success_nav = view(temps_messagesssssss['bran_item_list_input_message'], def_center_mesg_template_brand);
+        show_hide_nav_icn(0);
+    })
+
 
 }); /*jquery end */
 function get_shop_list(shop_id = null) {
@@ -5761,9 +5787,9 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
                // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
                 //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
                 brand_name += '<td class="'+searchTextFound1+'" style="text-align: left; width:40%">' + largeArray[i].name + '</td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
-                brand_name += '<td style="text-align: right;width:10%"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="" class="form-control brndOrderInputQty"></td>';
                 console.log(i+','+smallArray.length)
                 if(i<smallArray.length){
                     if(voice_text!=''){
@@ -5772,9 +5798,9 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
                         }
                     }
                     brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
-                    brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
-                    brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
-                    brand_name += '<td style="text-align: right;width:10%">'+ Math.floor(Math.random() * 100); +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
                 }else{
                     brand_name += '<td style="text-align: left; width:40%"></td>';
@@ -5799,7 +5825,7 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
                     ]
                 },
             }
-            nav_width = '365px';
+            nav_width = '400px';
             display_positionX = '15px';
             display_positionY = '15px';
             success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
@@ -7191,16 +7217,27 @@ $(document).ready(function () {
     $(document).mouseup(function (e) {
         //var hide_enter_outside = $(".nav_disp,.ui-datepicker");
         var is_id_1 = $('.nav_disp').attr('id');
+        var page_url = url_search();
         //console.log(is_id_1);
         var hide_enter_outside = $("#jn_0,.ui-datepicker");
+        var hide_enter_outside_brand = $("#jn_0,.ui-datepicker,.jn_brand");
         // console.log(hide_enter_outside);
         // console.log('divs');
 
-        if (!hide_enter_outside.is(e.target) && hide_enter_outside.has(e.target).length === 0 && is_id_1 == 'jn_0') {
+       if (!hide_enter_outside.is(e.target) && hide_enter_outside.has(e.target).length === 0 && is_id_1 == 'jn_0') {
+           
             close_all_navi_msg();
             show_hide_nav_icn(1);
             // console.log('divs out click');
         }
+    if(page_url=='brand-order' || page_url=='brand-order#'){
+        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0) {
+            setTimeout(function(){
+            close_all_navi_msg();
+            show_hide_nav_icn(1);
+        }, 6000);
+        }
+    }
     });
     /*case size setting handy*/
 
@@ -11248,6 +11285,10 @@ function close_default_page_navi(page_id) {
             nav_list[receive_order_step_3_nav].show();
             show_hide_nav_icn(0);
             break;
+        case 5000://brand nav
+        close_all_navi_msg();
+            show_hide_nav_icn(1);
+            break;
         default:
             break;
     }
@@ -11344,6 +11385,21 @@ const def_nav_icon = `
 
 const def_center_mesg_template = `
 <div class="card card-warning jn_popup" style="background:rgb(255, 235, 255)">
+    <div class="card-body">
+        <ul>
+            {{#message_list}}
+            <p class="text-center popup_center_message" style="margin-bottom:0;">{{{message}}}</p>
+            {{/message_list}}
+        </ul>
+        {{#button_list}}
+            {{{button}}}
+        {{/button_list}}
+    </div>
+</div>
+`;
+
+const def_center_mesg_template_brand = `
+<div class="card card-warning jn_brand jn_popup" style="background:rgb(255, 235, 255)">
     <div class="card-body">
         <ul>
             {{#message_list}}

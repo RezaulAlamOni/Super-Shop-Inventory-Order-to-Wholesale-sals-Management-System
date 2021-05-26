@@ -132,6 +132,18 @@
             margin-bottom: 0;
             font-size: 36px;
         }
+        .searchTextFound{
+            background:#F3F885 !important;
+        }
+        .brndOrderInputQty{
+            background: transparent;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    padding-left: 0!important;
+    padding-right: 0!important;
+    text-align: right;
+        }
         #inventory_details_qty_bysuplierid {
             width: 100%;
             overflow: hidden;
@@ -695,9 +707,7 @@
             white-space: normal;
             font-size: 20px;
         }
-        .searchTextFound{
-            background:#F3F885 !important;
-        }
+        
         #manual_order_table_entry .table col {
             width: 150px;
         }
