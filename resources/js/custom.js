@@ -3717,7 +3717,7 @@ $(document).ready(function () {
 
             bran_item_list_input_message: {
                 message: [
-                    {message: '価値が成功を救った'},
+                    {message: '入力されました'},
                 ],
                 buttons: [
                     {button: '<center><a href="javascript:close_default_page_navi(5000)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
@@ -5014,6 +5014,7 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
                 var largeArray=arrays2;
                 var smallArray=arrays1;
             }
+            var rightBarorderFrequency = 100-largeArray.length;
             for (var i = 0; i < (largeArray.length); i++) {
                 var searchTextFound1 = 'searchTextNotFound';
                 var searchTextFound2 = 'searchTextNotFound';
@@ -5029,6 +5030,7 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
                 console.log(i+','+smallArray.length)
                 if(i<smallArray.length){
                     if(voice_text!=''){
@@ -5040,7 +5042,7 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ rightBarorderFrequency-- +'</td>';
                 }else{
                     brand_name += '<td style="text-align: left; width:40%"></td>';
                     brand_name += '<td style="text-align: right;width:10%"></td>';

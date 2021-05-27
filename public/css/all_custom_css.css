@@ -724,6 +724,40 @@
             width: 50px;
         }
 
+/*brandOrder*/
+#brand_order_table_entry {
+    width: 100%;
+    overflow: hidden;
+    border: 5px solid #000;
+}
+
+#brand_order_table_entry .table th,
+#brand_order_table_entry .table td {
+    white-space: normal;
+    font-size: 20px;
+}
+
+#brand_order_table_entry .table col {
+    width: 150px;
+}
+
+#brand_order_table_entry .table col:nth-child(1) {
+    width: 370px;
+}
+
+#brand_order_table_entry .table col:nth-child(2) {
+    width: 70px;
+}
+
+#brand_order_table_entry .table col:nth-child(n+3) {
+    width: 50px;
+}
+#brand_order_table_entry .table th:nth-child(6),
+#brand_order_table_entry .table td:nth-child(6) {
+    border-left: 7px double #000 !important;
+}
+/*brandOrder*/
+
         .warning_custom {
             background-color: #CCC;
         }

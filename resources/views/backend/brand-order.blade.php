@@ -89,7 +89,7 @@
 
             <div class="clearboth"></div>
             <div class="col-md-12 menual_order_receive_table">
-                <div id="manual_order_table_entry" style="margin:0">
+                <div id="brand_order_table_entry" style="margin:0">
                     <table class="table table-bordered table-freeze-multi" data-scroll-height="680"
                            data-cols-number="5">
 
@@ -101,6 +101,7 @@
                             <th width="10%">数量</th>
                             <th width="10%">売価</th>
                             <th width="10%">原価</th>
+                            <th width="10%">頻度順</th>
                             <th width="40%">品名・メーカー・規格</th>
                             <th width="10%">数量</th>
                             <th width="10%">売価</th>
