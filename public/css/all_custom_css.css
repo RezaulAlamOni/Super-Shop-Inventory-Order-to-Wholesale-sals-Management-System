@@ -143,6 +143,7 @@
     padding-left: 0!important;
     padding-right: 0!important;
     text-align: right;
+    font-size: 20px !important;
         }
         #inventory_details_qty_bysuplierid {
             width: 100%;
