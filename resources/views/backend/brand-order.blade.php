@@ -66,7 +66,7 @@
             <div class="col-md-4">
                 <div class="text-center">
                     <div class="input-group">
-                            <input type="text" class="form-control voice_reading_text" placeholder="品名"
+                            <input type="text" class="form-control voice_reading_text" placeholder="メーカー名入力してください"
                             aria-describedby="basic-addon2">
                                                     <span class="input-group-addon voice_icon_group" id="basic-addon2">
                                 <span id="voice_reset_btn" class="material-icons show voice_start custom_voice_img">

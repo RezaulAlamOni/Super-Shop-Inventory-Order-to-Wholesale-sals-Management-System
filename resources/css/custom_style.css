@@ -32,6 +32,9 @@
     text-align: right;
     font-size: 20px !important;
         }
+        .brand_tble_header_content th{
+            font-size: 20px !important;
+        }
         #inventory_details_qty_bysuplierid {
             width: 100%;
             overflow: hidden;
