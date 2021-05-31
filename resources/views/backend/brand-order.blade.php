@@ -36,7 +36,7 @@
                     <ul class="top_page_btn_list_jacos list-inline">
                         <li><a href="home" class="btn btn-danger btn-lg">業務選択</a></li>
                         <li><a href="shipment" class="btn btn-warning btn-lg">履歴</a></li>
-                        <li><a href="{{config('app.url').'/brand-order-detail'}}" class="btn btn-warning btn-lg">完了</a></li>
+                        <li><a href="{{config('app.url').'/brand-order-detail'}}" class="btn btn-success btn-lg">入力完了リスト</a></li>
                         <!-- <li>
                             <button class="btn customer_list_show_popup btn-warning btn-lg">店舗</button>
                         </li> -->
