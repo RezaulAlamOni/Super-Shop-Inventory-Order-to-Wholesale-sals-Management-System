@@ -34,16 +34,15 @@
                 <input type="hidden" value="0" class="customer_manual_order_status">
                 <div class="top_btn_list">
                     <ul class="top_page_btn_list_jacos list-inline">
-                        <li><a href="#" delete_st="0" class="btn btn-danger btn-lg delete_entry">行削除</a></li>
                         <li><a href="home" class="btn btn-danger btn-lg">業務選択</a></li>
                         <li><a href="shipment" class="btn btn-warning btn-lg">履歴</a></li>
-                        <li><a href="#" class="btn btn-warning btn-lg">完了</a></li>
+                        <li><a href="{{config('app.url').'/brand-order-detail'}}" class="btn btn-warning btn-lg">完了</a></li>
                         <!-- <li>
                             <button class="btn customer_list_show_popup btn-warning btn-lg">店舗</button>
                         </li> -->
                         <li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
                         <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left">右へ移動</a></li>
-                        <li><button class="btn customBackBtn btn-info btn-lg pull-right mt-1 ">戻る</button></li>
+                        <li><button class="btn customBackBtn btn-info btn-lg pull-right ">戻る</button></li>
 
                     </ul>
 

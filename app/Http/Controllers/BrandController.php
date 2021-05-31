@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\customer;
+use App\customer_shop;
 use App\customer_item;
 use App\vendor_item;
 use App\jan;
@@ -38,12 +39,14 @@ class BrandController extends Controller
 
         return view('backend.brand-order', compact('title', 'active','brands','all_customer_list'));
     }
-    public function brand_details($id)
+    public function brand_details($id=0,$shop_id=0)
     {
+        
         $title = "Oline Order";
         $active = 'onlinerder';
         $all_customer_list=customer::where('is_deleted', 0)->get();
         $specific_customer_info=customer::where('customer_id',$id)->first();
+        $specific_shop_info=customer_shop::where('customer_id',$id)->first();
         $brands = [
 'コカ・コーラ　コカ・コーラ', 
 'コカ・コーラ　アクエリアス', 

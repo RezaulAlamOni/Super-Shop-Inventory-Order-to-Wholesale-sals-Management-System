@@ -192,7 +192,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 
 //	brand order
     Route::get('/brand-order/{id?}', 'BrandController@index')->name('brand');
-    Route::get('/brand-order-detail/{id?}', 'BrandController@brand_details')->name('brand');
+    Route::get('/brand-order-detail/{id?}/{shop_id?}', 'BrandController@brand_details')->name('brand');
 
 
 	/* shimpent order */
@@ -221,6 +221,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/get_customer_base_manual_order_item', 'Customer_menual_orderController@get_customer_base_manual_order_item');
 	Route::post('/get_shop_list_by_customer_id', 'Customer_menual_orderController@get_shop_list_by_customer_id');
 	Route::post('/get_shop_item_list_by_customer_id', 'Customer_menual_orderController@get_shop_item_list_by_customer_id');
+	Route::post('/get_shop_updated_item_list_by_customer_id', 'Customer_menual_orderController@get_shop_updated_item_list_by_customer_id');
 	Route::post('/get_jn_info_by_jn_code', 'Customer_menual_orderController@get_jn_info_by_jn_code');
 	Route::post('/shop_store', 'CustomerShopController@store');
 	Route::post('/item_search_by_name', 'VendorController@item_search_by_name');

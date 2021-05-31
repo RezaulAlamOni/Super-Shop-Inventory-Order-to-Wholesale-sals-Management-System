@@ -90,6 +90,13 @@ $(document).ready(function () {
         var start_date = $('#vendor_start_date').val();
         var end_date = $('#vendor_end_date').val();
         get_management_vendor_data_list_tonya(vendor_id , start_date, end_date, mesg_status = 0, order_by = 0);
+    } else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
+        var u_c_id=1;
+        var u_c_name='A スーパー ・ B 店';
+        $('.c_ids_v').val(u_c_id);
+        $('.jcs_main_hand_title').text(u_c_name);
+        $('.jcs_main_hand_title').attr('data_page_num',2);
+        get_brand_updated_item_list(u_c_id, u_c_name);
     }
 
     $('.change_rack_type').click(function (e) {
@@ -2207,6 +2214,13 @@ $(document).ready(function () {
             $('.jcs_main_hand_title').text(c_name);
             $('.jcs_main_hand_title').attr('data_page_num',2);
             get_brand_item_list(c_id, c_name);
+        } else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
+            var u_c_id=1;
+            var u_c_name='A スーパー ・ B 店';
+            $('.c_ids_v').val(u_c_id);
+            $('.jcs_main_hand_title').text(u_c_name);
+            $('.jcs_main_hand_title').attr('data_page_num',2);
+            get_brand_updated_item_list(u_c_id, u_c_name);
         } else {
             view_customer_master_by_customer_id(c_id, c_name);
         }
@@ -5078,7 +5092,101 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
 }
 
 // brand order
+//brand updatedItemList
+function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
+    var brand_name = '';
+    var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
+   // var currnt_brand_list= '店 A,店 B,店 C,店 D';
 
+   $.ajax({
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    },
+    url: "get_shop_updated_item_list_by_customer_id",
+    type: "POST",
+    dataType: "JSON",
+    data: {customer_id: c_id,voice_text:voice_text},
+    success: function (response) {
+            var brand_name = '';
+            var p = 1;
+            var numberOfOrder = 100;
+
+            /*make array two arrays*/
+            var arrays1 = response.shop_item_list.slice(response.shop_item_list.length / 2);
+            var arrays2 = response.shop_item_list.slice(0,response.shop_item_list.length / 2);
+            console.log(arrays1);
+            console.log(arrays2);
+            /*make array two arrays*/
+            if(arrays1.length>arrays2.length){
+                var largeArray=arrays1;
+                var smallArray=arrays2;
+            }else{
+                var largeArray=arrays2;
+                var smallArray=arrays1;
+            }
+            var rightBarorderFrequency = 100-largeArray.length;
+            for (var i = 0; i < (largeArray.length); i++) {
+                var searchTextFound1 = 'searchTextNotFound';
+                var searchTextFound2 = 'searchTextNotFound';
+                if(voice_text!=''){
+                    if(largeArray[i].name.indexOf(voice_text) != -1){
+                        searchTextFound1 = 'searchTextFound';
+                    }
+                }
+                brand_name +='<tr class="shopBrandListitem">';
+               // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
+                //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
+                brand_name += '<td class="'+searchTextFound1+'" style="text-align: left; width:40%">' + largeArray[i].name + '</td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
+                console.log(i+','+smallArray.length)
+                if(i<smallArray.length){
+                    if(voice_text!=''){
+                        if(smallArray[i].name.indexOf(voice_text) != -1){
+                            searchTextFound2 = 'searchTextFound';
+                        }
+                    }
+                    brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ rightBarorderFrequency-- +'</td>';
+                }else{
+                    brand_name += '<td style="text-align: left; width:40%"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"></td>';
+                }
+                brand_name +='</tr>';
+            }
+            $(".brand_order_updated_tble").html(brand_name);
+            $('#customer_shop_list_modal').modal('hide');
+            const temps_messagessss = {
+
+                bran_item_list_show_message: {
+                    message: [
+                        {message: '１、前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています'},
+                        {message: '２、メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます'},
+                    ],
+                    buttons: [
+                        {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
+                    ]
+                },
+            }
+            nav_width = '400px';
+            display_positionX = '15px';
+            display_positionY = '15px';
+            success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
+    }
+});
+
+
+
+}
+//brand updatedItemList
 function searchBrandOrderByText(text) {
     if (text.length <= 0) {
         return 0;

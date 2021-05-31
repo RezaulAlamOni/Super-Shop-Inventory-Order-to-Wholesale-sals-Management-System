@@ -160,10 +160,32 @@ class Customer_menual_orderController extends Controller
             $shop_item_list = $shop_item_list->where('customer_items.customer_id',$customer_id);
         }
         if (isset($request->voice_text)){
+            $voice_text = $request->voice_text;
+            if($voice_text=="サントリー"){
+                //$voice_text = substr($voice_text,0,-1);
+                //$voice_text = substr_replace($voice_text, "", -1);
+                $voice_text = str_replace('ー','',$voice_text);
+
+            }
+           // $shop_item_list = $shop_item_list->orderByRaw('jans.name like %'.$request->voice_text.'%');
+            $shop_item_list = $shop_item_list->orderByRaw('jans.name like "%'.$voice_text.'%" desc');
+        }
+        $shop_item_list =$shop_item_list->groupBy('customer_items.jan')->get();
+        $result = response()->json(['shop_item_list' => $shop_item_list]);
+        return $result;
+    }
+    public function get_shop_updated_item_list_by_customer_id(Request $request)
+    {
+        $customer_id = $request->customer_id;
+        $shop_item_list = customer_item::Join('jans', 'jans.jan', '=', 'customer_items.jan');
+        if($customer_id!=0){
+            $shop_item_list = $shop_item_list->where('customer_items.customer_id',$customer_id);
+        }
+        if (isset($request->voice_text)){
            // $shop_item_list = $shop_item_list->orderByRaw('jans.name like %'.$request->voice_text.'%');
             $shop_item_list = $shop_item_list->orderByRaw('jans.name like "%'.$request->voice_text.'%" desc');
         }
-        $shop_item_list =$shop_item_list->groupBy('customer_items.jan')->get();
+        $shop_item_list =$shop_item_list->groupBy('customer_items.jan')->limit(3)->get();
         $result = response()->json(['shop_item_list' => $shop_item_list]);
         return $result;
     }
