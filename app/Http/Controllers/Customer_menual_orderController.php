@@ -161,12 +161,12 @@ class Customer_menual_orderController extends Controller
         }
         if (isset($request->voice_text)){
             $voice_text = $request->voice_text;
-            if($voice_text=="サントリー"){
+            //if($voice_text=="サントリー"){
                 //$voice_text = substr($voice_text,0,-1);
                 //$voice_text = substr_replace($voice_text, "", -1);
-                $voice_text = str_replace('ー','',$voice_text);
+                //$voice_text = str_replace('ー','',$voice_text);
 
-            }
+          //  }
            // $shop_item_list = $shop_item_list->orderByRaw('jans.name like %'.$request->voice_text.'%');
             $shop_item_list = $shop_item_list->orderByRaw('jans.name like "%'.$voice_text.'%" desc');
         }

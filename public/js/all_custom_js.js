@@ -5762,7 +5762,9 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
     var brand_name = '';
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
-
+    if(voice_text!='' && voice_text=='サントリー'){
+        voice_text = voice_text.replace("ー", ""); 
+    }
    $.ajax({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -5858,7 +5860,9 @@ function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
     var brand_name = '';
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
-
+   if(voice_text!='' && voice_text=='サントリー'){
+    voice_text = voice_text.replace("ー", ""); 
+}
    $.ajax({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
