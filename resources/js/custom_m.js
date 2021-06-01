@@ -411,13 +411,16 @@ $(document).ready(function () {
     $(document).delegate('.shopListitem', 'click', function (e) {
         var cus_name =  $('.jcs_main_hand_title').text();
         var cId_val = $(this).closest('tr').attr('customer-id');
+        var sId_val = $(this).closest('tr').attr('shop-id');
         var shpname = $(this).closest('tr').find('td:nth-child(1)').text();
         var cus_shpneame = cus_name+' ・ '+shpname;
         $('.jcs_main_hand_title').text('');
         $('.jcs_main_hand_title').text(cus_shpneame);
         $('.jcs_main_hand_title').attr('data_page_num',1);
         $('.c_ids_v').val(cId_val);
+        $('.s_ids_v').val(sId_val);
         $('.c_ids_name').val(cus_shpneame);
+        $('.s_ids_name').val(shpname);
         get_brand_shop_brand_list(cId_val,cus_name);
     });
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
@@ -3239,6 +3242,60 @@ $(document).ready(function () {
             },
             type: "POST",
             url: "shipment_csv_insert",
+            data: formData,
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            dataType: "JSON",
+            success: function (response) {
+                console.log(response);
+                if (response.success != 1) {
+                    const tempmsg = {
+                        csv_import: {
+                            message: [
+                                {message: response.message}
+                            ],
+                            buttons: [{button: '<center><a href="javascript:close_default_page_navi(909)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}]
+                        }
+                    }
+                    nav_width = '300px';
+                    display_positionX = '15px';
+                    display_positionY = '15px';
+                    error_nav = view(tempmsg['csv_import'], def_center_mesg_template);
+                    show_hide_nav_icn(0);
+                } else {
+                    //location.reload();
+                }
+
+            }
+        });
+
+    });
+    $(document).delegate('#shipment_csv_input_brand', 'change', function () {
+        // $('#shipment_csv_input').change(function() {
+        var fileInput = $(this).val();
+        var ext = checkFileExt(fileInput);
+        if (ext != "csv") {
+            alert('受注データを選択してください');
+            return false;
+        }
+        var file_size = $(this)[0].files[0].size / 1024 / 1024;
+        if (file_size > 30) {
+            alert("Big File Size: " + file_size);
+            return false;
+        }
+        // var f_data = new FormData('#shipment_csv_form');
+        // console.log(f_data);
+        var formData = new FormData();
+        formData.append('file', $(this)[0].files[0]);
+        // console.log(formData);
+        // return 0;
+        $('#shipment_js_message').html('<center><img src="' + Globals.base_url + 'public/backend/images/ajax-loader.gif"></center>');
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            },
+            type: "POST",
+            url: "shipment_csv_insert_brand",
             data: formData,
             processData: false, // tell jQuery not to process the data
             contentType: false, // tell jQuery not to set contentType

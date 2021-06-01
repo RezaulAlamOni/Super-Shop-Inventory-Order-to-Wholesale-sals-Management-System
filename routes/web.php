@@ -167,6 +167,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/receive_order_update', 'ReceiveorderController@update');
 
 	Route::post('/shipment_csv_insert', 'ShipmentCsvController@ShipmentCsvInsert');
+	Route::post('/shipment_csv_insert_brand', 'ShipmentCsvController@ShipmentCsvInsert_brand');
 	Route::post('/customer_manul_order_insert_by_jan_code', 'ShipmentCsvController@customer_manul_order_insert_by_jan_code');
 
 	Route::post('/vendor_arival_insert', 'HandyrController@vendor_arival_insert');
@@ -219,6 +220,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::get('/manualOrder', 'Customer_menual_orderController@index');
 	Route::get('/onlineorder', 'Customer_menual_orderController@onlineorder');
 	Route::post('/get_customer_base_manual_order_item', 'Customer_menual_orderController@get_customer_base_manual_order_item');
+	Route::post('/update_csv_order_data', 'Customer_menual_orderController@update_csv_order_data');
 	Route::post('/get_shop_list_by_customer_id', 'Customer_menual_orderController@get_shop_list_by_customer_id');
 	Route::post('/get_shop_item_list_by_customer_id', 'Customer_menual_orderController@get_shop_item_list_by_customer_id');
 	Route::post('/get_shop_updated_item_list_by_customer_id', 'Customer_menual_orderController@get_shop_updated_item_list_by_customer_id');

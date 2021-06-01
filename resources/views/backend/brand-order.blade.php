@@ -32,6 +32,8 @@
             <div class="col-md-7 col-sm-7 mb-0 text-right">
                 <input type="hidden" value="0" class="c_ids_v">
                 <input type="hidden" value="" class="c_ids_name">
+                <input type="hidden" value="0" class="s_ids_v">
+                <input type="hidden" value="" class="s_ids_name">
                 <input type="hidden" value="0" class="customer_manual_order_status">
                 <div class="top_btn_list">
                     <ul class="top_page_btn_list_jacos list-inline">
@@ -86,7 +88,10 @@
         <div class="row">
 
         <!-- menual_order_tble -->
-
+        <div class="col-12 text-right">
+		<button class="btn btn-success">受注データ取込</button>
+		<input type="file" id="shipment_csv_input_brand" name="shipment_csv" accept=".csv">
+	</div>
             <div class="clearboth"></div>
             <div class="col-md-12 menual_order_receive_table">
                 <div id="brand_order_table_entry" style="margin:0">

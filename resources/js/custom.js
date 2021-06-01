@@ -3727,6 +3727,27 @@ $(document).ready(function () {
     })
 
     $(document).delegate(".brndOrderInputQty", "blur", function (e) {
+
+        var row_id = $(this).attr('row_id');
+        var field_name = $(this).attr('field_name');
+        var vl = $(this).val();
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            },
+            url: "update_csv_order_data",
+            type: "POST",
+            dataType: "JSON",
+            data: {row_id:row_id,field_name:field_name,vl:vl},
+            success: function (response) {
+                 console.log(response);
+                
+
+            }
+        });
+
+
         const temps_messagesssssss = {
 
             bran_item_list_input_message: {
@@ -5004,6 +5025,7 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
     if(voice_text!='' && voice_text=='サントリー'){
         voice_text = voice_text.replace("ー", ""); 
     }
+    var shop_id = $('.s_ids_v').val();
    $.ajax({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -5011,15 +5033,17 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
     url: "get_shop_item_list_by_customer_id",
     type: "POST",
     dataType: "JSON",
-    data: {customer_id: c_id,voice_text:voice_text},
+    data: {customer_id: c_id,voice_text:voice_text,shop_id:shop_id},
     success: function (response) {
             var brand_name = '';
             var p = 1;
             var numberOfOrder = 100;
 
             /*make array two arrays*/
-            var arrays1 = response.shop_item_list.slice(response.shop_item_list.length / 2);
-            var arrays2 = response.shop_item_list.slice(0,response.shop_item_list.length / 2);
+            var half_length = Math.ceil(response.shop_item_list.length / 2);    
+//var leftSide = arrayName.splice(0,half_length);
+            var arrays1 = response.shop_item_list.slice(0,Math.ceil(response.shop_item_list.length / 2));
+            var arrays2 = response.shop_item_list.slice(Math.ceil(response.shop_item_list.length / 2),response.shop_item_list.length);
             console.log(arrays1);
             console.log(arrays2);
             /*make array two arrays*/
@@ -5043,10 +5067,10 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
                // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
                 //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
                 brand_name += '<td class="'+searchTextFound1+'" style="text-align: left; width:40%">' + largeArray[i].name + '</td>';
-                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="" class="form-control brndOrderInputQty"></td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ largeArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+  largeArray[i].selling_price  +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+  largeArray[i].cost_price  +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].total_quantity +'</td>';
                 console.log(i+','+smallArray.length)
                 if(i<smallArray.length){
                     if(voice_text!=''){
@@ -5055,10 +5079,10 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
                         }
                     }
                     brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%">'+ rightBarorderFrequency-- +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ smallArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+ smallArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ smallArray[i].total_quantity +'</td>';
                 }else{
                     brand_name += '<td style="text-align: left; width:40%"></td>';
                     brand_name += '<td style="text-align: right;width:10%"></td>';
@@ -5102,6 +5126,7 @@ function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
    if(voice_text!='' && voice_text=='サントリー'){
     voice_text = voice_text.replace("ー", ""); 
 }
+var shop_id = 1;//$('.s_ids_v').val();
    $.ajax({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -5109,15 +5134,15 @@ function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
     url: "get_shop_updated_item_list_by_customer_id",
     type: "POST",
     dataType: "JSON",
-    data: {customer_id: c_id,voice_text:voice_text},
+    data: {customer_id: c_id,voice_text:voice_text,shop_id:shop_id},
     success: function (response) {
             var brand_name = '';
             var p = 1;
             var numberOfOrder = 100;
 
             /*make array two arrays*/
-            var arrays1 = response.shop_item_list.slice(response.shop_item_list.length / 2);
-            var arrays2 = response.shop_item_list.slice(0,response.shop_item_list.length / 2);
+            var arrays1 = response.shop_item_list.slice(0,Math.ceil(response.shop_item_list.length / 2));
+            var arrays2 = response.shop_item_list.slice(Math.ceil(response.shop_item_list.length / 2),response.shop_item_list.length);
             console.log(arrays1);
             console.log(arrays2);
             /*make array two arrays*/
@@ -5141,10 +5166,10 @@ function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
                // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
                 //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
                 brand_name += '<td class="'+searchTextFound1+'" style="text-align: left; width:40%">' + largeArray[i].name + '</td>';
-                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="" class="form-control brndOrderInputQty"></td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ numberOfOrder-- +'</td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ largeArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ largeArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ largeArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].total_quantity +'</td>';
                 console.log(i+','+smallArray.length)
                 if(i<smallArray.length){
                     if(voice_text!=''){
@@ -5153,10 +5178,10 @@ function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
                         }
                     }
                     brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ Math.floor(Math.random() * 100) +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%">'+ rightBarorderFrequency-- +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ smallArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ smallArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ smallArray[i].total_quantity +'</td>';
                 }else{
                     brand_name += '<td style="text-align: left; width:40%"></td>';
                     brand_name += '<td style="text-align: right;width:10%"></td>';

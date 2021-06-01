@@ -2077,7 +2077,9 @@
         }
 
         #shipment_csv_input,
-        #shipment_csv_input_nav {
+        #shipment_csv_input_nav,
+        #shipment_csv_input_brand
+         {
             position: absolute;
             right: 15px;
             top: 0px;

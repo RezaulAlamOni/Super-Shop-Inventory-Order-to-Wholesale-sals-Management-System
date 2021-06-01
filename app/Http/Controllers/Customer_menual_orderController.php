@@ -152,31 +152,59 @@ class Customer_menual_orderController extends Controller
         $result = response()->json(['shop_list' => $shop_list]);
         return $result;
     }
+    public function update_csv_order_data(Request $request){
+        $row_id = $request->row_id;
+        $field_name = $request->field_name;
+        $vl = $request->vl;
+        customer_order_detail::where('customer_order_detail_id',$row_id)->update(['update_status'=>'1',$field_name=>$vl]);
+        return response()->json(['success' => 1]);
+    }
     public function get_shop_item_list_by_customer_id(Request $request)
     {
         $customer_id = $request->customer_id;
+        $id = $request->customer_id;
+        $shop_id = $request->shop_id;
+        $voice_text = $request->voice_text;
         $shop_item_list = customer_item::Join('jans', 'jans.jan', '=', 'customer_items.jan');
         if($customer_id!=0){
             $shop_item_list = $shop_item_list->where('customer_items.customer_id',$customer_id);
         }
-        if (isset($request->voice_text)){
-            $voice_text = $request->voice_text;
-            //if($voice_text=="サントリー"){
-                //$voice_text = substr($voice_text,0,-1);
-                //$voice_text = substr_replace($voice_text, "", -1);
-                //$voice_text = str_replace('ー','',$voice_text);
-
-          //  }
-           // $shop_item_list = $shop_item_list->orderByRaw('jans.name like %'.$request->voice_text.'%');
+        if (isset($voice_text)){
             $shop_item_list = $shop_item_list->orderByRaw('jans.name like "%'.$voice_text.'%" desc');
         }
         $shop_item_list =$shop_item_list->groupBy('customer_items.jan')->get();
-        $result = response()->json(['shop_item_list' => $shop_item_list]);
+
+/*csv order list*/
+$wh = 'ORDER BY jans.name like "%'.$voice_text.'%" desc,total_quantity DESC';
+$online_order = collect(\DB::select("select 
+customer_shipments.confirm_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity,
+ stock_items.ball_quantity, stock_items.unit_quantity,jans.name,
+(CASE WHEN customer_order_details.inputs = 'ケース' THEN jans.case_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'ボール' THEN jans.ball_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'バラ' THEN customer_order_details.quantity END) AS total_quantity
+from customer_orders
+ inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id
+            inner join jans on jans.jan = customer_order_details.jan
+            inner join vendor_items on jans.jan=vendor_items.jan
+left join stock_items on vendor_items.vendor_item_id = stock_items.vendor_item_id
+left join customer_shipments on customer_shipments.customer_order_detail_id = customer_order_details.customer_order_detail_id
+             where customer_orders.customer_id = '".$id."' and customer_orders.customer_shop_id='".$shop_id."' and (customer_orders.status='未出荷' || customer_orders.status='確定済み') and customer_orders.category = 'edi' $wh
+            "));
+            $order_array =array();
+            if($online_order){
+                foreach($online_order as $order){
+                    $order_array[$order->jan][]=$order;
+                }
+            }
+/*csv order list*/
+
+        $result = response()->json(['shop_item_list' => $online_order,'order_item'=>$shop_item_list]);
         return $result;
     }
     public function get_shop_updated_item_list_by_customer_id(Request $request)
     {
         $customer_id = $request->customer_id;
+        $id = $request->customer_id;
+        $shop_id = $request->shop_id;
+        $voice_text = $request->voice_text;
         $shop_item_list = customer_item::Join('jans', 'jans.jan', '=', 'customer_items.jan');
         if($customer_id!=0){
             $shop_item_list = $shop_item_list->where('customer_items.customer_id',$customer_id);
@@ -186,7 +214,28 @@ class Customer_menual_orderController extends Controller
             $shop_item_list = $shop_item_list->orderByRaw('jans.name like "%'.$request->voice_text.'%" desc');
         }
         $shop_item_list =$shop_item_list->groupBy('customer_items.jan')->limit(3)->get();
-        $result = response()->json(['shop_item_list' => $shop_item_list]);
+        /*csv order list*/
+$wh = 'ORDER BY jans.name like "%'.$voice_text.'%" desc,total_quantity DESC';
+$online_order = collect(\DB::select("select 
+customer_shipments.confirm_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity,
+ stock_items.ball_quantity, stock_items.unit_quantity,jans.name,
+(CASE WHEN customer_order_details.inputs = 'ケース' THEN jans.case_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'ボール' THEN jans.ball_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'バラ' THEN customer_order_details.quantity END) AS total_quantity
+from customer_orders
+ inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id
+            inner join jans on jans.jan = customer_order_details.jan
+            inner join vendor_items on jans.jan=vendor_items.jan
+left join stock_items on vendor_items.vendor_item_id = stock_items.vendor_item_id
+left join customer_shipments on customer_shipments.customer_order_detail_id = customer_order_details.customer_order_detail_id
+             where customer_orders.customer_id = '".$id."' and customer_orders.customer_shop_id='".$shop_id."' and (customer_orders.status='未出荷' || customer_orders.status='確定済み') and customer_orders.category = 'edi' and customer_order_details.update_status = '1' $wh
+            "));
+            $order_array =array();
+            if($online_order){
+                foreach($online_order as $order){
+                    $order_array[$order->jan][]=$order;
+                }
+            }
+/*csv order list*/
+        $result = response()->json(['shop_item_list' =>$online_order,'order_item'=>$shop_item_list]);
         return $result;
     }
     public function get_customer_janinfo(Request $request)
