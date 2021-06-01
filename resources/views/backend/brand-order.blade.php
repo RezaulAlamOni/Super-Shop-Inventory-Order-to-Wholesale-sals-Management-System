@@ -21,7 +21,8 @@
                                                                   style="color:#fff" href="manualOrder">手書</a></button>
 
                 </div>
-                <p class="hmdate">納品日　<?php echo date("m", time());?>月<?php echo date("d", time());?>日</p>
+                <p class="hmdate" style="margin-bottom:10px;">納品日　<?php echo date("m", time());?>月<?php echo date("d", time());?>日</p>
+                <h1 class="brandPageTitlte">商品選択画面</h1>
 {{--                <div style="display: flex">--}}
 {{--                    <p class="shps_byrsplrs">販売先名<span data_page_num="0" class="jcs_main_hand_title"></span>殿 </p>--}}
 {{--                    <bar-code-scan base_url="{{config('app.url')}}" page="brand-order"></bar-code-scan>--}}
