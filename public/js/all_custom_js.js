@@ -851,14 +851,14 @@ $(document).ready(function () {
         var start_date = $('#vendor_start_date').val();
         var end_date = $('#vendor_end_date').val();
         get_management_vendor_data_list_tonya(vendor_id , start_date, end_date, mesg_status = 0, order_by = 0);
-    } else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
+    } /*else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
         var u_c_id=1;
         var u_c_name='A スーパー ・ B 店';
         $('.c_ids_v').val(u_c_id);
         $('.jcs_main_hand_title').text(u_c_name);
         $('.jcs_main_hand_title').attr('data_page_num',2);
         get_brand_updated_item_list(u_c_id, u_c_name);
-    }
+    }*
 
     $('.change_rack_type').click(function (e) {
         var curr_status = parseInt($(this).attr('data_status'));
@@ -2970,25 +2970,27 @@ $(document).ready(function () {
             $('.c_ids_v').val(c_id);
             $('.jcs_main_hand_title').text(c_name);
             get_manual_order_item(c_id, c_name);
-        } else if (url_last_element == 'brand-order' || url_last_element == 'brand-order#') {
+        } else if (url_last_element == 'brand-order' || url_last_element == 'brand-order#' || url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
             $('.c_ids_v').val(c_id);
             $('.jcs_main_hand_title').text(c_name);
             $('.jcs_main_hand_title').attr('data_page_num',2);
             get_brand_item_list(c_id, c_name);
-        } else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
-            var u_c_id=1;
-            var u_c_name='A スーパー ・ B 店';
-            $('.c_ids_v').val(u_c_id);
-            $('.jcs_main_hand_title').text(u_c_name);
-            $('.jcs_main_hand_title').attr('data_page_num',2);
-            get_brand_updated_item_list(u_c_id, u_c_name);
-        } else {
+        }  else {
             view_customer_master_by_customer_id(c_id, c_name);
         }
         show_hide_nav_icn(1);
     });
 
-
+/*brnd detail*/
+// else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
+//     var u_c_id=1;
+//     var u_c_name='A スーパー ・ B 店';
+//     $('.c_ids_v').val(u_c_id);
+//     $('.jcs_main_hand_title').text(u_c_name);
+//     $('.jcs_main_hand_title').attr('data_page_num',2);
+//     get_brand_updated_item_list(u_c_id, u_c_name);
+// }
+/*brnd detail*/
     /* filter by customer_id */
 
 
@@ -5887,7 +5889,7 @@ function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
    if(voice_text!='' && voice_text=='サントリー'){
     voice_text = voice_text.replace("ー", ""); 
 }
-var shop_id = 1;//$('.s_ids_v').val();
+var shop_id = $('.s_ids_v').val();
    $.ajax({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -7474,6 +7476,7 @@ $(document).ready(function () {
         }
     })
     $(document).delegate('.shopListitem', 'click', function (e) {
+        var page_url = url_search();
         var cus_name =  $('.jcs_main_hand_title').text();
         var cId_val = $(this).closest('tr').attr('customer-id');
         var sId_val = $(this).closest('tr').attr('shop-id');
@@ -7486,7 +7489,12 @@ $(document).ready(function () {
         $('.s_ids_v').val(sId_val);
         $('.c_ids_name').val(cus_shpneame);
         $('.s_ids_name').val(shpname);
-        get_brand_shop_brand_list(cId_val,cus_name);
+        if(page_url=='brand-order' || page_url=='brand-order#' ){
+            get_brand_shop_brand_list(cId_val,cus_name);
+        }else{
+            get_brand_updated_item_list(cId_val,cus_name);
+        }
+        
     });
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
         e.preventDefault();
@@ -11346,6 +11354,15 @@ function show_default_page_notifications() {
             vendor_master_default_nav = view(message_notify_default['vendor_master2'], def_old_nav_template);
             break;
         case 'brand-order':
+            close_all_navi_msg();
+            show_hide_nav_icn(0);
+            get_customer_list();
+            $('#customer_message_success').html('');
+            $("#add_customer_message").html('');
+            $("#update_customer_message_fail").html('');
+            $("#customer_show_modal").modal("show");
+         break;
+        case 'brand-order-detail':
             close_all_navi_msg();
             show_hide_nav_icn(0);
             get_customer_list();

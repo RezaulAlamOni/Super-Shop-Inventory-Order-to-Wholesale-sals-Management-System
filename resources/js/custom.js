@@ -90,14 +90,14 @@ $(document).ready(function () {
         var start_date = $('#vendor_start_date').val();
         var end_date = $('#vendor_end_date').val();
         get_management_vendor_data_list_tonya(vendor_id , start_date, end_date, mesg_status = 0, order_by = 0);
-    } else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
+    } /*else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
         var u_c_id=1;
         var u_c_name='A スーパー ・ B 店';
         $('.c_ids_v').val(u_c_id);
         $('.jcs_main_hand_title').text(u_c_name);
         $('.jcs_main_hand_title').attr('data_page_num',2);
         get_brand_updated_item_list(u_c_id, u_c_name);
-    }
+    }*
 
     $('.change_rack_type').click(function (e) {
         var curr_status = parseInt($(this).attr('data_status'));
@@ -2209,25 +2209,27 @@ $(document).ready(function () {
             $('.c_ids_v').val(c_id);
             $('.jcs_main_hand_title').text(c_name);
             get_manual_order_item(c_id, c_name);
-        } else if (url_last_element == 'brand-order' || url_last_element == 'brand-order#') {
+        } else if (url_last_element == 'brand-order' || url_last_element == 'brand-order#' || url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
             $('.c_ids_v').val(c_id);
             $('.jcs_main_hand_title').text(c_name);
             $('.jcs_main_hand_title').attr('data_page_num',2);
             get_brand_item_list(c_id, c_name);
-        } else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
-            var u_c_id=1;
-            var u_c_name='A スーパー ・ B 店';
-            $('.c_ids_v').val(u_c_id);
-            $('.jcs_main_hand_title').text(u_c_name);
-            $('.jcs_main_hand_title').attr('data_page_num',2);
-            get_brand_updated_item_list(u_c_id, u_c_name);
-        } else {
+        }  else {
             view_customer_master_by_customer_id(c_id, c_name);
         }
         show_hide_nav_icn(1);
     });
 
-
+/*brnd detail*/
+// else if (url_last_element == 'brand-order-detail' || url_last_element == 'brand-order-detail#') {
+//     var u_c_id=1;
+//     var u_c_name='A スーパー ・ B 店';
+//     $('.c_ids_v').val(u_c_id);
+//     $('.jcs_main_hand_title').text(u_c_name);
+//     $('.jcs_main_hand_title').attr('data_page_num',2);
+//     get_brand_updated_item_list(u_c_id, u_c_name);
+// }
+/*brnd detail*/
     /* filter by customer_id */
 
 
@@ -5126,7 +5128,7 @@ function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
    if(voice_text!='' && voice_text=='サントリー'){
     voice_text = voice_text.replace("ー", ""); 
 }
-var shop_id = 1;//$('.s_ids_v').val();
+var shop_id = $('.s_ids_v').val();
    $.ajax({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")

@@ -409,6 +409,7 @@ $(document).ready(function () {
         }
     })
     $(document).delegate('.shopListitem', 'click', function (e) {
+        var page_url = url_search();
         var cus_name =  $('.jcs_main_hand_title').text();
         var cId_val = $(this).closest('tr').attr('customer-id');
         var sId_val = $(this).closest('tr').attr('shop-id');
@@ -421,7 +422,12 @@ $(document).ready(function () {
         $('.s_ids_v').val(sId_val);
         $('.c_ids_name').val(cus_shpneame);
         $('.s_ids_name').val(shpname);
-        get_brand_shop_brand_list(cId_val,cus_name);
+        if(page_url=='brand-order' || page_url=='brand-order#' ){
+            get_brand_shop_brand_list(cId_val,cus_name);
+        }else{
+            get_brand_updated_item_list(cId_val,cus_name);
+        }
+        
     });
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
         e.preventDefault();
