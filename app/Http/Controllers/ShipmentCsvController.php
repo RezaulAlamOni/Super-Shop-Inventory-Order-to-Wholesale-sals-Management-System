@@ -153,6 +153,7 @@ class ShipmentCsvController extends Controller
         $dataArr = $this->csvReader($baseUrl);
         $customer_order_array=array();
         $error_item_list=array();
+        $error_item_duplicate=array();
        //return $dataArr;
         foreach ($dataArr as $key => $value) {
            
@@ -191,6 +192,10 @@ class ShipmentCsvController extends Controller
             $inputs_type = $value[9];
             if($inputs_type!='ケース' || $inputs_type!='ボール' || $inputs_type!='バラ'){
                 $inputs_type ='ケース';
+            }
+            $is_exist_customer_order = customer_order::join('customer_order_details','customer_order_details.customer_order_id','=','customer_orders.customer_order_id')->where(['customer_id'=>$customer_id,'customer_shop_id'=>$customer_shop_id,'customer_item_id'=>$customer_item_id,'status'=>'未出荷'])->orWhere('status','確定済み')->first();
+            if($is_exist_customer_order){
+                $error_item_duplicate[]=array('customer_item_id'=>$value[8]);
             }
             $customer_order_demo['customer_id']=$customer_id;
             $customer_order_demo['customer_shop_id']=$customer_shop_id;
@@ -250,9 +255,16 @@ class ShipmentCsvController extends Controller
         // return $customer_order_array;
         //customer_order::insert($customer_order_array);
         //customer_order_detail::insert($customer_order_detail_array);
+        if(count($error_item_duplicate)==0){
         Session::flash('message', '受注データの取り込みが完了しました'); 
         Session::flash('class_name', 'alert-success'); 
         return response()->json(['message' => '受注データの取り込みが完了しました','success'=>1]);
+    }else{
+        Session::flash('message', '同じデータを2回入力することはできません'); 
+        Session::flash('class_name', 'alert-success'); 
+        return response()->json(['message' => '同じデータを2回入力することはできません','success'=>0]);
+    }
+
     }
 
 
