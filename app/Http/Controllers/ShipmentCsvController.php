@@ -196,6 +196,7 @@ class ShipmentCsvController extends Controller
             $is_exist_customer_order = customer_order::join('customer_order_details','customer_order_details.customer_order_id','=','customer_orders.customer_order_id')->where(['customer_id'=>$customer_id,'customer_shop_id'=>$customer_shop_id,'customer_item_id'=>$customer_item_id,'status'=>'未出荷'])->orWhere('status','確定済み')->first();
             if($is_exist_customer_order){
                 $error_item_duplicate[]=array('customer_item_id'=>$value[8]);
+                continue;
             }
             $customer_order_demo['customer_id']=$customer_id;
             $customer_order_demo['customer_shop_id']=$customer_shop_id;
