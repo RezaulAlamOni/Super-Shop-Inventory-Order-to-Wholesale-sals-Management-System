@@ -5807,16 +5807,10 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
 //var leftSide = arrayName.splice(0,half_length);
             var arrays1 = response.shop_item_list.slice(0,Math.ceil(response.shop_item_list.length / 2));
             var arrays2 = response.shop_item_list.slice(Math.ceil(response.shop_item_list.length / 2),response.shop_item_list.length);
-            console.log(arrays1);
-            console.log(arrays2);
-            /*make array two arrays*/
-            if(arrays1.length>arrays2.length){
+            
                 var largeArray=arrays1;
                 var smallArray=arrays2;
-            }else{
-                var largeArray=arrays2;
-                var smallArray=arrays1;
-            }
+            
             var rightBarorderFrequency = 100-largeArray.length;
             for (var i = 0; i < (largeArray.length); i++) {
                 var searchTextFound1 = 'searchTextNotFound';
