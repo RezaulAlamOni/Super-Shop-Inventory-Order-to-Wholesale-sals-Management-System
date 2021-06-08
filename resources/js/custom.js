@@ -5027,6 +5027,9 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
     if(voice_text!='' && voice_text=='サントリー'){
         voice_text = voice_text.replace("ー", ""); 
     }
+    if(voice_text!='' && voice_text=='サントリ-'){
+        voice_text = voice_text.replace("-", ""); 
+    }
     var shop_id = $('.s_ids_v').val();
    $.ajax({
     headers: {
@@ -5044,12 +5047,26 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
             /*make array two arrays*/
             var half_length = Math.ceil(response.shop_item_list.length / 2);    
 //var leftSide = arrayName.splice(0,half_length);
-            var arrays1 = response.shop_item_list.slice(0,Math.ceil(response.shop_item_list.length / 2));
-            var arrays2 = response.shop_item_list.slice(Math.ceil(response.shop_item_list.length / 2),response.shop_item_list.length);
-            
+var arrays1 = [];
+var arrays2 = [];
+if(voice_text==''){
+             arrays1 = response.shop_item_list.slice(0,Math.ceil(response.shop_item_list.length / 2));
+             arrays2 = response.shop_item_list.slice(Math.ceil(response.shop_item_list.length / 2),response.shop_item_list.length);
+        }else{
+            for(var k=0;k<response.shop_item_list.length;k++){
+                if ( k % 2 == 0) {
+                    arrays1.push(response.shop_item_list[k]);
+                }else{
+                    arrays2.push(response.shop_item_list[k]);
+                }
+                
+            }
+        }  
+
                 var largeArray=arrays1;
                 var smallArray=arrays2;
-            
+            console.log(largeArray);
+            console.log(smallArray);
             var rightBarorderFrequency = 100-largeArray.length;
             for (var i = 0; i < (largeArray.length); i++) {
                 var searchTextFound1 = 'searchTextNotFound';
