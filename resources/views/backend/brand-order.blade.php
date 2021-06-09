@@ -106,12 +106,12 @@
                             <th width="10%">数量</th>
                             <th width="10%">売価</th>
                             <th width="10%">原価</th>
-                            <th width="10%">頻度順</th>
+                            <th width="10%" style="padding:0">頻度順</th>
                             <th width="40%">品名・メーカー・規格</th>
                             <th width="10%">数量</th>
                             <th width="10%">売価</th>
                             <th width="10%">原価</th>
-                            <th width="10%">頻度順</th>
+                            <th width="10%" style="padding:0">頻度順</th>
                         </tr>
 
                         </thead>
