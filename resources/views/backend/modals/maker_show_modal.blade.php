@@ -55,9 +55,9 @@
                 <h5 class="modal-title" id="maker_modal_heading">販売先一覧</h5>
                 <ul class="list-inline custom_header_button">
                         <button sup_buyer_type="1" class="btn btn-secondary pull-right customer_shop">店舗一覧</button>
-                        <button sup_buyer_type="1" class="btn btn-primary pull-right add_new_customer">追加</button>
-                        <button sup_buyer_type="1" class="btn btn-danger pull-right delete_new_vendor">削除</button>
+                        <button sup_buyer_type="1" class="btn btn-success pull-right add_new_customer">追加</button>
                         <button type="button" class="btn btn-warning" data-dismiss="modal">{{__('messages.close')}}</button>
+                        <button class="btn btn-primary custom_close_supa pull-right">戻る</button>
                 </ul>
                
             </div>
@@ -593,7 +593,9 @@
                 <h5 class="modal-title" id="maker_modal_heading">店一覧</h5>
                 <ul class="list-inline custom_header_button">
                         <button sup_buyer_type="1" class="btn btn-secondary pull-right customer_shop">店舗一覧</button>
+                       
                         <button type="button" class="btn btn-warning" data-dismiss="modal">{{__('messages.close')}}</button>
+                        <button class="btn btn-primary pull-right custom_close_shopList">戻る</button>
                 </ul>
             </div>
             <div class="panel-heading">

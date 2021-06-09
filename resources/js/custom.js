@@ -5049,19 +5049,26 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
 //var leftSide = arrayName.splice(0,half_length);
 var arrays1 = [];
 var arrays2 = [];
-if(voice_text==''){
-             arrays1 = response.shop_item_list.slice(0,Math.ceil(response.shop_item_list.length / 2));
-             arrays2 = response.shop_item_list.slice(Math.ceil(response.shop_item_list.length / 2),response.shop_item_list.length);
-        }else{
-            for(var k=0;k<response.shop_item_list.length;k++){
-                if ( k % 2 == 0) {
-                    arrays1.push(response.shop_item_list[k]);
-                }else{
-                    arrays2.push(response.shop_item_list[k]);
-                }
+// if(voice_text==''){
+//              arrays1 = response.shop_item_list.slice(0,Math.ceil(response.shop_item_list.length / 2));
+//              arrays2 = response.shop_item_list.slice(Math.ceil(response.shop_item_list.length / 2),response.shop_item_list.length);
+//         }else{
+//             for(var k=0;k<response.shop_item_list.length;k++){
+//                 if ( k % 2 == 0) {
+//                     arrays1.push(response.shop_item_list[k]);
+//                 }else{
+//                     arrays2.push(response.shop_item_list[k]);
+//                 }
                 
-            }
-        }  
+//             }
+//         }  
+for(var k=0;k<response.shop_item_list.length;k++){
+    if ( k % 2 == 0) {
+        arrays1.push(response.shop_item_list[k]);
+    }else{
+        arrays2.push(response.shop_item_list[k]);
+    }
+}
 
                 var largeArray=arrays1;
                 var smallArray=arrays2;
