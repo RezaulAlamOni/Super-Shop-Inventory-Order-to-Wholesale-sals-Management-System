@@ -5920,20 +5920,17 @@ var shop_id = $('.s_ids_v').val();
             var brand_name = '';
             var p = 1;
             var numberOfOrder = 100;
-
-            /*make array two arrays*/
-            var arrays1 = response.shop_item_list.slice(0,Math.ceil(response.shop_item_list.length / 2));
-            var arrays2 = response.shop_item_list.slice(Math.ceil(response.shop_item_list.length / 2),response.shop_item_list.length);
-            console.log(arrays1);
-            console.log(arrays2);
-            /*make array two arrays*/
-            if(arrays1.length>arrays2.length){
-                var largeArray=arrays1;
-                var smallArray=arrays2;
-            }else{
-                var largeArray=arrays2;
-                var smallArray=arrays1;
+            var arrays1=[];
+            var arrays2=[];
+            for(var k=0;k<response.shop_item_list.length;k++){
+                if ( k % 2 == 0) {
+                    arrays1.push(response.shop_item_list[k]);
+                }else{
+                    arrays2.push(response.shop_item_list[k]);
+                }
             }
+            var largeArray=arrays1;
+            var smallArray=arrays2;
             var rightBarorderFrequency = 100-largeArray.length;
             for (var i = 0; i < (largeArray.length); i++) {
                 var searchTextFound1 = 'searchTextNotFound';
@@ -7392,7 +7389,7 @@ $(document).ready(function () {
     if(page_url=='brand-order' || page_url=='brand-order#'){
         console.log(hide_enter_outside_brand.is(e.target));
         console.log(hide_enter_outside_brand.has(e.target).length);
-        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0) {
+        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0 && is_id_1 == 'jn_0') {
             setTimeout(function(){
             close_all_navi_msg();
             show_hide_nav_icn(1);

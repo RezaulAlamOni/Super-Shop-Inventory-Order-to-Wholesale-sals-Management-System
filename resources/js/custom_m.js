@@ -307,7 +307,7 @@ $(document).ready(function () {
     if(page_url=='brand-order' || page_url=='brand-order#'){
         console.log(hide_enter_outside_brand.is(e.target));
         console.log(hide_enter_outside_brand.has(e.target).length);
-        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0) {
+        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0 && is_id_1 == 'jn_0') {
             setTimeout(function(){
             close_all_navi_msg();
             show_hide_nav_icn(1);

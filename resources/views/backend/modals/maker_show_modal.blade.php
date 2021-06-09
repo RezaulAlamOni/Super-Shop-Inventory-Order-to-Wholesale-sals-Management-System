@@ -608,25 +608,28 @@
                         <thead>
                             <tr>
                                 <th class="change_table_th_title">店名</th>
-                                <th>電話</th>
+                               
                                 <th>コード</th>
+                                <th>電話</th>
                             </tr>
                         </thead>
                         <tbody class="customer_shop_list_item">
                             <tr class="shopListitem">
                                 <td>店 A</td>
-                                <td>0165685555</td>
+                                
                                 <td>2343221</td>
+                                <td>0165685555</td>
                             </tr>
                             <tr class="shopListitem">
                                 <td>店 B</td>
-                                <td>0165685555</td>
+                               
                                 <td>2343221</td>
+                                <td>0165685555</td>
                             </tr>
                             <tr class="shopListitem">
                                 <td>店 C</td>
-                                <td>0165685555</td>
                                 <td>2343221</td>
+                                <td>0165685555</td>
                             </tr>
                         </tbody>
                     </table>
