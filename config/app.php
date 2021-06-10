@@ -246,6 +246,7 @@ return [
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         //Laravel debugger
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'FastExcel' => Rap2hpoutre\FastExcel\Facades\FastExcel::class,
     ],
 
 ];

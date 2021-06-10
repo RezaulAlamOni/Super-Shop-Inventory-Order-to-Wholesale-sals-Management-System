@@ -4515,10 +4515,10 @@ $(document).ready(function () {
 
             bran_item_list_input_message: {
                 message: [
-                    {message: '入力されました'},
+                    {message: '入力完了しました<br>着色しています。'},
                 ],
                 buttons: [
-                    {button: '<center><a href="javascript:close_default_page_navi(5000)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
+                    {button: '<center><a href="'+Globals.base_url+'/brand-order-detail" class="btn btn-primary">確認</a><a href="javascript:close_default_page_navi(5000)" class="btn btn-primary">続ける</a></center>'}
                 ]
             },
         }
@@ -5839,7 +5839,7 @@ for(var k=0;k<response.shop_item_list.length;k++){
             for (var i = 0; i < (largeArray.length); i++) {
                 var searchTextFound1 = 'searchTextNotFound';
                 var searchTextFound2 = 'searchTextNotFound';
-                var updatedColorLg = (largeArray[i].update_status=="1"?'updated_yes':'updated_no'); 
+                var updatedColorLg = (largeArray[i].update_status=="1"?'updated_yes_off':'updated_no'); 
                 
                 if(voice_text!=''){
                     if(largeArray[i].name.indexOf(voice_text) != -1){
@@ -5861,7 +5861,7 @@ for(var k=0;k<response.shop_item_list.length;k++){
                             searchTextFound2 = 'searchTextFound';
                         }
                     }
-                    var updatedColorSm = (smallArray[i].update_status=="1"?'updated_yes':'updated_no'); 
+                    var updatedColorSm = (smallArray[i].update_status=="1"?'updated_yes_off':'updated_no'); 
                     brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
                     brand_name += '<td class="'+updatedColorSm+'" style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ smallArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
