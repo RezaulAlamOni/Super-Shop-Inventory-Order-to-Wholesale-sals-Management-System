@@ -5078,6 +5078,8 @@ for(var k=0;k<response.shop_item_list.length;k++){
             for (var i = 0; i < (largeArray.length); i++) {
                 var searchTextFound1 = 'searchTextNotFound';
                 var searchTextFound2 = 'searchTextNotFound';
+                var updatedColorLg = (largeArray[i].update_status=="1"?'updated_yes':'updated_no'); 
+                
                 if(voice_text!=''){
                     if(largeArray[i].name.indexOf(voice_text) != -1){
                         searchTextFound1 = 'searchTextFound';
@@ -5087,7 +5089,7 @@ for(var k=0;k<response.shop_item_list.length;k++){
                // brand_name +='<td  width="100px" style="text-align: center;">'+ p++ +'</td>';
                 //brand_name += '<td style="text-align: left;"><a href="'+base_url+'/brand-order-detail/'+p+'">' + substr[k] + '</a></td>';
                 brand_name += '<td class="'+searchTextFound1+'" style="text-align: left; width:40%">' + largeArray[i].name + '</td>';
-                brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ largeArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
+                brand_name += '<td class="'+updatedColorLg+'" style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ largeArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+  largeArray[i].selling_price  +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+  largeArray[i].cost_price  +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].total_quantity +'</td>';
@@ -5098,8 +5100,9 @@ for(var k=0;k<response.shop_item_list.length;k++){
                             searchTextFound2 = 'searchTextFound';
                         }
                     }
+                    var updatedColorSm = (smallArray[i].update_status=="1"?'updated_yes':'updated_no'); 
                     brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ smallArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td class="'+updatedColorSm+'" style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ smallArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+ smallArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%">'+ smallArray[i].total_quantity +'</td>';

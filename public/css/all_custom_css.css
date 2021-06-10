@@ -120,7 +120,9 @@
             vertical-align: middle !important;
         }
         /*inventory by suplier id list*/
-
+        .updated_yes{
+            background: #F3F885 !important;
+        }
         .percent_price {
             text-align: right;
         }
