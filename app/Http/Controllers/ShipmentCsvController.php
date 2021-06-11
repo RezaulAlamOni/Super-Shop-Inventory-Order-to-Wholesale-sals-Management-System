@@ -276,6 +276,129 @@ class ShipmentCsvController extends Controller
 
         $file->storeAs(config('const.CSV_UPLOAD_PATH'), $file_name);
         $baseUrl = storage_path().'/app/'.config('const.CSV_UPLOAD_PATH') . $file_name;
+        $dataArr = $this->csvReader_new($baseUrl);
+        $customer_order_array=array();
+        $error_item_list=array();
+        $error_item_duplicate=array();
+        foreach ($dataArr as $key => $value) {
+            $customer_id=$this->customer_search_byname($value[0]);
+            if($customer_id==null){
+                // @unlink($baseUrl);
+                // Session::flash('message', '未登録の販売先コードがあります：'.$value[3]); 
+                // Session::flash('class_name', 'alert-danger'); 
+                $error_item_list[]=array('customer_id'=>$value[0]);
+                continue;
+                // return response()->json(['message' => '未登録の販売先コードがあります：'.$value[3],'success'=>0]);
+            }
+            $customer_shop_id=$this->customer_shop_search_byname($value[1],$customer_id,$value[1]);
+            if($customer_shop_id==null){
+                // @unlink($baseUrl);
+                // Session::flash('message', 'shop code do not match：[shop code]'); 
+                // Session::flash('class_name', 'alert-danger'); 
+                // return response()->json(['message' => 'shop code do not match：'.$value[2],'success'=>0]);
+                $error_item_list[]=array('customer_shop_id'=>$value[1]);
+                continue;
+            }
+             $jan_code=$value[2];
+            $customer_item_id=$this->customer_item_search($jan_code,$customer_id);
+            if($customer_item_id==null){
+                // @unlink($baseUrl);
+                // Session::flash('message', 'jan code not exist：[jan code]'); 
+                // Session::flash('class_name', 'alert-danger'); 
+                // return response()->json(['message' => 'jan code not exist：'.$jan_code,'success'=>0]);
+                $error_item_list[]=array('customer_item_id'=>$value[2]);
+                continue;
+            }
+            $shipment_number=date('Y-m-d',strtotime($value[6]));
+            
+            $this->QR_var->folder_create('/app/public/shipment_numbers');
+            $this->QR_var->qr_code_gen($shipment_number,'/app/public/shipment_numbers');
+            $inputs_type = 'ケース';//$value[9];
+            if($inputs_type!='ケース' || $inputs_type!='ボール' || $inputs_type!='バラ'){
+                $inputs_type ='ケース';
+            }
+            $is_exist_customer_order = customer_order::join('customer_order_details','customer_order_details.customer_order_id','=','customer_orders.customer_order_id')->where(['customer_orders.customer_id'=>$customer_id,'customer_orders.customer_shop_id'=>$customer_shop_id,'customer_order_details.customer_item_id'=>$customer_item_id,'status'=>'未出荷'])->orWhere('status','確定済み')->first();
+            if($is_exist_customer_order){
+                $error_item_duplicate[]=array('customer_item_id'=>$value[2]);
+                continue;
+            }
+            $customer_order_demo['customer_id']=$customer_id;
+            $customer_order_demo['customer_shop_id']=$customer_shop_id;
+            $customer_order_demo['shipment_number']=$shipment_number;
+            $customer_order_demo['category']='edi';
+            $customer_order_demo['voucher_number']=date('YmdHis',strtotime($value[6]));//$value[4];
+            $customer_order_demo['order_date']= date('Y-m-d H:i:s',strtotime($value[6]));
+            $customer_order_demo['shipment_date']= date('Y-m-d');
+            $customer_order_demo['delivery_date']= date('Y-m-d H:i:s',strtotime($value[6]));
+
+            $customer_order_demo_detail['customer_item_id']=$customer_item_id;
+            $customer_order_demo_detail['jan']=$jan_code;
+            $customer_order_demo_detail['inputs']=$inputs_type;
+            $customer_order_demo_detail['quantity']=$value[5];
+            $customer_order_demo_detail['cost_price']=$value[7];
+            $customer_order_demo_detail['selling_price']=$value[8];
+            $customer_order_id = customer_order::insertGetId($customer_order_demo);
+            $customer_order_demo_detail['customer_order_id']=$customer_order_id;
+            $customer_order_detail_id = customer_order_detail::insertGetId($customer_order_demo_detail);
+            $stock_info = $this->get_stock_info($jan_code);
+            
+            $c_quantity = $value[5];
+            $shiptment['customer_id']=$customer_id;
+            $shiptment['customer_order_id']=$customer_order_id;
+            $shiptment['customer_order_detail_id']=$customer_order_detail_id;
+            $shiptment['shipment_date']=date('Y-m-d H:i:s',strtotime($value[6]));
+            $shiptment['inputs']=$inputs_type;
+            $shiptment['confirm_quantity']=$c_quantity;
+            
+            
+            
+            if($stock_info){
+                $shiptment['rack_number']=$stock_info->rack_number;
+                $conf_qty = $stock_info->conf_qty;
+                $conf_qty = ($conf_qty!=''?$conf_qty:0);
+                if ($inputs_type == 'ケース') {
+                    if($c_quantity<=$stock_info->case_quantity-$conf_qty){
+                        customer_shipment::insert($shiptment);
+                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
+                    }
+                    
+                } else if ($inputs_type == 'ボール') {
+                    if($c_quantity<=$stock_info->ball_quantity-$conf_qty){ 
+                        customer_shipment::insert($shiptment);
+                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
+                    }
+                } else {
+                    if($c_quantity<=$stock_info->unit_quantity-$conf_qty){
+                        customer_shipment::insert($shiptment);
+                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
+                    }
+                }
+            }
+
+            //$customer_order_array[]=$customer_order_demo;
+        }
+        // return $customer_order_array;
+        //customer_order::insert($customer_order_array);
+        //customer_order_detail::insert($customer_order_detail_array);
+        if(count($error_item_duplicate)==0){
+        Session::flash('message', '受注データの取り込みが完了しました'); 
+        Session::flash('class_name', 'alert-success'); 
+        return response()->json(['message' => '受注データの取り込みが完了しました','success'=>1]);
+    }else{
+        Session::flash('message', '同じデータを2回入力することはできません'); 
+        Session::flash('class_name', 'alert-success'); 
+        return response()->json(['message' => '同じデータを2回入力することはできません','success'=>0]);
+    }
+
+    }
+
+    public function ShipmentCsvInsert_brandBackup(Request $request){
+        $file = $request->file('file');
+        $file_name = time().'_'.$file->getClientOriginalName();
+        $this->QR_var->folder_create($this->csv_folder_name);
+
+        $file->storeAs(config('const.CSV_UPLOAD_PATH'), $file_name);
+        $baseUrl = storage_path().'/app/'.config('const.CSV_UPLOAD_PATH') . $file_name;
         $dataArr = $this->csvReader($baseUrl);
         $customer_order_array=array();
         $error_item_list=array();
@@ -393,7 +516,6 @@ class ShipmentCsvController extends Controller
 
     }
 
-
     public function customer_manul_order_insert_by_jan_code(Request $request){
         $customer_id = $request->customer_id;
         $jan_code = $request->jan;
@@ -481,8 +603,16 @@ class ShipmentCsvController extends Controller
         $data = array_map('str_getcsv', file($baseUrl));
         $csv_data = array_slice($data, 1);
         $rowData = $this->convert_from_sjis_to_utf8_recursively($csv_data);
-        \Log::debug('----- CSV file read completed from this url: (' . $baseUrl . ')-----');
         return $rowData;
+    }
+    public function csvReader_new($baseUrl)
+    {
+        $data = array_map('str_getcsv', file($baseUrl));
+       return $csv_data = array_slice($data, 1);
+        // print_r($csv_data);
+        // $rowData = $this->convert_from_sjis_to_utf8_recursively($csv_data);
+        // print_r($rowData);exit;
+        // return $rowData;
     }
 
     /**
@@ -517,10 +647,6 @@ class ShipmentCsvController extends Controller
         $customer_info = customer::where('partner_code',$partner_code)->first();
         return $customer_info['customer_id'];
     }
-    public function customer_item_search($jan_code,$customer_id){
-        $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
-        return $customer_item_info['customer_item_id'];
-    }
     public function customer_shop_search($shop_code,$customer_id,$shop_name){
         $customer_info = customer_shop::where(['shop_no'=>$shop_code,'customer_id'=>$customer_id])->first();
         return $customer_info['customer_shop_id'];
@@ -532,6 +658,27 @@ class ShipmentCsvController extends Controller
         }
        
     }
+
+    private function customer_search_byname($name){
+        $customer_info = customer::where('name',$name)->first();
+        return $customer_info['customer_id'];
+    }
+    public function customer_shop_search_byname($name,$customer_id,$shop_name){
+        $customer_info = customer_shop::where(['shop_name'=>$name,'customer_id'=>$customer_id])->first();
+        return $customer_info['customer_shop_id'];
+        if($customer_info){
+            return $customer_info['customer_shop_id'];
+        }else{
+            $customer_shop_id = customer_shop::insertGetId(['shop_no'=>$shop_code,'customer_id'=>$customer_id,'shop_name'=>$shop_name]);
+            return $customer_shop_id;
+        }
+       
+    }
+    public function customer_item_search($jan_code,$customer_id){
+        $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
+        return $customer_item_info['customer_item_id'];
+    }
+    
     
     
 }
