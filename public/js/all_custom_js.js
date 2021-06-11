@@ -4483,7 +4483,15 @@ $(document).ready(function () {
         $(this).removeClass('color_row_new_color');
     })
 
+    $(document).delegate(".brndOrderInputQty", "focusin", function (e) {
+        close_all_navi_msg();
+        show_hide_nav_icn(1);
+        
+    })
+
     $(document).delegate(".brndOrderInputQty", "keypress", function (e) {
+        close_all_navi_msg();
+        show_hide_nav_icn(1);
         if (e.keyCode == 13) {
            $(this).blur();
         }
@@ -5782,6 +5790,7 @@ function get_brand_item_list(c_id = 0, c_name = ''){
 }
 
 function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
+    close_all_navi_msg();
     var brand_name = '';
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
@@ -5878,22 +5887,24 @@ for(var k=0;k<response.shop_item_list.length;k++){
             }
             $(".brand_order_tble").html(brand_name);
             $('#customer_shop_list_modal').modal('hide');
-            const temps_messagessss = {
+            nav_list['jn_0'].show();
+            show_hide_nav_icn(0);
+            // const temps_messagessss = {
 
-                bran_item_list_show_message: {
-                    message: [
-                        {message: '１、前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています'},
-                        {message: '２、メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます'},
-                    ],
-                    buttons: [
-                        {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
-                    ]
-                },
-            }
-            nav_width = '400px';
-            display_positionX = '15px';
-            display_positionY = '15px';
-            success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
+            //     bran_item_list_show_message: {
+            //         message: [
+            //             {message: '１、前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています'},
+            //             {message: '２、メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます'},
+            //         ],
+            //         buttons: [
+            //             {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
+            //         ]
+            //     },
+            // }
+            // nav_width = '400px';
+            // display_positionX = '15px';
+            // display_positionY = '15px';
+            // success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
     }
 });
 
@@ -7390,13 +7401,26 @@ $(document).ready(function () {
             // console.log('divs out click');
         }
     if(page_url=='brand-order' || page_url=='brand-order#'){
-        console.log(hide_enter_outside_brand.is(e.target));
-        console.log(hide_enter_outside_brand.has(e.target).length);
-        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0 && is_id_1 == 'jn_0') {
-            setTimeout(function(){
-            close_all_navi_msg();
-            show_hide_nav_icn(1);
-        }, 6000);
+        
+          
+        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0 && (is_id_1!='undefined' && is_id_1!=null)) {
+            console.log('ac');
+            var hsClas = $('#'+is_id_1).closest('jn_popup');
+            if(hsClas.hasClass('jn_brand')){
+                console.log('js brand found');
+            }else{
+                // close_all_navi_msg();
+                // show_hide_nav_icn(1);
+            }
+    //         if(is_id_1 != 'jn_0'){
+    //         setTimeout(function(){
+    //         close_all_navi_msg();
+    //         show_hide_nav_icn(1);
+    //     }, 4000);
+    // }else{
+    //     close_all_navi_msg();
+    //     show_hide_nav_icn(1);
+    // }
         }
     }
     });
@@ -7472,6 +7496,8 @@ $(document).ready(function () {
     $('.customBackBtn').click(function(e){
         e.preventDefault();
         var page_slug_check =  $('.jcs_main_hand_title').attr('data_page_num');
+        close_all_navi_msg();
+        show_hide_nav_icn(0);
         if(page_slug_check==1){
             var c_id=1;
             var c_name = 'A スーパー';
@@ -7481,8 +7507,7 @@ $(document).ready(function () {
             get_brand_item_list(c_id, c_name);
         }else if(page_slug_check==2){
 
-            close_all_navi_msg();
-            show_hide_nav_icn(0);
+            
             get_customer_list();
             $('#customer_message_success').html('');
             $("#add_customer_message").html('');
@@ -11195,6 +11220,15 @@ const message_notify_default = {
             { button: '<center><button class="btn btn-warning receive_order_dflt_nav_btn">発注一覧表</button></center>' }
         ]
     },
+    brandOrdrs: {
+        message: [
+            { "message": "前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています" },
+            { "message": "メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます" },
+        ],
+        buttons: [
+            { button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>' }
+        ]
+    },
     vendor_arrival_inserted: {
         message: [
             { "message": "正常に終了しました。" },
@@ -11386,6 +11420,10 @@ function show_default_page_notifications() {
             vendor_master_default_nav = view(message_notify_default['vendor_master2'], def_old_nav_template);
             break;
         case 'brand-order':
+                nav_width = '400px';
+                display_positionY = '15px';
+                display_positionX = '15px';
+                receiveorderdefault_nav = view(message_notify_default['brandOrdrs'], def_old_nav_template_without_return_btn);
             close_all_navi_msg();
             show_hide_nav_icn(0);
             get_customer_list();

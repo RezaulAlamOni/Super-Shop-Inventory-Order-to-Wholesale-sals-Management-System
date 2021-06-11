@@ -3722,7 +3722,15 @@ $(document).ready(function () {
         $(this).removeClass('color_row_new_color');
     })
 
+    $(document).delegate(".brndOrderInputQty", "focusin", function (e) {
+        close_all_navi_msg();
+        show_hide_nav_icn(1);
+        
+    })
+
     $(document).delegate(".brndOrderInputQty", "keypress", function (e) {
+        close_all_navi_msg();
+        show_hide_nav_icn(1);
         if (e.keyCode == 13) {
            $(this).blur();
         }
@@ -5021,6 +5029,7 @@ function get_brand_item_list(c_id = 0, c_name = ''){
 }
 
 function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
+    close_all_navi_msg();
     var brand_name = '';
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
@@ -5117,22 +5126,24 @@ for(var k=0;k<response.shop_item_list.length;k++){
             }
             $(".brand_order_tble").html(brand_name);
             $('#customer_shop_list_modal').modal('hide');
-            const temps_messagessss = {
+            nav_list['jn_0'].show();
+            show_hide_nav_icn(0);
+            // const temps_messagessss = {
 
-                bran_item_list_show_message: {
-                    message: [
-                        {message: '１、前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています'},
-                        {message: '２、メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます'},
-                    ],
-                    buttons: [
-                        {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
-                    ]
-                },
-            }
-            nav_width = '400px';
-            display_positionX = '15px';
-            display_positionY = '15px';
-            success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
+            //     bran_item_list_show_message: {
+            //         message: [
+            //             {message: '１、前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています'},
+            //             {message: '２、メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます'},
+            //         ],
+            //         buttons: [
+            //             {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
+            //         ]
+            //     },
+            // }
+            // nav_width = '400px';
+            // display_positionX = '15px';
+            // display_positionY = '15px';
+            // success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
     }
 });
 

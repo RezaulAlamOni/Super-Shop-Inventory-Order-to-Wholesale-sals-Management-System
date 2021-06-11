@@ -305,13 +305,26 @@ $(document).ready(function () {
             // console.log('divs out click');
         }
     if(page_url=='brand-order' || page_url=='brand-order#'){
-        console.log(hide_enter_outside_brand.is(e.target));
-        console.log(hide_enter_outside_brand.has(e.target).length);
-        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0 && is_id_1 == 'jn_0') {
-            setTimeout(function(){
-            close_all_navi_msg();
-            show_hide_nav_icn(1);
-        }, 6000);
+        
+          
+        if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0 && (is_id_1!='undefined' && is_id_1!=null)) {
+            console.log('ac');
+            var hsClas = $('#'+is_id_1).closest('jn_popup');
+            if(hsClas.hasClass('jn_brand')){
+                console.log('js brand found');
+            }else{
+                // close_all_navi_msg();
+                // show_hide_nav_icn(1);
+            }
+    //         if(is_id_1 != 'jn_0'){
+    //         setTimeout(function(){
+    //         close_all_navi_msg();
+    //         show_hide_nav_icn(1);
+    //     }, 4000);
+    // }else{
+    //     close_all_navi_msg();
+    //     show_hide_nav_icn(1);
+    // }
         }
     }
     });
@@ -387,6 +400,8 @@ $(document).ready(function () {
     $('.customBackBtn').click(function(e){
         e.preventDefault();
         var page_slug_check =  $('.jcs_main_hand_title').attr('data_page_num');
+        close_all_navi_msg();
+        show_hide_nav_icn(0);
         if(page_slug_check==1){
             var c_id=1;
             var c_name = 'A スーパー';
@@ -396,8 +411,7 @@ $(document).ready(function () {
             get_brand_item_list(c_id, c_name);
         }else if(page_slug_check==2){
 
-            close_all_navi_msg();
-            show_hide_nav_icn(0);
+            
             get_customer_list();
             $('#customer_message_success').html('');
             $("#add_customer_message").html('');
