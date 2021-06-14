@@ -11222,8 +11222,8 @@ const message_notify_default = {
     },
     brandOrdrs: {
         message: [
-            { "message": "前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています" },
-            { "message": "メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます" },
+            { "message": "前回までの受注データが頻度順に表示されています" },
+            { "message": "メーカー名を音声または手入力するとメーカー別に絞り込み表示されます" },
         ],
         buttons: [
             { button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>' }
@@ -11420,10 +11420,10 @@ function show_default_page_notifications() {
             vendor_master_default_nav = view(message_notify_default['vendor_master2'], def_old_nav_template);
             break;
         case 'brand-order':
-                nav_width = '400px';
+                nav_width = '365px';
                 display_positionY = '15px';
                 display_positionX = '15px';
-                receiveorderdefault_nav = view(message_notify_default['brandOrdrs'], def_old_nav_template_without_return_btn);
+                success_nav = view(message_notify_default['brandOrdrs'], def_old_nav_template_without_return_btn);
             close_all_navi_msg();
             show_hide_nav_icn(0);
             get_customer_list();
