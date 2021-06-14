@@ -322,6 +322,8 @@ class ShipmentCsvController extends Controller
                 //$error_item_duplicate[]=array('customer_item_id'=>$value[2]);
                 $exitQty = $is_exist_customer_order->quantity;
                 $newQty= $is_exist_customer_order->quantity+$value[5];
+                $newfrquency =$is_exist_customer_order->order_frequency_num+1; 
+                customer_order::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['order_frequency_num'=>$newfrquency]);
                 customer_order_detail::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['quantity'=>$newQty]);
                 continue;
             }
@@ -329,6 +331,7 @@ class ShipmentCsvController extends Controller
             $customer_order_demo['customer_shop_id']=$customer_shop_id;
             $customer_order_demo['shipment_number']=$shipment_number;
             $customer_order_demo['category']='edi';
+            $customer_order_demo['order_frequency_num']=1;
             $customer_order_demo['voucher_number']=date('YmdHis',strtotime($value[6]));//$value[4];
             $customer_order_demo['order_date']= date('Y-m-d H:i:s',strtotime($value[6]));
             $customer_order_demo['shipment_date']= date('Y-m-d');

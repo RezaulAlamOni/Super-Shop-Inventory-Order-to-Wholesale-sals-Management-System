@@ -5040,6 +5040,10 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
         voice_text = voice_text.replace("-", ""); 
     }
     var shop_id = $('.s_ids_v').val();
+    var pageTitleText = $('.jcs_main_hand_title').text();
+    localStorage.setItem('local_shop_id', shop_id);
+    localStorage.setItem('local_customer_id', c_id);
+    localStorage.setItem('local_page_title', pageTitleText);
    $.ajax({
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -5101,7 +5105,7 @@ for(var k=0;k<response.shop_item_list.length;k++){
                 brand_name += '<td class="'+updatedColorLg+'" style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ largeArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+  largeArray[i].selling_price  +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+  largeArray[i].cost_price  +'" class="form-control brndOrderInputQty"></td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].total_quantity +'</td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].total_frequency +'</td>';
                 console.log(i+','+smallArray.length)
                 if(i<smallArray.length){
                     if(voice_text!=''){
@@ -5114,7 +5118,7 @@ for(var k=0;k<response.shop_item_list.length;k++){
                     brand_name += '<td class="'+updatedColorSm+'" style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="quantity" value="'+ smallArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+ smallArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%">'+ smallArray[i].total_quantity +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ smallArray[i].total_frequency +'</td>';
                 }else{
                     brand_name += '<td style="text-align: left; width:40%"></td>';
                     brand_name += '<td style="text-align: right;width:10%"></td>';
@@ -5128,22 +5132,7 @@ for(var k=0;k<response.shop_item_list.length;k++){
             $('#customer_shop_list_modal').modal('hide');
             nav_list['jn_0'].show();
             show_hide_nav_icn(0);
-            // const temps_messagessss = {
-
-            //     bran_item_list_show_message: {
-            //         message: [
-            //             {message: '１、前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています'},
-            //             {message: '２、メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます'},
-            //         ],
-            //         buttons: [
-            //             {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
-            //         ]
-            //     },
-            // }
-            // nav_width = '400px';
-            // display_positionX = '15px';
-            // display_positionY = '15px';
-            // success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
+            
     }
 });
 
@@ -5200,7 +5189,7 @@ var shop_id = $('.s_ids_v').val();
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ largeArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ largeArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ largeArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
-                brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].total_quantity +'</td>';
+                brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].total_frequency +'</td>';
                 console.log(i+','+smallArray.length)
                 if(i<smallArray.length){
                     if(voice_text!=''){
@@ -5212,7 +5201,7 @@ var shop_id = $('.s_ids_v').val();
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ smallArray[i].quantity +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ smallArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%">'+ smallArray[i].total_quantity +'</td>';
+                    brand_name += '<td style="text-align: right;width:10%">'+ smallArray[i].total_frequency +'</td>';
                 }else{
                     brand_name += '<td style="text-align: left; width:40%"></td>';
                     brand_name += '<td style="text-align: right;width:10%"></td>';
@@ -5224,22 +5213,8 @@ var shop_id = $('.s_ids_v').val();
             }
             $(".brand_order_updated_tble").html(brand_name);
             $('#customer_shop_list_modal').modal('hide');
-            const temps_messagessss = {
-
-                bran_item_list_show_message: {
-                    message: [
-                        {message: '１、前回までの受注データが頻度順に表示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;されています'},
-                        {message: '２、メーカー名を音声または手入力すると &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メーカー別に絞り込み表示されます'},
-                    ],
-                    buttons: [
-                        {button: '<center><a href="javascript:close_default_page_navi(101)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}
-                    ]
-                },
-            }
-            nav_width = '400px';
-            display_positionX = '15px';
-            display_positionY = '15px';
-            success_nav = view(temps_messagessss['bran_item_list_show_message'], def_left_list_mesg_template);
+            nav_list['jn_0'].show();
+            show_hide_nav_icn(0);
     }
 });
 

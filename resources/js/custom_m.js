@@ -195,6 +195,7 @@ const temporary_message = {
     },
 }
 $(document).ready(function () {
+   
     /*haccu list*/
     var vndorList = [];
     var clr = [];

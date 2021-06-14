@@ -179,7 +179,8 @@ $wh = 'ORDER BY jans.name like "%'.$voice_text.'%" desc,total_quantity DESC';
 $online_order = collect(\DB::select("select 
 customer_shipments.confirm_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity,
  stock_items.ball_quantity, stock_items.unit_quantity,jans.name,
-(CASE WHEN customer_order_details.inputs = 'ケース' THEN jans.case_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'ボール' THEN jans.ball_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'バラ' THEN customer_order_details.quantity END) AS total_quantity
+(CASE WHEN customer_order_details.inputs = 'ケース' THEN jans.case_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'ボール' THEN jans.ball_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'バラ' THEN customer_order_details.quantity END) AS total_quantity,
+customer_orders.order_frequency_num*customer_order_details.quantity as total_frequency
 from customer_orders
  inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id
             inner join jans on jans.jan = customer_order_details.jan
@@ -219,7 +220,8 @@ $wh = 'ORDER BY jans.name like "%'.$voice_text.'%" desc,total_quantity DESC';
 $online_order = collect(\DB::select("select 
 customer_shipments.confirm_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity,
  stock_items.ball_quantity, stock_items.unit_quantity,jans.name,
-(CASE WHEN customer_order_details.inputs = 'ケース' THEN jans.case_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'ボール' THEN jans.ball_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'バラ' THEN customer_order_details.quantity END) AS total_quantity
+(CASE WHEN customer_order_details.inputs = 'ケース' THEN jans.case_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'ボール' THEN jans.ball_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'バラ' THEN customer_order_details.quantity END) AS total_quantity,
+customer_orders.order_frequency_num*customer_order_details.quantity as total_frequency
 from customer_orders
  inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id
             inner join jans on jans.jan = customer_order_details.jan

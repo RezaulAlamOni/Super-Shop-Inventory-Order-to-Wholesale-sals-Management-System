@@ -17,6 +17,7 @@ class CreateCustomerOrdersTable extends Migration
             $table->increments('customer_order_id')->comment('Customer order Id');
             $table->integer('customer_id')->comment('Customer Id');
             $table->integer('customer_shop_id')->nullable()->comment('Customer shop Id');
+            $table->integer('order_frequency_num')->default('1')->comment('order_frequency_num');
             $table->enum('category',['edi', 'manual'])->default('edi')->comment('category');
             $table->enum('order_type',['normal', 'direct'])->default('normal')->comment('order type');
             $table->string('shipment_number',50)->comment('Shipment Number');
