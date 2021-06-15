@@ -324,7 +324,7 @@ class ShipmentCsvController extends Controller
                 $newQty= $is_exist_customer_order->quantity+$value[5];
                 $newfrquency =$is_exist_customer_order->order_frequency_num+1; 
                 customer_order::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['order_frequency_num'=>$newfrquency]);
-                customer_order_detail::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['quantity'=>$newQty]);
+                customer_order_detail::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['quantity'=>$newQty,'last_qty'=>$value[5]]);
                 continue;
             }
             $customer_order_demo['customer_id']=$customer_id;
@@ -341,6 +341,7 @@ class ShipmentCsvController extends Controller
             $customer_order_demo_detail['jan']=$jan_code;
             $customer_order_demo_detail['inputs']=$inputs_type;
             $customer_order_demo_detail['quantity']=$value[5];
+            $customer_order_demo_detail['last_qty']=$value[5];
             $customer_order_demo_detail['cost_price']=$value[7];
             $customer_order_demo_detail['selling_price']=$value[8];
             $customer_order_id = customer_order::insertGetId($customer_order_demo);

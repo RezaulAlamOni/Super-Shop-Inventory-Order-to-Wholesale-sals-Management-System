@@ -19,7 +19,8 @@ class CreateCustomerOrderDetailsTable extends Migration
             $table->integer('customer_item_id')->comment('Customer item Id');
             $table->string('jan',15)->comment('Jan');
             $table->enum('inputs', ['ケース', 'ボール','バラ'])->default('ケース')->comment('Inputs');
-            $table->integer('quantity')->comment('Quantity');
+            $table->integer('quantity')->default('0')->comment('Quantity');
+            $table->integer('last_qty')->default('0')->comment('last_qty'); 
             $table->mediumInteger('cost_price')->nullable()->comment('Cost Price');
             $table->mediumInteger('selling_price')->nullable()->comment('Selling Price');
             $table->enum('update_status', ['0', '1'])->default('0')->comment('Update status');

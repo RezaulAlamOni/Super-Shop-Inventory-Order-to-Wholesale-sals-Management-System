@@ -49,12 +49,12 @@ class CustomerShopController extends Controller
         if (!(Validator::make($request->all(), ['phone' => 'required|max:30'])->passes())) {
             return response()->json(['message' => '電話番号を入力してください。','class_name'=>'alert-danger']);
         }
-        if (!(Validator::make($request->all(), ['email' => 'email:rfc,dns|max:80'])->passes())) {
-            return response()->json(['message' => 'メールアドレスを入力してください。','class_name'=>'alert-danger']);
-        }
-        if (!(Validator::make($request->all(), ['delivery_cycle' => 'required|max:5'])->passes())) {
-            return response()->json(['message' => '配送サイクルを入力してください。','class_name'=>'alert-danger']);
-        }
+        // if (!(Validator::make($request->all(), ['email' => 'email:rfc,dns|max:80'])->passes())) {
+        //     return response()->json(['message' => 'メールアドレスを入力してください。','class_name'=>'alert-danger']);
+        // }
+        // if (!(Validator::make($request->all(), ['delivery_cycle' => 'required|max:5'])->passes())) {
+        //     return response()->json(['message' => '配送サイクルを入力してください。','class_name'=>'alert-danger']);
+        // }
         $shop_id=$request->shop_update_id;
         $customer_id=$request->customer_id;
         $shop_code=$request->shop_code;

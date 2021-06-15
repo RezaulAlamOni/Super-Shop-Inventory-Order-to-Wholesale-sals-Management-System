@@ -85,7 +85,7 @@
                                     value="" placeholder="ショップ名を入力してください">
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <!--<div class="form-group row">
                             <label for="shop_address" class="col-sm-4 col-form-label">住所</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control-plaintext" id="shop_address" name="shop_address"
@@ -98,7 +98,7 @@
                                 <input type="number" class="form-control-plaintext" id="postal_code" name="postal_code"
                                     value="" placeholder="ショップの郵便番号を入力してください">
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group row">
                             <label for="phone" class="col-sm-4 col-form-label">電話番号(※)</label>
                             <div class="col-sm-8">
@@ -106,7 +106,7 @@
                                     value="" placeholder="電話番号を入力してください">
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <!--<div class="form-group row">
                             <label for="email" class="col-sm-4 col-form-label">Email(※)</label>
                             <div class="col-sm-8">
                                 <input type="email" class="form-control-plaintext" id="email" name="email"
@@ -119,7 +119,7 @@
                                 <input type="number" class="form-control-plaintext" id="delivery_cycle" name="delivery_cycle"
                                     value="" placeholder="配送サイクル">
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="form-group row" style="margin-bottom:0;">
                             <label for="reqired_fiel" class="col-sm-12 col-form-label">注意）※印は必須です。</label>

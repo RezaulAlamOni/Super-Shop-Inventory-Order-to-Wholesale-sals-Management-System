@@ -21,8 +21,8 @@ class CreateCustomerShopsTable extends Migration
             $table->text('shop_address')->nullable()->comment('Customer shop address');
             $table->string('shop_postal_code',30)->nullable()->comment('Customer shop postal code');
             $table->string('phone',30)->comment('Customer shop phone number');
-            $table->string('email',80)->comment('Customer shop email');
-            $table->tinyInteger('delivery_cycle')->default(0)->comment('Delivery cycle');
+            $table->string('email',80)->nullable()->comment('Customer shop email');
+            $table->tinyInteger('delivery_cycle')->nullable()->comment('Delivery cycle');
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
 			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
