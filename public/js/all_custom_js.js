@@ -4181,6 +4181,7 @@ $(document).ready(function () {
     $('.add_new_shop').on('click', function () {
         $('#add_shop_message').html('');
         $('#customer_shop_modal').modal('hide');
+        $('#customer_show_modal').modal('hide');
         customer_list_dropdown();
         all_fields_blunk()
         $(".add_shop_info").html('新規店舗追加');
@@ -4230,7 +4231,8 @@ $(document).ready(function () {
                     // var buttons = [{ buttons: '<button type="button" id="close_success_error_navi_open_default" class="btn btn-info btn-sm">確認</button>' }]
                     // success_error_confirmation_popup(message, buttons);
                     get_shop_list()
-                    $('#customer_shop_modal').modal('show');
+                    $('#customer_shop_modal').modal('hide');
+                    $('#customer_show_modal').modal('show');
 
                 }
 
@@ -4240,7 +4242,8 @@ $(document).ready(function () {
     $('.close_shop_reg_update').on('click', function () {
         $('#shop_reg_modal').modal('hide');
         all_fields_blunk()
-        $('#customer_shop_modal').modal('show');
+        $('#customer_shop_modal').modal('hide');
+        $('#customer_show_modal').modal('show');
     })
     $('.custom_shop_close').on('click', function () {
         $('#customer_shop_modal').modal('hide');
