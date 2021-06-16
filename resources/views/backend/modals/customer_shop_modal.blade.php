@@ -21,7 +21,7 @@
                 <div id="shop_message_success"></div>
                 <div class="clearfix"></div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="display:none">
                 <div class="panel-body buyrslisst_overflow">
                     <table class="table table-striped table-bordered buyrslisst_overflow">
                         <thead>
@@ -38,7 +38,7 @@
                     </table>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="display:none">
                 <button type="button" class="btn btn-secondary custom_shop_close" data-dismiss="modal">{{__('messages.close')}}</button>
             </div>
         </div>
