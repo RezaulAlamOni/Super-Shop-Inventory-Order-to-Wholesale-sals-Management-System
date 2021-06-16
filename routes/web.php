@@ -126,6 +126,10 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::get('/inventory-update', 'HandyrController@inventoryUpdate')->name('inventory.update'); // Oni for new design handy
 	Route::get('/inventory-inquiry', 'HandyrController@inventoryInquiry')->name('inventory.inquiry'); // Oni for new design handy
 
+    //oni
+    Route::get('/inventory-return', 'HandyrController@inventoryReturn')->name('inventory.return'); // Oni for new design handy
+
+
     Route::get('/inventoryentrybyhandy', 'HandyrController@inventoryentrybyhandy'); // 26.01.2020 Oni
 
     Route::post('/stock_item_rack_check', 'HandyrController@stock_item_rack_check');

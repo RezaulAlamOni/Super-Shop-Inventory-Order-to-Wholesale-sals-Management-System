@@ -31,6 +31,13 @@ class HandyrController extends Controller
         return view('backend.handy_pages.product_jan_scan', compact('title', 'active'));
     }
 
+    public function inventoryReturn()
+    {
+        $title = "Dashboard";
+        $active = 'inventoryReturn';
+        return view('backend.handy_pages.inventory_return', compact('title', 'active'));
+    }
+
     public function inventoryInquiry()
     {
         $title = "Dashboard";
