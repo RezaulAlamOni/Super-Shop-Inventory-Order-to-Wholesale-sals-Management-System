@@ -4,6 +4,11 @@
 @endsection
 
 @section('content')
+    <style>
+        .marginboths > a {
+            background: gray;
+        }
+    </style>
 
     <div class="main-content-container container-fluid px-4">
         <!-- Small Stats Blocks -->
