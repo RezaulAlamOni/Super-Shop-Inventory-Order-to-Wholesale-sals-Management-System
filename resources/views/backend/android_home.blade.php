@@ -32,7 +32,7 @@
                 <div class="row marginboths">
                     <div class="col-6 handy_btn_aria handy_btn_left">
                         <!-- <a class="btn btn-default" id="wholesale_handy" href="handy_quotation"> -->
-                        <a class="btn btn-default" id="wholesale_handy" href="{{ route('inventory.update') }}"> <!--inventoryentrybyhandy-->
+                        <a style="padding: 15px 5px;" class="btn btn-default" id="wholesale_handy" href="{{ route('inventory.update') }}"> <!--inventoryentrybyhandy-->
                             <div class="numbering_col" style="padding: 0; margin: 0;">1</div>
                             <!-- <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">見積り</div> -->
                             <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
@@ -64,7 +64,7 @@
                             </div>
                         </a>
 
-                        <a href="{{ route('inventory.inquiry') }}" class="btn btn-default">
+                        <a href="{{ route('inventory.inquiry') }}" class="btn btn-default" style="padding: 15px 5px;">
                             <div class="numbering_col" style="padding: 0; margin: 0;">7</div>
                             <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
                                 在庫問い合わせ
@@ -78,7 +78,7 @@
 {{--                            </div>--}}
 {{--                        </a>--}}
 
-                        <a  href="{{Config::get('app.url').'/stock_details_by_handy'}}" class="btn btn-default">
+                        <a  href="{{Config::get('app.url').'/stock_details_by_handy'}}" style="padding: 15px 5px;" class="btn btn-default">
                             <div class="numbering_col" style="padding: 0; margin: 0;">9</div>
                             <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
                                 商品検索
@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="col-6 handy_btn_aria handy_btn_right">
-                        <a id="handy_order_btn" style="width: 100%" class="btn btn-default" href="{{ route('handy.store.order') }}">
+                        <a id="handy_order_btn" style="width: 100%;padding: 15px 5px;" class="btn btn-default" href="{{ route('handy.store.order') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">2</div>
                             <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
                                 発注
@@ -133,7 +133,7 @@
 {{--                            <div class="numbering_col" style="padding: 4px; margin: 0;">10</div>--}}
 {{--                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">返却(キャンセル)</div>--}}
 {{--                        </a>--}}
-                        <a  style="width: 100%" class="btn btn-default" href="handy_customer_master">
+                        <a  style="width: 100%;padding: 15px 5px;" class="btn btn-default" href="handy_customer_master">
                             <div class="numbering_col" style="padding: 0; margin: 0;">6</div>
                             <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
                                 販売先マスター
