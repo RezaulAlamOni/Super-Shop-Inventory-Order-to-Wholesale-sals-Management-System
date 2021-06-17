@@ -176,18 +176,33 @@ class Customer_menual_orderController extends Controller
 
 /*csv order list*/
 $wh = 'ORDER BY jans.name like "%'.$voice_text.'%" desc,total_quantity DESC';
-$online_order = collect(\DB::select("select 
-customer_shipments.confirm_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity,
+$online_order = collect(\DB::select("
+select all_orders.*,
+makers.maker_name
+from(
+select 
+customer_shipments.confirm_quantity,
+customer_order_details.cost_price,
+customer_order_details.selling_price,
+customer_order_details.inputs,
+customer_order_details.update_status,
+customer_order_details.quantity,
+customer_order_details.last_qty,
+customer_order_details.jan,
+customer_order_details.customer_item_id,
+customer_orders.*,stock_items.case_quantity,
  stock_items.ball_quantity, stock_items.unit_quantity,jans.name,
 (CASE WHEN customer_order_details.inputs = 'ケース' THEN jans.case_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'ボール' THEN jans.ball_inputs*customer_order_details.quantity WHEN customer_order_details.inputs = 'バラ' THEN customer_order_details.quantity END) AS total_quantity,
-customer_orders.order_frequency_num*customer_order_details.quantity as total_frequency
+customer_orders.order_frequency_num*customer_order_details.quantity as total_frequency,
+(case WHEN length(customer_order_details.jan)>8 then SUBSTRING(customer_order_details.jan,3,5) when length(customer_order_details.jan)=8 then SUBSTRING(customer_order_details.jan,1,5) end) as mk_code
 from customer_orders
  inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id
             inner join jans on jans.jan = customer_order_details.jan
             inner join vendor_items on jans.jan=vendor_items.jan
 left join stock_items on vendor_items.vendor_item_id = stock_items.vendor_item_id
 left join customer_shipments on customer_shipments.customer_order_detail_id = customer_order_details.customer_order_detail_id
-             where customer_orders.customer_id = '".$id."' and customer_orders.customer_shop_id='".$shop_id."' and (customer_orders.status='未出荷' || customer_orders.status='確定済み') and customer_orders.category = 'edi' $wh
+             where customer_orders.customer_id = '".$id."' and customer_orders.customer_shop_id='".$shop_id."' and (customer_orders.status='未出荷' || customer_orders.status='確定済み') and customer_orders.category = 'edi' $wh) as all_orders
+             left join makers on makers.maker_code= all_orders.mk_code
             "));
             $order_array =array();
             if($online_order){
