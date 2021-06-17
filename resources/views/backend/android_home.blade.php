@@ -114,18 +114,37 @@
 {{--                            </div>--}}
 {{--                        </button>--}}
 
-                        <a class="btn btn-default" id="jan_manter_handy_btn_delivery" href="handy_customer_master">
-                            <div class="numbering_col" style="padding: 4px; margin: 0;">6</div>
-                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">販売先マスター</div>
-                        </a>
 
-                        <a class="btn btn-default" id="jan_manter_handy_btn" href="handy_vendor_master">
-                            <div class="numbering_col" style="padding: 4px; margin: 0;">8</div>
-                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">仕入れ先 マスター</div>
+{{--                        <a class="btn btn-default" id="jan_manter_handy_btn_delivery" href="handy_customer_master">--}}
+{{--                            <div class="numbering_col" style="padding: 4px; margin: 0;">6</div>--}}
+{{--                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">販売先マスター</div>--}}
+{{--                        </a>--}}
+
+{{--                        <a class="btn btn-default" id="jan_manter_handy_btn" href="handy_vendor_master">--}}
+{{--                            <div class="numbering_col" style="padding: 4px; margin: 0;">8</div>--}}
+{{--                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">仕入れ先 マスター</div>--}}
+{{--                        </a>--}}
+{{--                        <a class="btn btn-default" id="jan_manter_handy_btn" href="inventory-return">--}}
+{{--                            <div class="numbering_col" style="padding: 4px; margin: 0;">10</div>--}}
+{{--                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">返却(キャンセル)</div>--}}
+{{--                        </a>--}}
+                        <a  style="width: 100%" class="btn btn-default" href="handy_customer_master">
+                            <div class="numbering_col" style="padding: 0; margin: 0;">6</div>
+                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
+                                販売先マスター
+                            </div>
                         </a>
-                        <a class="btn btn-default" id="jan_manter_handy_btn" href="inventory-return">
-                            <div class="numbering_col" style="padding: 4px; margin: 0;">10</div>
-                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">返却(キャンセル)</div>
+                        <a id="handy_order_btn" style="width: 100%" class="btn btn-default" href="handy_vendor_master">
+                            <div class="numbering_col" style="padding: 0; margin: 0;">8</div>
+                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
+                                仕入れ先 マスター
+                            </div>
+                        </a>
+                        <a id="" style="width: 100%" class="btn btn-default" href="{{ route('inventory.return') }}">
+                            <div class="numbering_col" style="padding: 0; margin: 0;">10</div>
+                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
+                                返却(キャンセル)
+                            </div>
                         </a>
 {{--                        <a id="handy_order_btn" style="width: 100%" class="btn btn-default" href="handy_store_order">--}}
 {{--                            <div class="numbering_col" style="padding: 0; margin: 0;">10</div>--}}
