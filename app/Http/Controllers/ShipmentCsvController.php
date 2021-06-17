@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\QRGenController;
 use App\customer;
+use App\jan;
+use App\maker;
 use App\customer_order;
 use App\customer_shop;
 use App\customer_order_detail;
@@ -268,7 +270,110 @@ class ShipmentCsvController extends Controller
     }
 
     }
+/*required function list*/
+    public function customer_findOrInsert($cus_name,$cus_code){
+        $customer_info = customer::where('name',$cus_name)->where('partner_code',$cus_code)->first();
+        if($customer_info){
+            return $customer_info['customer_id'];
+        }else{
+            $customer_id = customer::insertGetId(['name'=>$cus_name,'partner_code'=>$cus_code,'phone'=>'1234567']);
+            return $customer_id;
+        }
+    }
+    public function customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price){
+        $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
+        if($customer_item_info){
+            return $customer_item_info['customer_item_id'];
+        }else{
+            $janLenght = strlen($jan_code);
+            if($janLenght=='8'){
+                $maker_code = substr($jan_code, 0, 5);
+            }else{
+                $maker_code = substr($jan_code, 2, 5);
+            }
+            $vendor_id = 0;
+            if (maker::where('maker_code', $maker_code)->exists()) {
+                $api_data = maker::where('maker_code', $maker_code)->first();
+                $vendor_id = $api_data->vendor_id;
+                $maker_id = $api_data->maker_id;
+            } else {
+                $maker_id = maker::insertGetId(['maker_code' => $maker_code, 'vendor_id' => $vendor_id, 'maker_name' => $maker_name]);
+            }
+            if (!jan::where('jan', $jan_code)->exists()) {
+                jan::insert([
+                        "jan" => $jan_code,
+                        "name" => $jan_name,
+                        "jan_start_date" => date('Y-m-d H:i:s'),
+                        "jan_end_date" => date('Y-m-d H:i:s'),
+                        "case_inputs"=>"12",
+                        "ball_inputs"=>"6",
+                ]);
+            }
+            
+            $profit = $selling_price - $cost_price;
+            $profit_margin = ($cost_price*$profit)/100;
+            $profit_margin = round($profit_margin);
+            $vendor_item_id = vendor_item::insertGetId([
+                'vendor_id'=>$vendor_id,
+                'maker_id'=>$maker_id,
+                'jan'=>$jan_code,
+                'cost_price'=>$cost_price,
+                'selling_price'=>$selling_price,
+                'sale_selling_price'=>$selling_price,
+                'gross_profit'=>$profit,
+                'gross_profit_margin'=>$profit_margin,
+                'start_date'=>date('Y-m-d'),
+                'end_date'=>date('Y-m-d')
+            ]);
+            $csarray = array(
+                'c_name' => 0,
+            'v_name' => $vendor_id,
+            'j_code' => $jan_code,
+            'cost_price' => $selling_price
+            );
+            $insertTocus = $this->insertIntocustomeritem($csarray);
+            $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
+            if($customer_item_info){
+                return $customer_item_info['customer_item_id'];
+            }else{
+                return 999999;
+            }
+        }
+        
+    }
+    public function insertIntocustomeritem($data){
+        $gross_profit_margin = ($data['cost_price'] > 0 ? 30 : 0);
+        $selling_price = $data['cost_price'] + (($data['cost_price'] * $gross_profit_margin) / 100);
+        $selling_price = round($selling_price, 2);
+        $gross_profit = $selling_price - $data['cost_price'];
 
+        $customer_data_ins_array = array(
+            'customer_id' => $data['c_name'],
+            'vendor_id' => $data['v_name'],
+            'jan' => $data['j_code'],
+            'sale_selling_price' => 0,
+            'cost_price' => $data['cost_price'],
+            'selling_price' => $selling_price,
+            'gross_profit' => $gross_profit,
+            'gross_profit_margin' => $gross_profit_margin,
+            "start_date" => '2019-01-01',
+            "end_date" => '2021-12-31',
+        );
+        if (customer_item::where('jan', $data['j_code'])->exists()) {
+            return true;
+        } else {
+            $customer_list = customer::where('is_deleted', 0)->get();
+            if ($customer_list) {
+                foreach ($customer_list as $customer) {
+                    $customer_data_ins_array['customer_id'] = $customer->customer_id;
+                    customer_item::insert($customer_data_ins_array);
+                }
+            }
+
+        }
+        return true;
+    }
+/*required function list*/
     public function ShipmentCsvInsert_brand(Request $request){
         $file = $request->file('file');
         $file_name = time().'_'.$file->getClientOriginalName();
@@ -281,7 +386,19 @@ class ShipmentCsvController extends Controller
         $error_item_list=array();
         $error_item_duplicate=array();
         foreach ($dataArr as $key => $value) {
-            $customer_id=$this->customer_search_byname($value[0]);
+            $cus_name = $value[0];
+            $cus_code = $value[1];
+            $shp_name = $value[2];
+            $shp_code = $value[3];
+            $jan_code = $value[4];
+            $maker_name = $value[5];
+            $jan_name = $value[6];
+            $quantity = (int)$value[7];
+            $order_date = date('Y-m-d',strtotime($value[8]));
+            $cost_price = (int)$value[9];
+            $selling_price = (int)$value[10];
+           // $customer_id=$this->customer_search_byname($cus_name);
+            $customer_id=$this->customer_findOrInsert($cus_name,$cus_code);
             if($customer_id==null){
                 // @unlink($baseUrl);
                 // Session::flash('message', '未登録の販売先コードがあります：'.$value[3]); 
@@ -290,7 +407,7 @@ class ShipmentCsvController extends Controller
                 continue;
                 // return response()->json(['message' => '未登録の販売先コードがあります：'.$value[3],'success'=>0]);
             }
-            $customer_shop_id=$this->customer_shop_search_byname($value[1],$customer_id,$value[1]);
+            $customer_shop_id=$this->customer_shop_search_byname($customer_id,$shp_name,$shp_code);
             if($customer_shop_id==null){
                 // @unlink($baseUrl);
                 // Session::flash('message', 'shop code do not match：[shop code]'); 
@@ -299,8 +416,8 @@ class ShipmentCsvController extends Controller
                 $error_item_list[]=array('customer_shop_id'=>$value[1]);
                 continue;
             }
-             $jan_code=$value[2];
-            $customer_item_id=$this->customer_item_search($jan_code,$customer_id);
+            //$customer_item_id=$this->customer_item_search($jan_code,$customer_id);
+            $customer_item_id=$this->customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price);
             if($customer_item_id==null){
                 // @unlink($baseUrl);
                 // Session::flash('message', 'jan code not exist：[jan code]'); 
@@ -309,7 +426,7 @@ class ShipmentCsvController extends Controller
                 $error_item_list[]=array('customer_item_id'=>$value[2]);
                 continue;
             }
-            $shipment_number=date('Y-m-d',strtotime($value[6]));
+            $shipment_number=date('Y-m-d',strtotime($order_date));
             
             $this->QR_var->folder_create('/app/public/shipment_numbers');
             $this->QR_var->qr_code_gen($shipment_number,'/app/public/shipment_numbers');
@@ -321,10 +438,10 @@ class ShipmentCsvController extends Controller
             if($is_exist_customer_order){
                 //$error_item_duplicate[]=array('customer_item_id'=>$value[2]);
                 $exitQty = $is_exist_customer_order->quantity;
-                $newQty= $is_exist_customer_order->quantity+$value[5];
+                $newQty= (int)$is_exist_customer_order->quantity+$quantity;
                 $newfrquency =$is_exist_customer_order->order_frequency_num+1; 
                 customer_order::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['order_frequency_num'=>$newfrquency]);
-                customer_order_detail::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['quantity'=>$newQty,'last_qty'=>$value[5]]);
+                customer_order_detail::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['quantity'=>$newQty,'last_qty'=>$quantity]);
                 continue;
             }
             $customer_order_demo['customer_id']=$customer_id;
@@ -332,24 +449,24 @@ class ShipmentCsvController extends Controller
             $customer_order_demo['shipment_number']=$shipment_number;
             $customer_order_demo['category']='edi';
             $customer_order_demo['order_frequency_num']=1;
-            $customer_order_demo['voucher_number']=date('YmdHis',strtotime($value[6]));//$value[4];
-            $customer_order_demo['order_date']= date('Y-m-d H:i:s',strtotime($value[6]));
+            $customer_order_demo['voucher_number']=date('YmdHis',strtotime($order_date));//$value[4];
+            $customer_order_demo['order_date']= date('Y-m-d H:i:s',strtotime($order_date));
             $customer_order_demo['shipment_date']= date('Y-m-d');
-            $customer_order_demo['delivery_date']= date('Y-m-d H:i:s',strtotime($value[6]));
+            $customer_order_demo['delivery_date']= date('Y-m-d H:i:s',strtotime($order_date));
 
             $customer_order_demo_detail['customer_item_id']=$customer_item_id;
             $customer_order_demo_detail['jan']=$jan_code;
             $customer_order_demo_detail['inputs']=$inputs_type;
-            $customer_order_demo_detail['quantity']=$value[5];
-            $customer_order_demo_detail['last_qty']=$value[5];
-            $customer_order_demo_detail['cost_price']=$value[7];
-            $customer_order_demo_detail['selling_price']=$value[8];
+            $customer_order_demo_detail['quantity']=$quantity;
+            $customer_order_demo_detail['last_qty']=$quantity;
+            $customer_order_demo_detail['cost_price']=$cost_price;
+            $customer_order_demo_detail['selling_price']=$selling_price;
             $customer_order_id = customer_order::insertGetId($customer_order_demo);
             $customer_order_demo_detail['customer_order_id']=$customer_order_id;
             $customer_order_detail_id = customer_order_detail::insertGetId($customer_order_demo_detail);
             $stock_info = $this->get_stock_info($jan_code);
             
-            $c_quantity = $value[5];
+            $c_quantity = $quantity;
             $shiptment['customer_id']=$customer_id;
             $shiptment['customer_order_id']=$customer_order_id;
             $shiptment['customer_order_detail_id']=$customer_order_detail_id;
@@ -670,13 +787,13 @@ class ShipmentCsvController extends Controller
         $customer_info = customer::where('name',$name)->first();
         return $customer_info['customer_id'];
     }
-    public function customer_shop_search_byname($name,$customer_id,$shop_name){
-        $customer_info = customer_shop::where(['shop_name'=>$name,'customer_id'=>$customer_id])->first();
-        return $customer_info['customer_shop_id'];
+    public function customer_shop_search_byname($customer_id,$shop_name,$shop_code){
+        $customer_info = customer_shop::where(['shop_name'=>$shop_name,'shop_no'=>$shop_code,'customer_id'=>$customer_id])->first();
+      
         if($customer_info){
             return $customer_info['customer_shop_id'];
         }else{
-            $customer_shop_id = customer_shop::insertGetId(['shop_no'=>$shop_code,'customer_id'=>$customer_id,'shop_name'=>$shop_name]);
+            $customer_shop_id = customer_shop::insertGetId(['shop_no'=>$shop_code,'customer_id'=>$customer_id,'shop_name'=>$shop_name,'phone'=>'1234567']);
             return $customer_shop_id;
         }
        

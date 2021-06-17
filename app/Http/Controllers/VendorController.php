@@ -176,7 +176,12 @@ class VendorController extends Controller
 
         // }
         // return $maker_id;
-        $maker_code = substr($jan_code, 0, 7);
+        $janLenght = strlen($jan_code);
+        if($janLenght=='8'){
+            $maker_code = substr($jan_code, 0, 5);
+        }else{
+            $maker_code = substr($jan_code, 2, 5);
+        }
         $m_infos = array();
         $vendor_id = 0;
         $maker_id = 0;
