@@ -889,6 +889,23 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         return view('backend.handy_pages.handy_stock_inventory_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'));
     }
 
+    public function handy_get_last_order_by_jan_code($jan){
+        if (!vendor_item::where('jan', $jan)->exists()) {
+            return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
+        }
+        $result = vendor_order::select('jans.name as item_name','jans.case_inputs','jans.ball_inputs','vendor_orders.*','stock_items.rack_number','stock_items.temp_rack_number')
+        ->join('vendor_items','vendor_items.vendor_item_id','=','vendor_orders.vendor_item_id')
+        ->join('jans','jans.jan','=','vendor_items.jan')
+        ->join('stock_items','stock_items.vendor_item_id','=','vendor_orders.vendor_item_id')
+        ->where(['vendor_orders.status'=>'入荷済み','vendor_items.jan'=>$jan])
+        ->orderBy('vendor_orders.vendor_order_id','desc')
+        ->get();
+        if ($result == null) {
+            return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
+        }
+        return response()->json(['status' => 200, 'result'=>$result]);        
+    }
+
     public function handy_quotation()
     {
         $title = "Dashboard";

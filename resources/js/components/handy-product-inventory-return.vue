@@ -108,7 +108,7 @@
                                                                     <input type="tel" :id="'case'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.case_quantity"
+                                                                           v-model="order.order_case_quantity"
                                                                            :readonly="readonly"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
@@ -118,7 +118,7 @@
                                                                     <input type="tel" :id="'ball'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.ball_quantity"
+                                                                           v-model="order.order_ball_quantity"
                                                                            :readonly="readonly"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
@@ -128,7 +128,7 @@
                                                                     <input type="tel" :id="'bara'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.unit_quantity"
+                                                                           v-model="order.order_unit_quantity"
                                                                            :readonly="readonly"
                                                                            class="form-control cmn_num_formt bara_order inputs">
                                                                 </td>
@@ -142,6 +142,30 @@
                                                                            :readonly="readonly">
                                                                 </td>
 
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="number"
+                                                                           @keypress="pressEnterAndSave($event,0)"
+                                                                           class="form-control  " :id="'rack0'"
+                                                                           v-model="return_info.return_case_qty"
+                                                                           style="border-radius: 0px; text-align: center;">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
+                                                                           @keypress="pressEnterAndSave($event,1)"
+                                                                           class="form-control  " :id="'rack1'"
+                                                                           v-model="return_info.return_ball_qty"
+                                                                           style="border-radius: 0px; text-align: center;">
+                                                                </td>
+                                                                 <td>
+                                                                    <input type="number"
+                                                                           @keypress="pressEnterAndSave($event,2)"
+                                                                           class="form-control  " :id="'rack2'"
+                                                                           v-model="return_info.return_unit_qty"
+                                                                           style="border-radius: 0px; text-align: center;">
+                                                                </td>
+                                                                <td></td>
                                                             </tr>
                                                         </template>
                                                         <template v-else>
@@ -322,7 +346,14 @@ export default {
             order_data: [],
             search_data: [],
             barCodeScan: 0,
-
+            return_info:{
+                vendor_order_id:'',
+                vendor_item_id:'',
+                return_case_qty:0,
+                return_ball_qty:0,
+                return_unit_qty:0,
+                return_rack_number:'',
+            },
             case_order: 0,
             boll_order: 0,
             bara_order: 0,
@@ -364,7 +395,7 @@ export default {
             }
             $('.loading_image_custom').show()
             _this.loader = 1
-            axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code)
+            axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code)
                 .then(function (res) {
                     //_this.resetField();
                     if (res.data.result.length > 0) {
@@ -379,12 +410,12 @@ export default {
                                 if ($('#rack' + 0).length <= 0) {
                                     $('#order-place-button').focus()
                                 } else {
-                                    if (!_this.readonly) {
+                                    //if (!_this.readonly) {
                                         $('#rack' + 0).focus()
                                         $('#rack' + 0).select()
-                                    } else {
-                                        $('#order-place-button').focus()
-                                    }
+                                    // } else {
+                                    //     $('#order-place-button').focus()
+                                    // }
                                 }
                             }, 720)
                         }
@@ -410,9 +441,9 @@ export default {
             let _this = this;
             _this.total_quantity = 0;
             this.order_data.map(function (order) {
-                let unit = order.unit_quantity ? parseInt(order.unit_quantity) : 0;
-                let ball = order.ball_quantity ? parseInt(order.ball_quantity) : 0;
-                let case_ = order.case_quantity ? parseInt(order.case_quantity) : 0;
+                let unit = order.order_unit_quantity ? parseInt(order.order_unit_quantity) : 0;
+                let ball = order.order_ball_quantity ? parseInt(order.order_ball_quantity) : 0;
+                let case_ = order.order_case_quantity ? parseInt(order.order_case_quantity) : 0;
                 _this.total_quantity += unit + ball * parseInt(order.ball_inputs) + case_ * parseInt(order.case_inputs)
             })
 

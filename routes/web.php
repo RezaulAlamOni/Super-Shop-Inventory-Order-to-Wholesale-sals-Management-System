@@ -150,6 +150,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 
 	//Oni for new design
 	Route::get('/handy_stock_detail_get_by_jan_code/{jan}', 'HandyrController@handy_stock_detail_get_by_jan_code');
+	Route::get('/handy_get_last_order_by_jan_code/{jan}', 'HandyrController@handy_get_last_order_by_jan_code');
 	Route::get('/cache-clear/{rdn_code}', 'HandyrController@cacheClearAndReload')->name('cache.clear');
 
 	Route::post('/update_stock_by_rack_by_handy', 'HandyrController@update_stock_by_rack_by_handy');

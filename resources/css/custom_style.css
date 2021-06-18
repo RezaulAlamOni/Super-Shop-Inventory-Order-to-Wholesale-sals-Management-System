@@ -24,6 +24,14 @@
         .searchTextFound{
             background:#F3F885 !important;
         }
+        #shipment_js_message img{
+            position: absolute;
+            margin: 0 auto;
+            text-align: center;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
         .brndOrderInputQty{
             background: transparent;
     border: none;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\QRGenController;
+use Rap2hpoutre\FastExcel\FastExcel;
 use App\customer;
 use App\jan;
 use App\maker;
@@ -313,6 +314,7 @@ class ShipmentCsvController extends Controller
             $profit = $selling_price - $cost_price;
             $profit_margin = ($cost_price*$profit)/100;
             $profit_margin = round($profit_margin);
+            if (!vendor_item::where('jan', $jan_code)->exists()) {
             $vendor_item_id = vendor_item::insertGetId([
                 'vendor_id'=>$vendor_id,
                 'maker_id'=>$maker_id,
@@ -325,19 +327,21 @@ class ShipmentCsvController extends Controller
                 'start_date'=>date('Y-m-d'),
                 'end_date'=>date('Y-m-d')
             ]);
+            }
             $csarray = array(
-                'c_name' => 0,
+            'c_name' => $customer_id,
             'v_name' => $vendor_id,
             'j_code' => $jan_code,
             'cost_price' => $selling_price
             );
-            $insertTocus = $this->insertIntocustomeritem($csarray);
-            $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
-            if($customer_item_info){
-                return $customer_item_info['customer_item_id'];
-            }else{
-                return 999999;
-            }
+            return $insertTocus = $this->insertIntocustomeritem($csarray);
+
+            // $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
+            // if($customer_item_info){
+            //     return $customer_item_info['customer_item_id'];
+            // }else{
+            //     return 999999;
+            // }
         }
         
     }
@@ -359,29 +363,36 @@ class ShipmentCsvController extends Controller
             "start_date" => '2019-01-01',
             "end_date" => '2021-12-31',
         );
-        if (customer_item::where('jan', $data['j_code'])->exists()) {
-            return true;
+        if (customer_item::where('jan', $data['j_code'])->where('customer_id',$data['c_name'])->exists()) {
+             $customer_item_info = customer_item::where('jan', $data['j_code'])->where('customer_id',$data['c_name'])->first();
+            return $customer_item_info->customer_item_id;
         } else {
-            $customer_list = customer::where('is_deleted', 0)->get();
-            if ($customer_list) {
-                foreach ($customer_list as $customer) {
-                    $customer_data_ins_array['customer_id'] = $customer->customer_id;
-                    customer_item::insert($customer_data_ins_array);
-                }
-            }
-
+            $customer_item_id = customer_item::insertGetId($customer_data_ins_array);
+            return $customer_item_id;
         }
-        return true;
     }
 /*required function list*/
     public function ShipmentCsvInsert_brand(Request $request){
         $file = $request->file('file');
+        $file_type = $request->file_type;
         $file_name = time().'_'.$file->getClientOriginalName();
         $this->QR_var->folder_create($this->csv_folder_name);
 
         $file->storeAs(config('const.CSV_UPLOAD_PATH'), $file_name);
         $baseUrl = storage_path().'/app/'.config('const.CSV_UPLOAD_PATH') . $file_name;
+        $dataArr = array();
+        if($file_type=='xlsx'){
+        /*xlsx reader*/
+        $sheets = (new FastExcel)->importSheets($baseUrl);
+        foreach($sheets as $shett){
+           foreach($shett as $value){
+                $dataArr[]=array($value['スーパー'],$value['スーパーコード'],$value['店舗名'],$value['店舗コード'],$value['JAN'],$value['メーカー名'],$value['商品名'],$value['受注数量'],$value['納品日'],$value['原価'],$value['売価']);
+           }
+        }
+    }else{
         $dataArr = $this->csvReader_new($baseUrl);
+    }
+    
         $customer_order_array=array();
         $error_item_list=array();
         $error_item_duplicate=array();

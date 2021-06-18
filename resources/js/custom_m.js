@@ -3309,10 +3309,11 @@ $(document).ready(function () {
         // $('#shipment_csv_input').change(function() {
         var fileInput = $(this).val();
         var ext = checkFileExt(fileInput);
-        if (ext != "csv") {
-            alert('受注データを選択してください');
-            return false;
-        }
+        //alert(ext);
+        // if (ext != "csv" || ext !="xlsx") {
+        //     alert('受注データを選択してください');
+        //     return false;
+        // }
         var file_size = $(this)[0].files[0].size / 1024 / 1024;
         if (file_size > 30) {
             alert("Big File Size: " + file_size);
@@ -3322,9 +3323,10 @@ $(document).ready(function () {
         // console.log(f_data);
         var formData = new FormData();
         formData.append('file', $(this)[0].files[0]);
+        formData.append('file_type',ext);
         // console.log(formData);
         // return 0;
-        $('#shipment_js_message').html('<center><img src="' + Globals.base_url + 'public/backend/images/ajax-loader.gif"></center>');
+        $('#shipment_js_message').html('<center><img src="' + Globals.base_url + '/public/backend/images/loadingAjax.gif"></center>');
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -3352,7 +3354,7 @@ $(document).ready(function () {
                     error_nav = view(tempmsg['csv_import'], def_center_mesg_template);
                     show_hide_nav_icn(0);
                 } else {
-                    location.reload();
+                    //location.reload();
                 }
 
             }

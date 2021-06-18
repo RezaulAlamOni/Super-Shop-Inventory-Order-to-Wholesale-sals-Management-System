@@ -90,10 +90,11 @@
         <!-- menual_order_tble -->
         <div class="col-12 text-right">
 		<button class="btn btn-success">受注データ取込</button>
-		<input type="file" id="shipment_csv_input_brand" name="shipment_csv" accept=".csv">
+		<input type="file" id="shipment_csv_input_brand" name="shipment_csv" accept=".csv,.xlsx">
 	</div>
             <div class="clearboth"></div>
             <div class="col-md-12 menual_order_receive_table">
+                <div id="shipment_js_message"></div>
                 <div id="brand_order_table_entry" style="margin:0">
                     <table class="table table-bordered table-freeze-multi" data-scroll-height="680"
                            data-cols-number="5">
