@@ -5097,7 +5097,7 @@ for(var k=0;k<response.shop_item_list.length;k++){
                 var updatedColorLg = (largeArray[i].update_status=="1"?'updated_yes_off':'updated_no'); 
                 
                 if(voice_text!=''){
-                    if(largeArray[i].name.indexOf(voice_text) != -1){
+                    if(largeArray[i].name.indexOf(voice_text) != -1 || largeArray[i].maker_name.indexOf(voice_text) != -1){
                         searchTextFound1 = 'searchTextFound';
                     }
                 }
@@ -5112,7 +5112,7 @@ for(var k=0;k<response.shop_item_list.length;k++){
                 console.log(i+','+smallArray.length)
                 if(i<smallArray.length){
                     if(voice_text!=''){
-                        if(smallArray[i].name.indexOf(voice_text) != -1){
+                        if(smallArray[i].name.indexOf(voice_text) != -1 || smallArray[i].maker_name.indexOf(voice_text) != -1){
                             searchTextFound2 = 'searchTextFound';
                         }
                     }
