@@ -3354,7 +3354,7 @@ $(document).ready(function () {
                     error_nav = view(tempmsg['csv_import'], def_center_mesg_template);
                     show_hide_nav_icn(0);
                 } else {
-                    //location.reload();
+                    location.reload();
                 }
 
             }
