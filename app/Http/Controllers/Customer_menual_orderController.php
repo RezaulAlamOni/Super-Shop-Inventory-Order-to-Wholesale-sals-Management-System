@@ -175,7 +175,7 @@ class Customer_menual_orderController extends Controller
         $shop_item_list =$shop_item_list->groupBy('customer_items.jan')->get();
 
 /*csv order list*/
-$wh = 'ORDER BY all_orders.name like "%'.$voice_text.'%" desc,makers.maker_name like "%'.$voice_text.'%" desc,all_orders.total_quantity DESC';
+$wh = 'ORDER BY all_orders.total_quantity DESC,all_orders.name like "%'.$voice_text.'%" desc,makers.maker_name like "%'.$voice_text.'%" desc';
 $online_order = collect(\DB::select("
 select all_orders.*,
 makers.maker_name
