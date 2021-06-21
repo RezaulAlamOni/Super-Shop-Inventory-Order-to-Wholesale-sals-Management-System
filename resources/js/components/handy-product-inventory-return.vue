@@ -96,8 +96,12 @@
                                                                 バラ
                                                             </th>
                                                             <th style="width: 50px; text-align: center; padding: 5px;">
-                                                                入庫
-                                                                棚no
+                                                                在庫
+                                                                合計
+                                                            </th>
+                                                            <th style="width: 50px; text-align: center; padding: 5px;">
+                                                                返却
+                                                                合計
                                                             </th>
                                                         </tr>
                                                         </thead>
@@ -108,7 +112,7 @@
                                                                     <input type="tel" :id="'case'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.order_case_quantity"
+                                                                           v-model="order.arrival_case_quantity"
                                                                            :readonly="readonly"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
@@ -118,7 +122,7 @@
                                                                     <input type="tel" :id="'ball'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.order_ball_quantity"
+                                                                           v-model="order.arrival_ball_quantity"
                                                                            :readonly="readonly"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
@@ -128,7 +132,7 @@
                                                                     <input type="tel" :id="'bara'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.order_unit_quantity"
+                                                                           v-model="order.arrival_unit_quantity"
                                                                            :readonly="readonly"
                                                                            class="form-control cmn_num_formt bara_order inputs">
                                                                 </td>
@@ -136,37 +140,22 @@
                                                                 <td>
                                                                     <input type="tel"
                                                                            @keypress="pressEnterAndSave($event,index)"
-                                                                           class="form-control  " :id="'rack'+index"
-                                                                           v-model="order.rack_number"
+                                                                           class="form-control  "
+                                                                           v-model="order.quantity"
                                                                            style="border-radius: 0px; text-align: center;"
                                                                            :readonly="readonly">
                                                                 </td>
 
-                                                            </tr>
-                                                            <tr>
                                                                 <td>
-                                                                    <input type="number"
-                                                                           @keypress="pressEnterAndSave($event,0)"
-                                                                           class="form-control  " :id="'rack0'"
-                                                                           v-model="return_info.return_case_qty"
+                                                                    <input type="tel"
+                                                                           @keypress="pressEnterAndSave($event,index)"
+                                                                           class="form-control  " :id="'rack'+index"
+                                                                           v-model="order.damage_quantity"
                                                                            style="border-radius: 0px; text-align: center;">
                                                                 </td>
-                                                                <td>
-                                                                    <input type="number"
-                                                                           @keypress="pressEnterAndSave($event,1)"
-                                                                           class="form-control  " :id="'rack1'"
-                                                                           v-model="return_info.return_ball_qty"
-                                                                           style="border-radius: 0px; text-align: center;">
-                                                                </td>
-                                                                 <td>
-                                                                    <input type="number"
-                                                                           @keypress="pressEnterAndSave($event,2)"
-                                                                           class="form-control  " :id="'rack2'"
-                                                                           v-model="return_info.return_unit_qty"
-                                                                           style="border-radius: 0px; text-align: center;">
-                                                                </td>
-                                                                <td></td>
+
                                                             </tr>
+                                                            
                                                         </template>
                                                         <template v-else>
                                                             <tr>
@@ -188,7 +177,7 @@
                                                        style="float:right;margin-top: -10px">
                                                         次の商品へ</a>
                                                 </div>
-                                                <div class="input-group mb-2"
+                                               <!-- <div class="input-group mb-2"
                                                      style="border: .5px solid #b8b7b7;border-radius: 5px;width: 50%;height: 45px;margin-top: -10px;">
                                                     <div class="input-group-prepend"
                                                          style=" color: black;    /* padding: 0px 0px; */">
@@ -200,7 +189,7 @@
                                                     <input type="text" class="total_stock_jaiko_new jaiko_ form-control"
                                                            readonly="" :value="total_quantity"
                                                            style="padding: 5px 5px;    font-size: 16px;">
-                                                </div>
+                                                </div>-->
                                             </div>
 
 
@@ -401,7 +390,9 @@ export default {
                     if (res.data.result.length > 0) {
                         _this.order_data = res.data.result;
                         _this.product_name = _this.order_data[0].item_name;
-
+                        _this.return_info.vendor_item_id = _this.order_data[0].vendor_item_id;
+                        _this.return_info.vendor_order_id = _this.order_data[0].vendor_order_id;
+                        _this.return_info.return_rack_number = _this.order_data[0].rack_number;
                         _this.calculateTotalQuantity();
 
                         if (_this.type == 0) {
@@ -590,6 +581,13 @@ export default {
         },
         updateTemporaryTana() {
             let _this = this;
+            axios.post(this.base_url + '/item_return_to_tonya', _this.order_data)
+                    .then(function (res) {
+                        console.log(res);
+                    })
+                    .then(function (er) {
+                        console.log(err);
+                    })
             _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
             $('#handy-navi').show()
             _this.hideModelAndClearInput()

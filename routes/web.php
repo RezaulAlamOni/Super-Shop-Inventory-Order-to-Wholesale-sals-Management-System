@@ -266,6 +266,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/get_all_vendor_order_item_by_voucher', 'VendormanagementsheetController@get_all_vendor_order_item_by_voucher');
 	Route::post('/vendor_payment_insert_update', 'VendormanagementsheetController@vendor_payment_insert_update');
 	Route::post('/vendor_due_payment_insert_update', 'VendormanagementsheetController@vendor_due_payment_insert_update');
+	Route::post('/item_return_to_tonya', 'HandyrController@item_return_to_tonya');
 
 	//vendormanagementsheet
 

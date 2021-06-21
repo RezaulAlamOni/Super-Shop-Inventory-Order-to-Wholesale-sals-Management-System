@@ -21017,17 +21017,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21103,6 +21092,9 @@ __webpack_require__.r(__webpack_exports__);
         if (res.data.result.length > 0) {
           _this.order_data = res.data.result;
           _this.product_name = _this.order_data[0].item_name;
+          _this.return_info.vendor_item_id = _this.order_data[0].vendor_item_id;
+          _this.return_info.vendor_order_id = _this.order_data[0].vendor_order_id;
+          _this.return_info.return_rack_number = _this.order_data[0].rack_number;
 
           _this.calculateTotalQuantity();
 
@@ -21279,6 +21271,11 @@ __webpack_require__.r(__webpack_exports__);
     updateTemporaryTana: function updateTemporaryTana() {
       var _this = this;
 
+      axios.post(this.base_url + '/item_return_to_tonya', _this.order_data).then(function (res) {
+        console.log(res);
+      }).then(function (er) {
+        console.log(err);
+      });
       _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
       $('#handy-navi').show();
 
@@ -63170,7 +63167,23 @@ var render = function() {
                                                   },
                                                   [
                                                     _vm._v(
-                                                      "\n                                                                入庫\n                                                                棚no\n                                                            "
+                                                      "\n                                                                在庫\n                                                                合計\n                                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "5px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                返却\n                                                                合計\n                                                            "
                                                     )
                                                   ]
                                                 )
@@ -63182,467 +63195,332 @@ var render = function() {
                                               { staticClass: "physicaltbody" },
                                               [
                                                 _vm.order_data.length > 0
-                                                  ? [
-                                                      _vm._l(
-                                                        _vm.order_data,
-                                                        function(order, index) {
-                                                          return _c("tr", [
-                                                            _c("td", [
-                                                              _c("input", {
-                                                                directives: [
-                                                                  {
-                                                                    name:
-                                                                      "model",
-                                                                    rawName:
-                                                                      "v-model",
-                                                                    value:
-                                                                      order.order_case_quantity,
-                                                                    expression:
-                                                                      "order.order_case_quantity"
-                                                                  }
-                                                                ],
-                                                                staticClass:
-                                                                  "form-control inputs ",
-                                                                attrs: {
-                                                                  type: "tel",
-                                                                  id:
-                                                                    "case" +
-                                                                    index,
-                                                                  readonly:
-                                                                    _vm.readonly
-                                                                },
-                                                                domProps: {
+                                                  ? _vm._l(
+                                                      _vm.order_data,
+                                                      function(order, index) {
+                                                        return _c("tr", [
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
                                                                   value:
-                                                                    order.order_case_quantity
-                                                                },
-                                                                on: {
-                                                                  click: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.selectItem(
-                                                                      $event,
-                                                                      "ケース"
-                                                                    )
-                                                                  },
-                                                                  keypress: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.pressEnterAndSave(
-                                                                      $event,
-                                                                      "case"
-                                                                    )
-                                                                  },
-                                                                  input: function(
-                                                                    $event
-                                                                  ) {
-                                                                    if (
-                                                                      $event
-                                                                        .target
-                                                                        .composing
-                                                                    ) {
-                                                                      return
-                                                                    }
-                                                                    _vm.$set(
-                                                                      order,
-                                                                      "order_case_quantity",
-                                                                      $event
-                                                                        .target
-                                                                        .value
-                                                                    )
-                                                                  }
+                                                                    order.arrival_case_quantity,
+                                                                  expression:
+                                                                    "order.arrival_case_quantity"
                                                                 }
-                                                              })
-                                                            ]),
-                                                            _vm._v(" "),
-                                                            _c("td", [
-                                                              _c("input", {
-                                                                directives: [
-                                                                  {
-                                                                    name:
-                                                                      "model",
-                                                                    rawName:
-                                                                      "v-model",
-                                                                    value:
-                                                                      order.order_ball_quantity,
-                                                                    expression:
-                                                                      "order.order_ball_quantity"
-                                                                  }
-                                                                ],
-                                                                staticClass:
-                                                                  "form-control boll_order inputs",
-                                                                attrs: {
-                                                                  type: "tel",
-                                                                  id:
-                                                                    "ball" +
-                                                                    index,
-                                                                  readonly:
-                                                                    _vm.readonly
+                                                              ],
+                                                              staticClass:
+                                                                "form-control inputs ",
+                                                              attrs: {
+                                                                type: "tel",
+                                                                id:
+                                                                  "case" +
+                                                                  index,
+                                                                readonly:
+                                                                  _vm.readonly
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  order.arrival_case_quantity
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.selectItem(
+                                                                    $event,
+                                                                    "ケース"
+                                                                  )
                                                                 },
-                                                                domProps: {
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    "case"
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    order,
+                                                                    "arrival_case_quantity",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
                                                                   value:
-                                                                    order.order_ball_quantity
-                                                                },
-                                                                on: {
-                                                                  click: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.selectItem(
-                                                                      $event,
-                                                                      "ケース"
-                                                                    )
-                                                                  },
-                                                                  keypress: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.pressEnterAndSave(
-                                                                      $event,
-                                                                      "case"
-                                                                    )
-                                                                  },
-                                                                  input: function(
-                                                                    $event
-                                                                  ) {
-                                                                    if (
-                                                                      $event
-                                                                        .target
-                                                                        .composing
-                                                                    ) {
-                                                                      return
-                                                                    }
-                                                                    _vm.$set(
-                                                                      order,
-                                                                      "order_ball_quantity",
-                                                                      $event
-                                                                        .target
-                                                                        .value
-                                                                    )
-                                                                  }
+                                                                    order.arrival_ball_quantity,
+                                                                  expression:
+                                                                    "order.arrival_ball_quantity"
                                                                 }
-                                                              })
-                                                            ]),
-                                                            _vm._v(" "),
-                                                            _c("td", [
-                                                              _c("input", {
-                                                                directives: [
-                                                                  {
-                                                                    name:
-                                                                      "model",
-                                                                    rawName:
-                                                                      "v-model",
-                                                                    value:
-                                                                      order.order_unit_quantity,
-                                                                    expression:
-                                                                      "order.order_unit_quantity"
-                                                                  }
-                                                                ],
-                                                                staticClass:
-                                                                  "form-control cmn_num_formt bara_order inputs",
-                                                                attrs: {
-                                                                  type: "tel",
-                                                                  id:
-                                                                    "bara" +
-                                                                    index,
-                                                                  readonly:
-                                                                    _vm.readonly
+                                                              ],
+                                                              staticClass:
+                                                                "form-control boll_order inputs",
+                                                              attrs: {
+                                                                type: "tel",
+                                                                id:
+                                                                  "ball" +
+                                                                  index,
+                                                                readonly:
+                                                                  _vm.readonly
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  order.arrival_ball_quantity
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.selectItem(
+                                                                    $event,
+                                                                    "ケース"
+                                                                  )
                                                                 },
-                                                                domProps: {
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    "case"
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    order,
+                                                                    "arrival_ball_quantity",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
                                                                   value:
-                                                                    order.order_unit_quantity
-                                                                },
-                                                                on: {
-                                                                  click: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.selectItem(
-                                                                      $event,
-                                                                      "ケース"
-                                                                    )
-                                                                  },
-                                                                  keypress: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.pressEnterAndSave(
-                                                                      $event,
-                                                                      "case"
-                                                                    )
-                                                                  },
-                                                                  input: function(
-                                                                    $event
-                                                                  ) {
-                                                                    if (
-                                                                      $event
-                                                                        .target
-                                                                        .composing
-                                                                    ) {
-                                                                      return
-                                                                    }
-                                                                    _vm.$set(
-                                                                      order,
-                                                                      "order_unit_quantity",
-                                                                      $event
-                                                                        .target
-                                                                        .value
-                                                                    )
-                                                                  }
+                                                                    order.arrival_unit_quantity,
+                                                                  expression:
+                                                                    "order.arrival_unit_quantity"
                                                                 }
-                                                              })
-                                                            ]),
-                                                            _vm._v(" "),
-                                                            _c("td", [
-                                                              _c("input", {
-                                                                directives: [
-                                                                  {
-                                                                    name:
-                                                                      "model",
-                                                                    rawName:
-                                                                      "v-model",
-                                                                    value:
-                                                                      order.rack_number,
-                                                                    expression:
-                                                                      "order.rack_number"
+                                                              ],
+                                                              staticClass:
+                                                                "form-control cmn_num_formt bara_order inputs",
+                                                              attrs: {
+                                                                type: "tel",
+                                                                id:
+                                                                  "bara" +
+                                                                  index,
+                                                                readonly:
+                                                                  _vm.readonly
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  order.arrival_unit_quantity
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.selectItem(
+                                                                    $event,
+                                                                    "ケース"
+                                                                  )
+                                                                },
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    "case"
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
                                                                   }
-                                                                ],
-                                                                staticClass:
-                                                                  "form-control  ",
-                                                                staticStyle: {
-                                                                  "border-radius":
-                                                                    "0px",
-                                                                  "text-align":
-                                                                    "center"
-                                                                },
-                                                                attrs: {
-                                                                  type: "tel",
-                                                                  id:
-                                                                    "rack" +
-                                                                    index,
-                                                                  readonly:
-                                                                    _vm.readonly
-                                                                },
-                                                                domProps: {
+                                                                  _vm.$set(
+                                                                    order,
+                                                                    "arrival_unit_quantity",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
                                                                   value:
-                                                                    order.rack_number
-                                                                },
-                                                                on: {
-                                                                  keypress: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.pressEnterAndSave(
-                                                                      $event,
-                                                                      index
-                                                                    )
-                                                                  },
-                                                                  input: function(
-                                                                    $event
-                                                                  ) {
-                                                                    if (
-                                                                      $event
-                                                                        .target
-                                                                        .composing
-                                                                    ) {
-                                                                      return
-                                                                    }
-                                                                    _vm.$set(
-                                                                      order,
-                                                                      "rack_number",
-                                                                      $event
-                                                                        .target
-                                                                        .value
-                                                                    )
-                                                                  }
+                                                                    order.quantity,
+                                                                  expression:
+                                                                    "order.quantity"
                                                                 }
-                                                              })
-                                                            ])
+                                                              ],
+                                                              staticClass:
+                                                                "form-control  ",
+                                                              staticStyle: {
+                                                                "border-radius":
+                                                                  "0px",
+                                                                "text-align":
+                                                                  "center"
+                                                              },
+                                                              attrs: {
+                                                                type: "tel",
+                                                                readonly:
+                                                                  _vm.readonly
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  order.quantity
+                                                              },
+                                                              on: {
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    index
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    order,
+                                                                    "quantity",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    order.damage_quantity,
+                                                                  expression:
+                                                                    "order.damage_quantity"
+                                                                }
+                                                              ],
+                                                              staticClass:
+                                                                "form-control  ",
+                                                              staticStyle: {
+                                                                "border-radius":
+                                                                  "0px",
+                                                                "text-align":
+                                                                  "center"
+                                                              },
+                                                              attrs: {
+                                                                type: "tel",
+                                                                id:
+                                                                  "rack" + index
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  order.damage_quantity
+                                                              },
+                                                              on: {
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    index
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    order,
+                                                                    "damage_quantity",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
                                                           ])
-                                                        }
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c("tr", [
-                                                        _c("td", [
-                                                          _c("input", {
-                                                            directives: [
-                                                              {
-                                                                name: "model",
-                                                                rawName:
-                                                                  "v-model",
-                                                                value:
-                                                                  _vm
-                                                                    .return_info
-                                                                    .return_case_qty,
-                                                                expression:
-                                                                  "return_info.return_case_qty"
-                                                              }
-                                                            ],
-                                                            staticClass:
-                                                              "form-control  ",
-                                                            staticStyle: {
-                                                              "border-radius":
-                                                                "0px",
-                                                              "text-align":
-                                                                "center"
-                                                            },
-                                                            attrs: {
-                                                              type: "number",
-                                                              id: "rack0"
-                                                            },
-                                                            domProps: {
-                                                              value:
-                                                                _vm.return_info
-                                                                  .return_case_qty
-                                                            },
-                                                            on: {
-                                                              keypress: function(
-                                                                $event
-                                                              ) {
-                                                                return _vm.pressEnterAndSave(
-                                                                  $event,
-                                                                  0
-                                                                )
-                                                              },
-                                                              input: function(
-                                                                $event
-                                                              ) {
-                                                                if (
-                                                                  $event.target
-                                                                    .composing
-                                                                ) {
-                                                                  return
-                                                                }
-                                                                _vm.$set(
-                                                                  _vm.return_info,
-                                                                  "return_case_qty",
-                                                                  $event.target
-                                                                    .value
-                                                                )
-                                                              }
-                                                            }
-                                                          })
-                                                        ]),
-                                                        _vm._v(" "),
-                                                        _c("td", [
-                                                          _c("input", {
-                                                            directives: [
-                                                              {
-                                                                name: "model",
-                                                                rawName:
-                                                                  "v-model",
-                                                                value:
-                                                                  _vm
-                                                                    .return_info
-                                                                    .return_ball_qty,
-                                                                expression:
-                                                                  "return_info.return_ball_qty"
-                                                              }
-                                                            ],
-                                                            staticClass:
-                                                              "form-control  ",
-                                                            staticStyle: {
-                                                              "border-radius":
-                                                                "0px",
-                                                              "text-align":
-                                                                "center"
-                                                            },
-                                                            attrs: {
-                                                              type: "number",
-                                                              id: "rack1"
-                                                            },
-                                                            domProps: {
-                                                              value:
-                                                                _vm.return_info
-                                                                  .return_ball_qty
-                                                            },
-                                                            on: {
-                                                              keypress: function(
-                                                                $event
-                                                              ) {
-                                                                return _vm.pressEnterAndSave(
-                                                                  $event,
-                                                                  1
-                                                                )
-                                                              },
-                                                              input: function(
-                                                                $event
-                                                              ) {
-                                                                if (
-                                                                  $event.target
-                                                                    .composing
-                                                                ) {
-                                                                  return
-                                                                }
-                                                                _vm.$set(
-                                                                  _vm.return_info,
-                                                                  "return_ball_qty",
-                                                                  $event.target
-                                                                    .value
-                                                                )
-                                                              }
-                                                            }
-                                                          })
-                                                        ]),
-                                                        _vm._v(" "),
-                                                        _c("td", [
-                                                          _c("input", {
-                                                            directives: [
-                                                              {
-                                                                name: "model",
-                                                                rawName:
-                                                                  "v-model",
-                                                                value:
-                                                                  _vm
-                                                                    .return_info
-                                                                    .return_unit_qty,
-                                                                expression:
-                                                                  "return_info.return_unit_qty"
-                                                              }
-                                                            ],
-                                                            staticClass:
-                                                              "form-control  ",
-                                                            staticStyle: {
-                                                              "border-radius":
-                                                                "0px",
-                                                              "text-align":
-                                                                "center"
-                                                            },
-                                                            attrs: {
-                                                              type: "number",
-                                                              id: "rack2"
-                                                            },
-                                                            domProps: {
-                                                              value:
-                                                                _vm.return_info
-                                                                  .return_unit_qty
-                                                            },
-                                                            on: {
-                                                              keypress: function(
-                                                                $event
-                                                              ) {
-                                                                return _vm.pressEnterAndSave(
-                                                                  $event,
-                                                                  2
-                                                                )
-                                                              },
-                                                              input: function(
-                                                                $event
-                                                              ) {
-                                                                if (
-                                                                  $event.target
-                                                                    .composing
-                                                                ) {
-                                                                  return
-                                                                }
-                                                                _vm.$set(
-                                                                  _vm.return_info,
-                                                                  "return_unit_qty",
-                                                                  $event.target
-                                                                    .value
-                                                                )
-                                                              }
-                                                            }
-                                                          })
-                                                        ]),
-                                                        _vm._v(" "),
-                                                        _c("td")
-                                                      ])
-                                                    ]
+                                                        ])
+                                                      }
+                                                    )
                                                   : [_vm._m(0)]
                                               ],
                                               2
@@ -63675,36 +63553,6 @@ var render = function() {
                                             )
                                           ]
                                         )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "input-group mb-2",
-                                        staticStyle: {
-                                          border: ".5px solid #b8b7b7",
-                                          "border-radius": "5px",
-                                          width: "50%",
-                                          height: "45px",
-                                          "margin-top": "-10px"
-                                        }
-                                      },
-                                      [
-                                        _vm._m(1),
-                                        _vm._v(" "),
-                                        _c("input", {
-                                          staticClass:
-                                            "total_stock_jaiko_new jaiko_ form-control",
-                                          staticStyle: {
-                                            padding: "5px 5px",
-                                            "font-size": "16px"
-                                          },
-                                          attrs: { type: "text", readonly: "" },
-                                          domProps: {
-                                            value: _vm.total_quantity
-                                          }
-                                        })
                                       ]
                                     )
                                   ]
@@ -63996,7 +63844,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(1),
     _vm._v(" "),
     _c(
       "div",
@@ -64129,37 +63977,6 @@ var staticRenderFns = [
         ]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "input-group-prepend",
-        staticStyle: { color: "black", "/* padding": "0px 0px" }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "input-group-text",
-            staticStyle: {
-              color: "black",
-              "font-weight": "bold",
-              padding: "0 11px",
-              "font-size": "16px"
-            }
-          },
-          [
-            _vm._v(
-              "\n                                                            在庫合計\n                                                        "
-            )
-          ]
-        )
-      ]
-    )
   },
   function() {
     var _vm = this

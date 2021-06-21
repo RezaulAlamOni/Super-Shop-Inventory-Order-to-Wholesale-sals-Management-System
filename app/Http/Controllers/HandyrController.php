@@ -888,17 +888,18 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
         return view('backend.handy_pages.handy_stock_inventory_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'));
     }
-
+ 
     public function handy_get_last_order_by_jan_code($jan){
         if (!vendor_item::where('jan', $jan)->exists()) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
-        $result = vendor_order::select('jans.name as item_name','jans.case_inputs','jans.ball_inputs','vendor_orders.*','stock_items.rack_number','stock_items.temp_rack_number')
+        $result = vendor_arrival::select('jans.name as item_name','jans.case_inputs','jans.ball_inputs','vendor_orders.status','vendor_orders.unit_cost_price','vendor_orders.vendor_item_id','vendor_arrivals.*','stock_items.rack_number','stock_items.temp_rack_number')
+        ->join('vendor_orders','vendor_orders.vendor_order_id','=','vendor_arrivals.vendor_order_id')
         ->join('vendor_items','vendor_items.vendor_item_id','=','vendor_orders.vendor_item_id')
         ->join('jans','jans.jan','=','vendor_items.jan')
         ->join('stock_items','stock_items.vendor_item_id','=','vendor_orders.vendor_item_id')
         ->where(['vendor_orders.status'=>'入荷済み','vendor_items.jan'=>$jan])
-        ->orderBy('vendor_orders.vendor_order_id','desc')
+        ->orderBy('vendor_arrivals.vendor_order_id','desc')
         ->get();
         if ($result == null) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
@@ -1960,6 +1961,42 @@ WHERE DATE(co.shipment_date) = CURDATE()
             stock_item_detail::insert(['stock_item_id' => $stock_item_id, 'inc_dec_status' => $inc_dec, 'inc_dec_inputs' => 'ボール', 'inc_dec_quantity' => $inc_dec_qty, 'actual_quantity' => $stock_item_info->unit_quantity]);
             stock_item::where('stock_item_id', $stock_item_id)->update(['unit_quantity' => $unit_quantity]);
         }
+        return $result = response()->json(['message' => 'success']);
+    }
+
+    public function item_return_to_tonya(Request $request){
+        $requestAll = $request->all();
+        foreach($requestAll as $req){
+            $stock_item_info = stock_item::where('rack_number', $req['rack_number'])->where('vendor_item_id',$req['vendor_item_id'])->first();
+            if($stock_item_info){
+            if($stock_item_info->unit_quantity>=$req['damage_quantity']){
+                $unit_quantity = $stock_item_info->unit_quantity-$req['damage_quantity'];
+                stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity]);
+            }else{
+                
+                $total_stock = (($stock_item_info->case_quantity*$req['case_inputs'])+($stock_item_info->ball_quantity*$req['ball_inputs'])+$stock_item_info->unit_quantity);
+                $total_stock = $total_stock-$req['damage_quantity'];
+                if($req['case_inputs']!=0){
+                    $case_quantity = floor($total_stock/$req['case_inputs']);
+                }else{
+                    $case_quantity = 0;
+                }
+                if($req['ball_inputs']!=0){
+                    $ball_quantity = floor(($total_stock-($case_quantity*$req['case_inputs']))/$req['ball_inputs']);
+                }else{
+                    $ball_quantity = 0;
+                }
+                $unit_quantity = ($total_stock-(($case_quantity*$req['case_inputs'])+($ball_quantity*$req['ball_inputs'])));
+                stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity,'case_quantity'=>$case_quantity,'ball_quantity'=>$ball_quantity]);
+            }
+        }
+            $newQty = $req['quantity']-$req['damage_quantity'];
+            $invoice_amount = $req['unit_cost_price']*$newQty;
+            vendor_invoice::where('voucher_number',$req['vendor_order_id'])->update(['invoice_amount'=>$invoice_amount]);
+            vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$req['damage_quantity']]);
+        }
+       
+        
         return $result = response()->json(['message' => 'success']);
     }
 
