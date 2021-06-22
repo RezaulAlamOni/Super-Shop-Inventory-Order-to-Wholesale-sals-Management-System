@@ -1990,10 +1990,13 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity,'case_quantity'=>$case_quantity,'ball_quantity'=>$ball_quantity]);
             }
         }
-            $newQty = $req['quantity']-$req['damage_quantity'];
+        $existingArivalInfo = vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->first();
+            $existDamageQty = $existingArivalInfo->damage_quantity;
+            $returnQty=$existDamageQty+$req['damage_quantity'];
+            $newQty = $req['quantity']-$returnQty;
             $invoice_amount = $req['unit_cost_price']*$newQty;
             vendor_invoice::where('voucher_number',$req['vendor_order_id'])->update(['invoice_amount'=>$invoice_amount]);
-            vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$req['damage_quantity']]);
+            vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$returnQty]);
         }
        
         
