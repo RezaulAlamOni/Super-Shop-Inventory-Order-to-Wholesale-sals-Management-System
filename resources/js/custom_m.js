@@ -452,7 +452,7 @@ $(document).ready(function () {
         $('.c_ids_name').val(cus_shpneame);
         $('.s_ids_name').val(shpname);
         if(page_url=='brand-order' || page_url=='brand-order#' ){
-            get_brand_shop_brand_list(cId_val,cus_name);
+            get_brand_shop_brand_list(cId_val,cus_name,'','popup1');
         }else{
             get_brand_updated_item_list(cId_val,cus_name);
         }

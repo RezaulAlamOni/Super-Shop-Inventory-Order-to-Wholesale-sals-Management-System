@@ -36,7 +36,16 @@ let tonoya_order = 0;
 let maker_order = 0;
 let num_order = 0;
 
+
 $(document).ready(function () {
+   
+    if (window.history && window.history.pushState) {
+
+		$(window).on('popstate', function() {
+      
+		  alert('Back button was pressed.');
+		});
+	}
     /*test custom popu*/
     //custom_navi_design();
     //custom_navi_design2();
@@ -203,7 +212,7 @@ $(document).ready(function () {
             if(page_url=='brand-order' || page_url=='brand-order#'){
                 var cId_val = $('.c_ids_v').val();
                 var cus_name = $('.c_ids_name').val();
-                get_brand_shop_brand_list(cId_val,cus_name,name);
+                get_brand_shop_brand_list(cId_val,cus_name,name,'popup1');
             }else{
                 jan_list_search_by_name(name);
             }
@@ -5031,7 +5040,7 @@ function get_brand_item_list(c_id = 0, c_name = ''){
     $('#customer_shop_list_modal').modal('show');
 }
 
-function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
+function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text='',display_popup=''){
     close_all_navi_msg();
     var brand_name = '';
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
@@ -5141,8 +5150,14 @@ for(var k=0;k<response.shop_item_list.length;k++){
                 brand_name +='</tr>';
             }
             $(".brand_order_tble").html(brand_name);
+            if(display_popup=='popup1'){
+               
+                nav_list['jn_0'].show();
+            }else{
+                nav_list['jn_0'].hide();
+            }
+            
             $('#customer_shop_list_modal').modal('hide');
-            nav_list['jn_0'].show();
             show_hide_nav_icn(0);
             
     }

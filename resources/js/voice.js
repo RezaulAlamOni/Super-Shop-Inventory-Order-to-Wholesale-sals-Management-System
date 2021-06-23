@@ -84,7 +84,7 @@ function add_record_callback(data) {
             if(page_url=='brand-order' || page_url=='brand-order#'){
                 var cId_val = $('.c_ids_v').val();
                 var cus_name = $('.c_ids_name').val();
-                get_brand_shop_brand_list(cId_val,cus_name,command);
+                get_brand_shop_brand_list(cId_val,cus_name,command,'popup1');
             }else{
                 jan_list_search_by_name(command);
             }

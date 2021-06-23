@@ -287,14 +287,13 @@ function show_default_page_notifications() {
                 $('.c_ids_v').val(localStorage.getItem('local_customer_id'));
                 $('.jcs_main_hand_title').text(localStorage.getItem('local_page_title'));
                 get_brand_shop_brand_list(localStorage.getItem('local_customer_id'));
-            }else{
-                
-                get_customer_list();
-                $('#customer_message_success').html('');
-                $("#add_customer_message").html('');
-                $("#update_customer_message_fail").html('');
-                $("#customer_show_modal").modal("show");
             }
+             
+            get_customer_list();
+            $('#customer_message_success').html('');
+            $("#add_customer_message").html('');
+            $("#update_customer_message_fail").html('');
+            $("#customer_show_modal").modal("show");
             /*view existing data*/
            
          break;
