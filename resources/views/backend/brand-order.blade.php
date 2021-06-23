@@ -40,11 +40,11 @@
                         <li><a href="home" class="btn btn-danger btn-lg">業務選択</a></li>
                         <li><a href="shipment" class="btn btn-warning btn-lg">履歴</a></li>
                         <li><a href="{{config('app.url').'/brand-order-detail'}}" class="btn btn-success btn-lg">入力完了リスト</a></li>
-                        <!-- <li>
+                        <li>
                             <button class="btn customer_list_show_popup btn-warning btn-lg">店舗</button>
-                        </li> -->
-                        <li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
-                        <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left">右へ移動</a></li>
+                        </li> 
+                        <!--<li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
+                        <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left">右へ移動</a></li>-->
                         <li><button class="btn customBackBtn btn-info btn-lg pull-right ">戻る</button></li>
 
                     </ul>
