@@ -279,13 +279,24 @@ function show_default_page_notifications() {
                 display_positionY = '15px';
                 display_positionX = '15px';
                 success_nav = view(message_notify_default['brandOrdrs'], def_old_nav_template_without_return_btn);
-            close_all_navi_msg();
-            show_hide_nav_icn(0);
-            get_customer_list();
-            $('#customer_message_success').html('');
-            $("#add_customer_message").html('');
-            $("#update_customer_message_fail").html('');
-            $("#customer_show_modal").modal("show");
+                close_all_navi_msg();
+                show_hide_nav_icn(0);
+            /*view existing data*/
+            if(localStorage.getItem('local_shop_id')!=''){
+                $('.s_ids_v').val(localStorage.getItem('local_shop_id'));
+                $('.c_ids_v').val(localStorage.getItem('local_customer_id'));
+                $('.jcs_main_hand_title').text(localStorage.getItem('local_page_title'));
+                get_brand_shop_brand_list(localStorage.getItem('local_customer_id'));
+            }else{
+                
+                get_customer_list();
+                $('#customer_message_success').html('');
+                $("#add_customer_message").html('');
+                $("#update_customer_message_fail").html('');
+                $("#customer_show_modal").modal("show");
+            }
+            /*view existing data*/
+           
          break;
         case 'brand-order-detail':
             close_all_navi_msg();

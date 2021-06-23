@@ -5044,6 +5044,15 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text=''){
     }
     var shop_id = $('.s_ids_v').val();
     var pageTitleText = $('.jcs_main_hand_title').text();
+    console.log("shop id");
+    console.log(localStorage.getItem('local_shop_id'));
+    console.log("shop id");
+    /*
+            console.log(localStorage.getItem('local_customer_id'));
+            $('.s_ids_v').val(localStorage.getItem('local_shop_id'));
+            $('.c_ids_v').val(localStorage.getItem('local_customer_id'));
+            $('.jcs_main_hand_title').text(localStorage.getItem('local_page_title'));
+    */
     localStorage.setItem('local_shop_id', shop_id);
     localStorage.setItem('local_customer_id', c_id);
     localStorage.setItem('local_page_title', pageTitleText);
