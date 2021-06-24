@@ -44,7 +44,7 @@
                         </li> 
                         <!--<li><a href="#" id="left" class="btn btn-info btn-lg scroll_to_right">左へ移動</a></li>
                         <li><a href="#" id="right" class="btn btn-primary btn-lg scroll_to_left">右へ移動</a></li>-->
-                        <li><a href="{{config('app.url').'/brand-order'}}" class="btn btn-info btn-lg pull-right ">戻る</a></li>
+                        <li><a href="{{config('app.url').'/brand-order'}}" class="btn btn-info backToBrandOrder btn-lg pull-right ">戻る</a></li>
 
                     </ul>
 

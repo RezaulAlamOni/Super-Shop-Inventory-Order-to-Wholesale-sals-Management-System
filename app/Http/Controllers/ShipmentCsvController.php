@@ -396,7 +396,9 @@ class ShipmentCsvController extends Controller
         $customer_order_array=array();
         $error_item_list=array();
         $error_item_duplicate=array();
-        foreach ($dataArr as $key => $value) {
+        $chunckedArray=array_chunk($dataArr,50);
+        foreach ($chunckedArray as $chnkdata) {
+        foreach ($chnkdata as $key => $value) {
             $cus_name = $value[0];
             $cus_code = $value[1];
             $shp_name = $value[2];
@@ -511,7 +513,9 @@ class ShipmentCsvController extends Controller
             }
 
             //$customer_order_array[]=$customer_order_demo;
-        }
+        }//endforeach
+        }//endforeach
+        
         // return $customer_order_array;
         //customer_order::insert($customer_order_array);
         //customer_order_detail::insert($customer_order_detail_array);

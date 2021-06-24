@@ -7556,6 +7556,11 @@ $(document).ready(function () {
         }
         
     });
+    $('.backToBrandOrder').click(function(e){
+        e.preventDefault();
+        localStorage.setItem('returnFrom','1');
+        window.location.href= $(this).attr('href');
+    })
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
         e.preventDefault();
 
@@ -11432,18 +11437,25 @@ function show_default_page_notifications() {
                 close_all_navi_msg();
                 show_hide_nav_icn(0);
             /*view existing data*/
+            var returnFrom = localStorage.getItem('returnFrom');
             if(localStorage.getItem('local_shop_id')!=''){
-                $('.s_ids_v').val(localStorage.getItem('local_shop_id'));
-                $('.c_ids_v').val(localStorage.getItem('local_customer_id'));
-                $('.jcs_main_hand_title').text(localStorage.getItem('local_page_title'));
-                get_brand_shop_brand_list(localStorage.getItem('local_customer_id'));
+               
+                if(returnFrom=='1'){
+                    $('.s_ids_v').val(localStorage.getItem('local_shop_id'));
+                    $('.c_ids_v').val(localStorage.getItem('local_customer_id'));
+                    $('.jcs_main_hand_title').text(localStorage.getItem('local_page_title'));
+                    
+                    get_brand_shop_brand_list(localStorage.getItem('local_customer_id'),'','','popup1');
+                }
             }
-             
-            get_customer_list();
-            $('#customer_message_success').html('');
-            $("#add_customer_message").html('');
-            $("#update_customer_message_fail").html('');
-            $("#customer_show_modal").modal("show");
+            if(returnFrom!='1'){
+                get_customer_list();
+                $('#customer_message_success').html('');
+                $("#add_customer_message").html('');
+                $("#update_customer_message_fail").html('');
+                $("#customer_show_modal").modal("show");
+            }
+            localStorage.setItem('returnFrom','0');
             /*view existing data*/
            
          break;

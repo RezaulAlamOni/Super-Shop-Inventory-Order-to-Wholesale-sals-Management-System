@@ -458,6 +458,11 @@ $(document).ready(function () {
         }
         
     });
+    $('.backToBrandOrder').click(function(e){
+        e.preventDefault();
+        localStorage.setItem('returnFrom','1');
+        window.location.href= $(this).attr('href');
+    })
     $(document).delegate('.place_yellow_item_order_done_action', 'click', function (e) {
         e.preventDefault();
 
