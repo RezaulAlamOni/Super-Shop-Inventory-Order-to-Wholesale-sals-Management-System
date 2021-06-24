@@ -22,7 +22,7 @@
                         </div>
 
                         <div class="col-7 pull-right" style="text-align: right; padding: 0; font-size: 24px;">
-                            <p class="handy_top_bar2">業務選択<br>
+                            <p class="handy_top_bar2"><a class="backtoHomeFromAndroid" href="{{config('app.url').'/home'}}">業務選択</a><br>
 {{--                                <a href="javascript:void(0)" onclick="reloadAndClearCache()" class="btn btn-default m-0" style="width: 75%;background: rgb(81 242 111); text-align: center;"> リフレシュ </a>--}}
                             </p>
                         </div>

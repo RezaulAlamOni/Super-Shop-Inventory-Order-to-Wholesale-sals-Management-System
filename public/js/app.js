@@ -22351,7 +22351,7 @@ __webpack_require__.r(__webpack_exports__);
             $('.loading_image_custom').hide();
           }
         } else if (res.data.status == 402) {
-          _this.handi_navi = '<li>【' + res.data.data.name + '】商品の問屋が見つかりません。小売マスターメンテ画面から問屋を選択して発注してください。</li>';
+          _this.handi_navi = '<li>【' + res.data.data.name + '】商品の問屋が見つかりません。小売マスターメンテ画面から問屋を選択して発注してください。<a href="vendor_master" class="btn btn-primary">販売先マスター作成</a></li>';
           $('#handy-navi').show();
           $('.loading_image_custom').hide(); // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
           // _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
