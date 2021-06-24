@@ -3362,6 +3362,12 @@ $(document).ready(function () {
                     location.reload();
                 }
 
+            },
+            error: function (request, status, error) {
+                console.log('bandwidth error');
+                console.log(request.responseText);
+                console.log(error);
+                location.reload();
             }
         });
 
