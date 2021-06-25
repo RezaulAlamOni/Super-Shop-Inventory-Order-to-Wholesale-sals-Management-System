@@ -22923,6 +22923,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-receive",
@@ -22989,6 +22998,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.resetField();
 
         _this.order_data = res.data.result;
+        console.log(_this.order_data);
         _this.temp_tana = res.data.temp_rack;
         _this.case_order = _this.order_data.order_case_quantity;
         _this.boll_order = _this.order_data.order_ball_quantity;
@@ -64992,7 +65002,7 @@ var render = function() {
               [
                 _c("span", { staticClass: "pull-left" }, [
                   _vm._v(
-                    "\n                            発注(小売用・問屋)\n                        "
+                    "\n                            発注\n                        "
                   )
                 ]),
                 _vm._v(" "),
@@ -66073,6 +66083,48 @@ var render = function() {
                                               " " +
                                                 _vm._s(
                                                   _vm.order_data.item_name
+                                                ) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: {
+                                      "border-radius": "5px",
+                                      "margin-top": "5px !important",
+                                      "margin-bottom": "2px"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "product_vendor_name_aria",
+                                        staticStyle: { "min-height": "40px" },
+                                        attrs: { id: "search_product_name" }
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "#999",
+                                              "font-size": "20px"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(
+                                                  _vm.order_data.vendor_name
                                                 ) +
                                                 "\n                                            "
                                             )

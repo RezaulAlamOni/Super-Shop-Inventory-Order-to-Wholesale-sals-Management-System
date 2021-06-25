@@ -57,6 +57,15 @@
                                                 </span>
                                                 </p>
                                             </div>
+                                            <div class="form-group"
+                                                 style="border-radius: 5px; margin-top: 5px !important; margin-bottom: 2px">
+                                                <p id="search_product_name" class="product_vendor_name_aria" style="min-height:40px;">
+                                                    <span style="color: #999; font-size: 20px;"> {{
+                                                            order_data.vendor_name
+                                                        }}
+                                                </span>
+                                                </p>
+                                            </div>
                                             <div class="form-group" style="margin-bottom: 0">
                                                 <div class="col-md-12 col-xs-12 padding_0">
                                                     <table class="table table-bordered physical_handy_tabls">
@@ -342,6 +351,7 @@ export default {
                     _this.resetField();
 
                     _this.order_data = res.data.result
+                    console.log(_this.order_data);
                     _this.temp_tana = res.data.temp_rack
 
                     _this.case_order = _this.order_data.order_case_quantity;

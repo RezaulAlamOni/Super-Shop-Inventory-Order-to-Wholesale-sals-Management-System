@@ -2405,7 +2405,8 @@
             padding: 0;
         }
 
-        .product_name_aria {
+        .product_name_aria,
+        .product_vendor_name_aria {
             display: block;
             width: 100%;
             min-height: 70px;
