@@ -900,6 +900,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         ->join('stock_items','stock_items.vendor_item_id','=','vendor_orders.vendor_item_id')
         ->where(['vendor_orders.status'=>'入荷済み','vendor_items.jan'=>$jan])
         ->orderBy('vendor_arrivals.vendor_order_id','desc')
+        ->skip(0)
+        ->take('1')
         ->get();
         if ($result == null) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
