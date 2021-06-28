@@ -22932,6 +22932,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-receive",
@@ -22939,6 +22940,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       jan_code: '',
       order_data: [],
+      last_order_info: [],
       case_order: 0,
       boll_order: 0,
       bara_order: 0,
@@ -22998,8 +23000,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.resetField();
 
         _this.order_data = res.data.result;
-        console.log(_this.order_data);
         _this.temp_tana = res.data.temp_rack;
+        _this.last_order_info = res.data.last_order_info;
+        console.log(Object.keys(_this.last_order_info).length);
         _this.case_order = _this.order_data.order_case_quantity;
         _this.boll_order = _this.order_data.order_ball_quantity;
         _this.bara_order = _this.order_data.order_unit_quantity;
@@ -66129,7 +66132,33 @@ var render = function() {
                                                 "\n                                            "
                                             )
                                           ]
-                                        )
+                                        ),
+                                        _vm._v(" "),
+                                        Object.keys(_vm.last_order_info)
+                                          .length > 0
+                                          ? _c(
+                                              "span",
+                                              {
+                                                staticStyle: {
+                                                  color: "#999",
+                                                  "font-size": "20px"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.last_order_info
+                                                      .order_date
+                                                  ) +
+                                                    " " +
+                                                    _vm._s(
+                                                      _vm.last_order_info
+                                                        .maker_name
+                                                    )
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e()
                                       ]
                                     )
                                   ]

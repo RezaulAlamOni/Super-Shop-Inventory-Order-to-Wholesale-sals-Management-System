@@ -148,6 +148,10 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
             ->orderBy('stock_items.stock_item_id', 'desc')
             ->first();
 
+        $get_last_order_info=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->first();    
+        if(!$get_last_order_info){
+            $get_last_order_info = array();
+        }
         if ($last_temp_rack) {
             $temp_rack = $last_temp_rack->temp_rack_number;
         } else {
@@ -155,7 +159,7 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
             $temp_rack = '';
         }
 
-        $data = ['status' => 200,'result' =>$result, 'temp_rack' => $temp_rack];
+        $data = ['status' => 200,'result' =>$result, 'temp_rack' => $temp_rack,'last_order_info'=>$get_last_order_info];
 
         return response()->json($data);
 

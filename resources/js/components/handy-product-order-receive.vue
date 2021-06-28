@@ -64,6 +64,7 @@
                                                             order_data.vendor_name
                                                         }}
                                                 </span>
+                                                <span style="color: #999; font-size: 20px;" v-if="Object.keys(last_order_info).length>0">{{last_order_info.order_date}} {{last_order_info.maker_name}}</span>
                                                 </p>
                                             </div>
                                             <div class="form-group" style="margin-bottom: 0">
@@ -296,6 +297,7 @@ export default {
         return {
             jan_code: '',
             order_data: [],
+            last_order_info: [],
             case_order: 0,
             boll_order: 0,
             bara_order: 0,
@@ -351,9 +353,9 @@ export default {
                     _this.resetField();
 
                     _this.order_data = res.data.result
-                    console.log(_this.order_data);
                     _this.temp_tana = res.data.temp_rack
-
+                    _this.last_order_info = res.data.last_order_info
+console.log(Object.keys(_this.last_order_info).length);
                     _this.case_order = _this.order_data.order_case_quantity;
                     _this.boll_order = _this.order_data.order_ball_quantity;
                     _this.bara_order = _this.order_data.order_unit_quantity;
