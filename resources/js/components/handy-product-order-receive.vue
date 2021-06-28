@@ -159,6 +159,28 @@
 
 
                                         </div>
+                                        <div class="form-group">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>NO</th>
+                                                        <th>品名</th>
+                                                        <th>発注日付</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-if="get_last_order_list.length>0" v-for="(order_value,index) in get_last_order_list">
+                                                        <td>{{index+1}}</td>
+                                                        <td>{{order_value.name}}</td>
+                                                        <td>{{order_value.order_date}}</td>
+                                                    </tr>
+                                                    <tr v-if="get_last_order_list.length==0">
+                                                        <td colspan="3" style="text-align:center;">注文が見つかりません</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button class="btn btn-primary pull-right" style="float:right" @click="gerLastOrderlist">次へ</button>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -298,6 +320,7 @@ export default {
             jan_code: '',
             order_data: [],
             last_order_info: [],
+            get_last_order_list: [],
             case_order: 0,
             boll_order: 0,
             bara_order: 0,
@@ -310,7 +333,9 @@ export default {
             maker_id: null,
             temp_tana: '',
             total_quantity: 0,
-            navi_body: ''
+            navi_body: '',
+            skip_val:0,
+
         }
     },
     mounted() {
@@ -328,6 +353,14 @@ export default {
 
     },
     methods: {
+        gerLastOrderlist(){
+            let _this = this;
+            _this.skip_val =_this.skip_val+10;
+            axios.post(this.base_url + '/handy_received_product_detail_by_jan_code_for_order_list', {'jan_code': _this.jan_code,'skip_val':_this.skip_val})
+                .then(function (res) {
+                    _this.get_last_order_list = res.data.get_last_order_list
+                })
+        },
         getOrderDataByJan() {
             let _this = this;
             if (_this.jan_code.length <= 0) {
@@ -355,7 +388,8 @@ export default {
                     _this.order_data = res.data.result
                     _this.temp_tana = res.data.temp_rack
                     _this.last_order_info = res.data.last_order_info
-console.log(Object.keys(_this.last_order_info).length);
+                    _this.get_last_order_list = res.data.get_last_order_list
+                    console.log( _this.get_last_order_list);
                     _this.case_order = _this.order_data.order_case_quantity;
                     _this.boll_order = _this.order_data.order_ball_quantity;
                     _this.bara_order = _this.order_data.order_unit_quantity;

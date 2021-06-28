@@ -22933,6 +22933,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-receive",
@@ -22941,6 +22963,7 @@ __webpack_require__.r(__webpack_exports__);
       jan_code: '',
       order_data: [],
       last_order_info: [],
+      get_last_order_list: [],
       case_order: 0,
       boll_order: 0,
       bara_order: 0,
@@ -22953,7 +22976,8 @@ __webpack_require__.r(__webpack_exports__);
       maker_id: null,
       temp_tana: '',
       total_quantity: 0,
-      navi_body: ''
+      navi_body: '',
+      skip_val: 0
     };
   },
   mounted: function mounted() {
@@ -22971,6 +22995,17 @@ __webpack_require__.r(__webpack_exports__);
     _this.navi_body = '<li>JANコードスキャンして<br>【次へ】押してください。</li>';
   },
   methods: {
+    gerLastOrderlist: function gerLastOrderlist() {
+      var _this = this;
+
+      _this.skip_val = _this.skip_val + 10;
+      axios.post(this.base_url + '/handy_received_product_detail_by_jan_code_for_order_list', {
+        'jan_code': _this.jan_code,
+        'skip_val': _this.skip_val
+      }).then(function (res) {
+        _this.get_last_order_list = res.data.get_last_order_list;
+      });
+    },
     getOrderDataByJan: function getOrderDataByJan() {
       var _this = this;
 
@@ -23002,7 +23037,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.order_data = res.data.result;
         _this.temp_tana = res.data.temp_rack;
         _this.last_order_info = res.data.last_order_info;
-        console.log(Object.keys(_this.last_order_info).length);
+        _this.get_last_order_list = res.data.get_last_order_list;
+        console.log(_this.get_last_order_list);
         _this.case_order = _this.order_data.order_case_quantity;
         _this.boll_order = _this.order_data.order_ball_quantity;
         _this.bara_order = _this.order_data.order_unit_quantity;
@@ -66562,7 +66598,72 @@ var render = function() {
                                   ]
                                 )
                               ]
-                            )
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "table",
+                                { staticClass: "table table-bordered" },
+                                [
+                                  _vm._m(1),
+                                  _vm._v(" "),
+                                  _c(
+                                    "tbody",
+                                    [
+                                      _vm._l(_vm.get_last_order_list, function(
+                                        order_value,
+                                        index
+                                      ) {
+                                        return _vm.get_last_order_list.length >
+                                          0
+                                          ? _c("tr", [
+                                              _c("td", [
+                                                _vm._v(_vm._s(index + 1))
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(_vm._s(order_value.name))
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(order_value.order_date)
+                                                )
+                                              ])
+                                            ])
+                                          : _vm._e()
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.get_last_order_list.length == 0
+                                        ? _c("tr", [
+                                            _c(
+                                              "td",
+                                              {
+                                                staticStyle: {
+                                                  "text-align": "center"
+                                                },
+                                                attrs: { colspan: "3" }
+                                              },
+                                              [_vm._v("注文が見つかりません")]
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ],
+                                    2
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary pull-right",
+                                  staticStyle: { float: "right" },
+                                  on: { click: _vm.gerLastOrderlist }
+                                },
+                                [_vm._v("次へ")]
+                              )
+                            ])
                           ]
                         )
                       ]
@@ -66819,7 +66920,7 @@ var render = function() {
                           staticStyle: { border: "3px solid rgb(66, 139, 202)" }
                         },
                         [
-                          _vm._m(1),
+                          _vm._m(2),
                           _vm._v(" "),
                           _c(
                             "a",
@@ -66850,7 +66951,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(3),
     _vm._v(" "),
     _c(
       "div",
@@ -66927,6 +67028,20 @@ var staticRenderFns = [
         )
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("NO")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("品名")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("発注日付")])
+      ])
+    ])
   },
   function() {
     var _vm = this
