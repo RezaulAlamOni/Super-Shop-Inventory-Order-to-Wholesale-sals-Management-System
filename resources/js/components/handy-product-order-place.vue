@@ -239,6 +239,7 @@ export default {
         return {
             jan_code: '',
             order_data: [],
+            get_last_order_info: [],
             case_order: 0,
             boll_order: 0,
             bara_order: 0,
@@ -282,10 +283,12 @@ export default {
                         res = res.data
                         _this.order_data = res.data[0]
                         _this.input_type = _this.order_data.order_lot_inputs;
-
-                        _this.case_order = _this.order_data.order_lot_case_quantity;
-                        _this.boll_order = _this.order_data.order_lot_ball_quantity;
-                        _this.bara_order = _this.order_data.order_lot_unit_quantity;
+                        
+                        if(Object.keys(res.get_last_order_info).length>0){
+                        _this.case_order = res.get_last_order_info.order_case_quantity;//_this.order_data.order_lot_case_quantity;
+                        _this.boll_order = res.get_last_order_info.order_ball_quantity;//_this.order_data.order_lot_ball_quantity;
+                        _this.bara_order = res.get_last_order_info.order_unit_quantity;//_this.order_data.order_lot_unit_quantity;
+                        }
                         _this.calculateTotalQuantity();
                         setTimeout(function () {
                             $('.case_order').focus();

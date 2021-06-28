@@ -7,6 +7,7 @@ use App\jan;
 use App\stock_item;
 use App\vendor_item;
 use App\vendor;
+use App\vendor_order;
 use DB;
 use Mail;
 
@@ -249,12 +250,16 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             }
             $newarr[] = $vl->jan;
         }
+        $get_last_order_info=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->where('vendor_items.jan',$jan)->orderBy('vendor_orders.vendor_order_id','DESC')->first();  
+       if(!$get_last_order_info){
+            $get_last_order_info = array();
+        }
         //print_r($arr);
         if (count($arr) > 0) {
-            return response()->json(['status' => 200, 'data' => $arr]);
+            return response()->json(['status' => 200, 'data' => $arr,'get_last_order_info'=>$get_last_order_info]);
         } else {
             $product = jan::where('jan', $jan)->first();
-            return response()->json(['status' => 402, 'data' => $product]);
+            return response()->json(['status' => 402, 'data' => $product,'get_last_order_info'=>$get_last_order_info]);
         }
     }
 

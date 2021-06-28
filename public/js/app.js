@@ -22286,6 +22286,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       jan_code: '',
       order_data: [],
+      get_last_order_info: [],
       case_order: 0,
       boll_order: 0,
       bara_order: 0,
@@ -22331,9 +22332,14 @@ __webpack_require__.r(__webpack_exports__);
           res = res.data;
           _this.order_data = res.data[0];
           _this.input_type = _this.order_data.order_lot_inputs;
-          _this.case_order = _this.order_data.order_lot_case_quantity;
-          _this.boll_order = _this.order_data.order_lot_ball_quantity;
-          _this.bara_order = _this.order_data.order_lot_unit_quantity;
+
+          if (Object.keys(res.get_last_order_info).length > 0) {
+            _this.case_order = res.get_last_order_info.order_case_quantity; //_this.order_data.order_lot_case_quantity;
+
+            _this.boll_order = res.get_last_order_info.order_ball_quantity; //_this.order_data.order_lot_ball_quantity;
+
+            _this.bara_order = res.get_last_order_info.order_unit_quantity; //_this.order_data.order_lot_unit_quantity;
+          }
 
           _this.calculateTotalQuantity();
 
@@ -22642,6 +22648,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -66629,6 +66637,12 @@ var render = function() {
                                                 _vm._v(
                                                   _vm._s(order_value.order_date)
                                                 )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(order_value.quantity)
+                                                )
                                               ])
                                             ])
                                           : _vm._e()
@@ -66642,7 +66656,7 @@ var render = function() {
                                                 staticStyle: {
                                                   "text-align": "center"
                                                 },
-                                                attrs: { colspan: "3" }
+                                                attrs: { colspan: "4" }
                                               },
                                               [_vm._v("注文が見つかりません")]
                                             )
@@ -67039,7 +67053,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("品名")]),
         _vm._v(" "),
-        _c("th", [_vm._v("発注日付")])
+        _c("th", [_vm._v("発注日付")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("発注合計")])
       ])
     ])
   },

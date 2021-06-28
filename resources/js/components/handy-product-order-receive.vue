@@ -166,6 +166,7 @@
                                                         <th>NO</th>
                                                         <th>品名</th>
                                                         <th>発注日付</th>
+                                                        <th>発注合計</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -173,9 +174,10 @@
                                                         <td>{{index+1}}</td>
                                                         <td>{{order_value.name}}</td>
                                                         <td>{{order_value.order_date}}</td>
+                                                        <td>{{order_value.quantity}}</td>
                                                     </tr>
                                                     <tr v-if="get_last_order_list.length==0">
-                                                        <td colspan="3" style="text-align:center;">注文が見つかりません</td>
+                                                        <td colspan="4" style="text-align:center;">注文が見つかりません</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
