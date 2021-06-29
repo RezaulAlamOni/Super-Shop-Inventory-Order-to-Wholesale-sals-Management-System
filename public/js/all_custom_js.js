@@ -13080,6 +13080,7 @@ $('#handy_vendor_item_insert').click(function (e) {
                             api_maker_name = api_response.maker_name;
                         }
                         vendor_id = response.vendor_id;
+                        var maker_id = response.maker_id;
                         var price = 100;
                         /*insert auto vendor item*/
                         var order_point_unit = 'ケース';
@@ -13093,6 +13094,7 @@ $('#handy_vendor_item_insert').click(function (e) {
                         var sale_start_date = '2020-01-01';
                         var sale_end_date = '2021-12-31';
                         data = {
+                            maker_id: maker_id,
                             vendor_id: vendor_id,
                             jan_code: jan_code,
                             item_name: item_name,
@@ -13281,6 +13283,7 @@ function addIfProductNotFoundFrom(jan_code) {
                         api_maker_name = api_response.maker_name;
                     }
                     let vendor_id = response.vendor_id;
+                    let maker_id = response.maker_id;
                     var price = 100;
                     /*insert auto vendor item*/
                     var order_point_unit = 'ケース';
@@ -13295,6 +13298,7 @@ function addIfProductNotFoundFrom(jan_code) {
                     var sale_end_date = '2021-12-31';
                     let data = {
                         vendor_id: vendor_id,
+                        maker_id: maker_id,
                         jan_code: jan_code,
                         item_name: item_name,
                         case_qty: case_qty,

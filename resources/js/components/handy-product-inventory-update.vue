@@ -489,6 +489,7 @@ export default {
                                 api_maker_name = api_response.maker_name;
                             }
                             let vendor_id = response.data.vendor_id;
+                            let maker_id = response.data.maker_id;
                             let price = 100;
                             /*insert auto vendor item*/
                             let order_point_unit = 'ケース';
@@ -502,6 +503,7 @@ export default {
                             let sale_start_date = '2020-01-01';
                             let sale_end_date = '2021-12-31';
                             let data = {
+                                maker_id:maker_id,
                                 vendor_id: vendor_id,
                                 jan_code: jan_code,
                                 item_name: item_name,

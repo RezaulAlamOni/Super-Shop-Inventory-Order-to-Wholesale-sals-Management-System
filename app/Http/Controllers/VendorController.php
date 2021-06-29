@@ -201,7 +201,12 @@ class VendorController extends Controller
 
     public function get_maker_info_by_maker_code($jan_code, $data_resource, $vendor_item_data, $api_data)
     {
-        $maker_code = substr($jan_code, 0, 7);
+        $janLenght = strlen($jan_code);
+        if($janLenght=='8'){
+            $maker_code = substr($jan_code, 0, 5);
+        }else{
+            $maker_code = substr($jan_code, 2, 5);
+        }
         $m_infos = array();
         $vendor_id = 0;
         if (maker::where('maker_code', $maker_code)->exists()) {
@@ -337,7 +342,14 @@ class VendorController extends Controller
         $is_special = isset($request->is_special) ? $request->is_special : '0';
         $vendor_id = $request->vendor_id;
         $jan_code = $request->jan_code;
-        $maker_code = substr($jan_code, 0, 7);
+
+        $janLenght = strlen($jan_code);
+        if($janLenght=='8'){
+            $maker_code = substr($jan_code, 0, 5);
+        }else{
+            $maker_code = substr($jan_code, 2, 5);
+        }
+
         $item_name = $request->item_name;
         $case_qty = $request->case_qty;
         $ball_qty = $request->ball_qty;
@@ -487,7 +499,12 @@ class VendorController extends Controller
         $vendor_id = $request->vendor_id;
         $vendor_item_id = $request->vendor_item_id;
         $vendor_info = vendor_item::where('vendor_item_id', $vendor_item_id)->first();
-        $maker_code = substr($vendor_info->jan, 0, 7);
+        $janLenght = strlen($vendor_info->jan);
+        if($janLenght=='8'){
+            $maker_code = substr($vendor_info->jan, 0, 5);
+        }else{
+            $maker_code = substr($vendor_info->jan, 2, 5);
+        }
         //$vendor_name = $this->get_vendor_name_by_vendor_id($vendor_id);
         $api_response = $this->api_request->get_api_data($vendor_info->jan);
         $api_maker_name = $api_response->data->maker_name;

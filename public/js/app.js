@@ -20611,6 +20611,7 @@ __webpack_require__.r(__webpack_exports__);
             var sale_start_date = '2020-01-01';
             var sale_end_date = '2021-12-31';
             var data = {
+              maker_id: response.data.maker_id,
               vendor_id: vendor_id,
               jan_code: jan_code,
               item_name: item_name,
@@ -21354,6 +21355,7 @@ __webpack_require__.r(__webpack_exports__);
             var sale_start_date = '2020-01-01';
             var sale_end_date = '2021-12-31';
             var data = {
+              maker_id: response.data.maker_id,
               vendor_id: vendor_id,
               jan_code: jan_code,
               item_name: item_name,
@@ -21947,6 +21949,7 @@ __webpack_require__.r(__webpack_exports__);
             var sale_start_date = '2020-01-01';
             var sale_end_date = '2021-12-31';
             var data = {
+              maker_id: response.data.maker_id,
               vendor_id: vendor_id,
               jan_code: jan_code,
               item_name: item_name,
@@ -22554,6 +22557,7 @@ __webpack_require__.r(__webpack_exports__);
             var sale_start_date = '2020-01-01';
             var sale_end_date = '2021-12-31';
             var data = {
+              maker_id: response.data.maker_id,
               vendor_id: vendor_id,
               jan_code: jan_code,
               item_name: item_name,
@@ -23261,6 +23265,7 @@ __webpack_require__.r(__webpack_exports__);
             var sale_start_date = '2020-01-01';
             var sale_end_date = '2021-12-31';
             var data = {
+              maker_id: response.data.maker_id,
               vendor_id: vendor_id,
               jan_code: jan_code,
               item_name: item_name,
@@ -24141,6 +24146,7 @@ __webpack_require__.r(__webpack_exports__);
             var sale_start_date = '2020-01-01';
             var sale_end_date = '2021-12-31';
             var data = {
+              maker_id: response.data.maker_id,
               vendor_id: vendor_id,
               jan_code: jan_code,
               item_name: item_name,
