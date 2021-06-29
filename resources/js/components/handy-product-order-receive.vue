@@ -167,6 +167,7 @@
                                                         <th>品名</th>
                                                         <th>発注日付</th>
                                                         <th>発注合計</th>
+                                                        <th>入庫 棚no</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -174,10 +175,11 @@
                                                         <td>{{index+1}}</td>
                                                         <td>{{order_value.name}}</td>
                                                         <td>{{order_value.order_date}}</td>
-                                                        <td>{{order_value.quantity}}</td>
+                                                        <td>{{order_value.arrival_qty}}</td>
+                                                        <td>{{order_value.car_rack_number}}</td>
                                                     </tr>
                                                     <tr v-if="get_last_order_list.length==0">
-                                                        <td colspan="4" style="text-align:center;">注文が見つかりません</td>
+                                                        <td colspan="5" style="text-align:center;">注文が見つかりません</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

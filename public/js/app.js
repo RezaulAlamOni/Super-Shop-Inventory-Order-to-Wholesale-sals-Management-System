@@ -22963,6 +22963,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-receive",
@@ -66641,7 +66643,17 @@ var render = function() {
                                               _vm._v(" "),
                                               _c("td", [
                                                 _vm._v(
-                                                  _vm._s(order_value.quantity)
+                                                  _vm._s(
+                                                    order_value.arrival_qty
+                                                  )
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    order_value.car_rack_number
+                                                  )
                                                 )
                                               ])
                                             ])
@@ -66656,7 +66668,7 @@ var render = function() {
                                                 staticStyle: {
                                                   "text-align": "center"
                                                 },
-                                                attrs: { colspan: "4" }
+                                                attrs: { colspan: "5" }
                                               },
                                               [_vm._v("注文が見つかりません")]
                                             )
@@ -67055,7 +67067,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("発注日付")]),
         _vm._v(" "),
-        _c("th", [_vm._v("発注合計")])
+        _c("th", [_vm._v("発注合計")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("入庫 棚no")])
       ])
     ])
   },

@@ -150,7 +150,7 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
 
         $get_last_order_info=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->first();  
         $skip=0;  
-        $get_last_order_list=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();    
+        $get_last_order_list=vendor_order::select('vendor_orders.*','jans.name','vendor_arrivals.car_rack_number','vendor_arrivals.quantity as arrival_qty')->join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->join('vendor_arrivals','vendor_arrivals.vendor_order_id','vendor_orders.vendor_order_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();    
         if(!$get_last_order_info){
             $get_last_order_info = array();
         }
@@ -173,7 +173,7 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
     public function handy_received_product_detail_by_jan_code_for_order_list(Request $request){
         $skip=$request->skip_val;  
         $jan = $request->jan_code;
-        $get_last_order_list=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();    
+        $get_last_order_list=vendor_order::select('vendor_orders.*','jans.name','vendor_arrivals.car_rack_number','vendor_arrivals.quantity as arrival_qty')->join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->join('vendor_arrivals','vendor_arrivals.vendor_order_id','vendor_orders.vendor_order_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();    
         return response()->json(['get_last_order_list'=>$get_last_order_list]);
     }
 
