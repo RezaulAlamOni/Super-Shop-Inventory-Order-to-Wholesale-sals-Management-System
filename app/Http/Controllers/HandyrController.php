@@ -1980,7 +1980,6 @@ WHERE DATE(co.shipment_date) = CURDATE()
     }
 
     public function item_return_to_tonya(Request $request){
-        $requestAll = $request->all();
         foreach($requestAll as $req){
             $stock_item_info = stock_item::where('rack_number', $req['rack_number'])->where('vendor_item_id',$req['vendor_item_id'])->first();
             if($stock_item_info){
@@ -2005,13 +2004,16 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity,'case_quantity'=>$case_quantity,'ball_quantity'=>$ball_quantity]);
             }
         }
-        $existingArivalInfo = vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->first();
-            $existDamageQty = $existingArivalInfo->damage_quantity;
-            $returnQty=$existDamageQty+$req['damage_quantity'];
-            $newQty = $req['quantity']-$returnQty;
-            $invoice_amount = $req['unit_cost_price']*$newQty;
-            vendor_invoice::where('voucher_number',$req['vendor_order_id'])->update(['invoice_amount'=>$invoice_amount]);
-            vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$returnQty]);
+
+            $existingArivalInfo = vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->first();
+            if($existingArivalInfo){
+                $existDamageQty = $existingArivalInfo->damage_quantity;
+                $returnQty=$existDamageQty+$req['damage_quantity'];
+                $newQty = $req['quantity']-$returnQty;
+                $invoice_amount = $req['unit_cost_price']*$newQty;
+                vendor_invoice::where('voucher_number',$req['vendor_order_id'])->update(['invoice_amount'=>$invoice_amount]);
+                vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$returnQty]);
+            }
         }
        
         
