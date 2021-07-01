@@ -111,6 +111,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/update_order_info_by_id', 'VendorController@update_order_info_by_id');
 	Route::post('/vendor_order_insert', 'VendorController@vendor_order_insert');
 	Route::post('/vendor_order_insert_new', 'VendorController@vendor_order_insert_new');
+	Route::post('/vendor_order_insert_new_auto_order_by_last_order', 'VendorController@vendor_order_insert_new_auto_order_by_last_order');
 	Route::post('/vendor_order_insert_handy', 'VendorController@vendor_order_insert_handy');
 	Route::post('/vendor_order_list_by_voucher_number', 'HandyrController@vendor_order_list_by_voucher_number');
 	Route::post('/single_vendor_item', 'VendorController@singleVendorItem');

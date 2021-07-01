@@ -781,6 +781,65 @@ class VendorController extends Controller
         return $result = response()->json(['message' => 'insert_success']);
     }
 
+    public function vendor_order_insert_new_auto_order_by_last_order(Request $request)
+    {
+        $data_array = $request->data_array;
+        $newrrr = array();
+        $vendor_data_update_array = array();
+        $inserted_voucher_numbers = array();
+        foreach ($data_array as $key => $val) {
+            $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $val[4]])->first();
+            $lastOrderInfo = vendor_order::where(['status' => '入荷済み', 'vendor_item_id' => $val[4]])->orderBy('vendor_order_id','DESC')->first();
+            $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_item_id', $val[4])->first();
+            if ($lastOrderInfo && ($item_info->case_inputs > 0 || $item_info->ball_inputs > 0)) {
+                $case_order_qty = ($lastOrderInfo->order_case_quantity == '' ? 0 : $lastOrderInfo->order_case_quantity);
+                $ball_order_qty = ($lastOrderInfo->order_ball_quantity == '' ? 0 : $lastOrderInfo->order_ball_quantity);
+                $unit_order_qty = ($lastOrderInfo->order_unit_quantity == '' ? 0 : $lastOrderInfo->order_unit_quantity);
+                // vendor_item::where('vendor_item_id', $val[4])->update([
+                //     'order_lot_case_quantity' => $case_order_qty,
+                //     'order_lot_ball_quantity' => $ball_order_qty,
+                //     'order_lot_unit_quantity' => $unit_order_qty,
+                // ]);
+                $totalLotInventory = (($case_order_qty * $item_info->case_inputs) + ($ball_order_qty * $item_info->ball_inputs) + $unit_order_qty);
+                if (!$check_order_exist) {
+
+                    $order_id = vendor_order::insertGetId([
+                        'order_case_quantity' => $case_order_qty,
+                        'order_ball_quantity' => $ball_order_qty,
+                        'order_unit_quantity' => $unit_order_qty,
+                        'vendor_id' => $val[3],
+                        'shipment_date' => $val[5],
+                        'voucher_number' => $val[6],
+                        'destination' => 0,
+                        'vendor_item_id' => $val[4],
+                        'unit_cost_price' => $item_info->cost_price,
+                        'quantity' => $totalLotInventory,
+                        'source' => 0]);
+                } else {
+                    $order_id = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)
+                        ->update([
+                            'order_case_quantity' => $case_order_qty,
+                            'order_ball_quantity' => $ball_order_qty,
+                            'order_unit_quantity' => $unit_order_qty,
+                            'vendor_id' => $val[3],
+                            'shipment_date' => $val[5],
+                            'voucher_number' => $val[6],
+                            'destination' => 0,
+                            'vendor_item_id' => $val[4],
+                            'unit_cost_price' => $item_info->cost_price,
+                            'quantity' => $totalLotInventory,
+                            'source' => 0,
+                            'order_date' => date('Y-m-d H:i:s')
+                        ]);
+                }
+            }
+        }
+        // Session::flash('message', '発注番号: ' . $voucher_string);
+        // Session::flash('class_name', 'alert-success');
+
+        return $result = response()->json(['message' => 'insert_success']);
+    }
+
     public function vendor_order_insert_handy(Request $request)
     {
         $data_array = $request->data_array;

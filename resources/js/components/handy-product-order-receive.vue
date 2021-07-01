@@ -717,7 +717,8 @@ export default {
                                 Math.floor(100000 + Math.random() * 900000)
                             ]
                             data_array.push(data)
-                            axios.post(_this.base_url + '/vendor_order_insert_new', {'data_array': data_array})
+                            //vendor_order_insert_new  old url autometic order from order point
+                            axios.post(_this.base_url + '/vendor_order_insert_new_auto_order_by_last_order', {'data_array': data_array})
                                 .then(function (res) {
                                     console.log(res.data)
                                     // $('#handy-navi').show()

@@ -23343,8 +23343,9 @@ __webpack_require__.r(__webpack_exports__);
             var dates = $.datepicker.formatDate('yy-mm-dd', new Date());
             var data_array = [];
             var data = [order_data.order_lot_case_quantity, order_data.order_lot_ball_quantity, order_data.order_lot_unit_quantity, order_data.vendor_id, order_data.vendor_item_id, dates, Math.floor(100000 + Math.random() * 900000)];
-            data_array.push(data);
-            axios.post(_this.base_url + '/vendor_order_insert_new', {
+            data_array.push(data); //vendor_order_insert_new  old url autometic order from order point
+
+            axios.post(_this.base_url + '/vendor_order_insert_new_auto_order_by_last_order', {
               'data_array': data_array
             }).then(function (res) {
               console.log(res.data); // $('#handy-navi').show()
