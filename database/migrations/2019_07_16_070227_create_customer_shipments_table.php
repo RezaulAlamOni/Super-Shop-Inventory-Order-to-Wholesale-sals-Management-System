@@ -21,6 +21,9 @@ class CreateCustomerShipmentsTable extends Migration
             $table->date('shipment_date')->nullable()->comment('Shipment date');
             $table->enum('inputs', ['ケース', 'ボール','バラ'])->default('ケース')->comment('Inputs');
             $table->smallInteger('quantity')->comment('Quantity');
+            $table->integer('confirm_case_quantity')->nullable()->comment('Case quantity');
+            $table->integer('confirm_ball_quantity')->nullable()->comment('Ball quantity');
+            $table->integer('confirm_unit_quantity')->nullable()->comment('Unit quantity');
             $table->smallInteger('confirm_quantity')->comment('confirm quantity');
             $table->string('rack_number',20)->nullable()->comment('rack Number');
             $table->smallInteger('stock_out_quantity')->default(0)->comment('stock out quantity');

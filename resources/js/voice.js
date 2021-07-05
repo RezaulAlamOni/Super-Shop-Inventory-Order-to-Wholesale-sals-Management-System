@@ -138,7 +138,7 @@ function item_search(name) {
         dataType: 'JSON',
     })
         .done((response_data) => {
-            console.log(response_data);
+            
 
             /*match table */
             var counter = 1;
@@ -149,8 +149,7 @@ function item_search(name) {
                 var color_cls = (cnt > 1 ? 'yellow_tr' : 'deflt_tr');
                 var first = true;
                 var j = 1;
-                console.log(cnt);
-                console.log(response_data["match_reslt"][i]);
+                
                 $.each(response_data["match_reslt"][i], function (ii, e) {
                     /*if (first) {
                         $("#search_matching_table > tbody").prepend('<tr><td rowspan="' + cnt + '">' + i + '</td><td>' + response_data["match_reslt"][i][ii]["product_name"] + '</td><td>' + response_data["match_reslt"][i][ii]["pro_jan_code"] + '</td></tr>');
@@ -179,8 +178,7 @@ function item_search(name) {
         // Ajaxリクエストが失敗した時発動
         .fail((data) => {
             //            $('.result').html(data);
-            console.log('failed!');
-            console.log(data);
+           
         })
         // Ajaxリクエストが成功・失敗どちらでも発動
         .always((data) => {

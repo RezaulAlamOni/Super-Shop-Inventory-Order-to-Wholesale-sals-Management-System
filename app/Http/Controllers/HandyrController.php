@@ -435,7 +435,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
         (CASE WHEN stock_items.case_quantity !=0 THEN jans.case_inputs*stock_items.case_quantity ELSE 0 END+
         CASE WHEN stock_items.ball_quantity !=0 THEN jans.ball_inputs*stock_items.ball_quantity ELSE 0 END+
         CASE WHEN stock_items.unit_quantity !=0 THEN 1*stock_items.unit_quantity ELSE 0 END) as t_qty,
-        stock_items.rack_number,jans.jan,jans.name FROM `vendor_items` LEFT JOIN stock_items ON vendor_items.vendor_item_id = stock_items.vendor_item_id INNER JOIN jans ON jans.jan = vendor_items.jan $wh order by stock_items.updated_at DESC,vendor_items.vendor_id ASC,vendor_items.jan ASC"));
+        stock_items.rack_number,jans.jan,jans.name FROM `vendor_items` LEFT JOIN stock_items ON vendor_items.vendor_item_id = stock_items.vendor_item_id INNER JOIN jans ON jans.jan = vendor_items.jan $wh GROUP BY stock_items.rack_number,stock_items.vendor_item_id order by stock_items.updated_at DESC,vendor_items.vendor_id ASC,vendor_items.jan ASC"));
 
         $totals = count($stock_details_list);
         return $result = response()->json(['items' => $stock_details_list, 'total_rw' => $totals]);

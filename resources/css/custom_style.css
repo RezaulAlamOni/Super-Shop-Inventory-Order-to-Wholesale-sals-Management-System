@@ -2404,7 +2404,9 @@
             font-size: 18px;
             padding: 0;
         }
-
+        .marginboths > a {
+            background: gray;
+        }
         .product_name_aria,
         .product_vendor_name_aria {
             display: block;

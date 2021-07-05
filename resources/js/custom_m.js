@@ -204,9 +204,7 @@ $(document).ready(function () {
         var vendor_id = $(this).attr('data_vendor_id');
 
         if (jQuery.inArray(vendor_id, vndorList) != -1) {
-            console.log("is in array");
-            console.log(clr);
-            console.log(l);
+          
             $(this).css('background-color', clr[l - 1]);
         } else {
             vndorList.push($(this).attr('data_vendor_id'));
@@ -219,7 +217,6 @@ $(document).ready(function () {
                 ')');
             $(this).css('background-color', clr[l]);
             l++;
-            console.log("is NOT in array");
 
         }
 
@@ -298,7 +295,6 @@ $(document).ready(function () {
         var hide_enter_outside_brand = $("#jn_0,.jn_brand");
         // console.log(hide_enter_outside);
         // console.log('divs');
-        console.log(is_id_1);
        if (!hide_enter_outside.is(e.target) && hide_enter_outside.has(e.target).length === 0 && is_id_1 == 'jn_0') {
            
             close_all_navi_msg();
@@ -309,10 +305,10 @@ $(document).ready(function () {
         
           
         if (!hide_enter_outside_brand.is(e.target) && hide_enter_outside_brand.has(e.target).length === 0 && (is_id_1!='undefined' && is_id_1!=null)) {
-            console.log('ac');
+           
             var hsClas = $('#'+is_id_1).closest('jn_popup');
             if(hsClas.hasClass('jn_brand')){
-                console.log('js brand found');
+               
             }else{
                 // close_all_navi_msg();
                 // show_hide_nav_icn(1);
@@ -383,7 +379,6 @@ $(document).ready(function () {
     $("#right").on("click", function (e) {
         e.preventDefault();
         var leftPos = $('.freeze-multi-scroll-table-body').scrollLeft();
-        console.log(leftPos);
         $(".freeze-multi-scroll-table-body").animate({
             scrollLeft: leftPos + 450
         }, 800);
@@ -392,7 +387,6 @@ $(document).ready(function () {
     $("#left").on("click", function (e) {
         e.preventDefault();
         var leftPos = $('.freeze-multi-scroll-table-body').scrollLeft();
-        console.log(leftPos);
         $(".freeze-multi-scroll-table-body").animate({
             scrollLeft: leftPos - 450
         }, 800);
@@ -514,7 +508,6 @@ $(document).ready(function () {
                 dataType: "JSON",
                 data: {data_array: data_array},
                 success: function (response) {
-                    console.log(response);
                     get_vendor_list_item_by_vendor_id(v_id, v_name);
                 }
             });
@@ -531,7 +524,6 @@ $(document).ready(function () {
             orientation: "auto",
             useCurrent: false,
             onSelect: function (selected) {
-                console.log(44);
                 $('.to_dates').val(selected);
             }
         });
@@ -547,7 +539,6 @@ $(document).ready(function () {
             orientation: "auto",
             useCurrent: false,
             onSelect: function (dateText) {
-                console.log(dateText);
                 $('.from_dates').val(dateText);
                 var new_dates = new Date();
                 $(".to_dates").datepicker({
@@ -672,7 +663,6 @@ $(document).ready(function () {
         order_lot_ball_quantity = parseInt((order_lot_ball_quantity == '' ? 0 : order_lot_ball_quantity));
         order_lot_unit_quantity = parseInt((order_lot_unit_quantity == '' ? 0 : order_lot_unit_quantity));
         var rows_tr = $(this);
-        console.log(total_inventory);
         var total_point_qty = 0;
         var total_lot_qty = 0;
         $.ajax({
@@ -692,7 +682,6 @@ $(document).ready(function () {
             },
             dataType: "JSON",
             success: function (response) {
-                console.log(response);
                 total_point_qty = ((order_point_case_quantity * case_inputs) + (order_point_ball_quantity * ball_inputs) + parseInt(order_point_unit_quantity));
                 rows_tr.closest('tr').find('td.total_order_point_inventory_qty').text(total_point_qty);
                 color_class_td = (total_inventory < total_point_qty ? 'insufficant_quantity' : 'sufficant_quantity');//logic change by sacho
@@ -862,7 +851,6 @@ $(document).ready(function () {
     $(document).delegate(".goto_sheet_screen", "click", function (e) {
         e.preventDefault();
         var page_id = $(this).attr('data_goto');
-        console.log(page_id);
         if (page_id == 1) {
             close_all_navi_msg();
             show_hide_nav_icn(0);
@@ -936,7 +924,6 @@ $(document).ready(function () {
                 inputs_type: inputs_type,
             },
             success: function (response) {
-                console.log(response);
                 window.location.reload(true);
             }
         })
@@ -1143,7 +1130,6 @@ $(document).ready(function () {
             },
             dataType: "JSON",
             success: function (response) {
-                console.log(response);
                 //var vendor_name = response.vendor_name;
                 //get_vendor_list_item_by_vendor_id(0, '');
                 $('.digits_td').digits_td();
@@ -1178,7 +1164,6 @@ $(document).ready(function () {
             data: {vendor_item_id: vendor_item_id, in_company_code: in_company_code},
             dataType: "JSON",
             success: function (response) {
-                console.log(response);
                 if (response.duplicate_company_code == 1) {
                     row_trs.find('.v_in_company_code').val('');
                     return false;
@@ -1224,7 +1209,6 @@ $(document).ready(function () {
             },
             dataType: "JSON",
             success: function (response) {
-                console.log(response);
                 $('.digits_td').digits_td();
                 $('.digits').digits();
             }
@@ -1501,7 +1485,7 @@ $(document).ready(function () {
 
 
                 }
-                console.log(response);
+              
             }
         });
         // nav_width = '340px';
@@ -1610,7 +1594,7 @@ $(document).ready(function () {
                     }
 
                 }
-                console.log(response);
+               
             }
         });
         // nav_width = '340px';
@@ -1689,7 +1673,6 @@ $(document).ready(function () {
     });
     $(document).delegate('.cancel_receive_order_edition', 'click', function () {
         var c_edit_lenght = $('#order_point_unit').length;
-        console.log(c_edit_lenght);
         if (c_edit_lenght >= 1) {
             var order_point_unit = $('#order_point_unit').val();
             var order_point_quantity = $('#o_p_q').val();
@@ -1748,7 +1731,6 @@ $(document).ready(function () {
     })
     $(document).delegate('.cancel_customer_item_edition', 'click', function () {
         var c_edit_lenght = $('.selling_price').length;
-        console.log(c_edit_lenght);
         if (c_edit_lenght >= 1) {
 
             var basic_saleing_price = $('.selling_price').closest('td').attr('data_basic_selling_price');
@@ -1759,7 +1741,7 @@ $(document).ready(function () {
             } else {
                 var price = sale_saleing_price;
             }
-            console.log(item_id);
+          
             var row = $('tr[customer_item_id="' + item_id + '"]');
             row.find('td:nth-child(9)').html('');
             row.find('td:nth-child(9)').text(price);
@@ -1856,7 +1838,7 @@ $(document).ready(function () {
                     ball_qty: td_ball,
                     item_name: row_p_name
                 };
-                console.log(data_vl);
+            
                 $.ajax({
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -2079,7 +2061,7 @@ $(document).ready(function () {
             ball_qty: td_ball,
             item_name: row_p_name
         };
-        console.log(data_vl);
+       
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -2626,10 +2608,9 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.jn_info) {
                     var cust_opt = '<option value="">商品を選択してください</option>';
-                    console.log(response.jn_info);
+                    
                     for (var i = 0; i < response.jn_info.length; i++) {
-                        console.log(response.jn_info[i]);
-                        console.log('(' + response.jn_info[i].jan + ')' + response.jn_info[i].name);
+                       
                         cust_opt += '<option value="' + response.jn_info[i].jan + '">(' + response.jn_info[i].jan + ')' + response.jn_info[i].name + '</option>';
                     }
 
@@ -2783,7 +2764,7 @@ $(document).ready(function () {
                 $('.voucher_m_number').val('');
                 $('.delivery_date').val('');
                 success_message('m_order_message', 'alert-success', '手書き受注が正常に行われました');
-                console.log(response);
+              
             }
         });
 
@@ -2945,7 +2926,7 @@ $(document).ready(function () {
                         error_message('flash_message', 'alert-warning', 'この商品は既に登録済みです。');
 
                     } else {
-                        console.log(response.vendor_id);
+                    
                         if (response.vendor_id != 0) {
                             $('.v_nmes_selects').val(response.vendor_id);
                             $('.selectpicker').selectpicker('refresh');
@@ -3287,7 +3268,7 @@ $(document).ready(function () {
             contentType: false, // tell jQuery not to set contentType
             dataType: "JSON",
             success: function (response) {
-                console.log(response);
+                
                 if (response.success != 1) {
                     const tempmsg = {
                         csv_import: {
@@ -3343,7 +3324,7 @@ $(document).ready(function () {
             contentType: false, // tell jQuery not to set contentType
             dataType: "JSON",
             success: function (response) {
-                console.log(response);
+                
                 if (response.success != 1) {
                     const tempmsg = {
                         csv_import: {
@@ -3364,9 +3345,7 @@ $(document).ready(function () {
 
             },
             error: function (request, status, error) {
-                console.log('bandwidth error');
-                console.log(request.responseText);
-                console.log(error);
+                
                 location.reload();
             }
         });
@@ -3481,8 +3460,7 @@ function shipment_popup_data() {
         url: "receive_order_data",
         dataType: "JSON",
         success: function (response) {
-            console.log(response);
-            console.log(response.length);
+           
             var html = '';
             if (response.length > 0) {
                 for (var i = 0; i < response.length; i++) {
@@ -3514,8 +3492,7 @@ function received_popup_data() {
         data: {vendor_id: vendor_id},
         dataType: "JSON",
         success: function (response) {
-            console.log(response);
-            console.log(response.length);
+           
             var html = '';
             if (response.length > 0) {
                 for (var i = 0; i < response.length; i++) {
@@ -3575,8 +3552,7 @@ function gross_profit_calculations() {
             }
 
         }
-        console.log(cost_pt);
-        console.log(sale_pt);
+       
         cost_pt = parseInt(cost_pt);
         sale_pt = parseInt(sale_pt);
 
@@ -3665,8 +3641,7 @@ function sortTable_brand_ordertable(table_bodys, jan_code, coll_num) {
 
     rows.sort(function (a, b) {
         var A = $(a).children('td').eq(coll_num).text();
-        console.log(A);
-        console.log(jan_code);
+       
         if (A == jan_code) {
             is_exist = 1;
             return -1;
@@ -3709,8 +3684,7 @@ function jan_list_search_by_name(name) {
             type: '1'
         },
         success: function (response) {
-            console.log(response.name_list.length);
-            // console.log(name);
+           
             var msgHtml = '';
             var btn = '';
             var mathod = "getProductFromJanMasterByName('" + name + "')";
@@ -3760,7 +3734,7 @@ function jan_list_search_by_name_from_master(name) {
         },
         success: function (response) {
             close_all_navi_msg();
-            console.log(response.api_data.data);
+        
             var msgHtml = '';
             var btn = '';
             if (response.api_data.return==1 && response.api_data.data.product_list.length>0) {
@@ -3884,10 +3858,7 @@ function management_sheet_date_confirmations(action_type) {
     var dateFroms = new Date(from_year, from_month, from_day); //Year, Month, Date
 
     var dateTos = new Date(to_year, to_month, to_day); //Year, Month, Date
-    console.log(dateFroms);
-    console.log(dateTos);
-    console.log(jcs_from_date);
-    console.log(jcs_to_date);
+    
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     const temporary_message_custms = {
         vendor_managementsheetnavi_3: {
@@ -3946,7 +3917,7 @@ function manual_order_exe2() {
         }
 
     });
-    console.log(manual_order_arr);
+    
 
     var customer_id = $('.c_ids_v').val();
     var manual_order_status = $('.customer_manual_order_status').val();
@@ -3982,8 +3953,6 @@ function manual_order_exe2() {
         data: {customer_id: customer_id, jan: jan, manual_order: manual_order_arr},
         dataType: "JSON",
         success: function (response) {
-
-            console.log(response);
             get_manual_order_item();
         }
     });
@@ -4044,7 +4013,6 @@ function manual_order_exe2_backups() {
         dataType: "JSON",
         success: function (response) {
             $('.sum_of_o_qty').removeClass('active_order_qty');
-            console.log(response);
         }
     });
     /*order exe*/
