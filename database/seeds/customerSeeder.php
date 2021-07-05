@@ -13,12 +13,12 @@ class customerSeeder extends Seeder
     {
         $user_array=array(
             [
-                'name' => 'A スパ',
+                'name' => 'A スーパー',
                 'partner_code' => '123456',
                 'phone' =>'01936755674'
             ],
             [
-                'name' => 'B スパ',
+                'name' => 'B スーパー',
                 'partner_code' => '65321',
                 'phone' =>'01936755674'
             ]
