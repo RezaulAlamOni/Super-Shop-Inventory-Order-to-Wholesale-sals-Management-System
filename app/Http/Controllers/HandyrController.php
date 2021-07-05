@@ -1980,6 +1980,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
     }
 
     public function item_return_to_tonya(Request $request){
+        $requestAll = $request->all();
         foreach($requestAll as $req){
             $stock_item_info = stock_item::where('rack_number', $req['rack_number'])->where('vendor_item_id',$req['vendor_item_id'])->first();
             if($stock_item_info){
