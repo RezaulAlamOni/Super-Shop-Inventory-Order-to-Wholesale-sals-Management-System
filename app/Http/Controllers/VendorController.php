@@ -461,8 +461,13 @@ class VendorController extends Controller
             if (vendor_item::where('jan', $jan_code)->exists()) {
                 return $result = response()->json(['message' => __('messages.jan_code_exists')]);
             } else {
-                vendor_item::insert($vendor_data_ins_array);
-                return $result = response()->json(['message' => 'insert_success']);
+                if (vendor_item::where('jan', $jan_code)->exists()) {
+                    return $result = response()->json(['message' => __('messages.jan_code_exists')]);
+                }else{
+                    vendor_item::insert($vendor_data_ins_array);
+                    return $result = response()->json(['message' => 'insert_success']);
+                }
+               
             }
         } else {
             $vendor_data_update_array = array(

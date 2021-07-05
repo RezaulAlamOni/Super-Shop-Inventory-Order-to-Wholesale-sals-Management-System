@@ -383,9 +383,11 @@ export default {
                 return false;
             }
             if (this.jan_code.length >= 13) {
+                console.log('call one')
                 this.getOrderDataByJan()
             }
             if (e.keyCode == 13) {
+                console.log('call two')
                 this.getOrderDataByJan()
             }
         },
