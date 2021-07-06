@@ -113,6 +113,7 @@ class VendormanagementsheetController extends Controller
         va.arrival_ball_quantity,
         va.arrival_unit_quantity,
         vo.unit_cost_price,
+        j.name as item_name,
         j.case_inputs,
         j.ball_inputs,
         vi.invoice_amount-vp.payment as due_payment,
@@ -161,6 +162,7 @@ class VendormanagementsheetController extends Controller
         vo.unit_cost_price,
         j.case_inputs,
         j.ball_inputs,
+        j.name as item_name,
         vi.invoice_amount-vp.payment as due_payment,
         vp.payment_date
         FROM
