@@ -160,6 +160,7 @@
 
                                         </div>
                                         <div class="form-group">
+                                        <h4 class="text-center">前回リスト</h4>
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
@@ -183,7 +184,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <button class="btn btn-primary pull-right" style="float:right" @click="gerLastOrderlist">次へ</button>
+                                            <button class="btn btn-primary pull-right" style="float:right" @click="gerLastOrderlist">次のリスト</button>
                                         </div>
 
                                     </div>

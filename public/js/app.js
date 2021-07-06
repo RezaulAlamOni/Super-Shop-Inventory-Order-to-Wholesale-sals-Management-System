@@ -22969,6 +22969,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-receive",
@@ -66618,6 +66619,10 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "form-group" }, [
+                              _c("h4", { staticClass: "text-center" }, [
+                                _vm._v("前回リスト")
+                              ]),
+                              _vm._v(" "),
                               _c(
                                 "table",
                                 { staticClass: "table table-bordered" },
@@ -66694,7 +66699,7 @@ var render = function() {
                                   staticStyle: { float: "right" },
                                   on: { click: _vm.gerLastOrderlist }
                                 },
-                                [_vm._v("次へ")]
+                                [_vm._v("次のリスト")]
                               )
                             ])
                           ]

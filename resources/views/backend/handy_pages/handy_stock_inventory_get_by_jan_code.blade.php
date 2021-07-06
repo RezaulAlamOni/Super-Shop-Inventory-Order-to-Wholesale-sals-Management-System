@@ -82,7 +82,7 @@
                                            data_attr_v_item_id="{{$value->vendor_item_id}}"
                                            data_attr_v_id="{{$value->vendor_id}}"
                                            data_attr_rack_number="{{$value->rack_number}}"
-                                           data_attr_row_id="{{$value->stock_item_id}}" autofocus="true"  readonly>
+                                           data_attr_row_id="{{$value->stock_item_id}}" autofocus="true"  >
 
                                     <input type="tel"
                                            class="form-control cmn_num_formt case_law_qty case_inputs_"
@@ -97,7 +97,7 @@
                                            data_attr_v_item_id="{{$value->vendor_item_id}}"
                                            data_attr_v_id="{{$value->vendor_id}}"
                                            data_attr_rack_number="{{$value->rack_number}}"
-                                           data_attr_row_id="{{$value->stock_item_id}}"  readonly>
+                                           data_attr_row_id="{{$value->stock_item_id}}"  >
 
                                     <input type="tel" class="form-control cmn_num_formt bol_law_qty boll_inputs_"
                                            value="{{$value->ball_inputs}}" readonly hidden>
@@ -111,7 +111,7 @@
                                            data_attr_v_item_id="{{$value->vendor_item_id}}"
                                            data_attr_v_id="{{$value->vendor_id}}"
                                            data_attr_rack_number="{{$value->rack_number}}"
-                                           data_attr_row_id="{{$value->stock_item_id}}" readonly>
+                                           data_attr_row_id="{{$value->stock_item_id}}" >
                                     <div class="input-group rsinput_group" style="display: none;" >
                                         <div class="input-group-addon rsgrp_adon_handy">入数</div>
                                         <input type="tel" class="form-control cmn_num_formt sep_law_qty"
@@ -120,7 +120,7 @@
                                 <td style="vertical-align: middle !important;text-align:center"><input
                                         type="tel" class="form-control new_rack_entry"
                                         value="{{$value->rack_number}}"
-                                        style="border-radius:0;text-align:center;" readonly></td>
+                                        style="border-radius:0;text-align:center;" ></td>
                             </tr>
                             <?php $i++;?>
                         @else
