@@ -159,7 +159,7 @@
 
 
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" style="display:none">
                                         <h4 class="text-center">前回リスト</h4>
                                             <table class="table table-bordered">
                                                 <thead>

@@ -22021,6 +22021,8 @@ __webpack_require__.r(__webpack_exports__);
 
           if (_this.temp_rack_number) {
             order.rack_number = _this.temp_rack_number;
+          } else {
+            order.rack_number = '';
           }
 
           data.push(order);
@@ -66618,90 +66620,101 @@ var render = function() {
                               ]
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("h4", { staticClass: "text-center" }, [
-                                _vm._v("前回リスト")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "table",
-                                { staticClass: "table table-bordered" },
-                                [
-                                  _vm._m(1),
-                                  _vm._v(" "),
-                                  _c(
-                                    "tbody",
-                                    [
-                                      _vm._l(_vm.get_last_order_list, function(
-                                        order_value,
-                                        index
-                                      ) {
-                                        return _vm.get_last_order_list.length >
-                                          0
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group",
+                                staticStyle: { display: "none" }
+                              },
+                              [
+                                _c("h4", { staticClass: "text-center" }, [
+                                  _vm._v("前回リスト")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "table",
+                                  { staticClass: "table table-bordered" },
+                                  [
+                                    _vm._m(1),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      [
+                                        _vm._l(
+                                          _vm.get_last_order_list,
+                                          function(order_value, index) {
+                                            return _vm.get_last_order_list
+                                              .length > 0
+                                              ? _c("tr", [
+                                                  _c("td", [
+                                                    _vm._v(_vm._s(index + 1))
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _vm._v(
+                                                      _vm._s(order_value.name)
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        order_value.order_date
+                                                      )
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        order_value.arrival_qty
+                                                      )
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        order_value.car_rack_number
+                                                      )
+                                                    )
+                                                  ])
+                                                ])
+                                              : _vm._e()
+                                          }
+                                        ),
+                                        _vm._v(" "),
+                                        _vm.get_last_order_list.length == 0
                                           ? _c("tr", [
-                                              _c("td", [
-                                                _vm._v(_vm._s(index + 1))
-                                              ]),
-                                              _vm._v(" "),
-                                              _c("td", [
-                                                _vm._v(_vm._s(order_value.name))
-                                              ]),
-                                              _vm._v(" "),
-                                              _c("td", [
-                                                _vm._v(
-                                                  _vm._s(order_value.order_date)
-                                                )
-                                              ]),
-                                              _vm._v(" "),
-                                              _c("td", [
-                                                _vm._v(
-                                                  _vm._s(
-                                                    order_value.arrival_qty
-                                                  )
-                                                )
-                                              ]),
-                                              _vm._v(" "),
-                                              _c("td", [
-                                                _vm._v(
-                                                  _vm._s(
-                                                    order_value.car_rack_number
-                                                  )
-                                                )
-                                              ])
+                                              _c(
+                                                "td",
+                                                {
+                                                  staticStyle: {
+                                                    "text-align": "center"
+                                                  },
+                                                  attrs: { colspan: "5" }
+                                                },
+                                                [_vm._v("注文が見つかりません")]
+                                              )
                                             ])
                                           : _vm._e()
-                                      }),
-                                      _vm._v(" "),
-                                      _vm.get_last_order_list.length == 0
-                                        ? _c("tr", [
-                                            _c(
-                                              "td",
-                                              {
-                                                staticStyle: {
-                                                  "text-align": "center"
-                                                },
-                                                attrs: { colspan: "5" }
-                                              },
-                                              [_vm._v("注文が見つかりません")]
-                                            )
-                                          ])
-                                        : _vm._e()
-                                    ],
-                                    2
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-primary pull-right",
-                                  staticStyle: { float: "right" },
-                                  on: { click: _vm.gerLastOrderlist }
-                                },
-                                [_vm._v("次のリスト")]
-                              )
-                            ])
+                                      ],
+                                      2
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary pull-right",
+                                    staticStyle: { float: "right" },
+                                    on: { click: _vm.gerLastOrderlist }
+                                  },
+                                  [_vm._v("次のリスト")]
+                                )
+                              ]
+                            )
                           ]
                         )
                       ]

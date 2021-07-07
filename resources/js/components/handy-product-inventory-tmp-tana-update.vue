@@ -597,6 +597,8 @@ export default {
                     _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
                     if (_this.temp_rack_number) {
                         order.rack_number = _this.temp_rack_number;
+                    }else{
+                        order.rack_number ='';
                     }
                     data.push(order)
                 }
