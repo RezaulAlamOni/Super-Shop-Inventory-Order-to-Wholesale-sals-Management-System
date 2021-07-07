@@ -177,8 +177,8 @@ class Customer_menual_orderController extends Controller
 /*csv order list*/
 //$wh = 'ORDER BY all_orders.total_quantity DESC,all_orders.name like "%'.$voice_text.'%" desc,makers.maker_name like "%'.$voice_text.'%" desc';
 $wh = 'ORDER BY all_orders.total_quantity DESC,all_orders.name like "%'.$voice_text.'%" desc,makers.maker_name like "%'.$voice_text.'%" desc';
-$wh2 = 'ORDER BY jans.name like "%'.$voice_text.'%" desc';
-$orderByMakername = 'ORDER BY makers.maker_name like "%'.$voice_text.'%" DESC,all_orders.order_frequency_num DESC,all_orders.total_quantity DESC';
+$wh2 = 'ORDER BY jans.name like "%'.$voice_text.'%" DESC';
+$orderByMakername = 'ORDER BY makers.maker_name like "%'.$voice_text.'%" DESC,all_orders.name like "%'.$voice_text.'%" DESC,all_orders.order_frequency_num DESC,all_orders.total_quantity DESC';
 $online_order = collect(\DB::select("
 select all_orders.*,
 makers.maker_name
