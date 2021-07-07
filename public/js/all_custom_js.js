@@ -4485,11 +4485,11 @@ $(document).ready(function () {
     $(document).delegate(".color_row_new_color", "click", function (e) {
         $(this).removeClass('color_row_new_color');
     })
-
+var isUpdateValue = '';
     $(document).delegate(".brndOrderInputQty", "focusin", function (e) {
         close_all_navi_msg();
         show_hide_nav_icn(1);
-        
+        isUpdateValue = $(this).val();
     })
 
     $(document).delegate(".brndOrderInputQty", "keypress", function (e) {
@@ -4505,6 +4505,9 @@ $(document).ready(function () {
         var row_id = $(this).attr('row_id');
         var field_name = $(this).attr('field_name');
         var vl = $(this).val();
+        console.log(isUpdateValue);
+        console.log(vl);
+        if(vl!=isUpdateValue){
         $(this).closest('td').css('background','#F3F885');
         $.ajax({
             headers: {
@@ -4539,6 +4542,11 @@ $(document).ready(function () {
         // def_center_mesg_template
         success_nav = view(temps_messagesssssss['bran_item_list_input_message'], def_center_mesg_template_brand);
         show_hide_nav_icn(0);
+    }else{
+        close_all_navi_msg();
+        show_hide_nav_icn(1);
+    }
+
     })
 
 
@@ -5885,9 +5893,9 @@ for(var k=0;k<response.shop_item_list.length;k++){
                     }
                     var updatedColorSm = (smallArray[i].update_status=="1"?'updated_yes_off':'updated_no'); 
                     brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
-                    brand_name += '<td class="'+updatedColorSm+'" style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="last_qty" value="'+ smallArray[i].last_qty +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
-                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+ smallArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td class="'+updatedColorSm+'" style="text-align: right;width:10%"><input type="tel" row_id="'+smallArray[i].customer_order_detail_id+'" field_name="last_qty" value="'+ smallArray[i].last_qty +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+smallArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
+                    brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+smallArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+ smallArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%">'+ smallArray[i].order_frequency_num +'</td>';
                 }else{
                     brand_name += '<td style="text-align: left; width:40%"></td>';
