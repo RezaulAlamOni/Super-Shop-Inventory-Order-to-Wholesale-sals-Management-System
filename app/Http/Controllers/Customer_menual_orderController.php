@@ -178,7 +178,7 @@ class Customer_menual_orderController extends Controller
 //$wh = 'ORDER BY all_orders.total_quantity DESC,all_orders.name like "%'.$voice_text.'%" desc,makers.maker_name like "%'.$voice_text.'%" desc';
 $wh = 'ORDER BY all_orders.total_quantity DESC,all_orders.name like "%'.$voice_text.'%" desc,makers.maker_name like "%'.$voice_text.'%" desc';
 $wh2 = 'ORDER BY jans.name like "%'.$voice_text.'%" DESC';
-$orderByMakername = 'ORDER BY makers.maker_name like "%'.$voice_text.'%" DESC,all_orders.name like "%'.$voice_text.'%" DESC,all_orders.order_frequency_num DESC,all_orders.total_quantity DESC';
+$orderByMakername = 'ORDER BY all_orders.name like "%'.$voice_text.'%" DESC, makers.maker_name like "%'.$voice_text.'%" DESC,all_orders.order_frequency_num DESC,all_orders.total_quantity DESC';
 $online_order = collect(\DB::select("
 select all_orders.*,
 makers.maker_name
@@ -205,8 +205,8 @@ from customer_orders
             inner join vendor_items on jans.jan=vendor_items.jan
 left join stock_items on vendor_items.vendor_item_id = stock_items.vendor_item_id
 left join customer_shipments on customer_shipments.customer_order_detail_id = customer_order_details.customer_order_detail_id
-             where customer_orders.customer_id = '".$id."' and customer_orders.customer_shop_id='".$shop_id."' and (customer_orders.status='未出荷' || customer_orders.status='確定済み') and customer_orders.category = 'edi' $wh2) as all_orders
-             left join makers on makers.maker_code= all_orders.mk_code $orderByMakername
+             where customer_orders.customer_id = '".$id."' and customer_orders.customer_shop_id='".$shop_id."' and (customer_orders.status='未出荷' || customer_orders.status='確定済み') and customer_orders.category = 'edi' group by customer_orders.customer_order_id $wh2) as all_orders
+             left join makers on makers.maker_code= all_orders.mk_code group by all_orders.customer_order_id $orderByMakername 
             "));
             $order_array =array();
             if($online_order){
@@ -237,7 +237,7 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
         /*csv order list*/
         $wh = 'ORDER BY all_orders.total_quantity DESC,all_orders.name like "%'.$voice_text.'%" desc,makers.maker_name like "%'.$voice_text.'%" desc';
         $wh2 = 'ORDER BY jans.name like "%'.$voice_text.'%" desc';
-        $orderByMakername = 'ORDER BY makers.maker_name like "%'.$voice_text.'%" DESC,all_orders.order_frequency_num DESC,all_orders.total_quantity DESC';
+        $orderByMakername = 'ORDER BY all_orders.name like "%'.$voice_text.'%" desc,makers.maker_name like "%'.$voice_text.'%" DESC,all_orders.order_frequency_num DESC,all_orders.total_quantity DESC';
         $online_order = collect(\DB::select("
         select all_orders.*,
         makers.maker_name
@@ -264,8 +264,8 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
                     inner join vendor_items on jans.jan=vendor_items.jan
         left join stock_items on vendor_items.vendor_item_id = stock_items.vendor_item_id
         left join customer_shipments on customer_shipments.customer_order_detail_id = customer_order_details.customer_order_detail_id
-                     where customer_orders.customer_id = '".$id."' and customer_orders.customer_shop_id='".$shop_id."' and (customer_orders.status='未出荷' || customer_orders.status='確定済み') and customer_orders.category = 'edi' and customer_order_details.update_status='1' $wh2) as all_orders
-                     left join makers on makers.maker_code= all_orders.mk_code $orderByMakername
+                     where customer_orders.customer_id = '".$id."' and customer_orders.customer_shop_id='".$shop_id."' and (customer_orders.status='未出荷' || customer_orders.status='確定済み') and customer_orders.category = 'edi' and customer_order_details.update_status='1' group by customer_orders.customer_order_id $wh2) as all_orders
+                     left join makers on makers.maker_code= all_orders.mk_code group by all_orders.customer_order_id $orderByMakername
                     "));
                     $order_array =array();
                     if($online_order){
