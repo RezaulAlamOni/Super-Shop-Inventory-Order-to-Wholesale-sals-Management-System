@@ -412,8 +412,9 @@ export default {
                         }
                         $('#handy-navi').hide()
                     } else {
-
-                        _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+                        console.log('No order found');
+                        _this.handi_navi = '<li>0000000000000000</li>';
+                        $('#handy-navi').show()
 
                     }
 

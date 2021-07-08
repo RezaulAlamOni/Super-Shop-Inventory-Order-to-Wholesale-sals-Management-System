@@ -21119,7 +21119,9 @@ __webpack_require__.r(__webpack_exports__);
 
           $('#handy-navi').hide();
         } else {
-          _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+          console.log('No order found');
+          _this.handi_navi = '<li>0000000000000000</li>';
+          $('#handy-navi').show();
         }
       })["catch"](function () {})["finally"](function () {
         _this.jan_code = '';
