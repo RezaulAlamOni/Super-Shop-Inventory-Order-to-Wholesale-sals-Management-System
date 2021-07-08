@@ -398,6 +398,10 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
         va.today_unit_arrival_qty,
         vod.order_case_quantity,
         vod.order_ball_quantity,
+        vod.order_date,
+        vod.shipment_date,
+        vod.quantity,
+        vod.voucher_number,
         vod.order_unit_quantity
     FROM
     (
@@ -433,7 +437,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
     left JOIN stock_items AS si ON si.vendor_item_id= vi.vendor_item_id
     ) AS vi_all
     INNER JOIN (
-SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendor_orders.order_unit_quantity,vendor_orders.vendor_item_id FROM `vendor_orders` where vendor_orders.status='未入荷' GROUP BY vendor_orders.vendor_item_id
+SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendor_orders.order_unit_quantity,vendor_orders.vendor_item_id,vendor_orders.voucher_number,vendor_orders.order_date,vendor_orders.shipment_date,vendor_orders.quantity FROM `vendor_orders` where vendor_orders.status='未入荷' GROUP BY vendor_orders.vendor_item_id
     ) AS vod on vod.vendor_item_id=vi_all.vendor_item_id
     LEFT JOIN (
         SELECT SUM(vendor_arrivals.arrival_case_quantity) as today_case_arrival_qty,SUM(vendor_arrivals.arrival_ball_quantity) as today_ball_arrival_qty,SUM(vendor_arrivals.arrival_unit_quantity) as today_unit_arrival_qty,vendor_orders.vendor_item_id FROM `vendor_arrivals` INNER JOIN vendor_orders on vendor_orders.vendor_order_id = vendor_arrivals.vendor_order_id WHERE date(`vendor_arrivals`.`arrival_date`)=CURDATE() GROUP BY vendor_orders.vendor_item_id) as va on va.vendor_item_id = vi_all.vendor_item_id
@@ -505,7 +509,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                     "devlivery_date" => $value->shipment_date,
                     "name" => $value->item_name,
                     "jan" => $value->jan,
-                    "inputs" => $value->order_inputs,
+                    "inputs" => 'ケース',
                     "quantity" => $value->quantity,
                     "cost_price" => $value->cost_price,
                     "store_price" => $value->cost_price
@@ -547,7 +551,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                     "devlivery_date" => $value->shipment_date,
                     "name" => $value->item_name,
                     "jan" => $value->jan,
-                    "inputs" => $value->order_inputs,
+                    "inputs" => 'ケース',
                     "quantity" => $value->quantity,
                     "cost_price" => $value->cost_price,
                     "store_price" => $value->cost_price
@@ -599,6 +603,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $handle = fopen($filename, 'w+');
         $handle2 = fopen($hacchu_file, 'w+');
         $result = $this->get_tonya_order_list_by_id($vendor_id);
+        
         /*
             prepare csv
         */
@@ -617,7 +622,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                     "devlivery_date" => $value->shipment_date,
                     "name" => $value->item_name,
                     "jan" => $value->jan,
-                    "inputs" => $value->order_inputs,
+                    "inputs" => 'ケース',
                     "quantity" => $value->quantity,
                     "cost_price" => $value->cost_price,
                     "store_price" => $value->cost_price

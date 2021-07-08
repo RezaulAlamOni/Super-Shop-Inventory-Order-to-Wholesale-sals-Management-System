@@ -149,7 +149,7 @@ settings_voice
                             <?php $i++;?>
                         @endforeach
                         @else
-                        <tr><td colspan="8">注文が見つかりません</td></tr>
+                        <tr><td colspan="9">注文が見つかりません</td></tr>
                     @endif
                 </tbody>
             </table>
