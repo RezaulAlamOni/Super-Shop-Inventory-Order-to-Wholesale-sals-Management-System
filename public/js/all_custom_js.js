@@ -3750,7 +3750,7 @@ $(document).ready(function () {
                         html += '<td><input type="tel" class="form-control digits insert_vendor_payments" data_vendor_id = "' + response[i].vendor_id + '" data_current_amount="' + total_amount + '" data_invoice_id="' + response[i].vendor_invoice_id + '"  value="' + total_amount + '"></td>';
                         html += '<td class="digits_td existing_due_amount" id="amount_d' + response[i].vendor_invoice_id + '">' + amount_d + '</td>';
                        // html += '<td>'+response[i].arrival_case_quantity+'*'+response[i].case_inputs+'+'+response[i].arrival_ball_quantity+'*'+response[i].ball_inputs+'+'+response[i].arrival_unit_quantity+'='+response[i].quantity+'*'+response[i].unit_cost_price+'='+response[i].invoice_amount+'</td>';
-                       html += '<td>原価'+response[i].unit_cost_price+'円ｘバラ数量'+response[i].quantity+'＝'+response[i].invoice_amount+'円</td>';
+                       html += '<td>原価'+response[i].unit_cost_price+'円ｘバラ数量'+response[i].quantity+'＝'+response[i].invoice_amount+'円 ('+response[i].item_name+')</td>';
 
                        html += '</tr>';
                         j++;
@@ -13154,7 +13154,7 @@ function handy_page_popup(url_last_element = null, message = "No message", font_
 function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
     if(case_ball_inputs_set == 0) {
         $('#handy-navi').show()
-        $('#handy-navi-body').html('<li>在庫を入れて下さい。</li>')
+        $('#handy-navi-body').html('<li>在庫を入れて下さい。</li><li>この商品は入り数が設定されていません。小売マスターメンテ画面で入り数を設定して下さい。</li>')
         return false;
     }
     let case_input = $(".case_inputs_").val();

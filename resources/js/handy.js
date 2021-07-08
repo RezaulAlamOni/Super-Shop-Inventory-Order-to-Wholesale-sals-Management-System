@@ -1134,7 +1134,7 @@ function handy_page_popup(url_last_element = null, message = "No message", font_
 function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
     if(case_ball_inputs_set == 0) {
         $('#handy-navi').show()
-        $('#handy-navi-body').html('<li>在庫を入れて下さい。</li>')
+        $('#handy-navi-body').html('<li>在庫を入れて下さい。</li><li>この商品は入り数が設定されていません。小売マスターメンテ画面で入り数を設定して下さい。</li>')
         return false;
     }
     let case_input = $(".case_inputs_").val();
