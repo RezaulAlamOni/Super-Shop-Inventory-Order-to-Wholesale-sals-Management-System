@@ -34,6 +34,7 @@ import handyProductInventoryTempTanaUpdate from './components/handy-product-inve
 import handyProductInventoryInquiry from './components/handy-product-inventory-inquiry'
 import handyProductInventoryReturn from './components/handy-product-inventory-return'
 import handyVendorMaster from './components/handy-vandor-master'
+import handyCustomerMaster from './components/handy-customer-master'
 import barCodeScan from './components/barcode-scan'
 
 /**
@@ -51,6 +52,7 @@ const app = new Vue({
         'handy-product-inventory-inquiry' : handyProductInventoryInquiry,
         'handy-product-inventory-return' : handyProductInventoryReturn,
         'bar-code-scan' : barCodeScan,
-        'handy-vendor-master' : handyVendorMaster
+        'handy-vendor-master' : handyVendorMaster,
+        'handy-customer-master' : handyCustomerMaster
     }
 });

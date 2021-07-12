@@ -103,9 +103,11 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/add_update_customer_item', 'CustomerController@add_update_customer_item');
 	Route::post('/add_customer_item_data_by_jan', 'CustomerController@add_customer_item_data_by_jan');
 	Route::post('/update_customer_master_item_content', 'CustomerController@update_customer_master_item_content');
+	Route::post('/handy_update_customer_master_item_content', 'CustomerController@handy_update_customer_master_item_content');
 	Route::post('/get_customer_list_item_by_id', 'CustomerController@get_customer_list_item_by_id');
 	Route::post('/delete_customer_itms_by_id', 'CustomerController@delete_customer_itms_by_id');
 	Route::post('/get_all_vendor_data_by_vendor_id', 'CustomerController@get_all_vendor_data_by_vendor_id');
+	Route::get('/handy_customer_master_item_get_by_jan_code/{jan}', 'CustomerController@handy_customer_master_item_get_by_jan_code');
 
 	Route::post('/vendor_item_delete', 'VendorController@vendorItemDelete');
 	Route::post('/update_order_info_by_id', 'VendorController@update_order_info_by_id');

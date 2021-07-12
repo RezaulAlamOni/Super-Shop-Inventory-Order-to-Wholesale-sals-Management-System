@@ -165,6 +165,16 @@ class CustomerController extends Controller
         customer_item::where('jan', '=', $jan)->update(['cost_price'=>$cost_price,'selling_price'=>$selling_price,'gross_profit'=>$gross_profit,'gross_profit_margin'=>$gross_profit_margin]);
         return $result = response()->json(['message' => 'update_success']);
     }
+    public function handy_update_customer_master_item_content(Request $request){
+        $jan = $request->jan;
+        $cost_price = $request->price;
+        $selling_price = $request->selling_price;
+        $gross_profit = $request->gross_profit;
+        $gross_profit_margin = $request->gross_profit_margin;
+        jan::where('jan',$jan)->update(['case_inputs'=>$request->case_qty,'ball_inputs'=>$request->ball_qty]);
+        customer_item::where('jan', '=', $jan)->update(['cost_price'=>$cost_price,'selling_price'=>$selling_price,'gross_profit'=>$gross_profit,'gross_profit_margin'=>$gross_profit_margin]);
+        return $result = response()->json(['message' => 'update_success']);
+    }
     public function get_customer_list_item_by_id(Request $request){
         $item_id = $request->c_list_item_id;
         $customer_item_data = customer_item::select('customer_items.*', 'jans.*','jans.name as product_name', 'customers.name')
@@ -269,5 +279,12 @@ class CustomerController extends Controller
         //Session::flash('class_name', 'alert-success');
 
         return $result = response()->json(['message' => 'delete_success']);
+    }
+    public function handy_customer_master_item_get_by_jan_code($jan){
+        if (!customer_item::where('jan', $jan)->exists()) {
+            return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
+        }
+        $result = customer_item::select('customer_items.*','customer_items.gross_profit_margin as profit_margin','vendor_items.vendor_id','vendor_items.vendor_item_id','vendor_items.maker_id','jans.case_inputs','jans.ball_inputs','jans.name as item_name')->join('jans','jans.jan','=','customer_items.jan')->join('vendor_items','vendor_items.jan','=','customer_items.jan')->where('customer_items.jan',$jan)->get();
+        return response()->json(['status' => 200, 'result'=>$result]);
     }
 }
