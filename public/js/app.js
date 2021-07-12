@@ -20412,6 +20412,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url', 'read_only'],
   name: "handy-customer-master",
@@ -20473,7 +20474,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.maker_id = _this.order_data[0].vendor_id;
           $('#handy-navi').hide();
           setTimeout(function () {
-            $('#case').select();
+            $('#cost').select();
           }, 200);
         } else {
           _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
@@ -62792,6 +62793,7 @@ var render = function() {
                                                           attrs: {
                                                             type: "tel",
                                                             id: "case",
+                                                            readonly: "",
                                                             id: "case"
                                                           },
                                                           domProps: {
@@ -62869,7 +62871,8 @@ var render = function() {
                                                           attrs: {
                                                             type: "tel",
                                                             id: "ball",
-                                                            id: "boll"
+                                                            id: "boll",
+                                                            readonly: ""
                                                           },
                                                           domProps: {
                                                             value:
@@ -63181,7 +63184,7 @@ var render = function() {
                                                             ) {
                                                               return _vm.pressEnterAndSave(
                                                                 $event,
-                                                                "case"
+                                                                "cost"
                                                               )
                                                             },
                                                             blur: function(
