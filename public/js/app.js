@@ -68352,7 +68352,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                                                    コスト\n                                                "
+              "\n                                                   原価\n                                                "
             )
           ]
         ),
@@ -68368,7 +68368,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                                                    セール\n                                                "
+              "\n                                                    売価\n                                                "
             )
           ]
         ),

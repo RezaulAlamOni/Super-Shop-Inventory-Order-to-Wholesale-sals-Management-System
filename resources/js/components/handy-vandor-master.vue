@@ -57,10 +57,10 @@
                                                     <!--                                                        バラ-->
                                                     <!--                                                    </th>-->
                                                     <th style="width: 50px; text-align: center; padding: 5px;">
-                                                        コスト
+                                                       原価
                                                     </th>
                                                     <th style="width: 50px; text-align: center; padding: 5px;">
-                                                        セール
+                                                        売価
                                                     </th>
                                                     <th style="width: 50px; text-align: center; padding: 5px;">
                                                         粗利
