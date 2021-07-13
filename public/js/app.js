@@ -23216,7 +23216,7 @@ __webpack_require__.r(__webpack_exports__);
             $('.loading_image_custom').hide();
           }
         } else if (res.data.status == 402) {
-          _this.handi_navi = '<li>【' + res.data.data.name + '】商品の問屋が見つかりません。小売マスターメンテ画面から問屋を選択して発注してください。<a href="vendor_master" class="btn btn-primary">販売先マスター作成</a></li>';
+          _this.handi_navi = '<li>【' + res.data.data.name + '】商品の問屋が見つかりません。仕入れ先 マスター画面から問屋を選択して発注してください。<a href="' + _this.base_url + '/handy_vendor_master" class="btn btn-primary">仕入れ先 マスター</a></li>';
           $('#handy-navi').show();
           $('.loading_image_custom').hide(); // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
           // _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
@@ -23294,8 +23294,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (_this.order_data.ball_inputs == 0 && _this.order_data.case_inputs == 0) {
         $('#handy-navi').show();
-        _this.handi_navi = '<li>この商品は入り数が設定されていません。小売マスターメンテ画面で入り数を設定して下さい。</li>';
-        _this.handi_navi += '<li style="text-align :center;list-style: none;"><a class="btn btn-primary " href="' + _this.base_url + '/vendor_master" target="_blank">小売マスターメンテ</a></li>';
+        _this.handi_navi = '<li>この商品は入り数が設定されていません。仕入れ先 マスター画面で入り数を設定して下さい。</li>';
+        _this.handi_navi += '<li style="text-align :center;list-style: none;"><a class="btn btn-primary " href="' + _this.base_url + '/handy_vendor_master">仕入れ先 マスター</a></li>';
 
         _this.hideModelAndClearInput();
 
