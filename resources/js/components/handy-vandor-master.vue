@@ -164,7 +164,7 @@
                                     <div class="form-group">
                                         <select class="form-control" id="vendprs" v-model="maker_id"
                                                 @change="updateVendorData()">
-                                            <option value="null">問屋を選択</option>
+                                            <option value="0">問屋を選択</option>
                                             <option v-for="vendor in vendors" :value="vendor.id">
                                                 {{ vendor.text }}
                                             </option>
@@ -454,7 +454,7 @@ export default {
             product_name: '',
             vendor_id: null,
             vendor_item_id: null,
-            maker_id: null,
+            maker_id: 0,
             loader: 0,
             total_quantity: 0,
             handi_navi: '',

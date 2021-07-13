@@ -24685,7 +24685,7 @@ __webpack_require__.r(__webpack_exports__);
       product_name: '',
       vendor_id: null,
       vendor_item_id: null,
-      maker_id: null,
+      maker_id: 0,
       loader: 0,
       total_quantity: 0,
       handi_navi: '',
@@ -70031,7 +70031,7 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("option", { attrs: { value: "null" } }, [
+                                    _c("option", { attrs: { value: "0" } }, [
                                       _vm._v("問屋を選択")
                                     ]),
                                     _vm._v(" "),
