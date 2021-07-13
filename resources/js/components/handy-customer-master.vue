@@ -79,7 +79,7 @@
                                                                    @keypress="pressEnterAndSave($event,'boll')"
                                                                    @blur="updateVendorItemProperty(order_data[0])"
                                                                    v-model="order_data[0].case_inputs"
-                                                                   class="form-control inputs " readonly
+                                                                   class="form-control inputs "
                                                                    id="case"
                                                                    style="text-align: center">
                                                             <!--                                                                @blur="updateOrderQnty('ケース')"-->
@@ -92,7 +92,6 @@
                                                                    @blur="updateVendorItemProperty(order_data[0])"
                                                                    v-model="order_data[0].ball_inputs"
                                                                    id="boll"
-                                                                   readonly
                                                                    class="form-control boll_order inputs"
                                                                    style="text-align: center">
                                                             <!--                                                                @blur="updateOrderQnty('ボール')"-->
@@ -137,7 +136,7 @@
                                                         <td>
                                                             <input type="tel"
                                                                    @click="selectItem($event,'')"
-                                                                   @keypress="pressEnterAndSave($event,'cost')"
+                                                                   @keypress="pressEnterAndSave($event,'case')"
                                                                    @blur="updateVendorItemProperty(order_data[0],'profit_margin')"
                                                                    class="form-control  " :id="'profit_margin'"
                                                                    v-model="order_data[0].profit_margin"
@@ -495,7 +494,7 @@ export default {
                         _this.maker_id = _this.order_data[0].vendor_id;
                         $('#handy-navi').hide()
                         setTimeout(function () {
-                            $('#cost').select()
+                            $('#case').select()
                         },200)
                     } else {
 
