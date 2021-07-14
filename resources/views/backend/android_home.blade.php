@@ -63,6 +63,13 @@
                                 商品検索
                             </div>
                         </a>
+
+                        <a  href="#" style="padding: 15px 5px;" class="btn btn-default">
+                            <div class="numbering_col" style="padding: 0; margin: 0;">11</div>
+                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
+                            買掛
+                            </div>
+                        </a>
                     </div>
 
                     <div class="col-6 handy_btn_aria handy_btn_right">
@@ -80,22 +87,28 @@
                             </div>
                         </a>
                    
-                        <a  style="width: 100%;padding: 15px 5px;" class="btn btn-default" href="handy_customer_master">
+                        <a  style="width: 100%;" class="btn btn-default" href="handy_customer_master">
                             <div class="numbering_col" style="padding: 0; margin: 0;">6</div>
                             <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
-                                販売先マスター
+                            販売マスター
                             </div>
                         </a>
-                        <a id="handy_order_btn" style="width: 100%" class="btn btn-default" href="handy_vendor_master">
+                        <a id="handy_order_btn" style="width: 100%;" class="btn btn-default" href="handy_vendor_master">
                             <div class="numbering_col" style="padding: 0; margin: 0;">8</div>
                             <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
-                                仕入れ先 マスター
+                            仕入マスター
                             </div>
                         </a>
                         <a id="" style="width: 100%" class="btn btn-default" href="{{ route('inventory.return') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">10</div>
                             <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
                                 返却(キャンセル)
+                            </div>
+                        </a>
+                        <a id="" style="width: 100%;padding: 15px 5px;" class="btn btn-default" href="#">
+                            <div class="numbering_col" style="padding: 0; margin: 0;">12</div>
+                            <div class="col-md-11 text-center" style="padding: 0; margin: 0;line-height:35px;">
+                            売掛
                             </div>
                         </a>
 

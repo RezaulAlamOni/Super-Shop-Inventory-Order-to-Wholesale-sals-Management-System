@@ -111,9 +111,8 @@
                                                                 <td>
                                                                     <input type="tel" :id="'case'+index"
                                                                            @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.arrival_case_quantity"
-                                                                           :readonly="readonly"
+                                                                           @keypress="pressEnterAndSave($event,'ball')"
+                                                                           v-model="order.arrival_case_quantity-order.damage_case_quantity"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
                                                                 </td>
@@ -121,9 +120,8 @@
                                                                 <td>
                                                                     <input type="tel" :id="'ball'+index"
                                                                            @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.arrival_ball_quantity"
-                                                                           :readonly="readonly"
+                                                                           @keypress="pressEnterAndSave($event,'bara')"
+                                                                           v-model="order.arrival_ball_quantity-order.damage_ball_quantity"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
                                                                 </td>
@@ -131,9 +129,8 @@
                                                                 <td>
                                                                     <input type="tel" :id="'bara'+index"
                                                                            @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'case')"
-                                                                           v-model="order.arrival_unit_quantity"
-                                                                           :readonly="readonly"
+                                                                           @keypress="pressEnterAndSave($event,'reck')"
+                                                                           v-model="order.arrival_unit_quantity-order.damage_case_quantity"
                                                                            class="form-control cmn_num_formt bara_order inputs">
                                                                 </td>
 
@@ -151,8 +148,10 @@
                                                                            @keypress="pressEnterAndSave($event,index)"
                                                                            class="form-control  " :id="'rack'+index"
                                                                            v-model="order.damage_quantity"
+                                                                           :readonly="readonly"
                                                                            style="border-radius: 0px; text-align: center;">
                                                                 </td>
+                                                                
 
                                                             </tr>
                                                             
@@ -160,7 +159,7 @@
                                                         <template v-else>
                                                             <tr>
                                                                 <td style="font-size:16px;background: #f4c8c8;text-align:center;vertical-align:0;"
-                                                                    colspan="4">
+                                                                    colspan="3">
                                                                     データが見つかりませんでした。
                                                                 </td>
                                                             </tr>
@@ -398,12 +397,12 @@ export default {
                         if (_this.type == 0) {
                             $('#stock-order-show-by-jan').modal({backdrop: 'static', keyboard: false})
                             setTimeout(function () {
-                                if ($('#rack' + 0).length <= 0) {
+                                if ($('#bara' + 0).length <= 0) {
                                     $('#order-place-button').focus()
                                 } else {
                                     //if (!_this.readonly) {
-                                        $('#rack' + 0).focus()
-                                        $('#rack' + 0).select()
+                                        $('#case' + 0).focus()
+                                        $('#case' + 0).select()
                                     // } else {
                                     //     $('#order-place-button').focus()
                                     // }
@@ -608,9 +607,11 @@ export default {
         },
         pressEnterAndSave(e, i) {
             if (e.keyCode == 13) {
-                $('#rack' + (i + 1)).focus()
-                $('#rack' + (i + 1)).select()
-                if ($('#rack' + (i + 1)).length <= 0) {
+                console.log(e);
+                console.log(i);
+                $('#' + (i + 0)).focus()
+                $('#' + (i + 0)).select()
+                if ( i == 'reck') {
                     $('#order-place-button').focus()
                 }
             }

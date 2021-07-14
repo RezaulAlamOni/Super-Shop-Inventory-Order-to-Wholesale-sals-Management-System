@@ -39,13 +39,13 @@ let num_order = 0;
 
 $(document).ready(function () {
    
-    if (window.history && window.history.pushState) {
+    // if (window.history && window.history.pushState) {
 
-		$(window).on('popstate', function() {
+	// 	$(window).on('popstate', function() {
       
-		  alert('Back button was pressed.');
-		});
-	}
+	// 	  alert('Back button was pressed.');
+	// 	});
+	// }
     /*test custom popu*/
     //custom_navi_design();
     //custom_navi_design2();

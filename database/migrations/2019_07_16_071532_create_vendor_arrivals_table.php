@@ -25,7 +25,10 @@ class CreateVendorArrivalsTable extends Migration
             $table->smallInteger('quantity')->comment('Quantity');
             $table->string('car_rack_number',20)->comment('car Rack number');
             $table->smallInteger('stock_out_quantity')->default(0)->comment('stock out quantity');
-            $table->smallInteger('damage_quantity')->default(0)->comment('damage quantity');
+            $table->integer('damage_case_quantity')->default('0')->comment('Case quantity');
+            $table->integer('damage_ball_quantity')->default('0')->comment('Ball quantity');
+            $table->integer('damage_unit_quantity')->default('0')->comment('Unit quantity');
+            $table->integer('damage_quantity')->default(0)->comment('damage quantity');
             $table->enum('reload_status',['0','1','2'])->default('0')->comment('reload Status');
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
 			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');

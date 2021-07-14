@@ -21869,7 +21869,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21957,12 +21956,12 @@ __webpack_require__.r(__webpack_exports__);
               keyboard: false
             });
             setTimeout(function () {
-              if ($('#rack' + 0).length <= 0) {
+              if ($('#bara' + 0).length <= 0) {
                 $('#order-place-button').focus();
               } else {
                 //if (!_this.readonly) {
-                $('#rack' + 0).focus();
-                $('#rack' + 0).select(); // } else {
+                $('#case' + 0).focus();
+                $('#case' + 0).select(); // } else {
                 //     $('#order-place-button').focus()
                 // }
               }
@@ -22150,10 +22149,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     pressEnterAndSave: function pressEnterAndSave(e, i) {
       if (e.keyCode == 13) {
-        $('#rack' + (i + 1)).focus();
-        $('#rack' + (i + 1)).select();
+        console.log(e);
+        console.log(i);
+        $('#' + (i + 0)).focus();
+        $('#' + (i + 0)).select();
 
-        if ($('#rack' + (i + 1)).length <= 0) {
+        if (i == 'reck') {
           $('#order-place-button').focus();
         }
       }
@@ -65432,9 +65433,10 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    order.arrival_case_quantity,
+                                                                    order.arrival_case_quantity -
+                                                                    order.damage_case_quantity,
                                                                   expression:
-                                                                    "order.arrival_case_quantity"
+                                                                    "order.arrival_case_quantity-order.damage_case_quantity"
                                                                 }
                                                               ],
                                                               staticClass:
@@ -65442,14 +65444,12 @@ var render = function() {
                                                               attrs: {
                                                                 type: "tel",
                                                                 id:
-                                                                  "case" +
-                                                                  index,
-                                                                readonly:
-                                                                  _vm.readonly
+                                                                  "case" + index
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  order.arrival_case_quantity
+                                                                  order.arrival_case_quantity -
+                                                                  order.damage_case_quantity
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65465,7 +65465,7 @@ var render = function() {
                                                                 ) {
                                                                   return _vm.pressEnterAndSave(
                                                                     $event,
-                                                                    "case"
+                                                                    "ball"
                                                                   )
                                                                 },
                                                                 input: function(
@@ -65479,8 +65479,9 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    order,
-                                                                    "arrival_case_quantity",
+                                                                    order.arrival_case_quantity -
+                                                                      order,
+                                                                    "damage_case_quantity",
                                                                     $event
                                                                       .target
                                                                       .value
@@ -65498,9 +65499,10 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    order.arrival_ball_quantity,
+                                                                    order.arrival_ball_quantity -
+                                                                    order.damage_ball_quantity,
                                                                   expression:
-                                                                    "order.arrival_ball_quantity"
+                                                                    "order.arrival_ball_quantity-order.damage_ball_quantity"
                                                                 }
                                                               ],
                                                               staticClass:
@@ -65508,14 +65510,12 @@ var render = function() {
                                                               attrs: {
                                                                 type: "tel",
                                                                 id:
-                                                                  "ball" +
-                                                                  index,
-                                                                readonly:
-                                                                  _vm.readonly
+                                                                  "ball" + index
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  order.arrival_ball_quantity
+                                                                  order.arrival_ball_quantity -
+                                                                  order.damage_ball_quantity
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65531,7 +65531,7 @@ var render = function() {
                                                                 ) {
                                                                   return _vm.pressEnterAndSave(
                                                                     $event,
-                                                                    "case"
+                                                                    "bara"
                                                                   )
                                                                 },
                                                                 input: function(
@@ -65545,8 +65545,9 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    order,
-                                                                    "arrival_ball_quantity",
+                                                                    order.arrival_ball_quantity -
+                                                                      order,
+                                                                    "damage_ball_quantity",
                                                                     $event
                                                                       .target
                                                                       .value
@@ -65564,9 +65565,10 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    order.arrival_unit_quantity,
+                                                                    order.arrival_unit_quantity -
+                                                                    order.damage_case_quantity,
                                                                   expression:
-                                                                    "order.arrival_unit_quantity"
+                                                                    "order.arrival_unit_quantity-order.damage_case_quantity"
                                                                 }
                                                               ],
                                                               staticClass:
@@ -65574,14 +65576,12 @@ var render = function() {
                                                               attrs: {
                                                                 type: "tel",
                                                                 id:
-                                                                  "bara" +
-                                                                  index,
-                                                                readonly:
-                                                                  _vm.readonly
+                                                                  "bara" + index
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  order.arrival_unit_quantity
+                                                                  order.arrival_unit_quantity -
+                                                                  order.damage_case_quantity
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65597,7 +65597,7 @@ var render = function() {
                                                                 ) {
                                                                   return _vm.pressEnterAndSave(
                                                                     $event,
-                                                                    "case"
+                                                                    "reck"
                                                                   )
                                                                 },
                                                                 input: function(
@@ -65611,8 +65611,9 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    order,
-                                                                    "arrival_unit_quantity",
+                                                                    order.arrival_unit_quantity -
+                                                                      order,
+                                                                    "damage_case_quantity",
                                                                     $event
                                                                       .target
                                                                       .value
@@ -65707,7 +65708,10 @@ var render = function() {
                                                               attrs: {
                                                                 type: "tel",
                                                                 id:
-                                                                  "rack" + index
+                                                                  "rack" +
+                                                                  index,
+                                                                readonly:
+                                                                  _vm.readonly
                                                               },
                                                               domProps: {
                                                                 value:
@@ -66193,7 +66197,7 @@ var staticRenderFns = [
             "text-align": "center",
             "vertical-align": "0"
           },
-          attrs: { colspan: "4" }
+          attrs: { colspan: "3" }
         },
         [
           _vm._v(
