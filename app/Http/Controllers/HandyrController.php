@@ -1980,17 +1980,22 @@ WHERE DATE(co.shipment_date) = CURDATE()
     }
 
     public function item_return_to_tonya(Request $request){
-        $requestAll = $request->all();
+        $requestAll = $request->order_data;
+        $return_data = $request->return_data;
+        $damage_quantity = $return_data['returnTotalQty'];
+        $damage_case_quantity = $return_data['retrunCaseQty'];
+        $damage_ball_quantity = $return_data['retrunBallQty'];
+        $damage_unit_quantity = $return_data['retrunUnitQty'];
         foreach($requestAll as $req){
             $stock_item_info = stock_item::where('rack_number', $req['rack_number'])->where('vendor_item_id',$req['vendor_item_id'])->first();
             if($stock_item_info){
-            if($stock_item_info->unit_quantity>=$req['damage_quantity']){
-                $unit_quantity = $stock_item_info->unit_quantity-$req['damage_quantity'];
+            if($stock_item_info->unit_quantity>=$damage_quantity){
+                $unit_quantity = $stock_item_info->unit_quantity-$damage_quantity;
                 stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity]);
             }else{
                 
                 $total_stock = (($stock_item_info->case_quantity*$req['case_inputs'])+($stock_item_info->ball_quantity*$req['ball_inputs'])+$stock_item_info->unit_quantity);
-                $total_stock = $total_stock-$req['damage_quantity'];
+                $total_stock = $total_stock-$damage_quantity;
                 if($req['case_inputs']!=0){
                     $case_quantity = floor($total_stock/$req['case_inputs']);
                 }else{
@@ -2009,11 +2014,12 @@ WHERE DATE(co.shipment_date) = CURDATE()
             $existingArivalInfo = vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->first();
             if($existingArivalInfo){
                 $existDamageQty = $existingArivalInfo->damage_quantity;
-                $returnQty=$existDamageQty+$req['damage_quantity'];
+                $returnQty=$existDamageQty+$damage_quantity;
+                
                 $newQty = $req['quantity']-$returnQty;
                 $invoice_amount = $req['unit_cost_price']*$newQty;
                 vendor_invoice::where('voucher_number',$req['vendor_order_id'])->update(['invoice_amount'=>$invoice_amount]);
-                vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$returnQty]);
+                vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$returnQty,'damage_case_quantity'=>$damage_case_quantity+$existingArivalInfo->damage_case_quantity,'damage_ball_quantity'=>$existingArivalInfo->damage_ball_quantity+$damage_ball_quantity,'damage_unit_quantity'=>$damage_unit_quantity+$existingArivalInfo->damage_unit_quantity]);
             }
         }
        

@@ -21890,6 +21890,11 @@ __webpack_require__.r(__webpack_exports__);
         return_case_qty: 0,
         return_ball_qty: 0,
         return_unit_qty: 0,
+        retrunUnitQty: 0,
+        retrunBallQty: 0,
+        retrunCaseQty: 0,
+        returnTotalQty: 0,
+        TotalQty: 0,
         return_rack_number: ''
       },
       case_order: 0,
@@ -21940,13 +21945,17 @@ __webpack_require__.r(__webpack_exports__);
       $('.loading_image_custom').show();
       _this.loader = 1;
       axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code).then(function (res) {
-        //_this.resetField();
+        _this.resetField();
+
         if (res.data.result.length > 0) {
           _this.order_data = res.data.result;
           _this.product_name = _this.order_data[0].item_name;
           _this.return_info.vendor_item_id = _this.order_data[0].vendor_item_id;
           _this.return_info.vendor_order_id = _this.order_data[0].vendor_order_id;
           _this.return_info.return_rack_number = _this.order_data[0].rack_number;
+          _this.return_info.return_case_qty = _this.order_data[0].arrival_case_quantity - _this.order_data[0].damage_case_quantity;
+          _this.return_info.return_ball_qty = _this.order_data[0].arrival_ball_quantity - _this.order_data[0].damage_ball_quantity;
+          _this.return_info.return_unit_qty = _this.order_data[0].arrival_unit_quantity - _this.order_data[0].damage_unit_quantity;
 
           _this.calculateTotalQuantity();
 
@@ -21984,11 +21993,60 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       _this.total_quantity = 0;
+      console.log(_this.return_info);
       this.order_data.map(function (order) {
-        var unit = order.order_unit_quantity ? parseInt(order.order_unit_quantity) : 0;
-        var ball = order.order_ball_quantity ? parseInt(order.order_ball_quantity) : 0;
-        var case_ = order.order_case_quantity ? parseInt(order.order_case_quantity) : 0;
-        _this.total_quantity += unit + ball * parseInt(order.ball_inputs) + case_ * parseInt(order.case_inputs);
+        var unit = order.arrival_unit_quantity ? parseInt(order.arrival_unit_quantity) : 0;
+        var ball = order.arrival_ball_quantity ? parseInt(order.arrival_ball_quantity) : 0;
+        var case_ = order.arrival_case_quantity ? parseInt(order.arrival_case_quantity) : 0;
+        var unit_r = order.damage_unit_quantity ? parseInt(order.damage_unit_quantity) : 0;
+        var ball_r = order.damage_ball_quantity ? parseInt(order.damage_ball_quantity) : 0;
+        var case_r = order.damage_case_quantity ? parseInt(order.damage_case_quantity) : 0;
+        unit = unit - unit_r;
+        ball = ball - ball_r;
+        case_ = case_ - case_r;
+
+        if (unit > _this.return_info.return_unit_qty) {
+          _this.return_info.retrunUnitQty = unit - _this.return_info.return_unit_qty;
+          $('#handy-navi').hide();
+        } else {
+          if (unit != _this.return_info.return_unit_qty) {
+            _this.handi_navi = '<li>0000000000000000</li>';
+            $('#handy-navi').show();
+          }
+
+          _this.return_info.return_unit_qty = unit;
+          _this.return_info.retrunUnitQty = 0;
+        }
+
+        if (ball > _this.return_info.return_ball_qty) {
+          _this.return_info.retrunBallQty = ball - _this.return_info.return_ball_qty;
+          $('#handy-navi').hide();
+        } else {
+          if (ball != _this.return_info.return_ball_qty) {
+            _this.handi_navi = '<li>0000000000000000</li>';
+            $('#handy-navi').show();
+          }
+
+          _this.return_info.return_ball_qty = ball;
+          _this.return_info.retrunBallQty = 0;
+        }
+
+        if (case_ > _this.return_info.return_case_qty) {
+          _this.return_info.retrunCaseQty = case_ - _this.return_info.return_case_qty;
+          $('#handy-navi').hide();
+        } else {
+          if (case_ != _this.return_info.return_case_qty) {
+            _this.handi_navi = '<li>0000000000000000</li>';
+            $('#handy-navi').show();
+          }
+
+          _this.return_info.return_case_qty = case_;
+          _this.return_info.retrunCaseQty = 0;
+        }
+
+        _this.return_info.returnTotalQty = _this.return_info.retrunUnitQty + _this.return_info.retrunBallQty * parseInt(order.ball_inputs) + _this.return_info.retrunCaseQty * parseInt(order.case_inputs);
+        console.log(order.damage_quantity);
+        _this.return_info.TotalQty = parseInt(_this.return_info.return_unit_qty) + parseInt(_this.return_info.return_ball_qty) * parseInt(order.ball_inputs) + parseInt(_this.return_info.return_case_qty) * parseInt(order.case_inputs);
       });
     },
     getSearchData: function getSearchData(text) {
@@ -22125,29 +22183,42 @@ __webpack_require__.r(__webpack_exports__);
     updateTemporaryTana: function updateTemporaryTana() {
       var _this = this;
 
-      axios.post(this.base_url + '/item_return_to_tonya', _this.order_data).then(function (res) {
-        console.log(res);
-      }).then(function (er) {
-        console.log(err);
-      });
+      var orderAndReturnDetails = {
+        order_data: _this.order_data,
+        return_data: _this.return_info
+      };
+
+      if (_this.return_info.returnTotalQty > 0) {
+        axios.post(this.base_url + '/item_return_to_tonya', orderAndReturnDetails).then(function (res) {
+          console.log(res);
+        }).then(function (er) {
+          console.log(err);
+        });
+      }
+
       _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
       $('#handy-navi').show();
 
       _this.hideModelAndClearInput();
     },
     resetField: function resetField() {
-      if (this.input_type == 'ケース') {
-        this.boll_order = 0;
-        this.bara_order = 0;
-      } else if (this.input_type == 'ボール') {
-        this.case_order = 0;
-        this.bara_order = 0;
-      } else {
-        this.case_order = 0;
-        this.boll_order = 0;
-      }
+      this.return_info = {
+        vendor_order_id: '',
+        vendor_item_id: '',
+        return_case_qty: 0,
+        return_ball_qty: 0,
+        return_unit_qty: 0,
+        retrunUnitQty: 0,
+        retrunBallQty: 0,
+        retrunCaseQty: 0,
+        returnTotalQty: 0,
+        TotalQty: 0,
+        return_rack_number: ''
+      };
     },
     pressEnterAndSave: function pressEnterAndSave(e, i) {
+      this.calculateTotalQuantity();
+
       if (e.keyCode == 13) {
         console.log(e);
         console.log(i);
@@ -65433,10 +65504,11 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    order.arrival_case_quantity -
-                                                                    order.damage_case_quantity,
+                                                                    _vm
+                                                                      .return_info
+                                                                      .return_case_qty,
                                                                   expression:
-                                                                    "order.arrival_case_quantity-order.damage_case_quantity"
+                                                                    "return_info.return_case_qty"
                                                                 }
                                                               ],
                                                               staticClass:
@@ -65448,8 +65520,9 @@ var render = function() {
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  order.arrival_case_quantity -
-                                                                  order.damage_case_quantity
+                                                                  _vm
+                                                                    .return_info
+                                                                    .return_case_qty
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65479,9 +65552,8 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    order.arrival_case_quantity -
-                                                                      order,
-                                                                    "damage_case_quantity",
+                                                                    _vm.return_info,
+                                                                    "return_case_qty",
                                                                     $event
                                                                       .target
                                                                       .value
@@ -65499,10 +65571,11 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    order.arrival_ball_quantity -
-                                                                    order.damage_ball_quantity,
+                                                                    _vm
+                                                                      .return_info
+                                                                      .return_ball_qty,
                                                                   expression:
-                                                                    "order.arrival_ball_quantity-order.damage_ball_quantity"
+                                                                    "return_info.return_ball_qty"
                                                                 }
                                                               ],
                                                               staticClass:
@@ -65514,8 +65587,9 @@ var render = function() {
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  order.arrival_ball_quantity -
-                                                                  order.damage_ball_quantity
+                                                                  _vm
+                                                                    .return_info
+                                                                    .return_ball_qty
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65545,9 +65619,8 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    order.arrival_ball_quantity -
-                                                                      order,
-                                                                    "damage_ball_quantity",
+                                                                    _vm.return_info,
+                                                                    "return_ball_qty",
                                                                     $event
                                                                       .target
                                                                       .value
@@ -65565,10 +65638,11 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    order.arrival_unit_quantity -
-                                                                    order.damage_case_quantity,
+                                                                    _vm
+                                                                      .return_info
+                                                                      .return_unit_qty,
                                                                   expression:
-                                                                    "order.arrival_unit_quantity-order.damage_case_quantity"
+                                                                    "return_info.return_unit_qty"
                                                                 }
                                                               ],
                                                               staticClass:
@@ -65580,8 +65654,9 @@ var render = function() {
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  order.arrival_unit_quantity -
-                                                                  order.damage_case_quantity
+                                                                  _vm
+                                                                    .return_info
+                                                                    .return_unit_qty
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65611,9 +65686,8 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    order.arrival_unit_quantity -
-                                                                      order,
-                                                                    "damage_case_quantity",
+                                                                    _vm.return_info,
+                                                                    "return_unit_qty",
                                                                     $event
                                                                       .target
                                                                       .value
@@ -65631,9 +65705,11 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    order.quantity,
+                                                                    _vm
+                                                                      .return_info
+                                                                      .TotalQty,
                                                                   expression:
-                                                                    "order.quantity"
+                                                                    "return_info.TotalQty"
                                                                 }
                                                               ],
                                                               staticClass:
@@ -65651,7 +65727,9 @@ var render = function() {
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  order.quantity
+                                                                  _vm
+                                                                    .return_info
+                                                                    .TotalQty
                                                               },
                                                               on: {
                                                                 keypress: function(
@@ -65673,8 +65751,8 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    order,
-                                                                    "quantity",
+                                                                    _vm.return_info,
+                                                                    "TotalQty",
                                                                     $event
                                                                       .target
                                                                       .value
@@ -65692,9 +65770,11 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    order.damage_quantity,
+                                                                    _vm
+                                                                      .return_info
+                                                                      .returnTotalQty,
                                                                   expression:
-                                                                    "order.damage_quantity"
+                                                                    "return_info.returnTotalQty"
                                                                 }
                                                               ],
                                                               staticClass:
@@ -65715,7 +65795,9 @@ var render = function() {
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  order.damage_quantity
+                                                                  _vm
+                                                                    .return_info
+                                                                    .returnTotalQty
                                                               },
                                                               on: {
                                                                 keypress: function(
@@ -65737,8 +65819,8 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    order,
-                                                                    "damage_quantity",
+                                                                    _vm.return_info,
+                                                                    "returnTotalQty",
                                                                     $event
                                                                       .target
                                                                       .value

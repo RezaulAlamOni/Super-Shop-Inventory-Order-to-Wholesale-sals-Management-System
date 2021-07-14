@@ -112,7 +112,7 @@
                                                                     <input type="tel" :id="'case'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'ball')"
-                                                                           v-model="order.arrival_case_quantity-order.damage_case_quantity"
+                                                                           v-model="return_info.return_case_qty"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
                                                                 </td>
@@ -121,7 +121,7 @@
                                                                     <input type="tel" :id="'ball'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'bara')"
-                                                                           v-model="order.arrival_ball_quantity-order.damage_ball_quantity"
+                                                                           v-model="return_info.return_ball_qty"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
                                                                 </td>
@@ -130,7 +130,7 @@
                                                                     <input type="tel" :id="'bara'+index"
                                                                            @click="selectItem($event,'ケース')"
                                                                            @keypress="pressEnterAndSave($event,'reck')"
-                                                                           v-model="order.arrival_unit_quantity-order.damage_case_quantity"
+                                                                           v-model="return_info.return_unit_qty"
                                                                            class="form-control cmn_num_formt bara_order inputs">
                                                                 </td>
 
@@ -138,7 +138,7 @@
                                                                     <input type="tel"
                                                                            @keypress="pressEnterAndSave($event,index)"
                                                                            class="form-control  "
-                                                                           v-model="order.quantity"
+                                                                           v-model="return_info.TotalQty"
                                                                            style="border-radius: 0px; text-align: center;"
                                                                            :readonly="readonly">
                                                                 </td>
@@ -147,7 +147,7 @@
                                                                     <input type="tel"
                                                                            @keypress="pressEnterAndSave($event,index)"
                                                                            class="form-control  " :id="'rack'+index"
-                                                                           v-model="order.damage_quantity"
+                                                                           v-model="return_info.returnTotalQty"
                                                                            :readonly="readonly"
                                                                            style="border-radius: 0px; text-align: center;">
                                                                 </td>
@@ -340,6 +340,11 @@ export default {
                 return_case_qty:0,
                 return_ball_qty:0,
                 return_unit_qty:0,
+                retrunUnitQty:0,
+                retrunBallQty:0,
+                retrunCaseQty:0,
+                returnTotalQty:0,
+                TotalQty:0,
                 return_rack_number:'',
             },
             case_order: 0,
@@ -385,13 +390,17 @@ export default {
             _this.loader = 1
             axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code)
                 .then(function (res) {
-                    //_this.resetField();
+                    _this.resetField();
                     if (res.data.result.length > 0) {
                         _this.order_data = res.data.result;
                         _this.product_name = _this.order_data[0].item_name;
                         _this.return_info.vendor_item_id = _this.order_data[0].vendor_item_id;
                         _this.return_info.vendor_order_id = _this.order_data[0].vendor_order_id;
                         _this.return_info.return_rack_number = _this.order_data[0].rack_number;
+                        _this.return_info.return_case_qty = _this.order_data[0].arrival_case_quantity-_this.order_data[0].damage_case_quantity;
+                        _this.return_info.return_ball_qty = _this.order_data[0].arrival_ball_quantity-_this.order_data[0].damage_ball_quantity;
+                        _this.return_info.return_unit_qty = _this.order_data[0].arrival_unit_quantity-_this.order_data[0].damage_unit_quantity;
+
                         _this.calculateTotalQuantity();
 
                         if (_this.type == 0) {
@@ -431,11 +440,55 @@ export default {
         calculateTotalQuantity() {
             let _this = this;
             _this.total_quantity = 0;
+            
+            console.log(_this.return_info)
             this.order_data.map(function (order) {
-                let unit = order.order_unit_quantity ? parseInt(order.order_unit_quantity) : 0;
-                let ball = order.order_ball_quantity ? parseInt(order.order_ball_quantity) : 0;
-                let case_ = order.order_case_quantity ? parseInt(order.order_case_quantity) : 0;
-                _this.total_quantity += unit + ball * parseInt(order.ball_inputs) + case_ * parseInt(order.case_inputs)
+                let unit = order.arrival_unit_quantity ? parseInt(order.arrival_unit_quantity) : 0;
+                let ball = order.arrival_ball_quantity ? parseInt(order.arrival_ball_quantity) : 0;
+                let case_ = order.arrival_case_quantity ? parseInt(order.arrival_case_quantity) : 0;
+                let unit_r = order.damage_unit_quantity ? parseInt(order.damage_unit_quantity) : 0;
+                let ball_r = order.damage_ball_quantity ? parseInt(order.damage_ball_quantity) : 0;
+                let case_r = order.damage_case_quantity ? parseInt(order.damage_case_quantity) : 0;
+                unit = unit-unit_r;
+                ball = ball-ball_r;
+                case_ =case_-case_r; 
+                if(unit>_this.return_info.return_unit_qty){
+                     _this.return_info.retrunUnitQty = unit-_this.return_info.return_unit_qty;
+                     $('#handy-navi').hide();
+                }else{
+                    if(unit!=_this.return_info.return_unit_qty){
+                        _this.handi_navi = '<li>0000000000000000</li>';
+                        $('#handy-navi').show()
+                    }
+                     
+                        _this.return_info.return_unit_qty=unit;
+                        _this.return_info.retrunUnitQty = 0;
+                }
+                if(ball>_this.return_info.return_ball_qty){
+                     _this.return_info.retrunBallQty = ball-_this.return_info.return_ball_qty;
+                     $('#handy-navi').hide();
+                }else{
+                    if(ball!=_this.return_info.return_ball_qty){
+                    _this.handi_navi = '<li>0000000000000000</li>';
+                        $('#handy-navi').show();
+                        }
+                        _this.return_info.return_ball_qty = ball;
+                        _this.return_info.retrunBallQty = 0;
+                }
+                 if(case_>_this.return_info.return_case_qty){
+                     _this.return_info.retrunCaseQty = case_-_this.return_info.return_case_qty;
+                     $('#handy-navi').hide();
+                }else{
+                    if(case_!=_this.return_info.return_case_qty){
+                    _this.handi_navi = '<li>0000000000000000</li>';
+                        $('#handy-navi').show()
+                    }
+                        _this.return_info.return_case_qty = case_;
+                        _this.return_info.retrunCaseQty = 0;
+                }
+                _this.return_info.returnTotalQty = _this.return_info.retrunUnitQty + _this.return_info.retrunBallQty * parseInt(order.ball_inputs) + _this.return_info.retrunCaseQty * parseInt(order.case_inputs);
+                console.log(order.damage_quantity);
+                _this.return_info.TotalQty = parseInt(_this.return_info.return_unit_qty) + parseInt(_this.return_info.return_ball_qty) * parseInt(order.ball_inputs) + parseInt(_this.return_info.return_case_qty) * parseInt(order.case_inputs)
             })
 
         },
@@ -581,31 +634,41 @@ export default {
         },
         updateTemporaryTana() {
             let _this = this;
-            axios.post(this.base_url + '/item_return_to_tonya', _this.order_data)
+            var orderAndReturnDetails = {
+                order_data:_this.order_data,
+                return_data:_this.return_info
+            };
+            if(_this.return_info.returnTotalQty>0){
+            axios.post(this.base_url + '/item_return_to_tonya', orderAndReturnDetails)
                     .then(function (res) {
                         console.log(res);
                     })
                     .then(function (er) {
                         console.log(err);
                     })
+                    }
             _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
             $('#handy-navi').show()
             _this.hideModelAndClearInput()
 
         },
         resetField() {
-            if (this.input_type == 'ケース') {
-                this.boll_order = 0;
-                this.bara_order = 0;
-            } else if (this.input_type == 'ボール') {
-                this.case_order = 0;
-                this.bara_order = 0;
-            } else {
-                this.case_order = 0;
-                this.boll_order = 0;
+            this.return_info={
+                vendor_order_id:'',
+                vendor_item_id:'',
+                return_case_qty:0,
+                return_ball_qty:0,
+                return_unit_qty:0,
+                retrunUnitQty:0,
+                retrunBallQty:0,
+                retrunCaseQty:0,
+                returnTotalQty:0,
+                TotalQty:0,
+                return_rack_number:'',
             }
         },
         pressEnterAndSave(e, i) {
+            this.calculateTotalQuantity();
             if (e.keyCode == 13) {
                 console.log(e);
                 console.log(i);
