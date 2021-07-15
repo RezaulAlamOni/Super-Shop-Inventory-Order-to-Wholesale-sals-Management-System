@@ -2751,7 +2751,30 @@
             100% { opacity: 1.0; }
         }
         /*flash button*/
-        @media (min-width: 320px) and (max-width: 767px) {
+        .marginboths .handy_btn_aria a{
+            padding: 15px 5px;
+        }
+        .marginboths .handy_btn_aria a .btnText,
+        .marginboths .handy_btn_aria a .numbering_col
+        {
+            line-height: 45px !important;
+        }
+        @media (min-width: 310px) and (max-width: 767px) {
+            .marginboths .handy_btn_aria a{
+                padding: 0px !important;
+            }
+            
+            .marginboths .handy_btn_aria a .btnText,
+            .marginboths .handy_btn_aria a .numbering_col{
+                line-height: 20px !important;
+            }
+            .marginboths .handy_btn_aria a .oneLine,
+            .marginboths .handy_btn_aria a .numbering_col{
+                line-height: 70px !important;
+            }
+            .marginboths .handy_btn_aria a .twoLine{
+                padding: 15px 5px !important;
+            }
             .handy_screen {
                 width: 50% !important;
                 float: left;
@@ -2775,6 +2798,7 @@
         .imgArea{
             text-align: center;
         }
+
         .productImgZoomer{
             width: auto;
             height: 300px;;
