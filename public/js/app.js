@@ -23366,8 +23366,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (_this.order_data.ball_inputs == 0 && _this.order_data.case_inputs == 0) {
         $('#handy-navi').show();
-        _this.handi_navi = '<li>この商品は入り数が設定されていません。仕入れ先 マスター画面で入り数を設定して下さい。</li>';
-        _this.handi_navi += '<li style="text-align :center;list-style: none;"><a class="btn btn-primary " href="' + _this.base_url + '/handy_vendor_master">仕入れ先 マスター</a></li>';
+        _this.handi_navi = '<li>この商品は入り数が設定されていません。仕入マスター画面で入り数を設定して下さい。</li>';
+        _this.handi_navi += '<li style="text-align :center;list-style: none;"><a class="btn btn-primary " href="' + _this.base_url + '/handy_vendor_master">仕入マスター</a></li>';
 
         _this.hideModelAndClearInput();
 
