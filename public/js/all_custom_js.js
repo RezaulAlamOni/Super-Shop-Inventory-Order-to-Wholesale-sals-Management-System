@@ -7094,7 +7094,25 @@ function get_vendor_list(vendor_id = null) {
         }
     });
 }
+function managementsheetPopup(){
+    btn = [{button: '<center><a href="javascript:close_default_page_navi(9099090)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}];
 
+    msgHtml = 'パソコン画面から見てください';
+    
+const tempmsgss = {
+    managmentsheethandypopup: {
+        message: [
+            {message: msgHtml}
+        ],
+        buttons: btn
+    }
+}
+nav_width = '280px';
+display_positionX = '15px';
+display_positionY = '15px';
+error_nav = view(tempmsgss['managmentsheethandypopup'], def_center_mesg_html_template);
+show_hide_nav_icn(0);
+}
 var error_nav;
 var success_nav;
 var delete_item_nav;
@@ -11550,6 +11568,11 @@ function close_default_page_navi(page_id) {
         case 909:
             nav_list[error_nav].hide();
             show_hide_nav_icn(1);
+            break;
+        case 9099090:
+            nav_list[error_nav].hide();
+            close_all_navi_msg();
+            show_hide_nav_icn(0);
             break;
         case 808:
             nav_list[manual_order_exe_step_1].hide();

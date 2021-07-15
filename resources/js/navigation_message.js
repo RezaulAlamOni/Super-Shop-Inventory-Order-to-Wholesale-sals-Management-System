@@ -423,6 +423,11 @@ function close_default_page_navi(page_id) {
             nav_list[error_nav].hide();
             show_hide_nav_icn(1);
             break;
+        case 9099090:
+            nav_list[error_nav].hide();
+            close_all_navi_msg();
+            show_hide_nav_icn(0);
+            break;
         case 808:
             nav_list[manual_order_exe_step_1].hide();
             show_hide_nav_icn(1);

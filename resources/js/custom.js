@@ -6333,3 +6333,22 @@ function get_vendor_list(vendor_id = null) {
         }
     });
 }
+function managementsheetPopup(){
+    btn = [{button: '<center><a href="javascript:close_default_page_navi(9099090)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}];
+
+    msgHtml = 'パソコン画面から見てください';
+    
+const tempmsgss = {
+    managmentsheethandypopup: {
+        message: [
+            {message: msgHtml}
+        ],
+        buttons: btn
+    }
+}
+nav_width = '280px';
+display_positionX = '15px';
+display_positionY = '15px';
+error_nav = view(tempmsgss['managmentsheethandypopup'], def_center_mesg_html_template);
+show_hide_nav_icn(0);
+}
