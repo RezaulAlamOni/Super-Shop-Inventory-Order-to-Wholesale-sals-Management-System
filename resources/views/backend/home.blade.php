@@ -11,7 +11,7 @@
 	<div class="page-header custom_header_bottom row no-gutters py-4 mb-3">
 	<div class="col-md-2">
 
-		<h4 class="owner_title"> 問屋用 </h4>
+		<h4 class="owner_title"> スーパー用 </h4>
 	</div>
 		<div class="col-10 col-sm-10 text-center text-sm-right mb-15">
 
@@ -62,12 +62,12 @@
 				</div>
 				<!-- <div class="col-md-2"></div> -->
 				<div class="col-md-4">
-					<a href="{{Config::get('app.url').'/shipment'}}" class="btn btn-success common_goto"
+					<a href="{{Config::get('app.url').'/special_master_item'}}" class="btn btn-success common_goto"
 						data_num_link="3" id="jan_manter_handy_btn">
 						<div class="left_num pull-left" style="padding: 0; margin: 0;">3</div>
-						<div class="col-md-12 text-center" style="padding: 0; margin: 0;">販売先マスター・出荷</div>
+						<div class="col-md-12 text-center" style="padding: 0; margin: 0;">特売マスターメンテ画面</div>
 					</a>
-					<p class="submessg">（受注・確定）<a href="{{Config::get('app.url').'/shipmentmangementsheet'}}"
+					<!--<p class="submessg">（受注・確定）<a href="{{Config::get('app.url').'/shipmentmangementsheet'}}"
 							class="btn btn-success btn-sm deliverablebtn common_goto_sheet" data_num_link="12"
 							id="size_setting_btn" style="margin-bottom: 0">
 							売掛
@@ -77,7 +77,7 @@
 							class="btn btn-info btn-sm menualablebtn common_goto_sheet" data_num_link="12"
 							id="size_setting_btn" style="margin-bottom: 0">
 							手書
-						</a></p>
+						</a></p>-->
 						<!-- <h4 class="btom_content_home" style="padding-top:55px">③000000000</h4> -->
 				</div>
 

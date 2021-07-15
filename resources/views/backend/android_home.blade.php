@@ -13,7 +13,7 @@
                 <div class="well-sm header" style="font-size: 18px; ">
                     <div class="row">
                         <div class="col-5 pull-left" style="padding: 0;font-size: 22px;">
-                            <p class="handy_top_bar1">問屋用メニュー</p>
+                            <p class="handy_top_bar1">小売用メニュー</p>
                         </div>
 
                         <div class="col-7 pull-right" style="text-align: right; padding: 0; font-size: 24px;">
