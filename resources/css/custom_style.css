@@ -2768,7 +2768,9 @@
         .marginboths .handy_btn_aria a{
             padding: 0px !important;
         }
-        
+        .marginboths .handy_btn_aria a .numbering_col{
+            position: absolute;
+        }
         .marginboths .handy_btn_aria a .btnText,
         .marginboths .handy_btn_aria a .numbering_col{
             line-height: 23px !important;
