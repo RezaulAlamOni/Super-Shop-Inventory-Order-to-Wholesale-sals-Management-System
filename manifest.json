@@ -1,34 +1,41 @@
 {
   "name": "流通クラウッド",
-  "short_name": "流通",
-  "icons": [{
-    "src": "images/RV3log-128x128.png",
+  "short_name": "スーパー",
+  "icons": [
+    {
+      "src": "images/RV3log-128x128.png",
       "sizes": "128x128",
       "type": "image/png"
-    }, {
+    },
+    {
       "src": "images/android-icon-144x144.png",
       "sizes": "144x144",
       "type": "image/png"
-    }, {
+    },
+    {
       "src": "images/apple-icon-152x152.png",
       "sizes": "152x152",
       "type": "image/png"
-    }, {
+    },
+    {
       "src": "images/android-icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
-    }, {
+    },
+    {
       "src": "images/RV3logo-256x256.png",
       "sizes": "256x256",
       "type": "image/png"
-    }, {
+    },
+    {
       "src": "images/RV3logo512x512.png",
       "sizes": "512x512",
       "type": "image/png"
-    }],
+    }
+  ],
   "lang": "en-US",
-  "start_url": "/rv3_tonyav1/android_home",
-  "scope": "/rv3_tonyav1/android_home,/rv3_tonyav1/inventory-update,/rv3_tonyav1/*",
+  "start_url": "/rv3_superv1/android_home",
+  "scope": "/rv3_superv1/android_home,/rv3_superv1/inventory-update,/rv3_superv1/*",
   "display": "standalone",
   "background_color": "green",
   "theme_color": "orange"
