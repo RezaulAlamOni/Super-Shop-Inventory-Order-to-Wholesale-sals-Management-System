@@ -64,7 +64,7 @@
                             </div>
                         </a>
 
-                        <a  href="javascript:managementsheetPopup()" style="padding: 15px 5px;" class="btn btn-default">
+                        <a  href="javascript:managementsheetPopup('vendormangementsheet')" style="padding: 15px 5px;" class="btn btn-default">
                             <div class="numbering_col" style="padding: 0; margin: 0;">11</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                             買掛
@@ -105,7 +105,7 @@
                                 返却(キャンセル)
                             </div>
                         </a>
-                        <a id="" style="width: 100%;padding: 15px 5px;" class="btn btn-default" href="javascript:managementsheetPopup()">
+                        <a id="" style="width: 100%;padding: 15px 5px;" class="btn btn-default" href="javascript:managementsheetPopup('shipmentmangementsheet')">
                             <div class="numbering_col" style="padding: 0; margin: 0;">12</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                             売掛
