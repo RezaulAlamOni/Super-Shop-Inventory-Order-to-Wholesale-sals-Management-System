@@ -20,7 +20,7 @@
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <input type="text" id="jan_input" class="form-control custom-input"
+                                        <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code"
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
@@ -173,7 +173,7 @@
                                                             在庫合計
                                                         </div>
                                                     </div>
-                                                    <input type="text" class="total_stock_jaiko_new jaiko_ form-control"
+                                                    <input type="tel" class="total_stock_jaiko_new jaiko_ form-control"
                                                            readonly="" :value="total_quantity"
                                                            style="padding: 5px 5px;    font-size: 16px;">
                                                 </div>

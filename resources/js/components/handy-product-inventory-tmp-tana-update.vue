@@ -148,7 +148,7 @@
                                                             在庫合計
                                                         </div>
                                                     </div>
-                                                    <input type="text" class="total_stock_jaiko_new jaiko_ form-control"
+                                                    <input type="tel" class="total_stock_jaiko_new jaiko_ form-control"
                                                            readonly="" :value="total_quantity"
                                                            style="padding: 5px 5px;    font-size: 16px;">
                                                 </div>

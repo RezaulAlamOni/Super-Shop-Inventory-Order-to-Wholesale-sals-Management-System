@@ -62735,7 +62735,7 @@ var render = function() {
                             ],
                             staticClass: "form-control custom-input",
                             attrs: {
-                              type: "text",
+                              type: "tel",
                               id: "jan_input_",
                               name: "scan_by_jan_for_stock_detail",
                               placeholder: "JANコードスキャン（13桁）",
@@ -63988,7 +63988,7 @@ var render = function() {
                             ],
                             staticClass: "form-control custom-input",
                             attrs: {
-                              type: "text",
+                              type: "tel",
                               id: "jan_input",
                               name: "scan_by_jan_for_stock_detail",
                               placeholder: "JANコードスキャン（13桁）",
@@ -64619,7 +64619,7 @@ var render = function() {
                                             padding: "5px 5px",
                                             "font-size": "16px"
                                           },
-                                          attrs: { type: "text", readonly: "" },
+                                          attrs: { type: "tel", readonly: "" },
                                           domProps: {
                                             value: _vm.total_quantity
                                           }
@@ -65207,7 +65207,7 @@ var render = function() {
                             ],
                             staticClass: "form-control custom-input",
                             attrs: {
-                              type: "text",
+                              type: "tel",
                               id: "jan_input",
                               name: "scan_by_jan_for_stock_detail",
                               placeholder: "JANコードスキャン（13桁）",
@@ -66886,7 +66886,7 @@ var render = function() {
                                             padding: "5px 5px",
                                             "font-size": "16px"
                                           },
-                                          attrs: { type: "text", readonly: "" },
+                                          attrs: { type: "tel", readonly: "" },
                                           domProps: {
                                             value: _vm.total_quantity
                                           }
@@ -67821,7 +67821,7 @@ var render = function() {
                                             padding: "5px 5px",
                                             "font-size": "16px"
                                           },
-                                          attrs: { type: "text", readonly: "" },
+                                          attrs: { type: "tel", readonly: "" },
                                           domProps: {
                                             value: _vm.total_quantity
                                           }
@@ -68850,7 +68850,7 @@ var render = function() {
                                             padding: "5px 5px",
                                             "font-size": "16px"
                                           },
-                                          attrs: { type: "text", readonly: "" },
+                                          attrs: { type: "tel", readonly: "" },
                                           domProps: {
                                             value: _vm.total_quantity
                                           }
@@ -69512,7 +69512,7 @@ var render = function() {
                             ],
                             staticClass: "form-control custom-input",
                             attrs: {
-                              type: "text",
+                              type: "tel",
                               id: "jan_input_",
                               name: "scan_by_jan_for_stock_detail",
                               placeholder: "JANコードスキャン（13桁）",

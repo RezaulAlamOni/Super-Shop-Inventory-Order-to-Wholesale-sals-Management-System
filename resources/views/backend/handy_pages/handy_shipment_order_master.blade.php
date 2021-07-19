@@ -63,7 +63,7 @@ border_inner
 							消費期限:
 							</label>
 							<div class="col-8">
-								<input style="color: #000; font-size: 20px; height: 40px;" type="text" class="form-control shipment_note_1 note_1" value="" placeholder="">
+								<input style="color: #000; font-size: 20px; height: 40px;" type="tel" class="form-control shipment_note_1 note_1" value="" placeholder="">
 							</div>						
 						</div>
 						<!--<div class="form-group row">

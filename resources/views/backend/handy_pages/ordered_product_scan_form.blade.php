@@ -27,7 +27,7 @@
 {{--                                <label for="scan_bybin" class="col-md-2 customlabel col-form-label">JANコード</label>--}}
                                 <div class="col-md-10 customfiled" style="width: 100%">
                                     <!-- <input type="tel" data_field_name="stock_update_reck_jan" class="form-control scanner" id="scan_bybin" placeholder="JANコードスキャン"> -->
-                                    <input  type="text" pattern="\d*" maxlength="13" data_field_name="jan_code" class="form-control custom-input" name="jan_code" id="scan_by_jan_for_order_receive" placeholder="JANコードスキャン（13桁）">
+                                    <input  type="tel" pattern="\d*" maxlength="13" data_field_name="jan_code" class="form-control custom-input" name="jan_code" id="scan_by_jan_for_order_receive" placeholder="JANコードスキャン（13桁）">
                                 </div>
                                 <div class="offset-2 col-md-10 text-left">
                                     @if($errors->any())
