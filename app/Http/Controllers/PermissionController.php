@@ -55,7 +55,7 @@ class PermissionController extends Controller
             } else {
                 $permission_check = Permission::where('id', $permission_update_id)->first();
                 if ($permission_check['name'] != $permission_name) {
-                    if (Permission::where('name', '=', $permission_name)->exists()) {
+                    if (Permission::where('name', '=', $permission_name)->first()) {
                         return redirect()->back()->with(['message' => __('messages.permission_updated'), 'class_name' => 'alert-danger']);
                     }
                 }

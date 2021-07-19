@@ -92,7 +92,7 @@ class VendorController extends Controller
         );
         \Log::info('Data array bind');
         if ($vendor_id == null) {
-            if (vendor::where('partner_code', $vendor_code)->exists()) {
+            if (vendor::where('partner_code', $vendor_code)->first()) {
                 \Log::info('Code exists');
                 return response()->json(['message' => 'code_exists']);
             } else {
@@ -111,7 +111,7 @@ class VendorController extends Controller
             $vendor_all_info = vendor::where('vendor_id', '=', $vendor_id)->first();
             $original_vendor_code = $vendor_all_info->partner_code;
             if ($original_vendor_code != $vendor_code) {
-                if (vendor::where('partner_code', '=', $vendor_code)->exists()) {
+                if (vendor::where('partner_code', '=', $vendor_code)->first()) {
                     return response()->json(['message' => 'code_exists']);
                 }
             }
@@ -165,7 +165,7 @@ class VendorController extends Controller
         // $maker_code = substr($jan_code, 0, 7);
         // $m_infos = array();
         // $vendor_id = 0;
-        // if (maker::where('maker_code', $maker_code)->exists()) {
+        // if (maker::where('maker_code', $maker_code)->first()) {
         //     $api_datas = maker::where('maker_code', $maker_code)->first();
         //     $maker_resource = 'database';
         //     $maker_id = $api_datas->maker_id;
@@ -185,7 +185,7 @@ class VendorController extends Controller
         $m_infos = array();
         $vendor_id = 0;
         $maker_id = 0;
-        if (maker::where('maker_code', $maker_code)->exists()) {
+        if (maker::where('maker_code', $maker_code)->first()) {
             $api_data = maker::where('maker_code', $maker_code)->first();
             $maker_resource = 'database';
             $vendor_id = $api_data->vendor_id;
@@ -209,7 +209,7 @@ class VendorController extends Controller
         }
         $m_infos = array();
         $vendor_id = 0;
-        if (maker::where('maker_code', $maker_code)->exists()) {
+        if (maker::where('maker_code', $maker_code)->first()) {
             $api_datas = maker::where('maker_code', $maker_code)->first();
             $maker_resource = 'database';
             //$m_infos = array('maker_info'=>$api_data,'m_source'=>$maker_resource);
@@ -217,7 +217,7 @@ class VendorController extends Controller
         } else {
             $maker_name = ($api_data->maker_name != '' ? $api_data->maker_name : 'テストメーカー');
             $maker_name = str_replace('株式会社', '', $maker_name);
-            if (vendor::where('partner_code', $maker_code)->exists()) {
+            if (vendor::where('partner_code', $maker_code)->first()) {
                 $api_datas = vendor::where('partner_code', $maker_code)->first();
                 $vendor_id = $api_datas->vendor_id;
             } else {
@@ -233,7 +233,7 @@ class VendorController extends Controller
     {
         $vendor_name = '';
         if ($vendor_id != 0) {
-            if (vendor::where('vendor_id', $vendor_id)->exists()) {
+            if (vendor::where('vendor_id', $vendor_id)->first()) {
                 $api_data = vendor::where('vendor_id', $vendor_id)->first();
                 $vendor_name = $api_data->name;
             }
@@ -270,9 +270,9 @@ class VendorController extends Controller
         $data_resource = '';
         $vendor_item_data = 0;
         $vendor_id = 0;
-        if (jan::where('jan', $jan_code)->exists()) {
+        if (jan::where('jan', $jan_code)->first()) {
             $api_data = jan::where('jan', $jan_code)->first();
-            if (vendor_item::where('jan', $jan_code)->exists()) {
+            if (vendor_item::where('jan', $jan_code)->first()) {
                 $item_info = vendor_item::where('jan', $jan_code)->first();
                 $vendor_item_data = 1;
                 $vendor_id = $item_info->vendor_id;
@@ -287,7 +287,7 @@ class VendorController extends Controller
                 return $result = response()->json(['api_data' => $api_data, 'data_resource' => $data_resource, 'vendor_item_data' => $vendor_item_data]);
             } else {
                 $api_data = $api_data_check;
-                if (vendor_item::where('jan', $jan_code)->exists()) {
+                if (vendor_item::where('jan', $jan_code)->first()) {
                     $item_info = vendor_item::where('jan', $jan_code)->first();
                     $vendor_item_data = 1;
                     $vendor_id = $item_info->vendor_id;
@@ -388,7 +388,7 @@ class VendorController extends Controller
         if ($ball_qty != 0) {
             $jan_ins_array['ball_inputs'] = $ball_qty;
         }
-        if (jan::where('jan', $jan_code)->exists()) {
+        if (jan::where('jan', $jan_code)->first()) {
             $jan_update_array = array(
                 "name" => $item_name,
             );
@@ -409,7 +409,7 @@ class VendorController extends Controller
         }
 
 
-        if (maker::where('maker_code', $maker_code)->exists()) {
+        if (maker::where('maker_code', $maker_code)->first()) {
             $api_data = maker::where('maker_code', $maker_code)->first();
             $maker_resource = 'database';
             $maker_id = $api_data->maker_id;
@@ -458,10 +458,10 @@ class VendorController extends Controller
         $add_to = $this->add_auto_customer_item($customer_item_array);
         /* add to customer item */
         if ($vendor_item_id == null) {
-            if (vendor_item::where('jan', $jan_code)->exists()) {
+            if (vendor_item::where('jan', $jan_code)->first()) {
                 return $result = response()->json(['message' => __('messages.jan_code_exists')]);
             } else {
-                if (vendor_item::where('jan', $jan_code)->exists()) {
+                if (vendor_item::where('jan', $jan_code)->first()) {
                     return $result = response()->json(['message' => __('messages.jan_code_exists')]);
                 }else{
                     vendor_item::insert($vendor_data_ins_array);
@@ -513,7 +513,7 @@ class VendorController extends Controller
         //$vendor_name = $this->get_vendor_name_by_vendor_id($vendor_id);
         $api_response = $this->api_request->get_api_data($vendor_info->jan);
         $api_maker_name = $api_response->data->maker_name;
-        if (maker::where('maker_code', $maker_code)->exists()) {
+        if (maker::where('maker_code', $maker_code)->first()) {
             maker::where('maker_code', $maker_code)->update(['vendor_id' => $vendor_id]);
         } else {
             if ($vendor_id != 0) {
@@ -550,7 +550,7 @@ class VendorController extends Controller
             "start_date" => '2019-01-01',
             "end_date" => '2021-12-31',
         );
-        if (customer_item::where('jan', $data['j_code'])->exists()) {
+        if (customer_item::where('jan', $data['j_code'])->first()) {
             return 'item already registered';
         } else {
             $customer_list = customer::where('is_deleted', 0)->get();
@@ -618,10 +618,10 @@ class VendorController extends Controller
         $duplicate_company_code = 0;
         if ($in_company_code != '') {
 
-            if (in_company::where('in_company_code', $in_company_code)->exists()) {
+            if (in_company::where('in_company_code', $in_company_code)->first()) {
                 $duplicate_company_code = 1;
             } else {
-                if (in_company::where('jan', $vendor_info->jan)->exists()) {
+                if (in_company::where('jan', $vendor_info->jan)->first()) {
                     in_company::where('jan', $vendor_info->jan)->update(['in_company_code' => $in_company_code]);
                 } else {
                     in_company::insert(['jan' => $vendor_info->jan, 'in_company_code' => $in_company_code]);
@@ -646,7 +646,7 @@ class VendorController extends Controller
         $sale_start_date = $request->sale_start_date;
         $sale_end_date = $request->sale_end_date;
         $item_name = $request->item_name;
-        if (jan::where('jan', $jan_code)->exists()) {
+        if (jan::where('jan', $jan_code)->first()) {
             $jan_update_array = array(
                 "case_inputs" => $case_qty,
                 "ball_inputs" => $ball_qty,

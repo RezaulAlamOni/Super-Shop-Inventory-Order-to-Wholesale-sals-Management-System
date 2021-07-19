@@ -169,7 +169,7 @@ public function userDelete($user_id)
 
         $user_email_exist = $user_all_data->email;
         if ($user_email_exist != $email) {
-            if (User::where('email', '=', $email)->exists()) {
+            if (User::where('email', '=', $email)->first()) {
                 return $result = response()->json(['message' => 'exist']);
             }
         }

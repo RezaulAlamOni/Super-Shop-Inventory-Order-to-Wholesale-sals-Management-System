@@ -81,7 +81,7 @@ class CustomerShopController extends Controller
             $old_shop_code=$old_shop_info['shop_no'];
             if($old_shop_code!= $shop_code){
                 
-                if(customer_shop::where('shop_no',$shop_code)->where('customer_id',$customer_id)->exists()){
+                if(customer_shop::where('shop_no',$shop_code)->where('customer_id',$customer_id)->first()){
                     return response()->json(['message' => 'Customer shop code duplicated','class_name'=>'alert-danger']);
                 }  
             }
@@ -89,7 +89,7 @@ class CustomerShopController extends Controller
             return response()->json(['message' => 'success','class_name'=>'alert-success','mesg'=>'更新しました']);
 
         }else{
-            if(customer_shop::where('shop_no',$shop_code)->where('customer_id',$customer_id)->exists()){
+            if(customer_shop::where('shop_no',$shop_code)->where('customer_id',$customer_id)->first()){
                 return response()->json(['message' => 'Customer shop code duplicated','class_name'=>'alert-danger']);
             }
             customer_shop::insert($shop_array);

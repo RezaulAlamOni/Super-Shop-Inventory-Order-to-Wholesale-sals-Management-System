@@ -187,7 +187,7 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
     public function stock_item_rack_check(Request $request)
     {
         $rack_number = $request->self_no;
-        if (stock_item::where('rack_number', $rack_number)->exists()) {
+        if (stock_item::where('rack_number', $rack_number)->first()) {
             session(['rack_num' => $rack_number]);
             $value = session('rack_num');
             return $result = response()->json(['message' => '既に登録済みです', 'rack_num' => $value]);
@@ -632,7 +632,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
         $title = "Dashboard";
         $active = 'handy_stock';
         $jan = $request->scan_by_jan_for_stock_detail;
-        if (!vendor_item::where('jan', $jan)->exists()) {
+        if (!vendor_item::where('jan', $jan)->first()) {
             Session::flash('message', "ベンダーマスターからjanを挿入してください");
             return Redirect::back();
         }
@@ -744,7 +744,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $title = "Dashboard";
         $active = 'handy_stock';
         $jan = $request->scan_by_jan_for_stock_detail;
-        if (!vendor_item::where('jan', $jan)->exists()) {
+        if (!vendor_item::where('jan', $jan)->first()) {
             Session::flash('message', "ベンダーマスターからjanを挿入してください");
             return Redirect::back();
         }
@@ -820,7 +820,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
     public function handy_stock_detail_get_by_jan_code($jan)
     {
         $active = 'handy_stock';
-        if (!vendor_item::where('jan', $jan)->exists()) {
+        if (!vendor_item::where('jan', $jan)->first()) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $where = '';
@@ -903,7 +903,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
     }
  
     public function handy_get_last_order_by_jan_code($jan){
-        if (!vendor_item::where('jan', $jan)->exists()) {
+        if (!vendor_item::where('jan', $jan)->first()) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $result = vendor_arrival::select('jans.name as item_name','jans.case_inputs','jans.ball_inputs','vendor_orders.status','vendor_orders.unit_cost_price','vendor_orders.vendor_item_id','vendor_arrivals.*','stock_items.rack_number','stock_items.temp_rack_number')
@@ -960,7 +960,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $rack_number = $request->rack_number;
         $vendor_item_id = $request->vendor_item_id;
         $vendor_id = $request->vendor_id;
-        if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->exists()) {
+        if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
             $stock_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
             $stock_update_array = array(
                 'case_quantity' => $case_quantity + $stock_info->case_quantity,
@@ -1011,7 +1011,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                 ->orderBy('stock_items.stock_item_id', 'desc')
                 ->first();
 
-            if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->exists()) {
+            if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
                 $stock_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
                 $stock_update_array = array(
                     'case_quantity' => $case_quantity + $stock_info->case_quantity,
@@ -1430,7 +1430,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
                     'temp_rack_number' => $rack_number,
                     'expiration_date' => date('Y-m-d H:i:s')
                 );
-                if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->exists()) {
+                if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
                     $row = stock_item::where('vendor_item_id',$vendor_item_id)->where('rack_number', $rack_number)->first();
 
                         $stock_items['case_quantity'] = $row->case_quantity + $case_quantaty;
@@ -1506,7 +1506,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 'rack_number' => $rack_number,
                 'expiration_date' => date('Y-m-d H:i:s')
             );
-            if (stock_item::where('vendor_item_id', $order_detail_list->vendor_item_id)->where('rack_number', $rack_number)->exists()) {
+            if (stock_item::where('vendor_item_id', $order_detail_list->vendor_item_id)->where('rack_number', $rack_number)->first()) {
                 $row = stock_item::where('vendor_item_id', $order_detail_list->vendor_item_id)->where('rack_number', $rack_number)->first();
                 if ($order_detail_list->inputs == 'ケース') {
                     $stock_items['case_quantity'] = $row->case_quantity + $insertable_qty;
@@ -1658,7 +1658,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 );
 
 
-                if (stock_item::where('vendor_item_id', $order_detail_list->vendor_item_id)->exists()) {
+                if (stock_item::where('vendor_item_id', $order_detail_list->vendor_item_id)->first()) {
                     $row = stock_item::where('vendor_item_id', $order_detail_list->vendor_item_id)->first();
                     if ($order_detail_list->inputs == 'ケース') {
                         $stock_items['case_quantity'] = $row->case_quantity + $insertable_qty;
@@ -1753,7 +1753,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
         $statusupdate = array(
             'status' => '入荷済み'
         );
-        if (stock_item::where('vendor_item_id', $vendor_item_id->vendor_item_id)->exists()) {
+        if (stock_item::where('vendor_item_id', $vendor_item_id->vendor_item_id)->first()) {
             $row = stock_item::where('vendor_item_id', $vendor_item_id->vendor_item_id)->first();
             if ($vendor_order_id->inputs == 'ケース') {
                 $stock_items['case_quantity'] = $row->case_quantity + $c_quantity;
@@ -1814,7 +1814,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
     public function check_self_no_is_exists(Request $request)
     {
         $self_no = $request->self_no;
-        if (stock_item::where('rack_number', $self_no)->exists()) {
+        if (stock_item::where('rack_number', $self_no)->first()) {
             return $result = response()->json(['message' => 'success']);
         } else {
             return $result = response()->json(['message' => 'invalid']);
@@ -1849,7 +1849,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
             'unit_quantity' => $unit_quantity,
         );
 
-        if (stock_item::where('stock_item_id', $stock_item_id)->exists()) {
+        if (stock_item::where('stock_item_id', $stock_item_id)->first()) {
             stock_item::where(['stock_item_id' => $stock_item_id])->update($uparray);
             return $result = response()->json(['message' => 'success']);
         }
@@ -1887,7 +1887,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
         );
 
 
-        if (stock_item::where('vendor_item_id', $vendor_item_id)->exists()) {
+        if (stock_item::where('vendor_item_id', $vendor_item_id)->first()) {
             stock_item::where(['vendor_item_id' => $vendor_item_id])->update($uparray);
             return $result = response()->json(['message' => 'success']);
         } else {
@@ -1910,7 +1910,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
         $rack_number = $request->rack_number;
         $vendor_item_id = $request->vendor_item_id;
         $vendor_id = $request->vendor_id;
-        if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->exists()) {
+        if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
             $stock_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
             return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_info->stock_item_id]);
         } else {
