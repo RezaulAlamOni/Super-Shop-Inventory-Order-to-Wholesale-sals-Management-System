@@ -169,7 +169,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
     public function orderInfoForHandy($jan)
     {
         /* remove GROUP BY vi_all.jan by */
-        if (!vendor_item::where('jan', $jan)->exists()){
+        if (!vendor_item::where('jan', $jan)->first()){
             return response()->json(['status' => 401]);
         }
         $where = '';

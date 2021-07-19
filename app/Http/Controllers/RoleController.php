@@ -78,7 +78,7 @@ class RoleController extends Controller
             } else {
                 $roles_check = Role::where('id', $role_update_id)->first();
                 if ($roles_check['name'] != $role_name) {
-                    if (Role::where('name', '=', $role_name)->exists()) {
+                    if (Role::where('name', '=', $role_name)->first()) {
                         return redirect()->back()->with(['message' => __('messages.role_duplicated'), 'class_name' => 'alert-danger']);
                     }
                 }

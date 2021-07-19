@@ -71,7 +71,7 @@ class CustomerController extends Controller
         );
 
         /* jan insert */
-            if (jan::where('jan', $request->j_code)->exists()) {
+            if (jan::where('jan', $request->j_code)->first()) {
                 $jan_update_array = array(
                     "name" => $request->customer_item_name,
                     "case_inputs" => $request->c_qty,
@@ -98,7 +98,7 @@ class CustomerController extends Controller
         );
 
         if($customer_item_id==0){
-            if(customer_item::where('jan',$request->j_code)->where('customer_id',$request->c_name)->exists()){
+            if(customer_item::where('jan',$request->j_code)->where('customer_id',$request->c_name)->first()){
                 return $result = response()->json(['message' => '既に登録済みです']);
             }else{
                 customer_item::insert($customer_data_ins_array);
@@ -149,7 +149,7 @@ class CustomerController extends Controller
         );
 
 
-        if(customer_item::where('jan',$request->jan_code)->where('customer_id',$request->customer_id)->exists()){
+        if(customer_item::where('jan',$request->jan_code)->where('customer_id',$request->customer_id)->first()){
             return $result = response()->json(['message' => 'update_success']);
         }else{
             customer_item::insert($customer_data_ins_array);
@@ -214,7 +214,7 @@ class CustomerController extends Controller
         );
 
         if($customer_id==null){
-            if(customer::where('partner_code',$customer_code)->exists()){
+            if(customer::where('partner_code',$customer_code)->first()){
                 return $result = response()->json(['message' => 'code_exists']);
             }else{
                 customer::insert($customer_info);
@@ -226,7 +226,7 @@ class CustomerController extends Controller
                 $customer_all_info = customer::where('customer_id', '=', $customer_id)->first();
                 $original_customer_code = $customer_all_info->partner_code;
                 if ($original_customer_code != $customer_code) {
-                    if (customer::where('partner_code', '=', $customer_code)->exists()) {
+                    if (customer::where('partner_code', '=', $customer_code)->first()) {
                         return $result = response()->json(['message' => 'code_exists']);
                     }
                 }
@@ -281,7 +281,7 @@ class CustomerController extends Controller
         return $result = response()->json(['message' => 'delete_success']);
     }
     public function handy_customer_master_item_get_by_jan_code($jan){
-        if (!customer_item::where('jan', $jan)->exists()) {
+        if (!customer_item::where('jan', $jan)->first()) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $result = customer_item::select('customer_items.*','customer_items.gross_profit_margin as profit_margin','vendor_items.vendor_id','vendor_items.vendor_item_id','vendor_items.maker_id','jans.case_inputs','jans.ball_inputs','jans.name as item_name')->join('jans','jans.jan','=','customer_items.jan')->join('vendor_items','vendor_items.jan','=','customer_items.jan')->where('customer_items.jan',$jan)->get();

@@ -293,14 +293,14 @@ class ShipmentCsvController extends Controller
                 $maker_code = substr($jan_code, 2, 5);
             }
             $vendor_id = 0;
-            if (maker::where('maker_code', $maker_code)->exists()) {
+            if (maker::where('maker_code', $maker_code)->first()) {
                 $api_data = maker::where('maker_code', $maker_code)->first();
                 $vendor_id = $api_data->vendor_id;
                 $maker_id = $api_data->maker_id;
             } else {
                 $maker_id = maker::insertGetId(['maker_code' => $maker_code, 'vendor_id' => $vendor_id, 'maker_name' => $maker_name]);
             }
-            if (!jan::where('jan', $jan_code)->exists()) {
+            if (!jan::where('jan', $jan_code)->first()) {
                 jan::insert([
                         "jan" => $jan_code,
                         "name" => $jan_name,
@@ -314,7 +314,7 @@ class ShipmentCsvController extends Controller
             $profit = $selling_price - $cost_price;
             $profit_margin = ($cost_price*$profit)/100;
             $profit_margin = round($profit_margin);
-            if (!vendor_item::where('jan', $jan_code)->exists()) {
+            if (!vendor_item::where('jan', $jan_code)->first()) {
             $vendor_item_id = vendor_item::insertGetId([
                 'vendor_id'=>$vendor_id,
                 'maker_id'=>$maker_id,
@@ -363,7 +363,7 @@ class ShipmentCsvController extends Controller
             "start_date" => '2019-01-01',
             "end_date" => '2021-12-31',
         );
-        if (customer_item::where('jan', $data['j_code'])->where('customer_id',$data['c_name'])->exists()) {
+        if (customer_item::where('jan', $data['j_code'])->where('customer_id',$data['c_name'])->first()) {
              $customer_item_info = customer_item::where('jan', $data['j_code'])->where('customer_id',$data['c_name'])->first();
             return $customer_item_info->customer_item_id;
         } else {
