@@ -638,17 +638,11 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
         }
         $where = '';
         if ($jan != '') {
-            $where = 'where vi_all.jan="' . $jan . '"';
+            $where = 'where vi_all.jan="' . $jan . '" AND LENGTH(vi_all.rack_number) = 3 group by vi_all.rack_number,vi_all.vendor_item_id';
 
         }
         $result = DB::select("SELECT
-        vi_all.*,
-        va.today_case_arrival_qty,
-        va.today_ball_arrival_qty,
-        va.today_unit_arrival_qty,
-        vod.order_case_quantity,
-        vod.order_ball_quantity,
-        vod.order_unit_quantity
+        vi_all.*
     FROM
     (
     SELECT
@@ -681,13 +675,8 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
     vendor_items AS vi
     INNER JOIN vendors ON vendors.vendor_id=vi.vendor_id
     INNER JOIN jans ON vi.jan=jans.jan
-    left JOIN stock_items AS si ON si.vendor_item_id= vi.vendor_item_id
+    INNER JOIN stock_items AS si ON si.vendor_item_id= vi.vendor_item_id
     ) AS vi_all
-    LEFT JOIN (
-SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendor_orders.order_unit_quantity,vendor_orders.vendor_item_id FROM `vendor_orders` where vendor_orders.status='未入荷' GROUP BY vendor_orders.vendor_item_id
-    ) AS vod on vod.vendor_item_id=vi_all.vendor_item_id
-    LEFT JOIN (
-        SELECT SUM(vendor_arrivals.arrival_case_quantity) as today_case_arrival_qty,SUM(vendor_arrivals.arrival_ball_quantity) as today_ball_arrival_qty,SUM(vendor_arrivals.arrival_unit_quantity) as today_unit_arrival_qty,vendor_orders.vendor_item_id FROM `vendor_arrivals` INNER JOIN vendor_orders on vendor_orders.vendor_order_id = vendor_arrivals.vendor_order_id WHERE date(`vendor_arrivals`.`arrival_date`)=CURDATE() GROUP BY vendor_orders.vendor_item_id) as va on va.vendor_item_id = vi_all.vendor_item_id
     $where
     ORDER BY vi_all.vendor_item_id DESC,vi_all.vendor_name ASC,item_name ASC
     ");
