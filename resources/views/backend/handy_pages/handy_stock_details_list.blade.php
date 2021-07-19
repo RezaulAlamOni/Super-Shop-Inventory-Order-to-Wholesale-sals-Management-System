@@ -24,7 +24,7 @@
 						@endforeach
 
 					</select>
-					<input type="text" name="filter_by_jcode" class="form-control filter_by_jcodes" value="0" placeholder="JANコード">
+					<input type="tel" name="filter_by_jcode" class="form-control filter_by_jcodes" value="0" placeholder="JANコード">
 					<!-- <select name="filter_by_jcode" class="form-control filter_by_jcodes">
 						<option value="0"></option>
 						@foreach($jan_list as $val)

@@ -8,7 +8,7 @@
             </button>
 
 <!-- <div class="input-group">
-    <input type="text" placeholder="品名" aria-describedby="basic-addon2" class="form-control voice_reading_text"> <span id="basic-addon2" class="input-group-addon voice_icon_group"><span id="voice_reset_btn" class="material-icons show voice_start custom_voice_img">
+    <input type="tel" placeholder="品名" aria-describedby="basic-addon2" class="form-control voice_reading_text"> <span id="basic-addon2" class="input-group-addon voice_icon_group"><span id="voice_reset_btn" class="material-icons show voice_start custom_voice_img">
 settings_voice
 </span> <span id="stop_rec_btn" class="voice_recoding hide custom_voice_img"><img src="http://localhost/rv3_tonyav1/public/backend/images/voice_rec.gif" class="voice_recoring"></span></span> <span class="voice_text_c">音声</span>
 </div> -->

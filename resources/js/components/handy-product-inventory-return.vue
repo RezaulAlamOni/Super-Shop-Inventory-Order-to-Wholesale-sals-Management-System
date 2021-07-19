@@ -20,7 +20,7 @@
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <input type="text" id="jan_input" class="form-control custom-input"
+                                        <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code"
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"

@@ -179,7 +179,7 @@
                                      style="color: black;font-weight: bold;padding: 0 5px;font-size: 16px;">在庫合計
                                 </div>
                             </div>
-                            <input type="text" class="total_stock_jaiko_new jaiko_ form-control" readonly=""
+                            <input type="tel" class="total_stock_jaiko_new jaiko_ form-control" readonly=""
                                    value="{{$total_jaikos_stock ? $total_jaikos_stock : 0}}"
                                    style="padding: 5px 5px;font-size: 16px;">
                         </div>
