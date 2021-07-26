@@ -31,5 +31,20 @@
   "scope": "/rv3_tonyav1/android_home,/rv3_tonyav1/inventory-update,/rv3_tonyav1/*",
   "display": "standalone",
   "background_color": "green",
-  "theme_color": "orange"
+  "theme_color": "orange",
+    "shortcuts": [
+        {
+            "name": "流通",
+            "description": " ---",
+            "url": "/rv3_tonyav1/android_home",
+            "icons": [
+                {
+                    "src": "images/RV3log-128x128.png",
+                    "type": "image/svg+xml",
+                    "purpose": "any"
+                }
+            ]
+        }
+    ]
 }
+
