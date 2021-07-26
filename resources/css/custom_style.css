@@ -2782,6 +2782,13 @@
         .marginboths .handy_btn_aria a .twoLine{
             padding: 15px 5px !important;
         }
+        #installApp {
+            text-align: center;
+            margin: 0;
+            padding: 3px;
+            height: auto;
+            width: auto;
+        }
         /*
             new handy css
         */
