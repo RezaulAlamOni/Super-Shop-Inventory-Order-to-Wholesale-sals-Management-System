@@ -17,8 +17,10 @@
                         </div>
 
                         <div class="col-7 pull-right" style="text-align: right; padding: 0; font-size: 24px;">
-                            <p class="handy_top_bar2"><a class="backtoHomeFromAndroid" href="{{config('app.url').'/home'}}">業務選択</a><br>
+                            <p class="handy_top_bar2"><a class="backtoHomeFromAndroid" href="{{config('app.url').'/home'}}">業務選択</a>
+                            <p class="handy_top_bar2"><a class="backtoHomeFromAndroid" id="installApp">アプリを作る</a></p>
                             </p>
+
                         </div>
                     </div>
                 </div>
