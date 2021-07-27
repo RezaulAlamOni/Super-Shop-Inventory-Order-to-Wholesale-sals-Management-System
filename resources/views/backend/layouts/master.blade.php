@@ -53,7 +53,7 @@
             @include('backend.pages.footer')
 
             <div class="cutom-loader">
-                <img src="{{asset('public/loader/ajax-loader.gif')}}" class="loading_image loading_image_custom"/>
+                <img src="{{Config::get('app.url').'/public/loader/ajax-loader.gif'}}" class="loading_image loading_image_custom"/>
             </div>
         </div>
     </div>
