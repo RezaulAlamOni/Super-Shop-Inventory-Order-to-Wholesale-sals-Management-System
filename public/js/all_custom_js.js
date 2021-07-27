@@ -12080,7 +12080,7 @@ window.onload = () => {
         });
     }
 
-    
+  /*  
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -12097,7 +12097,7 @@ installApp.addEventListener('click', async () => {
         }
     }
 });
-
+*/
 
 }
 
