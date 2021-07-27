@@ -2907,7 +2907,13 @@
         /*
             new handy css
         */
-
+.appss_install{
+    cursor: pointer;
+    text-align: center;
+    margin-top: 15px;
+    border: 2px solid red;
+    padding: 6px;
+}
         @media (min-width: 310px) and (max-width: 767px) {
             #installApp {
                 display: block;
