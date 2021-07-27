@@ -12055,22 +12055,7 @@ $(function() {
 }(jQuery));
 var jan_code_store = [];
 // pwa
-let deferredPrompt;
 
-window.addEventListener('beforeinstallprompt', (e) => {
-    deferredPrompt = e;
-});
-const installApp = document.getElementById('installApp');
-
-installApp.addEventListener('click', async () => {
-    if (deferredPrompt !== null) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-            deferredPrompt = null;
-        }
-    }
-});
 window.onload = () => {
     'use strict';
 
@@ -12094,6 +12079,25 @@ window.onload = () => {
             });
         });
     }
+
+    
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    deferredPrompt = e;
+});
+const installApp = document.getElementById('installApp');
+
+installApp.addEventListener('click', async () => {
+    if (deferredPrompt !== null) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            deferredPrompt = null;
+        }
+    }
+});
+
 
 }
 
