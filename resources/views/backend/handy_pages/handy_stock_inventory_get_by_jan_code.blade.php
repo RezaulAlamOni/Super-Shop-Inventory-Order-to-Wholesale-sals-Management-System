@@ -74,7 +74,7 @@
                                 {{--                                <td style="vertical-align: middle !important;"--}}
                                 {{--                                    class="total_stock_rack rack_number_{{$value->stock_item_id}}">{{$total_rack_stock}}</td>--}}
                                 <td>
-                                    <input type="tel" case_invent_qty="" onkeypress="saveAndGoNext(event,{{$key}},0)"
+                                    <input type="tel" case_invent_qty="" onkeypress="saveAndGoNextInventory(event,{{$key}},0)"
                                            onclick="$(this).select()" onblur="updateInventory({{$key}},0,{{ $is_case_and_ball_base_set }})"
                                            class="form-control cmn_num_formt case_invent_qty_{{$key}} cmn_physical_cl inputs"
                                            data_field_name="case_invent" id="case{{ $key }}"
@@ -89,7 +89,7 @@
                                            value="{{$value->case_inputs}}" readonly hidden>
                                 </td>
 
-                                <td><input type="tel" bol_invent_qty="" onkeypress="saveAndGoNext(event,{{$key}},1)"
+                                <td><input type="tel" bol_invent_qty="" onkeypress="saveAndGoNextInventory(event,{{$key}},1)"
                                            onclick="$(this).select()" onblur="updateInventory({{$key}},0,{{ $is_case_and_ball_base_set }})"
                                            class="form-control cmn_num_formt bol_invent_qty_{{$key}} cmn_physical_cl inputs"
                                            value="{{$value->ball_quantity == null ? 0 : $value->ball_quantity}}"
@@ -103,7 +103,7 @@
                                            value="{{$value->ball_inputs}}" readonly hidden>
                                 </td>
 
-                                <td><input type="tel" unit_invent_qty="" onkeypress="saveAndGoNext(event,{{$key}},2)"
+                                <td><input type="tel" unit_invent_qty="" onkeypress="saveAndGoNextInventory(event,{{$key}},2)"
                                            onclick="$(this).select()" onblur="updateInventory({{$key}},0,{{ $is_case_and_ball_base_set }})"
                                            class="form-control cmn_num_formt unit_invent_qty_{{$key}} cmn_physical_cl inputs"
                                            data_field_name="individual_invent" id="bara{{ $key }}"
@@ -118,9 +118,12 @@
                                                value="" readonly></div>
                                 </td>
                                 <td style="vertical-align: middle !important;text-align:center"><input
-                                        type="tel" class="form-control new_rack_entry"
+                                        type="tel" class="form-control new_rack_entry{{ $key }}"
+                                        onkeypress="saveAndGoNextInventory(event,{{$key}},3)"
+                                           onkeyup="saveAndExit(event,{{$key}},3)" onclick="$(this).select()"
+                                           onblur="updateInventory({{$key}},0,{{ $is_case_and_ball_base_set }})"
                                         value="{{$value->rack_number}}"
-                                        style="border-radius:0;text-align:center;" ></td>
+                                        style="border-radius:0;text-align:center;" id="rack{{ $key }}"></td>
                             </tr>
                             <?php $i++;?>
                         @else
@@ -134,7 +137,7 @@
                                 {{--                                    <td style="vertical-align: middle !important;"--}}
                                 {{--                                        class="total_stock_rack rack_number_{{$i}}">0--}}
                                 {{--                                    </td>--}}
-                                <td><input type="tel" case_invent_qty="" onkeypress="saveAndGoNext(event,{{$i}},0)"
+                                <td><input type="tel" case_invent_qty="" onkeypress="saveAndGoNextInventory(event,{{$i}},0)"
                                            onclick="$(this).select()" onblur="updateInventory({{$i}},1,{{ $is_case_and_ball_base_set }})"
                                            class="form-control cmn_num_formt case_invent_qty_{{ $i }} cmn_physical_cl inputs"
                                            data_field_name="case_invent" id="case{{ $i }}"
@@ -147,7 +150,7 @@
                                            value="{{$value->case_inputs}}" readonly hidden>
                                 </td>
 
-                                <td><input type="tel" bol_invent_qty="" onkeypress="saveAndGoNext(event,{{$i}},1)"
+                                <td><input type="tel" bol_invent_qty="" onkeypress="saveAndGoNextInventory(event,{{$i}},1)"
                                            onclick="$(this).select()" onblur="updateInventory({{$i}},1,{{ $is_case_and_ball_base_set }})"
                                            class="form-control cmn_num_formt bol_invent_qty_{{ $i }} cmn_physical_cl  inputs"
                                            value="{{$value->ball_quantity == null ? 0 : $value->ball_quantity}}"
@@ -159,7 +162,7 @@
                                            value="{{$value->ball_inputs}}" readonly hidden>
                                 </td>
 
-                                <td><input type="tel" unit_invent_qty="" onkeypress="saveAndGoNext(event,{{$i}},2)"
+                                <td><input type="tel" unit_invent_qty="" onkeypress="saveAndGoNextInventory(event,{{$i}},2)"
                                            onclick="$(this).select()" onblur="updateInventory({{$i}},1,{{ $is_case_and_ball_base_set }})"
                                            class="form-control cmn_num_formt unit_invent_qty_{{ $i }} cmn_physical_cl inputs"
                                            data_field_name="individual_invent" id="bara{{ $i }}"
@@ -169,7 +172,7 @@
                                            data_attr_rack_number="" data_attr_row_id="0"></td>
                                 <td style="vertical-align: middle !important;text-align:center;padding:0;">
                                     <input type="tel" class="form-control new_rack_entry{{ $i }}" value=""
-                                           onkeypress="saveAndGoNext(event,{{$i}},3)"
+                                           onkeypress="saveAndGoNextInventory(event,{{$i}},3)"
                                            onkeyup="saveAndExit(event,{{$i}},3)" onclick="$(this).select()"
                                            onblur="updateInventory({{$i}},1,{{ $is_case_and_ball_base_set }})"
                                            style="border-radius:0;text-align:center;" id="rack{{ $i }}"></td>
