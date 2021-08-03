@@ -20708,8 +20708,10 @@ __webpack_require__.r(__webpack_exports__);
         var data_resource = response.data.data_resource;
 
         if (api_response == 'invalid_jan_code') {
-          $('.handy_error_msg').html("JAN\u30B3\u30FC\u30C9\u308A\u307E\u305B\u3093");
-          $('.handdy_error').removeClass('hide').addClass('show');
+          //$('.handy_error_msg').html(`JANコードりません`);
+          //$('.handdy_error').removeClass('hide').addClass('show');
+          _this.handi_navi = 'JAN コードを入力してください';
+          $('#handy-navi').show();
         } else {
           if (response.data.vendor_item_data == 1) {
             console.log('this jan code is already registered');
@@ -25037,8 +25039,10 @@ __webpack_require__.r(__webpack_exports__);
         var data_resource = response.data.data_resource;
 
         if (api_response == 'invalid_jan_code') {
-          $('.handy_error_msg').html("JAN\u30B3\u30FC\u30C9\u308A\u307E\u305B\u3093");
-          $('.handdy_error').removeClass('hide').addClass('show');
+          //$('.handy_error_msg').html(`JANコードりません`);
+          //$('.handdy_error').removeClass('hide').addClass('show');
+          _this.handi_navi = 'JAN コードを入力してください';
+          $('#handy-navi').show();
         } else {
           if (response.data.vendor_item_data == 1) {
             console.log('this jan code is already registered');
