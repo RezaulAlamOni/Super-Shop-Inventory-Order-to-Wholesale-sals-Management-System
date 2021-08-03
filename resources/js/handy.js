@@ -373,6 +373,7 @@ $('document').ready(function () {
 
     $('.case_invent_qty,.bol_invent_qty,.unit_invent_qty').blur(function (e) {
         e.preventDefault();
+        console.log('individual hit');
         var thisRow = $(this);
         var updated_stock_jaiko = 0;
 
@@ -1132,6 +1133,7 @@ function handy_page_popup(url_last_element = null, message = "No message", font_
 
 //oni
 function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
+    console.log('hit up inv');
     if(case_ball_inputs_set == 0) {
         $('#handy-navi').show()
         $('#handy-navi-body').html('<li>在庫を入れて下さい。</li><li>この商品は入り数が設定されていません。仕入マスター画面で入り数を設定して下さい。</li><li><a class="btn btn-primary " href="' + Globals.base_url + '/handy_vendor_master">仕入マスター</a></li>')
@@ -1139,14 +1141,16 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
     }
     let case_input = $(".case_inputs_").val();
     let boll_input = $(".boll_inputs_").val();
-    let case_quantity, ball_quantity, bara, total = 0, rack_number, vendor_item_id, stock_item_id, vendor_id;
+    let case_quantity, ball_quantity, bara, total = 0, rack_number,previous_rack_number, vendor_item_id, stock_item_id, vendor_id;
     vendor_item_id = $('.case_invent_qty_' + index).attr('data_attr_v_item_id');
     vendor_id = $('.case_invent_qty_' + index).attr('data_attr_v_id');
     stock_item_id = $('.case_invent_qty_' + index).attr('data_attr_row_id');
     case_quantity = $('.case_invent_qty_' + index).val();
     ball_quantity = $('.bol_invent_qty_' + index).val();
     bara = $('.unit_invent_qty_' + index).val();
-    rack_number = $('.case_invent_qty_' + index).attr('data_attr_rack_number');
+   // rack_number = $('.case_invent_qty_' + index).attr('data_attr_rack_number');
+   previous_rack_number = $('.case_invent_qty_' + index).attr('data_attr_rack_number');
+    rack_number = $('#rack' + index).val();
     for (let j = 0; j <= 2; j++) {
         let case_ = $('.case_invent_qty_' + j).val();
         let ball_ = $('.bol_invent_qty_' + j).val();
@@ -1160,8 +1164,8 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
     }
 
     $('.total_stock_jaiko_new').val(total)
-    if (rack_number == '') {
-        rack_number = $('.new_rack_entry' + index).val();
+    if (rack_number != previous_rack_number) {
+        type = 1;//$('.new_rack_entry' + index).val();
     }
     let url = type == 0 ? 'update_stock_by_rack_by_handy' : 'stock_inventory_rack_code_add';
     if (rack_number != '' && total > 0) {
@@ -1174,6 +1178,7 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
             dataType: "JSON",
             data: {
                 rack_number: rack_number,
+                previous_rack_number: previous_rack_number,
                 vendor_item_id: vendor_item_id,
                 vendor_id: vendor_id,
                 case_quantity: case_quantity,
@@ -1300,6 +1305,46 @@ function addIfProductNotFoundFrom(jan_code) {
 }
 
 function saveAndGoNext(e, i, type) {
+    let key = e.keyCode;
+    if (key === 13) {
+        if (type == 0) {
+            $('#boll' + i).select();
+            $('#boll' + i).focus();
+        } else if (type == 1) {
+            $('#bara' + i).select();
+            $('#bara' + i).focus();
+        } else if (type == 2) {
+            console.log('#rack' + i)
+            if ($('#rack' + i).length == 0) {
+                if ($('#case' + (i + 1)).length == 0){
+                    $('.scan_tanarosi_sohin').focus()
+                } else {
+                    $('#case' + (i + 1)).select();
+                    $('#case' + (i + 1)).focus();
+                }
+            } else {
+                $('#rack' + i).select();
+                $('#rack' + i).focus();
+            }
+        } else if (type == 3) {
+            $(this).blur();
+            // if (i == 2) {
+                setTimeout(function () {
+                    // $('.scan_tanarosi_sohin').click()
+                    if ($('#case' + (i + 1)).length == 0){
+                        $('.scan_tanarosi_sohin').focus()
+                    }
+                }, 500)
+            // }
+            $('#case' + (i + 1)).select();
+            $('#case' + (i + 1)).focus();
+        }
+    }
+
+
+}
+
+function saveAndGoNextInventory(e, i, type) {
     let key = e.keyCode;
     if (key === 13) {
         if (type == 0) {
