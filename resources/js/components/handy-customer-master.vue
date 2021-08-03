@@ -647,9 +647,12 @@ export default {
                 return false;
             }
             let reg = /^\d+$/;
-
-            if (reg.test(this.jan_code)) {
-                _this.insertToJanList();
+            console.log(this.jan_code.length);
+            if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+               // this.insertToJanList()
+               if (reg.test(this.jan_code)) {
+                    _this.insertToJanList();
+                }
             }
             if (e.keyCode === 13) {
                 if (reg.test(this.jan_code)) {
