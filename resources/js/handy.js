@@ -499,16 +499,15 @@ $('document').ready(function () {
         },200)
     });
 
-    // $('#scan_by_jan_for_stock_detail_handy').on('paste',function (e) {
-    //     let _this = this
-    //     setTimeout(function () {
-    //         let value = $(_this).val();
-    //         if (value.length == 13) {
-    //             alert(33);
-    //             $('.scan_bybin_search_new').click();
-    //         }
-    //     },200)
-    // })
+    $('#scan_by_jan_for_stock_detail_handy').on('paste',function (e) {
+        let _this = this
+        setTimeout(function () {
+            let value = $(_this).val();
+            if (value.length == 13 || value.length == 8) {
+                $('.scan_bybin_search_new').click();
+            }
+        },200)
+    })
 
     $('#scan_by_jan_for_stock_detail_handy').keypress(function (e) {
         // e.preventDefault()

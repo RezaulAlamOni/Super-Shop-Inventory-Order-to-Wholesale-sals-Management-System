@@ -24,6 +24,7 @@
                                                v-model="jan_code"
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
+                                               @paste="checkAndGetData($event)"
                                                @blur="checkAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" :autofocus="true">
                                     </div>
