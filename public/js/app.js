@@ -20412,6 +20412,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url', 'read_only'],
   name: "handy-customer-master",
@@ -24311,6 +24312,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -62758,6 +62760,9 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
                               blur: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
@@ -69533,6 +69538,9 @@ var render = function() {
                             domProps: { value: _vm.jan_code },
                             on: {
                               keyup: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              paste: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
                               blur: function($event) {
