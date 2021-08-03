@@ -743,11 +743,7 @@ $('document').ready(function () {
                 $('#scan_by_jan_for_stock_detail').addClass('active_input');
                 $("#scan_by_jan_for_stock_detail")[0].focus();
                 break;
-            case 'handy_vendor_master':
-                $('#handy_vendor_master_jancode_registration').addClass('active_input');
-                $("#handy_vendor_master_jancode_registration")[0].focus();
-
-                break;
+           
             case 'handy_order_receive_scan_jan':
                 $('#scan_by_jan_for_order_receive').addClass('active_input');
                 $("#scan_by_jan_for_order_receive")[0].focus();
