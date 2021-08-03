@@ -20604,9 +20604,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var reg = /^\d+$/;
+      console.log(this.jan_code.length);
 
-      if (reg.test(this.jan_code)) {
-        _this.insertToJanList();
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        // this.insertToJanList()
+        if (reg.test(this.jan_code)) {
+          _this.insertToJanList();
+        }
       }
 
       if (e.keyCode === 13) {
@@ -24933,9 +24937,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var reg = /^\d+$/;
+      console.log(this.jan_code.length);
 
-      if (reg.test(this.jan_code)) {
-        _this.insertToJanList();
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        // this.insertToJanList()
+        if (reg.test(this.jan_code)) {
+          _this.insertToJanList();
+        }
       }
 
       if (e.keyCode === 13) {
