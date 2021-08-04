@@ -25,6 +25,8 @@
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
                                                @blur="checkAndGetData($event)"
+                                               @paste="checkAndGetData($event)"
+                                               @input="checkAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" autofocus>
                                     </div>
                                 </div>
@@ -536,7 +538,7 @@ export default {
             }
             let reg = /^\d+$/;
 
-            if (this.jan_code.length >= 13) {
+            if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
                 if (reg.test(this.jan_code)) {
                     this.getOrderDataByJan()
                 }

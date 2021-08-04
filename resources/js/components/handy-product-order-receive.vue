@@ -21,6 +21,9 @@
                                         <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code" name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
+                                               @paste="checkAndGetData($event)"
+                                               @input="checkAndGetData($event)"
+                                               @blur="checkAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" autofocus>
                                     </div>
                                 </div>
@@ -492,9 +495,9 @@ export default {
             }, 120)
         },
         checkAndGetData(e) {
-            if (this.jan_code.length >= 13 && e.keyCode == 13) {
+            if ((this.jan_code.length >= 13 || this.jan_code.length==8) && e.keyCode == 13) {
                 this.getOrderDataByJan()
-            } else if (this.jan_code.length >= 13) {
+            } else if (this.jan_code.length >= 13 || this.jan_code.length==8) {
                 this.getOrderDataByJan()
             } else if (e.keyCode == 13) {
                 this.getOrderDataByJan()
