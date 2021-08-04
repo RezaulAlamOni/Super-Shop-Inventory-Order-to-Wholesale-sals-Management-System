@@ -25,6 +25,7 @@
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
                                                @paste="checkAndGetData($event)"
+                                               @input="checkInputEventAndGetData($event)"
                                                @blur="checkAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" :autofocus="true">
                                     </div>
@@ -640,6 +641,25 @@ export default {
             setTimeout(function () {
                 $('#jan_input').focus()
             }, 120)
+        },
+        checkInputEventAndGetData(e) {
+            let _this = this;
+
+            if (this.loader === 1) {
+                return false;
+            }
+
+            let reg = /^\d+$/;
+            console.log('--paste start');
+            console.log(e.target.value);
+            console.log('--paste end');
+            console.log(this.jan_code.length);
+            if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+               // this.insertToJanList()
+               if (reg.test(this.jan_code)) {
+                    _this.insertToJanList();
+                }
+            }
         },
         checkAndGetData(e) {
             let _this = this;
