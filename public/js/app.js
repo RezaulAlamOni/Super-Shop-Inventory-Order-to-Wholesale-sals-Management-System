@@ -21169,6 +21169,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21388,7 +21390,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var reg = /^\d+$/;
 
-      if (this.jan_code.length >= 13) {
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         if (reg.test(this.jan_code)) {
           this.getOrderDataByJan();
         }
@@ -21575,6 +21577,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _text_recognition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./text-recognition */ "./resources/js/components/text-recognition.vue");
 /* harmony import */ var vue_barcode_reader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-barcode-reader */ "./node_modules/vue-barcode-reader/src/index.js");
+//
+//
 //
 //
 //
@@ -22186,7 +22190,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var reg = /^\d+$/;
 
-      if (this.jan_code.length >= 13) {
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         if (reg.test(this.jan_code)) {
           this.getOrderDataByJan();
         }
@@ -22638,6 +22642,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-inventory-tana-update",
@@ -22762,7 +22769,7 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       }
 
-      if (this.jan_code.length >= 13) {
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         this.getOrderDataByJan();
       }
 
@@ -23238,6 +23245,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-place",
@@ -23377,7 +23387,7 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       }
 
-      if (this.jan_code.length >= 13) {
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         this.getOrderDataByJan();
       }
 
@@ -23926,6 +23936,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-receive",
@@ -24097,9 +24110,9 @@ __webpack_require__.r(__webpack_exports__);
       }, 120);
     },
     checkAndGetData: function checkAndGetData(e) {
-      if (this.jan_code.length >= 13 && e.keyCode == 13) {
+      if ((this.jan_code.length >= 13 || this.jan_code.length == 8) && e.keyCode == 13) {
         this.getOrderDataByJan();
-      } else if (this.jan_code.length >= 13) {
+      } else if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         this.getOrderDataByJan();
       } else if (e.keyCode == 13) {
         this.getOrderDataByJan();
@@ -64066,12 +64079,20 @@ var render = function() {
                               blur: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
-                              }
+                              ]
                             }
                           })
                         ])
@@ -65282,14 +65303,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              blur: function($event) {
+                              paste: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
@@ -66491,11 +66520,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
@@ -67423,11 +67463,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
@@ -68336,11 +68387,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
