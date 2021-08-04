@@ -1909,7 +1909,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
         if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
             stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $previous_rack_number)->delete();
             $stock_item_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
-
+            
             if ($stock_item_info->case_quantity!=null) {
                 $case_quantity = $case_quantity+$stock_item_info->case_quantity;
             }
@@ -1927,6 +1927,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 'ball_quantity' => $ball_quantity,
                 'unit_quantity' => $unit_quantity
             );
+            
             if($stock_item_info->temp_rack_number==null){
                 $updatearr['temp_rack_number']=$temp_rack_number;
             }

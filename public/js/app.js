@@ -20413,6 +20413,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url', 'read_only'],
   name: "handy-customer-master",
@@ -20596,6 +20597,26 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         $('#jan_input').focus();
       }, 120);
+    },
+    checkInputEventAndGetData: function checkInputEventAndGetData(e) {
+      var _this = this;
+
+      if (this.loader === 1) {
+        return false;
+      }
+
+      var reg = /^\d+$/;
+      console.log('--paste start');
+      console.log(e.target.value);
+      console.log('--paste end');
+      console.log(this.jan_code.length);
+
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        // this.insertToJanList()
+        if (reg.test(this.jan_code)) {
+          _this.insertToJanList();
+        }
+      }
     },
     checkAndGetData: function checkAndGetData(e) {
       var _this = this;
@@ -62784,14 +62805,19 @@ var render = function() {
                               paste: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkInputEventAndGetData($event)
+                                }
+                              ],
                               blur: function($event) {
                                 return _vm.checkAndGetData($event)
-                              },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.jan_code = $event.target.value
                               }
                             }
                           })

@@ -12612,44 +12612,7 @@ $('document').ready(function () {
 
         if (jan_code !== '') {
 
-            $.ajax({
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                },
-                url: "handy_stock_detail_get_by_jan_code/" + jan_code,
-                type: "GET",
-                dataType: "JSON",
-                success: function (response) {
-                    // console.log(response);
-                    loader = 0
-
-                    if (response.status === 200) {
-
-                        $('.loading_image_custom').hide()
-                        $('#stock-inventory-show-by-jan').modal({backdrop: 'static', keyboard: false})
-                        $('#handy_order_form_by_jan').html(response.view)
-                        $('#handy-navi').show()
-                        $('#handy-navi-body').html('<li>在庫を入れて下さい。</li><li>棚番スキャンしてください。</li>')
-                        setTimeout(function () {
-                            $('#case0').select();
-                            $('#case0').focus();
-                        }, 1000)
-                    } else {
-                        // $('#scan_by_jan_for_stock_detail').val('');
-                        addIfProductNotFoundFrom(jan_code);
-                        // $('#scan_bybin').val('');
-                        // $('#scan_by_jan_for_stock_detail_handy').val('');
-                        // $('.handy_error_msg').html(`JANコードりません <br> この商品を追加しますか? <center><a href="javascript:javascript:void(0)" class="btn btn-primary" onclick="addIfProductNotFoundFrom('` + jan_code + `')">はい</a><a href="javascript:void(0)" onclick="$('.hide_enter_outside').removeClass('show').addClass('hide');$('#scan_by_jan_for_stock_detail_handy').val('');;" class="btn btn-primary rsalrtconfirms">いいえ</a></center>`);
-                        // $('.handdy_error').removeClass('hide').addClass('show');
-
-                        setTimeout(function () {
-                            $('#case0').select();
-                            $('#case0').focus();
-                        }, 1000)
-                        return false;
-                    }
-                }
-            });
+           inventory_stockDetailsByJanCode(jan_code);
             loader = 0
             $('.loading_image_custom').hide()
             // old code working ?? Oni
@@ -12674,7 +12637,6 @@ $('document').ready(function () {
         }
     });
     // end oni-dev
-
 
     $('#scan_by_shelf_number').keypress(function (e) {
         if (e.keyCode == 13) {
@@ -13258,6 +13220,14 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
             },
             success: function (response) {
                 // console.log(response);
+                if(url=='stock_inventory_rack_code_add'){
+                    var jan_code = $('#scan_by_jan_for_stock_detail_handy').val();
+
+                    if (jan_code !== '' && rack_number != previous_rack_number) {
+            
+                       inventory_stockDetailsByJanCode(jan_code);
+                    }
+                }
             }
         });
     }
@@ -14428,6 +14398,49 @@ function shipment_note_2_check() {
     $('#shipment_master_jancode').focus();
     $('#shipment_master_jancode').addClass('active_input');
 }
+
+
+function inventory_stockDetailsByJanCode(jan_code){
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        url: "handy_stock_detail_get_by_jan_code/" + jan_code,
+        type: "GET",
+        dataType: "JSON",
+        success: function (response) {
+            // console.log(response);
+            loader = 0
+
+            if (response.status === 200) {
+
+                $('.loading_image_custom').hide()
+                $('#stock-inventory-show-by-jan').modal({backdrop: 'static', keyboard: false})
+                $('#handy_order_form_by_jan').html(response.view)
+                $('#handy-navi').show()
+                $('#handy-navi-body').html('<li>在庫を入れて下さい。</li><li>棚番スキャンしてください。</li>')
+                setTimeout(function () {
+                    $('#case0').select();
+                    $('#case0').focus();
+                }, 1000)
+            } else {
+                // $('#scan_by_jan_for_stock_detail').val('');
+                addIfProductNotFoundFrom(jan_code);
+                // $('#scan_bybin').val('');
+                // $('#scan_by_jan_for_stock_detail_handy').val('');
+                // $('.handy_error_msg').html(`JANコードりません <br> この商品を追加しますか? <center><a href="javascript:javascript:void(0)" class="btn btn-primary" onclick="addIfProductNotFoundFrom('` + jan_code + `')">はい</a><a href="javascript:void(0)" onclick="$('.hide_enter_outside').removeClass('show').addClass('hide');$('#scan_by_jan_for_stock_detail_handy').val('');;" class="btn btn-primary rsalrtconfirms">いいえ</a></center>`);
+                // $('.handdy_error').removeClass('hide').addClass('show');
+
+                setTimeout(function () {
+                    $('#case0').select();
+                    $('#case0').focus();
+                }, 1000)
+                return false;
+            }
+        }
+    });
+}
+
 
 var voice_flg = true;
 var voice_tr = null;
