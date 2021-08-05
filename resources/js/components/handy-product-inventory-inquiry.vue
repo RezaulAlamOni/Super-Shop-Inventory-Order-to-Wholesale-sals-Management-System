@@ -369,6 +369,12 @@ export default {
             axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code)
                 .then(function (res) {
                     //_this.resetField();
+                        if(res.data.status==400){
+                             console.log('log here');
+                            _this.handi_navi = '<li>0000000</li>';
+                            $('#handy-navi').show();
+                            return false;
+                        }
                     if (res.data.result.length > 0) {
                         _this.order_data = res.data.result;
                         _this.product_name = _this.order_data[0].item_name;
@@ -390,19 +396,19 @@ export default {
                                 }
                             }, 720)
                         }
-                        $('#handy-navi').hide()
+                        $('#handy-navi').hide();
                     } else {
-
                         _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
-
+                        $('#handy-navi').show();
                     }
+                    
 
                 })
                 .catch(function () {
 
                 })
                 .finally(function () {
-                    _this.jan_code = ''
+                    //_this.jan_code = ''
                     $('.loading_image_custom').hide()
                     _this.loader = 0
 

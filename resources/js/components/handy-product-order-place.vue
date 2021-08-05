@@ -323,7 +323,7 @@ export default {
 
                 })
                 .finally(function () {
-                    _this.jan_code = ''
+                   // _this.jan_code = ''
                     _this.loader = 0
                 })
         },
@@ -482,7 +482,6 @@ export default {
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        1
                         _this.handi_navi = '<li>JANコードりません</li>';
                         $('#handy-navi').show()
                     } else {

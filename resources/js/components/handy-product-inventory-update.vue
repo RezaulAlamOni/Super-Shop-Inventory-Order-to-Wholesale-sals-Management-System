@@ -289,6 +289,11 @@ export default {
             axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/'+ _this.jan_code)
                 .then(function (res) {
                     //_this.resetField();
+                     if(res.data.status==400){
+                            _this.handi_navi = '<li>0000000000</li>';
+                            $('#handy-navi').show();
+                            return false;
+                        }
                     if (res.data.result.length > 0) {
                         _this.order_data = res.data.result;
                         _this.product_name = _this.order_data[0].item_name;

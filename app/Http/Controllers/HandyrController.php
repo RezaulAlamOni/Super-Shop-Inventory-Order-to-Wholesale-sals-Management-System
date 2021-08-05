@@ -810,7 +810,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
     {
         $active = 'handy_stock';
         if (!vendor_item::where('jan', $jan)->first()) {
-            return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
+            return response()->json(['status' => 400, 'status_code' => 400,'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $where = '';
         if ($jan != '') {
@@ -881,11 +881,11 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $total_jaikos_stock = $total_jaiko->t_qty;
         }
         if ($result == null) {
-            return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
+            return response()->json(['status' => 400,'status_code' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $title = "";
         $view = view('backend.handy_pages.handy_stock_inventory_get_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'))->render();
-        return response()->json(['status' => 200, 'view' => $view,'result'=>$result]);
+        return response()->json(['status' => 200, 'status_code' => 200, 'view' => $view,'result'=>$result]);
 
 
         return view('backend.handy_pages.handy_stock_inventory_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'));
