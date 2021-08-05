@@ -319,10 +319,12 @@ export default {
 
                 })
                 .catch(function () {
-
+                    console.log('eror found');
+                     _this.handi_navi = '<li>00000000</li>';
+                        $('#handy-navi').show()
                 })
                 .finally(function () {
-                    _this.jan_code = ''
+                    //_this.jan_code = ''
                     $('.loading_image_custom').hide()
                     _this.loader = 0
                 })
