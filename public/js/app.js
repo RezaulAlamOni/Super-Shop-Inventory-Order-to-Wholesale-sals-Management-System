@@ -21235,6 +21235,13 @@ __webpack_require__.r(__webpack_exports__);
       _this.loader = 1;
       axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code).then(function (res) {
         //_this.resetField();
+        if (res.data.status == 400) {
+          console.log('log here');
+          _this.handi_navi = '<li>0000000</li>';
+          $('#handy-navi').show();
+          return false;
+        }
+
         if (res.data.result.length > 0) {
           _this.order_data = res.data.result;
           _this.product_name = _this.order_data[0].item_name;
@@ -21263,9 +21270,10 @@ __webpack_require__.r(__webpack_exports__);
           $('#handy-navi').hide();
         } else {
           _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+          $('#handy-navi').show();
         }
       })["catch"](function () {})["finally"](function () {
-        _this.jan_code = '';
+        //_this.jan_code = ''
         $('.loading_image_custom').hide();
         _this.loader = 0;
       });
@@ -21979,6 +21987,12 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code).then(function (res) {
         _this.resetField();
 
+        if (res.data.status == 400) {
+          _this.handi_navi = '<li>0000000000</li>';
+          $('#handy-navi').show();
+          return false;
+        }
+
         if (res.data.result.length > 0) {
           _this.order_data = res.data.result;
           _this.product_name = _this.order_data[0].item_name;
@@ -22016,7 +22030,7 @@ __webpack_require__.r(__webpack_exports__);
           $('#handy-navi').show();
         }
       })["catch"](function () {})["finally"](function () {
-        _this.jan_code = '';
+        // _this.jan_code = ''
         $('.loading_image_custom').hide();
         _this.loader = 0;
       });
@@ -22718,8 +22732,12 @@ __webpack_require__.r(__webpack_exports__);
           _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
           $('#handy-navi').show();
         }
-      })["catch"](function () {})["finally"](function () {
-        _this.jan_code = '';
+      })["catch"](function () {
+        console.log('eror found');
+        _this.handi_navi = '<li>00000000</li>';
+        $('#handy-navi').show();
+      })["finally"](function () {
+        //_this.jan_code = ''
         $('.loading_image_custom').hide();
         _this.loader = 0;
       });
@@ -23338,7 +23356,7 @@ __webpack_require__.r(__webpack_exports__);
 
         }
       })["catch"](function () {})["finally"](function () {
-        _this.jan_code = '';
+        // _this.jan_code = ''
         _this.loader = 0;
       });
     },
@@ -23482,7 +23500,6 @@ __webpack_require__.r(__webpack_exports__);
         var data_resource = response.data.data_resource;
 
         if (api_response == 'invalid_jan_code') {
-          1;
           _this.handi_navi = '<li>JANコードりません</li>';
           $('#handy-navi').show();
         } else {
@@ -24003,14 +24020,16 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         // console.log(res.data)
         if (res.data.status == 505) {
-          _this.jan_code = '';
+          // _this.jan_code = '';
+          //_this.handi_navi = '<li>0000000000</li>';
           $('#handy-navi-body').html('<li>この商品は登録されていません。</li><li> 【棚卸(在庫)】押して登録してください。</li>');
           $('#handy-navi').show();
           return false;
         }
 
         if (res.data.status == 501) {
-          _this.jan_code = '';
+          //_this.jan_code = '';
+          //_this.handi_navi = '<li>0000000000</li>';
           $('#handy-navi-body').html('<li>この商品は発注されていません。</li>');
           $('#handy-navi').show();
           return false;

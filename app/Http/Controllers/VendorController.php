@@ -280,8 +280,10 @@ class VendorController extends Controller
             $data_resource = 'database';
         } else {
             $api_response = $this->api_request->get_api_data($jan_code);
+            //print_r($api_response->data);exit;
             $api_data_check = json_decode(json_encode($api_response->data));
-            if (is_null($api_data_check->jan_code)) {
+            
+            if (is_null($api_data_check->jan_code) || $api_data_check->jan_code=='') {
                 $api_data = 'invalid_jan_code';
                 $data_resource = 'api_invalid';
                 return $result = response()->json(['api_data' => $api_data, 'data_resource' => $data_resource, 'vendor_item_data' => $vendor_item_data]);
