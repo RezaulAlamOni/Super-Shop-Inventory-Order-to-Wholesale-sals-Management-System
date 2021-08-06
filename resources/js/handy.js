@@ -1175,8 +1175,11 @@ function addIfProductNotFoundFrom(jan_code) {
             var api_response = response.api_data;
             var data_resource = response.data_resource;
             if (api_response == 'invalid_jan_code') {
-                $('.handy_error_msg').html(`JANコードりません`);
-                $('.handdy_error').removeClass('hide').addClass('show');
+                //$('.handy_error_msg').html(`JANコードりません`);
+                //$('#handy-navi').hide();
+                //$('.handdy_error').removeClass('hide').addClass('show');
+                $('#handy-navi').show()
+                $('#handy-navi-body').html('<li>JANコードりません。</li>')
 
             } else {
                 if (response.vendor_item_data == 1) {
