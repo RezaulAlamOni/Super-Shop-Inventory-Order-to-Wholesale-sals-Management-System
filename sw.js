@@ -1,7 +1,7 @@
-var cacheName = 'rv3-pwa-v1';
+var cacheName = 'rv3-pwa-v3'+Math.random();
 var filesToCache = [
   // '/rv3_super',
-  '/rv3_tonyav1/android_home',
+  // '/rv3_tonyav1/android_home',
   // '/css/style.css',
   // '/js/main.js'
 ];
@@ -16,12 +16,16 @@ self.addEventListener('install', function(e) {
 });
 
 /* Serve cached content when offline */
-self.addEventListener('fetch', function(e) {
-  e.respondWith(
-    caches.match(e.request).then(function(response) {
-      return response || fetch(e.request);
-    })
-  );
+// self.addEventListener('fetch', function(e) {
+//   e.respondWith(
+//     caches.match(e.request).then(function(response) {
+//       return response || fetch(e.request);
+//     })
+//   );
+// });
+
+self.addEventListener('fetch', function(event) {
+    event.respondWith(fetch(event.request));
 });
 
 // Active Service Worker
