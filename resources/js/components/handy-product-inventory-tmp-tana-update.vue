@@ -24,6 +24,9 @@
                                                v-model="jan_code"
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
+                                               @paste="checkAndGetData($event)"
+                                               @input="checkAndGetData($event)"
+                                               @blur="checkAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" autofocus>
                                     </div>
                                 </div>
@@ -316,10 +319,12 @@ export default {
 
                 })
                 .catch(function () {
-
+                    console.log('eror found');
+                     _this.handi_navi = '<li>00000000</li>';
+                        $('#handy-navi').show()
                 })
                 .finally(function () {
-                    _this.jan_code = ''
+                    //_this.jan_code = ''
                     $('.loading_image_custom').hide()
                     _this.loader = 0
                 })
@@ -375,7 +380,7 @@ export default {
             if (this.loader == 1) {
                 return false;
             }
-            if (this.jan_code.length >= 13) {
+            if (this.jan_code.length >= 13 || this.jan_code.length==8) {
                 this.getOrderDataByJan()
             }
             if (e.keyCode == 13) {

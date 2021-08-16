@@ -810,7 +810,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
     {
         $active = 'handy_stock';
         if (!vendor_item::where('jan', $jan)->first()) {
-            return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
+            return response()->json(['status' => 400, 'status_code' => 400,'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $where = '';
         if ($jan != '') {
@@ -881,11 +881,11 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $total_jaikos_stock = $total_jaiko->t_qty;
         }
         if ($result == null) {
-            return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
+            return response()->json(['status' => 400,'status_code' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $title = "";
         $view = view('backend.handy_pages.handy_stock_inventory_get_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'))->render();
-        return response()->json(['status' => 200, 'view' => $view,'result'=>$result]);
+        return response()->json(['status' => 200, 'status_code' => 200, 'view' => $view,'result'=>$result]);
 
 
         return view('backend.handy_pages.handy_stock_inventory_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'));
@@ -1897,24 +1897,61 @@ WHERE DATE(co.shipment_date) = CURDATE()
         $ball_quantity = $request->ball_quantity;
         $unit_quantity = $request->unit_quantity;
         $rack_number = $request->rack_number;
+        $previous_rack_number = $request->previous_rack_number;
         $vendor_item_id = $request->vendor_item_id;
         $vendor_id = $request->vendor_id;
+        $previous_stock_item_info=stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $previous_rack_number)->first();
+        $temp_rack_number = '';
+        if($previous_stock_item_info){
+            $temp_rack_number = $previous_stock_item_info->temp_rack_number;
+        }
+       
         if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
-            $stock_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
-            return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_info->stock_item_id]);
+            stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $previous_rack_number)->delete();
+            $stock_item_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
+            
+            if ($stock_item_info->case_quantity!=null) {
+                $case_quantity = $case_quantity+$stock_item_info->case_quantity;
+            }
+
+            if ($stock_item_info->ball_quantity!=null) {
+                $ball_quantity = $ball_quantity+$stock_item_info->ball_quantity;
+            }
+
+            if ($stock_item_info->unit_quantity!=null) {
+                $unit_quantity = $unit_quantity+$stock_item_info->unit_quantity;
+            }
+
+            $updatearr=array(
+                'case_quantity' => $case_quantity,
+                'ball_quantity' => $ball_quantity,
+                'unit_quantity' => $unit_quantity
+            );
+            
+            if($stock_item_info->temp_rack_number==null){
+                $updatearr['temp_rack_number']=$temp_rack_number;
+            }
+            stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update($updatearr);
+            return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_item_info->stock_item_id]);
         } else {
             $case_quantity = ($case_quantity != '' ? $case_quantity : 0);
             $ball_quantity = ($ball_quantity != '' ? $ball_quantity : 0);
             $unit_quantity = ($unit_quantity != '' ? $unit_quantity : 0);
             $insarray = array(
                 'rack_number' => $rack_number,
+                'temp_rack_number' => $temp_rack_number,
                 'vendor_item_id' => $vendor_item_id,
                 'vendor_id' => $vendor_id,
                 'case_quantity' => $case_quantity,
                 'ball_quantity' => $ball_quantity,
                 'unit_quantity' => $unit_quantity
             );
-            $stock_item_id = stock_item::insertGetId($insarray);
+            if($stock_item_id!='0'){
+                stock_item::where('stock_item_id',$stock_item_id)->update($insarray);
+            }else{
+                $stock_item_id = stock_item::insertGetId($insarray);
+            }
+            
             return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_item_id]);
 
         }

@@ -373,6 +373,10 @@ class ShipmentCsvController extends Controller
     }
 /*required function list*/
     public function ShipmentCsvInsert_brand(Request $request){
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', 300);
+        ini_set('max_input_time', 360);
+        set_time_limit(0);
         $file = $request->file('file');
         $file_type = $request->file_type;
         $file_name = time().'_'.$file->getClientOriginalName();

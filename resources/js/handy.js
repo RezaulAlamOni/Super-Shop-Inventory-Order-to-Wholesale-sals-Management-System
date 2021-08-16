@@ -1,5 +1,6 @@
 var jan_code_store = [];
 // pwa
+
 window.onload = () => {
     'use strict';
 
@@ -23,6 +24,25 @@ window.onload = () => {
             });
         });
     }
+
+  /*  
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    deferredPrompt = e;
+});
+const installApp = document.getElementById('installApp');
+
+installApp.addEventListener('click', async () => {
+    if (deferredPrompt !== null) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            deferredPrompt = null;
+        }
+    }
+});
+*/
 
 }
 
@@ -373,6 +393,7 @@ $('document').ready(function () {
 
     $('.case_invent_qty,.bol_invent_qty,.unit_invent_qty').blur(function (e) {
         e.preventDefault();
+        console.log('individual hit');
         var thisRow = $(this);
         var updated_stock_jaiko = 0;
 
@@ -498,16 +519,15 @@ $('document').ready(function () {
         },200)
     });
 
-    // $('#scan_by_jan_for_stock_detail_handy').on('paste',function (e) {
-    //     let _this = this
-    //     setTimeout(function () {
-    //         let value = $(_this).val();
-    //         if (value.length == 13) {
-    //             alert(33);
-    //             $('.scan_bybin_search_new').click();
-    //         }
-    //     },200)
-    // })
+    $('#scan_by_jan_for_stock_detail_handy').on('paste',function (e) {
+        let _this = this
+        setTimeout(function () {
+            let value = $(_this).val();
+            if (value.length == 13 || value.length == 8) {
+                $('.scan_bybin_search_new').click();
+            }
+        },200)
+    })
 
     $('#scan_by_jan_for_stock_detail_handy').keypress(function (e) {
         // e.preventDefault()
@@ -537,44 +557,7 @@ $('document').ready(function () {
 
         if (jan_code !== '') {
 
-            $.ajax({
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                },
-                url: "handy_stock_detail_get_by_jan_code/" + jan_code,
-                type: "GET",
-                dataType: "JSON",
-                success: function (response) {
-                    // console.log(response);
-                    loader = 0
-
-                    if (response.status === 200) {
-
-                        $('.loading_image_custom').hide()
-                        $('#stock-inventory-show-by-jan').modal({backdrop: 'static', keyboard: false})
-                        $('#handy_order_form_by_jan').html(response.view)
-                        $('#handy-navi').show()
-                        $('#handy-navi-body').html('<li>在庫を入れて下さい。</li><li>棚番スキャンしてください。</li>')
-                        setTimeout(function () {
-                            $('#case0').select();
-                            $('#case0').focus();
-                        }, 1000)
-                    } else {
-                        // $('#scan_by_jan_for_stock_detail').val('');
-                        addIfProductNotFoundFrom(jan_code);
-                        // $('#scan_bybin').val('');
-                        // $('#scan_by_jan_for_stock_detail_handy').val('');
-                        // $('.handy_error_msg').html(`JANコードりません <br> この商品を追加しますか? <center><a href="javascript:javascript:void(0)" class="btn btn-primary" onclick="addIfProductNotFoundFrom('` + jan_code + `')">はい</a><a href="javascript:void(0)" onclick="$('.hide_enter_outside').removeClass('show').addClass('hide');$('#scan_by_jan_for_stock_detail_handy').val('');;" class="btn btn-primary rsalrtconfirms">いいえ</a></center>`);
-                        // $('.handdy_error').removeClass('hide').addClass('show');
-
-                        setTimeout(function () {
-                            $('#case0').select();
-                            $('#case0').focus();
-                        }, 1000)
-                        return false;
-                    }
-                }
-            });
+           inventory_stockDetailsByJanCode(jan_code);
             loader = 0
             $('.loading_image_custom').hide()
             // old code working ?? Oni
@@ -599,7 +582,6 @@ $('document').ready(function () {
         }
     });
     // end oni-dev
-
 
     $('#scan_by_shelf_number').keypress(function (e) {
         if (e.keyCode == 13) {
@@ -743,11 +725,7 @@ $('document').ready(function () {
                 $('#scan_by_jan_for_stock_detail').addClass('active_input');
                 $("#scan_by_jan_for_stock_detail")[0].focus();
                 break;
-            case 'handy_vendor_master':
-                $('#handy_vendor_master_jancode_registration').addClass('active_input');
-                $("#handy_vendor_master_jancode_registration")[0].focus();
-
-                break;
+           
             case 'handy_order_receive_scan_jan':
                 $('#scan_by_jan_for_order_receive').addClass('active_input');
                 $("#scan_by_jan_for_order_receive")[0].focus();
@@ -1132,6 +1110,7 @@ function handy_page_popup(url_last_element = null, message = "No message", font_
 
 //oni
 function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
+    console.log('hit up inv');
     if(case_ball_inputs_set == 0) {
         $('#handy-navi').show()
         $('#handy-navi-body').html('<li>在庫を入れて下さい。</li><li>この商品は入り数が設定されていません。仕入マスター画面で入り数を設定して下さい。</li><li><a class="btn btn-primary " href="' + Globals.base_url + '/handy_vendor_master">仕入マスター</a></li>')
@@ -1139,14 +1118,16 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
     }
     let case_input = $(".case_inputs_").val();
     let boll_input = $(".boll_inputs_").val();
-    let case_quantity, ball_quantity, bara, total = 0, rack_number, vendor_item_id, stock_item_id, vendor_id;
+    let case_quantity, ball_quantity, bara, total = 0, rack_number,previous_rack_number, vendor_item_id, stock_item_id, vendor_id;
     vendor_item_id = $('.case_invent_qty_' + index).attr('data_attr_v_item_id');
     vendor_id = $('.case_invent_qty_' + index).attr('data_attr_v_id');
     stock_item_id = $('.case_invent_qty_' + index).attr('data_attr_row_id');
     case_quantity = $('.case_invent_qty_' + index).val();
     ball_quantity = $('.bol_invent_qty_' + index).val();
     bara = $('.unit_invent_qty_' + index).val();
-    rack_number = $('.case_invent_qty_' + index).attr('data_attr_rack_number');
+   // rack_number = $('.case_invent_qty_' + index).attr('data_attr_rack_number');
+   previous_rack_number = $('.case_invent_qty_' + index).attr('data_attr_rack_number');
+    rack_number = $('#rack' + index).val();
     for (let j = 0; j <= 2; j++) {
         let case_ = $('.case_invent_qty_' + j).val();
         let ball_ = $('.bol_invent_qty_' + j).val();
@@ -1160,8 +1141,8 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
     }
 
     $('.total_stock_jaiko_new').val(total)
-    if (rack_number == '') {
-        rack_number = $('.new_rack_entry' + index).val();
+    if (rack_number != previous_rack_number) {
+        type = 1;//$('.new_rack_entry' + index).val();
     }
     let url = type == 0 ? 'update_stock_by_rack_by_handy' : 'stock_inventory_rack_code_add';
     if (rack_number != '' && total > 0) {
@@ -1174,6 +1155,7 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
             dataType: "JSON",
             data: {
                 rack_number: rack_number,
+                previous_rack_number: previous_rack_number,
                 vendor_item_id: vendor_item_id,
                 vendor_id: vendor_id,
                 case_quantity: case_quantity,
@@ -1183,6 +1165,14 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
             },
             success: function (response) {
                 // console.log(response);
+                if(url=='stock_inventory_rack_code_add'){
+                    var jan_code = $('#scan_by_jan_for_stock_detail_handy').val();
+
+                    if (jan_code !== '' && rack_number != previous_rack_number) {
+            
+                       inventory_stockDetailsByJanCode(jan_code);
+                    }
+                }
             }
         });
     }
@@ -1205,8 +1195,11 @@ function addIfProductNotFoundFrom(jan_code) {
             var api_response = response.api_data;
             var data_resource = response.data_resource;
             if (api_response == 'invalid_jan_code') {
-                $('.handy_error_msg').html(`JANコードりません`);
-                $('.handdy_error').removeClass('hide').addClass('show');
+                //$('.handy_error_msg').html(`JANコードりません`);
+                //$('#handy-navi').hide();
+                //$('.handdy_error').removeClass('hide').addClass('show');
+                $('#handy-navi').show()
+                $('#handy-navi-body').html('<li>JANコードりません。</li>')
 
             } else {
                 if (response.vendor_item_data == 1) {
@@ -1300,6 +1293,46 @@ function addIfProductNotFoundFrom(jan_code) {
 }
 
 function saveAndGoNext(e, i, type) {
+    let key = e.keyCode;
+    if (key === 13) {
+        if (type == 0) {
+            $('#boll' + i).select();
+            $('#boll' + i).focus();
+        } else if (type == 1) {
+            $('#bara' + i).select();
+            $('#bara' + i).focus();
+        } else if (type == 2) {
+            console.log('#rack' + i)
+            if ($('#rack' + i).length == 0) {
+                if ($('#case' + (i + 1)).length == 0){
+                    $('.scan_tanarosi_sohin').focus()
+                } else {
+                    $('#case' + (i + 1)).select();
+                    $('#case' + (i + 1)).focus();
+                }
+            } else {
+                $('#rack' + i).select();
+                $('#rack' + i).focus();
+            }
+        } else if (type == 3) {
+            $(this).blur();
+            // if (i == 2) {
+                setTimeout(function () {
+                    // $('.scan_tanarosi_sohin').click()
+                    if ($('#case' + (i + 1)).length == 0){
+                        $('.scan_tanarosi_sohin').focus()
+                    }
+                }, 500)
+            // }
+            $('#case' + (i + 1)).select();
+            $('#case' + (i + 1)).focus();
+        }
+    }
+
+
+}
+
+function saveAndGoNextInventory(e, i, type) {
     let key = e.keyCode;
     if (key === 13) {
         if (type == 0) {
@@ -2313,3 +2346,46 @@ function shipment_note_2_check() {
     $('#shipment_master_jancode').focus();
     $('#shipment_master_jancode').addClass('active_input');
 }
+
+
+function inventory_stockDetailsByJanCode(jan_code){
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        url: "handy_stock_detail_get_by_jan_code/" + jan_code,
+        type: "GET",
+        dataType: "JSON",
+        success: function (response) {
+            // console.log(response);
+            loader = 0
+
+            if (response.status === 200) {
+
+                $('.loading_image_custom').hide()
+                $('#stock-inventory-show-by-jan').modal({backdrop: 'static', keyboard: false})
+                $('#handy_order_form_by_jan').html(response.view)
+                $('#handy-navi').show()
+                $('#handy-navi-body').html('<li>在庫を入れて下さい。</li><li>棚番スキャンしてください。</li>')
+                setTimeout(function () {
+                    $('#case0').select();
+                    $('#case0').focus();
+                }, 1000)
+            } else {
+                // $('#scan_by_jan_for_stock_detail').val('');
+                addIfProductNotFoundFrom(jan_code);
+                // $('#scan_bybin').val('');
+                // $('#scan_by_jan_for_stock_detail_handy').val('');
+                // $('.handy_error_msg').html(`JANコードりません <br> この商品を追加しますか? <center><a href="javascript:javascript:void(0)" class="btn btn-primary" onclick="addIfProductNotFoundFrom('` + jan_code + `')">はい</a><a href="javascript:void(0)" onclick="$('.hide_enter_outside').removeClass('show').addClass('hide');$('#scan_by_jan_for_stock_detail_handy').val('');;" class="btn btn-primary rsalrtconfirms">いいえ</a></center>`);
+                // $('.handdy_error').removeClass('hide').addClass('show');
+
+                setTimeout(function () {
+                    $('#case0').select();
+                    $('#case0').focus();
+                }, 1000)
+                return false;
+            }
+        }
+    });
+}
+

@@ -24,7 +24,9 @@
                                                v-model="jan_code"
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
+                                               @paste="checkAndGetData($event)"
                                                @blur="checkAndGetData($event)"
+                                               @input="checkInputEventAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" :autofocus="true">
                                     </div>
                                 </div>
@@ -639,17 +641,41 @@ export default {
                 $('#jan_input').focus()
             }, 120)
         },
+        checkInputEventAndGetData(e) {
+            let _this = this;
+
+            if (this.loader === 1) {
+                return false;
+            }
+
+            let reg = /^\d+$/;
+            console.log('--paste start');
+            console.log(e.target.value);
+            console.log('--paste end');
+            console.log(this.jan_code.length);
+            if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+               // this.insertToJanList()
+               if (reg.test(this.jan_code)) {
+                    _this.insertToJanList();
+                }
+            }
+        },
         checkAndGetData(e) {
             let _this = this;
 
             if (this.loader === 1) {
                 return false;
             }
-            let reg = /^\d+$/;
 
-            if (reg.test(this.jan_code)) {
-                _this.insertToJanList();
+            let reg = /^\d+$/;
+            console.log(this.jan_code.length);
+             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+               // this.insertToJanList()
+               if (reg.test(this.jan_code)) {
+                    _this.insertToJanList();
+                }
             }
+            
             if (e.keyCode === 13) {
                 if (reg.test(this.jan_code)) {
                     _this.insertToJanList();
@@ -747,8 +773,10 @@ export default {
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        $('.handy_error_msg').html(`JANコードりません`);
-                        $('.handdy_error').removeClass('hide').addClass('show');
+                        //$('.handy_error_msg').html(`JANコードりません`);
+                        //$('.handdy_error').removeClass('hide').addClass('show');
+                        _this.handi_navi = 'JAN コードを入力してください';
+                        $('#handy-navi').show();
                     } else {
                         if (response.data.vendor_item_data == 1) {
                             console.log('this jan code is already registered');

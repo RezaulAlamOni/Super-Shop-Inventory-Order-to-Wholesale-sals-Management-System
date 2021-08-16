@@ -17,8 +17,10 @@
                         </div>
 
                         <div class="col-7 pull-right" style="text-align: right; padding: 0; font-size: 24px;">
-                            <p class="handy_top_bar2"><a class="backtoHomeFromAndroid" href="{{config('app.url').'/home'}}">業務選択</a><br>
-                            </p>
+                            <p class="handy_top_bar2"><a class="backtoHomeFromAndroid" href="{{config('app.url').'/home'}}">業務選択</a>
+                          <!--  <p class="handy_top_bar2"><button class="backtoHomeFromAndroid visible-sm visible-xs hidden-md hidden-lg" id="installApp">アプリを作る</button></p>
+                            </p>-->
+
                         </div>
                     </div>
                 </div>
@@ -115,6 +117,11 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="appss_install" id="installapplications">ハンディブ ラウザ インストールしますか？</p>
+                    </div>
+                </div>
                 <!--receive handy popup-->
                 <div class="content_popuparea" style="display:none;">
                     <div class="popup">

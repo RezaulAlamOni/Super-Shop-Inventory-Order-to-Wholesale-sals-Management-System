@@ -21,6 +21,9 @@
                                         <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code" name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
+                                               @paste="checkAndGetData($event)"
+                                               @input="checkAndGetData($event)"
+                                               @blur="checkAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" autofocus>
                                     </div>
                                 </div>
@@ -376,13 +379,15 @@ export default {
                 .then(function (res) {
                     // console.log(res.data)
                     if (res.data.status == 505) {
-                        _this.jan_code = '';
+                       // _this.jan_code = '';
+                       //_this.handi_navi = '<li>0000000000</li>';
                         $('#handy-navi-body').html('<li>この商品は登録されていません。</li><li> 【棚卸(在庫)】押して登録してください。</li>')
                         $('#handy-navi').show()
                         return false;
                     }
                     if (res.data.status == 501) {
-                        _this.jan_code = '';
+                        //_this.jan_code = '';
+                        //_this.handi_navi = '<li>0000000000</li>';
                         $('#handy-navi-body').html('<li>この商品は発注されていません。</li>')
                         $('#handy-navi').show()
                         return false;
@@ -492,9 +497,9 @@ export default {
             }, 120)
         },
         checkAndGetData(e) {
-            if (this.jan_code.length >= 13 && e.keyCode == 13) {
+            if ((this.jan_code.length >= 13 || this.jan_code.length==8) && e.keyCode == 13) {
                 this.getOrderDataByJan()
-            } else if (this.jan_code.length >= 13) {
+            } else if (this.jan_code.length >= 13 || this.jan_code.length==8) {
                 this.getOrderDataByJan()
             } else if (e.keyCode == 13) {
                 this.getOrderDataByJan()

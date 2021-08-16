@@ -24,6 +24,9 @@
                                                v-model="jan_code"
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
+                                               @paste="checkAndGetData($event)"
+                                               @input="checkAndGetData($event)"
+                                               @blur="checkAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" autofocus>
                                     </div>
                                 </div>
@@ -320,7 +323,7 @@ export default {
 
                 })
                 .finally(function () {
-                    _this.jan_code = ''
+                   // _this.jan_code = ''
                     _this.loader = 0
                 })
         },
@@ -375,7 +378,7 @@ export default {
             if (this.loader == 1) {
                 return false;
             }
-            if (this.jan_code.length >= 13) {
+            if (this.jan_code.length >= 13 || this.jan_code.length==8) {
                 this.getOrderDataByJan()
             }
             if (e.keyCode == 13) {
@@ -479,7 +482,6 @@ export default {
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        1
                         _this.handi_navi = '<li>JANコードりません</li>';
                         $('#handy-navi').show()
                     } else {

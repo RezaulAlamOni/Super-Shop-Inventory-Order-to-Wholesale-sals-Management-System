@@ -20412,6 +20412,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url', 'read_only'],
   name: "handy-customer-master",
@@ -20596,6 +20598,26 @@ __webpack_require__.r(__webpack_exports__);
         $('#jan_input').focus();
       }, 120);
     },
+    checkInputEventAndGetData: function checkInputEventAndGetData(e) {
+      var _this = this;
+
+      if (this.loader === 1) {
+        return false;
+      }
+
+      var reg = /^\d+$/;
+      console.log('--paste start');
+      console.log(e.target.value);
+      console.log('--paste end');
+      console.log(this.jan_code.length);
+
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        // this.insertToJanList()
+        if (reg.test(this.jan_code)) {
+          _this.insertToJanList();
+        }
+      }
+    },
     checkAndGetData: function checkAndGetData(e) {
       var _this = this;
 
@@ -20604,9 +20626,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var reg = /^\d+$/;
+      console.log(this.jan_code.length);
 
-      if (reg.test(this.jan_code)) {
-        _this.insertToJanList();
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        // this.insertToJanList()
+        if (reg.test(this.jan_code)) {
+          _this.insertToJanList();
+        }
       }
 
       if (e.keyCode === 13) {
@@ -20708,8 +20734,10 @@ __webpack_require__.r(__webpack_exports__);
         var data_resource = response.data.data_resource;
 
         if (api_response == 'invalid_jan_code') {
-          $('.handy_error_msg').html("JAN\u30B3\u30FC\u30C9\u308A\u307E\u305B\u3093");
-          $('.handdy_error').removeClass('hide').addClass('show');
+          //$('.handy_error_msg').html(`JANコードりません`);
+          //$('.handdy_error').removeClass('hide').addClass('show');
+          _this.handi_navi = 'JAN コードを入力してください';
+          $('#handy-navi').show();
         } else {
           if (response.data.vendor_item_data == 1) {
             console.log('this jan code is already registered');
@@ -21141,6 +21169,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21205,6 +21235,13 @@ __webpack_require__.r(__webpack_exports__);
       _this.loader = 1;
       axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code).then(function (res) {
         //_this.resetField();
+        if (res.data.status == 400) {
+          console.log('log here');
+          _this.handi_navi = '<li>0000000</li>';
+          $('#handy-navi').show();
+          return false;
+        }
+
         if (res.data.result.length > 0) {
           _this.order_data = res.data.result;
           _this.product_name = _this.order_data[0].item_name;
@@ -21233,9 +21270,10 @@ __webpack_require__.r(__webpack_exports__);
           $('#handy-navi').hide();
         } else {
           _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+          $('#handy-navi').show();
         }
       })["catch"](function () {})["finally"](function () {
-        _this.jan_code = '';
+        //_this.jan_code = ''
         $('.loading_image_custom').hide();
         _this.loader = 0;
       });
@@ -21360,7 +21398,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var reg = /^\d+$/;
 
-      if (this.jan_code.length >= 13) {
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         if (reg.test(this.jan_code)) {
           this.getOrderDataByJan();
         }
@@ -21869,6 +21907,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21947,6 +21987,12 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code).then(function (res) {
         _this.resetField();
 
+        if (res.data.status == 400) {
+          _this.handi_navi = '<li>0000000000</li>';
+          $('#handy-navi').show();
+          return false;
+        }
+
         if (res.data.result.length > 0) {
           _this.order_data = res.data.result;
           _this.product_name = _this.order_data[0].item_name;
@@ -21984,7 +22030,7 @@ __webpack_require__.r(__webpack_exports__);
           $('#handy-navi').show();
         }
       })["catch"](function () {})["finally"](function () {
-        _this.jan_code = '';
+        // _this.jan_code = ''
         $('.loading_image_custom').hide();
         _this.loader = 0;
       });
@@ -22158,7 +22204,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var reg = /^\d+$/;
 
-      if (this.jan_code.length >= 13) {
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         if (reg.test(this.jan_code)) {
           this.getOrderDataByJan();
         }
@@ -22610,6 +22656,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-inventory-tana-update",
@@ -22683,8 +22732,12 @@ __webpack_require__.r(__webpack_exports__);
           _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
           $('#handy-navi').show();
         }
-      })["catch"](function () {})["finally"](function () {
-        _this.jan_code = '';
+      })["catch"](function () {
+        console.log('eror found');
+        _this.handi_navi = '<li>00000000</li>';
+        $('#handy-navi').show();
+      })["finally"](function () {
+        //_this.jan_code = ''
         $('.loading_image_custom').hide();
         _this.loader = 0;
       });
@@ -22734,7 +22787,7 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       }
 
-      if (this.jan_code.length >= 13) {
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         this.getOrderDataByJan();
       }
 
@@ -23210,6 +23263,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-place",
@@ -23300,7 +23356,7 @@ __webpack_require__.r(__webpack_exports__);
 
         }
       })["catch"](function () {})["finally"](function () {
-        _this.jan_code = '';
+        // _this.jan_code = ''
         _this.loader = 0;
       });
     },
@@ -23349,7 +23405,7 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       }
 
-      if (this.jan_code.length >= 13) {
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         this.getOrderDataByJan();
       }
 
@@ -23444,7 +23500,6 @@ __webpack_require__.r(__webpack_exports__);
         var data_resource = response.data.data_resource;
 
         if (api_response == 'invalid_jan_code') {
-          1;
           _this.handi_navi = '<li>JANコードりません</li>';
           $('#handy-navi').show();
         } else {
@@ -23898,6 +23953,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url'],
   name: "handy-product-order-receive",
@@ -23962,14 +24020,16 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         // console.log(res.data)
         if (res.data.status == 505) {
-          _this.jan_code = '';
+          // _this.jan_code = '';
+          //_this.handi_navi = '<li>0000000000</li>';
           $('#handy-navi-body').html('<li>この商品は登録されていません。</li><li> 【棚卸(在庫)】押して登録してください。</li>');
           $('#handy-navi').show();
           return false;
         }
 
         if (res.data.status == 501) {
-          _this.jan_code = '';
+          //_this.jan_code = '';
+          //_this.handi_navi = '<li>0000000000</li>';
           $('#handy-navi-body').html('<li>この商品は発注されていません。</li>');
           $('#handy-navi').show();
           return false;
@@ -24069,9 +24129,9 @@ __webpack_require__.r(__webpack_exports__);
       }, 120);
     },
     checkAndGetData: function checkAndGetData(e) {
-      if (this.jan_code.length >= 13 && e.keyCode == 13) {
+      if ((this.jan_code.length >= 13 || this.jan_code.length == 8) && e.keyCode == 13) {
         this.getOrderDataByJan();
-      } else if (this.jan_code.length >= 13) {
+      } else if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
         this.getOrderDataByJan();
       } else if (e.keyCode == 13) {
         this.getOrderDataByJan();
@@ -24739,6 +24799,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['base_url', 'read_only'],
   name: "handy-vendor-master",
@@ -24923,6 +24985,26 @@ __webpack_require__.r(__webpack_exports__);
         $('#jan_input').focus();
       }, 120);
     },
+    checkInputEventAndGetData: function checkInputEventAndGetData(e) {
+      var _this = this;
+
+      if (this.loader === 1) {
+        return false;
+      }
+
+      var reg = /^\d+$/;
+      console.log('--paste start');
+      console.log(e.target.value);
+      console.log('--paste end');
+      console.log(this.jan_code.length);
+
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        // this.insertToJanList()
+        if (reg.test(this.jan_code)) {
+          _this.insertToJanList();
+        }
+      }
+    },
     checkAndGetData: function checkAndGetData(e) {
       var _this = this;
 
@@ -24931,9 +25013,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var reg = /^\d+$/;
+      console.log(this.jan_code.length);
 
-      if (reg.test(this.jan_code)) {
-        _this.insertToJanList();
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        // this.insertToJanList()
+        if (reg.test(this.jan_code)) {
+          _this.insertToJanList();
+        }
       }
 
       if (e.keyCode === 13) {
@@ -25037,8 +25123,10 @@ __webpack_require__.r(__webpack_exports__);
         var data_resource = response.data.data_resource;
 
         if (api_response == 'invalid_jan_code') {
-          $('.handy_error_msg').html("JAN\u30B3\u30FC\u30C9\u308A\u307E\u305B\u3093");
-          $('.handdy_error').removeClass('hide').addClass('show');
+          //$('.handy_error_msg').html(`JANコードりません`);
+          //$('.handdy_error').removeClass('hide').addClass('show');
+          _this.handi_navi = 'JAN コードを入力してください';
+          $('#handy-navi').show();
         } else {
           if (response.data.vendor_item_data == 1) {
             console.log('this jan code is already registered');
@@ -62689,14 +62777,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              blur: function($event) {
+                              paste: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkInputEventAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
@@ -63945,12 +64041,20 @@ var render = function() {
                               blur: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
-                              }
+                              ]
                             }
                           })
                         ])
@@ -65161,14 +65265,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              blur: function($event) {
+                              paste: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
@@ -66370,11 +66482,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
@@ -67302,11 +67425,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
@@ -68215,11 +68349,22 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
                               }
                             }
                           })
@@ -69466,15 +69611,23 @@ var render = function() {
                               keyup: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
                               blur: function($event) {
                                 return _vm.checkAndGetData($event)
                               },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkInputEventAndGetData($event)
                                 }
-                                _vm.jan_code = $event.target.value
-                              }
+                              ]
                             }
                           })
                         ])

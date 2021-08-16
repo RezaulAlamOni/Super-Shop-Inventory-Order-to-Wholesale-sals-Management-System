@@ -24,6 +24,8 @@
                                                v-model="jan_code"
                                                name="scan_by_jan_for_stock_detail"
                                                v-on:keyup="checkAndGetData($event)"
+                                               @paste="checkAndGetData($event)"
+                                               @input="checkAndGetData($event)"
                                                @blur="checkAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" autofocus>
                                     </div>
@@ -391,6 +393,11 @@ export default {
             axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code)
                 .then(function (res) {
                     _this.resetField();
+                    if(res.data.status==400){
+                            _this.handi_navi = '<li>0000000000</li>';
+                            $('#handy-navi').show();
+                            return false;
+                        }
                     if (res.data.result.length > 0) {
                         _this.order_data = res.data.result;
                         _this.product_name = _this.order_data[0].item_name;
@@ -431,7 +438,7 @@ export default {
 
                 })
                 .finally(function () {
-                    _this.jan_code = ''
+                   // _this.jan_code = ''
                     $('.loading_image_custom').hide()
                     _this.loader = 0
 
@@ -611,7 +618,7 @@ export default {
             }
             let reg = /^\d+$/;
 
-            if (this.jan_code.length >= 13) {
+            if (this.jan_code.length >= 13 || this.jan_code.length==8) {
                 if (reg.test(this.jan_code)) {
                     this.getOrderDataByJan()
                 }

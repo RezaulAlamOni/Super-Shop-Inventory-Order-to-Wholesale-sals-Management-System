@@ -49,7 +49,7 @@
         <!-- End Page Header -->
         <div class="row">
             <div class="col-md-12 estimate_product_table">
-                <img src="{{asset('public/loader/ajax-loader.gif')}}" class="loading_image" style="display:none;"/>
+                <img src="{{Config::get('app.url').'/public/loader/ajax-loader.gif'}}" class="loading_image" style="display:none;"/>
                 <div id="management_sheet_table" style="margin:0;">
                     <table class="table table-striped table-bordered shipment_sheet_table table-freeze-multi"
                            cellpadding="0" cellspacing="0" data-scroll-height="550" data-cols-number="">
