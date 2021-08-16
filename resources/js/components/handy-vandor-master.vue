@@ -655,9 +655,6 @@ export default {
             console.log(this.jan_code.length);
             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
                // this.insertToJanList()
-                if(this.jan_code=='99999999'){
-                       alert('This is an invalid jancode');
-                   }
                if (reg.test(this.jan_code)) {
                     _this.insertToJanList();
                 }
