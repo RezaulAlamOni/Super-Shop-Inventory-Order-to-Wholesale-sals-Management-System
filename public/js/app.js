@@ -20857,8 +20857,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _text_recognition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./text-recognition */ "./resources/js/components/text-recognition.vue");
-/* harmony import */ var vue_barcode_reader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-barcode-reader */ "./node_modules/vue-barcode-reader/src/index.js");
 //
 //
 //
@@ -21126,92 +21124,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    TextRecognition: _text_recognition__WEBPACK_IMPORTED_MODULE_0__["default"],
-    StreamBarcodeReader: vue_barcode_reader__WEBPACK_IMPORTED_MODULE_1__["StreamBarcodeReader"]
-  },
-  props: ['base_url', 'read_only'],
+  props: ['base_url'],
   name: "handy-order-shipment-list",
   data: function data() {
     return {
       jan_code: '',
       order_data: [],
-      order_data_: [],
-      search_data: [],
-      barCodeScan: 0,
-      return_info: {
-        vendor_order_id: '',
-        vendor_item_id: '',
-        return_case_qty: 0,
-        return_ball_qty: 0,
-        return_unit_qty: 0,
-        retrunUnitQty: 0,
-        retrunBallQty: 0,
-        retrunCaseQty: 0,
-        returnTotalQty: 0,
-        TotalQty: 0,
-        return_rack_number: ''
-      },
       case_order: 0,
       boll_order: 0,
       bara_order: 0,
@@ -21225,7 +21144,7 @@ __webpack_require__.r(__webpack_exports__);
       loader: 0,
       total_quantity: 0,
       handi_navi: '',
-      readonly: this.read_only ? true : false
+      temp_rack_number: ''
     };
   },
   mounted: function mounted() {
@@ -21235,8 +21154,6 @@ __webpack_require__.r(__webpack_exports__);
       _this.jan_code = '';
       setTimeout(function () {
         $('#jan_input').focus();
-        _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
-        $('#handy-navi').show();
       }, 120);
     });
     _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
@@ -21245,39 +21162,20 @@ __webpack_require__.r(__webpack_exports__);
     getOrderDataByJan: function getOrderDataByJan() {
       var _this = this;
 
-      var reg = /^\d+$/;
-
-      if (!reg.test(this.jan_code)) {
-        _this.getSearchData(_this.jan_code);
-
-        return false;
-      }
-
       if (_this.jan_code.length <= 0) {
         return false;
       }
 
       $('.loading_image_custom').show();
       _this.loader = 1;
-      axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code).then(function (res) {
-        _this.resetField();
-
-        if (res.data.status == 400) {
-          _this.handi_navi = '<li>0000000000</li>';
-          $('#handy-navi').show();
-          return false;
-        }
-
+      axios.post(this.base_url + '/handy_stock_product_store_rack_code', {
+        'scan_by_jan_for_stock_detail': _this.jan_code
+      }).then(function (res) {
+        //_this.resetField();
         if (res.data.result.length > 0) {
           _this.order_data = res.data.result;
-          _this.order_data_ = res.data.result[0];
+          _this.temp_rack_number = res.data.last_rack;
           _this.product_name = _this.order_data[0].item_name;
-          _this.return_info.vendor_item_id = _this.order_data[0].vendor_item_id;
-          _this.return_info.vendor_order_id = _this.order_data[0].vendor_order_id;
-          _this.return_info.return_rack_number = _this.order_data[0].rack_number;
-          _this.return_info.return_case_qty = _this.order_data[0].arrival_case_quantity - _this.order_data[0].damage_case_quantity;
-          _this.return_info.return_ball_qty = _this.order_data[0].arrival_ball_quantity - _this.order_data[0].damage_ball_quantity;
-          _this.return_info.return_unit_qty = _this.order_data[0].arrival_unit_quantity - _this.order_data[0].damage_unit_quantity;
 
           _this.calculateTotalQuantity();
 
@@ -21287,149 +21185,27 @@ __webpack_require__.r(__webpack_exports__);
               keyboard: false
             });
             setTimeout(function () {
-              if ($('#bara' + 0).length <= 0) {
+              if ($('#rack' + 0).length <= 0) {
                 $('#order-place-button').focus();
               } else {
-                //if (!_this.readonly) {
-                $('#case' + 0).focus();
-                $('#case' + 0).select(); // } else {
-                //     $('#order-place-button').focus()
-                // }
+                $('#rack' + 0).focus();
+                $('#rack' + 0).select();
               }
             }, 720);
           }
-
-          $('#handy-navi').hide();
         } else {
-          console.log('No order found');
-          _this.handi_navi = '<li>0000000000000000</li>';
+          _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
           $('#handy-navi').show();
         }
-      })["catch"](function () {})["finally"](function () {
-        // _this.jan_code = ''
+      })["catch"](function () {
+        console.log('eror found');
+        _this.handi_navi = '<li>00000000</li>';
+        $('#handy-navi').show();
+      })["finally"](function () {
+        //_this.jan_code = ''
         $('.loading_image_custom').hide();
         _this.loader = 0;
       });
-    },
-    calculateTotalQuantity: function calculateTotalQuantity() {
-      var _this = this;
-
-      _this.total_quantity = 0;
-      console.log(_this.return_info);
-      this.order_data.map(function (order) {
-        var unit = order.arrival_unit_quantity ? parseInt(order.arrival_unit_quantity) : 0;
-        var ball = order.arrival_ball_quantity ? parseInt(order.arrival_ball_quantity) : 0;
-        var case_ = order.arrival_case_quantity ? parseInt(order.arrival_case_quantity) : 0;
-        var unit_r = order.damage_unit_quantity ? parseInt(order.damage_unit_quantity) : 0;
-        var ball_r = order.damage_ball_quantity ? parseInt(order.damage_ball_quantity) : 0;
-        var case_r = order.damage_case_quantity ? parseInt(order.damage_case_quantity) : 0;
-        unit = unit - unit_r;
-        ball = ball - ball_r;
-        case_ = case_ - case_r;
-
-        if (unit > _this.return_info.return_unit_qty) {
-          _this.return_info.retrunUnitQty = unit - _this.return_info.return_unit_qty;
-          $('#handy-navi').hide();
-        } else {
-          if (unit != _this.return_info.return_unit_qty) {
-            _this.handi_navi = '<li>0000000000000000</li>';
-            $('#handy-navi').show();
-          }
-
-          _this.return_info.return_unit_qty = unit;
-          _this.return_info.retrunUnitQty = 0;
-        }
-
-        if (ball > _this.return_info.return_ball_qty) {
-          _this.return_info.retrunBallQty = ball - _this.return_info.return_ball_qty;
-          $('#handy-navi').hide();
-        } else {
-          if (ball != _this.return_info.return_ball_qty) {
-            _this.handi_navi = '<li>0000000000000000</li>';
-            $('#handy-navi').show();
-          }
-
-          _this.return_info.return_ball_qty = ball;
-          _this.return_info.retrunBallQty = 0;
-        }
-
-        if (case_ > _this.return_info.return_case_qty) {
-          _this.return_info.retrunCaseQty = case_ - _this.return_info.return_case_qty;
-          $('#handy-navi').hide();
-        } else {
-          if (case_ != _this.return_info.return_case_qty) {
-            _this.handi_navi = '<li>0000000000000000</li>';
-            $('#handy-navi').show();
-          }
-
-          _this.return_info.return_case_qty = case_;
-          _this.return_info.retrunCaseQty = 0;
-        }
-
-        _this.return_info.returnTotalQty = _this.return_info.retrunUnitQty + _this.return_info.retrunBallQty * parseInt(order.ball_inputs) + _this.return_info.retrunCaseQty * parseInt(order.case_inputs);
-        console.log(order.damage_quantity);
-        _this.return_info.TotalQty = parseInt(_this.return_info.return_unit_qty) + parseInt(_this.return_info.return_ball_qty) * parseInt(order.ball_inputs) + parseInt(_this.return_info.return_case_qty) * parseInt(order.case_inputs);
-      });
-    },
-    getSearchData: function getSearchData(text) {
-      var _this = this;
-
-      if (text.length <= 0) {
-        return false;
-      }
-
-      $('.loading_image_custom').show();
-      _this.jan_code = text;
-      axios.post(_this.base_url + '/item_search_by_name', {
-        'name': text
-      }).then(function (res) {
-        res = res.data;
-        _this.search_data = res.name_list;
-
-        if (_this.search_data.length > 0) {
-          $('#handy-navi').hide();
-          $('#handy-navi-jan-list').show();
-        } else {
-          _this.handi_navi = '<li>XXXXXXX。</li>';
-          $('#handy-navi').show();
-        }
-      })["catch"](function () {})["finally"](function () {
-        $('.loading_image_custom').hide();
-      });
-    },
-    alertForIos: function alertForIos() {
-      this.jan_code = "";
-      this.handi_navi = '<li>キーボードの 【<img src="' + this.base_url + '/public/backend/images/mic.png' + '" height="18px" alt=""> 】マイクロフォンを押して音声検索してください。</li>';
-      $('#handy-navi').show();
-      setTimeout(function () {// $('#jan_input').focus()
-      }, 120);
-      this.jan_code = "";
-    },
-    getBarCodeScan: function getBarCodeScan() {
-      this.barCodeScan = this.barCodeScan ? 0 : 1;
-      this.barCodeScan ? $('#bar-code-scan-area').modal({
-        backdrop: 'static',
-        keyboard: false
-      }) : $('#bar-code-scan-area').modal('hide');
-    },
-    onDecode: function onDecode(result) {
-      console.log(result);
-      this.getBarCodeScan();
-      this.jan_code = result;
-      $('#handy-navi').hide();
-      this.getOrderDataByJan();
-    },
-    onLoad: function onLoad() {
-      $('#handy-navi').show();
-      this.handi_navi = '<li>********。</li>';
-    },
-    clearInput: function clearInput() {
-      this.jan_code = "";
-    },
-    GetDetailsFormSearchList: function GetDetailsFormSearchList(jan) {
-      this.jan_code = jan;
-      $('#handy-navi-jan-list').hide();
-      this.getOrderDataByJan();
     },
     updateOrderQnty: function updateOrderQnty(type) {
       var _this = this;
@@ -21472,30 +21248,16 @@ __webpack_require__.r(__webpack_exports__);
       }, 120);
     },
     checkAndGetData: function checkAndGetData(e) {
-      var _this = this;
-
-      if (this.loader === 1) {
+      if (this.loader == 1) {
         return false;
       }
 
-      var reg = /^\d+$/;
-
       if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
-        if (reg.test(this.jan_code)) {
-          this.getOrderDataByJan();
-        }
+        this.getOrderDataByJan();
       }
 
-      if (e.keyCode === 13) {
-        if (reg.test(this.jan_code)) {
-          this.getOrderDataByJan();
-        }
-      }
-
-      if (!reg.test(this.jan_code)) {
-        setTimeout(function () {
-          _this.getSearchData(_this.jan_code);
-        }, 1200);
+      if (e.keyCode == 13) {
+        this.getOrderDataByJan();
       }
     },
     selectItem: function selectItem(e, type) {
@@ -21505,51 +21267,79 @@ __webpack_require__.r(__webpack_exports__);
     updateTemporaryTana: function updateTemporaryTana() {
       var _this = this;
 
-      var orderAndReturnDetails = {
-        order_data: _this.order_data,
-        return_data: _this.return_info
-      };
+      var data = [];
+      $('.loading_image_custom').show();
+      this.order_data.map(function (order) {
+        if (order.rack_number.length >= 4) {
+          var _data = {
+            rack_number: order.rack_number,
+            case_quantity: order.case_quantity,
+            unit_quantity: order.unit_quantity,
+            ball_quantity: order.ball_quantity,
+            vendor_id: order.vendor_id,
+            stock_item_id: order.stock_item_id,
+            vendor_item_id: order.vendor_item_id
+          };
+          data.push(_data);
+        }
+      });
 
-      if (_this.return_info.returnTotalQty > 0) {
-        axios.post(this.base_url + '/item_return_to_tonya', orderAndReturnDetails).then(function (res) {
-          console.log(res);
-        }).then(function (er) {
-          console.log(err);
+      if (data.length <= 0) {
+        $('.loading_image_custom').hide();
+        $('#stock-order-show-by-jan').modal('hide');
+      } else {
+        axios.post(this.base_url + '/stock_inventory_update_rack_multiple', {
+          data: data
+        }).then(function (res) {
+          $('#handy-navi').show();
+          _this.handi_navi = '<li>棚入庫が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+
+          _this.hideModelAndClearInput();
+        }).then(function (er) {})["finally"](function () {
+          $('.loading_image_custom').hide();
+          _this.loader = 0;
         });
       }
-
-      _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
-      $('#handy-navi').show();
-
-      _this.hideModelAndClearInput();
     },
     resetField: function resetField() {
-      this.return_info = {
-        vendor_order_id: '',
-        vendor_item_id: '',
-        return_case_qty: 0,
-        return_ball_qty: 0,
-        return_unit_qty: 0,
-        retrunUnitQty: 0,
-        retrunBallQty: 0,
-        retrunCaseQty: 0,
-        returnTotalQty: 0,
-        TotalQty: 0,
-        return_rack_number: ''
-      };
+      if (this.input_type == 'ケース') {
+        this.boll_order = 0;
+        this.bara_order = 0;
+      } else if (this.input_type == 'ボール') {
+        this.case_order = 0;
+        this.bara_order = 0;
+      } else {
+        this.case_order = 0;
+        this.boll_order = 0;
+      }
     },
     pressEnterAndSave: function pressEnterAndSave(e, i) {
-      this.calculateTotalQuantity();
-
       if (e.keyCode == 13) {
-        console.log(e);
-        console.log(i);
-        $('#' + (i + 0)).focus();
-        $('#' + (i + 0)).select();
+        $('#case' + (i + 1)).focus();
+        $('#case' + (i + 1)).select(); // $('#rack' + (i + 1)).focus()
+        // $('#rack' + (i + 1)).select()
 
-        if (i == 'reck') {
+        if ($('#case' + (i + 1)).length <= 0) {
           $('#order-place-button').focus();
         }
+      }
+    },
+    pressEnterAndNext: function pressEnterAndNext(e, type, i) {
+      if (e.keyCode == 13) {
+        if (type == 'case') {
+          $('#ball' + i).focus();
+          $('#ball' + i).select(); // this.input_type = 'ボール';
+        } else if (type == 'ball') {
+          $('#bara' + i).focus();
+          $('#bara' + i).select(); // this.input_type = 'バラ';
+        } else {
+          $('#rack' + i).focus();
+        } // $('#rack' + (i + 1)).focus()
+        // $('#rack' + (i + 1)).select()
+        // if ($('#rack' + (i + 1)).length <= 0) {
+        //     $('#order-place-button').focus()
+        // }
+
       }
     },
     insertToJanList: function insertToJanList() {
@@ -21663,6 +21453,26 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.getOrderDataByJan();
       });
+    },
+    calculateTotalQuantity: function calculateTotalQuantity() {
+      var _this = this;
+
+      var data = [];
+      _this.total_quantity = 0;
+      this.order_data.map(function (order) {
+        if (order.rack_number.length == 3) {
+          _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs);
+
+          if (_this.temp_rack_number) {
+            order.rack_number = _this.temp_rack_number;
+          } else {
+            order.rack_number = '';
+          }
+
+          data.push(order);
+        }
+      });
+      this.order_data = data;
     }
   },
   watch: {// jan_code: function (val) {
@@ -30642,7 +30452,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-df3be5d8] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-df3be5d8] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-df3be5d8] {\n        display: block !important;\n}\n#handy-navi[data-v-df3be5d8] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-df3be5d8] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-df3be5d8] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
 
 // exports
 
@@ -64861,7 +64671,7 @@ var render = function() {
               [
                 _c("span", { staticClass: "pull-left" }, [
                   _vm._v(
-                    "\n                                出荷一覧\n                            "
+                    "\n                            出荷一覧\n                        "
                   )
                 ]),
                 _vm._v(" "),
@@ -64954,7 +64764,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                                        音声\n                                    "
+                              "\n                                    音声\n                                "
                             )
                           ]
                         ),
@@ -64977,7 +64787,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                                        次へ\n                                    "
+                              "\n                                    次へ\n                                "
                             )
                           ]
                         )
@@ -65105,16 +64915,16 @@ var render = function() {
                                                   },
                                                   [
                                                     _vm._v(
-                                                      "\n                                                                ケース "
+                                                      "\n                                                            ケース "
                                                     ),
                                                     _c("br"),
                                                     _vm._v(
-                                                      "\n                                                                (入数 " +
+                                                      "\n                                                            (入数 " +
                                                         _vm._s(
-                                                          _vm.order_data_
+                                                          _vm.order_data
                                                             .case_inputs
                                                         ) +
-                                                        ")\n                                                            "
+                                                        ")\n                                                        "
                                                     )
                                                   ]
                                                 ),
@@ -65130,16 +64940,16 @@ var render = function() {
                                                   },
                                                   [
                                                     _vm._v(
-                                                      "\n                                                                ボール "
+                                                      "\n                                                            ボール "
                                                     ),
                                                     _c("br"),
                                                     _vm._v(
                                                       " (入数 " +
                                                         _vm._s(
-                                                          _vm.order_data_
+                                                          _vm.order_data
                                                             .ball_inputs
                                                         ) +
-                                                        ")\n\n                                                            "
+                                                        ")\n\n                                                        "
                                                     )
                                                   ]
                                                 ),
@@ -65155,7 +64965,7 @@ var render = function() {
                                                   },
                                                   [
                                                     _vm._v(
-                                                      "\n                                                                バラ\n                                                            "
+                                                      "\n                                                            バラ\n                                                        "
                                                     )
                                                   ]
                                                 ),
@@ -65171,23 +64981,7 @@ var render = function() {
                                                   },
                                                   [
                                                     _vm._v(
-                                                      "\n                                                                在庫\n                                                                合計\n                                                            "
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "th",
-                                                  {
-                                                    staticStyle: {
-                                                      width: "50px",
-                                                      "text-align": "center",
-                                                      padding: "5px"
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                                返却\n                                                                合計\n                                                            "
+                                                      "\n                                                            入庫\n                                                            棚no\n                                                        "
                                                     )
                                                   ]
                                                 )
@@ -65205,19 +64999,6 @@ var render = function() {
                                                         return _c("tr", [
                                                           _c("td", [
                                                             _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .return_info
-                                                                      .return_case_qty,
-                                                                  expression:
-                                                                    "return_info.return_case_qty"
-                                                                }
-                                                              ],
                                                               staticClass:
                                                                 "form-control inputs ",
                                                               attrs: {
@@ -65227,9 +65008,7 @@ var render = function() {
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  _vm
-                                                                    .return_info
-                                                                    .return_case_qty
+                                                                  order.case_quantity
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65237,33 +65016,16 @@ var render = function() {
                                                                 ) {
                                                                   return _vm.selectItem(
                                                                     $event,
-                                                                    "ケース"
+                                                                    "case"
                                                                   )
                                                                 },
                                                                 keypress: function(
                                                                   $event
                                                                 ) {
-                                                                  return _vm.pressEnterAndSave(
+                                                                  return _vm.pressEnterAndNext(
                                                                     $event,
-                                                                    "ball"
-                                                                  )
-                                                                },
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.return_info,
-                                                                    "return_case_qty",
-                                                                    $event
-                                                                      .target
-                                                                      .value
+                                                                    "case",
+                                                                    index
                                                                   )
                                                                 }
                                                               }
@@ -65272,19 +65034,6 @@ var render = function() {
                                                           _vm._v(" "),
                                                           _c("td", [
                                                             _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .return_info
-                                                                      .return_ball_qty,
-                                                                  expression:
-                                                                    "return_info.return_ball_qty"
-                                                                }
-                                                              ],
                                                               staticClass:
                                                                 "form-control boll_order inputs",
                                                               attrs: {
@@ -65294,9 +65043,7 @@ var render = function() {
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  _vm
-                                                                    .return_info
-                                                                    .return_ball_qty
+                                                                  order.ball_quantity
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65304,33 +65051,16 @@ var render = function() {
                                                                 ) {
                                                                   return _vm.selectItem(
                                                                     $event,
-                                                                    "ケース"
+                                                                    "ball"
                                                                   )
                                                                 },
                                                                 keypress: function(
                                                                   $event
                                                                 ) {
-                                                                  return _vm.pressEnterAndSave(
+                                                                  return _vm.pressEnterAndNext(
                                                                     $event,
-                                                                    "bara"
-                                                                  )
-                                                                },
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.return_info,
-                                                                    "return_ball_qty",
-                                                                    $event
-                                                                      .target
-                                                                      .value
+                                                                    "ball",
+                                                                    index
                                                                   )
                                                                 }
                                                               }
@@ -65339,21 +65069,8 @@ var render = function() {
                                                           _vm._v(" "),
                                                           _c("td", [
                                                             _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .return_info
-                                                                      .return_unit_qty,
-                                                                  expression:
-                                                                    "return_info.return_unit_qty"
-                                                                }
-                                                              ],
                                                               staticClass:
-                                                                "form-control cmn_num_formt bara_order inputs",
+                                                                "form-control cmn_num_formt bara_order inputs ",
                                                               attrs: {
                                                                 type: "tel",
                                                                 id:
@@ -65361,9 +65078,7 @@ var render = function() {
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  _vm
-                                                                    .return_info
-                                                                    .return_unit_qty
+                                                                  order.unit_quantity
                                                               },
                                                               on: {
                                                                 click: function(
@@ -65371,99 +65086,17 @@ var render = function() {
                                                                 ) {
                                                                   return _vm.selectItem(
                                                                     $event,
-                                                                    "ケース"
+                                                                    "bara"
                                                                   )
                                                                 },
                                                                 keypress: function(
                                                                   $event
                                                                 ) {
-                                                                  return _vm.pressEnterAndSave(
+                                                                  return _vm.pressEnterAndNext(
                                                                     $event,
-                                                                    "reck"
-                                                                  )
-                                                                },
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.return_info,
-                                                                    "return_unit_qty",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]),
-                                                          _vm._v(" "),
-                                                          _c("td", [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .return_info
-                                                                      .TotalQty,
-                                                                  expression:
-                                                                    "return_info.TotalQty"
-                                                                }
-                                                              ],
-                                                              staticClass:
-                                                                "form-control  ",
-                                                              staticStyle: {
-                                                                "border-radius":
-                                                                  "0px",
-                                                                "text-align":
-                                                                  "center"
-                                                              },
-                                                              attrs: {
-                                                                type: "tel",
-                                                                readonly:
-                                                                  _vm.readonly
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .return_info
-                                                                    .TotalQty
-                                                              },
-                                                              on: {
-                                                                keypress: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.pressEnterAndSave(
-                                                                    $event,
+                                                                    "bara",
                                                                     index
                                                                   )
-                                                                },
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.return_info,
-                                                                    "TotalQty",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
                                                                 }
                                                               }
                                                             })
@@ -65477,15 +65110,13 @@ var render = function() {
                                                                   rawName:
                                                                     "v-model",
                                                                   value:
-                                                                    _vm
-                                                                      .return_info
-                                                                      .returnTotalQty,
+                                                                    order.rack_number,
                                                                   expression:
-                                                                    "return_info.returnTotalQty"
+                                                                    "order.rack_number"
                                                                 }
                                                               ],
                                                               staticClass:
-                                                                "form-control  ",
+                                                                "form-control  update_rack_code_exec  ",
                                                               staticStyle: {
                                                                 "border-radius":
                                                                   "0px",
@@ -65495,16 +65126,11 @@ var render = function() {
                                                               attrs: {
                                                                 type: "tel",
                                                                 id:
-                                                                  "rack" +
-                                                                  index,
-                                                                readonly:
-                                                                  _vm.readonly
+                                                                  "rack" + index
                                                               },
                                                               domProps: {
                                                                 value:
-                                                                  _vm
-                                                                    .return_info
-                                                                    .returnTotalQty
+                                                                  order.rack_number
                                                               },
                                                               on: {
                                                                 keypress: function(
@@ -65526,8 +65152,8 @@ var render = function() {
                                                                     return
                                                                   }
                                                                   _vm.$set(
-                                                                    _vm.return_info,
-                                                                    "returnTotalQty",
+                                                                    order,
+                                                                    "rack_number",
                                                                     $event
                                                                       .target
                                                                       .value
@@ -65567,10 +65193,40 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                                        次の商品へ"
+                                              "\n                                                    次の商品へ"
                                             )
                                           ]
                                         )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "input-group mb-2",
+                                        staticStyle: {
+                                          border: ".5px solid #b8b7b7",
+                                          "border-radius": "5px",
+                                          width: "50%",
+                                          height: "45px",
+                                          "margin-top": "-10px"
+                                        }
+                                      },
+                                      [
+                                        _vm._m(1),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          staticClass:
+                                            "total_stock_jaiko_new jaiko_ form-control",
+                                          staticStyle: {
+                                            padding: "5px 5px",
+                                            "font-size": "16px"
+                                          },
+                                          attrs: { type: "tel", readonly: "" },
+                                          domProps: {
+                                            value: _vm.total_quantity
+                                          }
+                                        })
                                       ]
                                     )
                                   ]
@@ -65708,9 +65364,9 @@ var render = function() {
                                                     },
                                                     [
                                                       _vm._v(
-                                                        "\n                                                                " +
+                                                        "\n                                                            " +
                                                           _vm._s(vendor.text) +
-                                                          "\n                                                            "
+                                                          "\n                                                        "
                                                       )
                                                     ]
                                                   )
@@ -65738,7 +65394,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                                        次の商品へ\n                                                    "
+                                              "\n                                                    次の商品へ\n                                                "
                                             )
                                           ]
                                         )
@@ -65774,9 +65430,9 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                                                        " +
+                                              "\n                                                    " +
                                                 _vm._s(_vm.product_name) +
-                                                "\n                                                "
+                                                "\n                                            "
                                             )
                                           ]
                                         )
@@ -65799,133 +65455,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade bd-example-modal-lg",
-        attrs: {
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "myLargeModalLabel",
-          "aria-hidden": "true",
-          id: "bar-code-scan-area"
-        }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-body p-0" }, [
-              _c(
-                "div",
-                { staticClass: "main-content-container container-fluid pt-2" },
-                [
-                  _vm.barCodeScan
-                    ? _c("StreamBarcodeReader", {
-                        on: {
-                          decode: _vm.onDecode,
-                          loaded: function($event) {
-                            return _vm.onLoad()
-                          }
-                        }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn custom-btn btn-primary pull-right text-right show_inline",
-                      staticStyle: {
-                        float: "right",
-                        margin: "5px 0",
-                        width: "95px !important"
-                      },
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.getBarCodeScan()
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                次へ\n                            "
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
-            ])
-          ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "jn nav_disp",
-        staticStyle: {
-          "z-index": "9999",
-          width: "270px",
-          right: "15px",
-          bottom: "15px",
-          display: "none"
-        },
-        attrs: { id: "handy-navi-jan-list" }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "card card-warning jn_old_popup ",
-            staticStyle: {
-              padding: "6px",
-              "max-height": "70vh",
-              overflow: "auto"
-            }
-          },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-light float-right",
-                  attrs: {
-                    href: "javascript:void(0)",
-                    onclick: "$('#handy-navi-jan-list').hide()"
-                  }
-                },
-                [_vm._v("戻る")]
-              ),
-              _vm._v(" "),
-              _c(
-                "ol",
-                { attrs: { id: "handy-navi-body-for-jan-list" } },
-                _vm._l(_vm.search_data, function(data) {
-                  return _c(
-                    "li",
-                    {
-                      staticStyle: { cursor: "pointer" },
-                      on: {
-                        click: function($event) {
-                          return _vm.GetDetailsFormSearchList(data.jan)
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(data.name) + "\n                        ")]
-                  )
-                }),
-                0
-              )
-            ])
-          ]
-        )
-      ]
-    ),
+    _vm._m(2),
     _vm._v(" "),
     _c(
       "div",
@@ -65986,15 +65516,46 @@ var staticRenderFns = [
             "text-align": "center",
             "vertical-align": "0"
           },
-          attrs: { colspan: "3" }
+          attrs: { colspan: "4" }
         },
         [
           _vm._v(
-            "\n                                                                    データが見つかりませんでした。\n                                                                "
+            "\n                                                                データが見つかりませんでした。\n                                                            "
           )
         ]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "input-group-prepend",
+        staticStyle: { color: "black", "/* padding": "0px 0px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "input-group-text",
+            staticStyle: {
+              color: "black",
+              "font-weight": "bold",
+              padding: "0 11px",
+              "font-size": "16px"
+            }
+          },
+          [
+            _vm._v(
+              "\n                                                        在庫合計\n                                                    "
+            )
+          ]
+        )
+      ]
+    )
   },
   function() {
     var _vm = this
