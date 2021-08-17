@@ -38,6 +38,13 @@ class HandyrController extends Controller
         return view('backend.handy_pages.inventory_return', compact('title', 'active'));
     }
 
+    public function order_shipment_list()
+    {
+        $title = "Dashboard";
+        $active = 'OrderShipmentList';
+        return view('backend.handy_pages.handy-order-shipment-list', compact('title', 'active'));
+    }
+
     public function inventoryInquiry()
     {
         $title = "Dashboard";
@@ -148,9 +155,9 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
             ->orderBy('stock_items.stock_item_id', 'desc')
             ->first();
 
-        $get_last_order_info=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->first();  
-        $skip=0;  
-        $get_last_order_list=vendor_order::select('vendor_orders.*','jans.name','vendor_arrivals.car_rack_number','vendor_arrivals.quantity as arrival_qty')->join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->join('vendor_arrivals','vendor_arrivals.vendor_order_id','vendor_orders.vendor_order_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();    
+        $get_last_order_info=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->first();
+        $skip=0;
+        $get_last_order_list=vendor_order::select('vendor_orders.*','jans.name','vendor_arrivals.car_rack_number','vendor_arrivals.quantity as arrival_qty')->join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->join('vendor_arrivals','vendor_arrivals.vendor_order_id','vendor_orders.vendor_order_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();
         if(!$get_last_order_info){
             $get_last_order_info = array();
         }
@@ -171,9 +178,9 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
     }
 
     public function handy_received_product_detail_by_jan_code_for_order_list(Request $request){
-        $skip=$request->skip_val;  
+        $skip=$request->skip_val;
         $jan = $request->jan_code;
-        $get_last_order_list=vendor_order::select('vendor_orders.*','jans.name','vendor_arrivals.car_rack_number','vendor_arrivals.quantity as arrival_qty')->join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->join('vendor_arrivals','vendor_arrivals.vendor_order_id','vendor_orders.vendor_order_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();    
+        $get_last_order_list=vendor_order::select('vendor_orders.*','jans.name','vendor_arrivals.car_rack_number','vendor_arrivals.quantity as arrival_qty')->join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->join('vendor_arrivals','vendor_arrivals.vendor_order_id','vendor_orders.vendor_order_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();
         return response()->json(['get_last_order_list'=>$get_last_order_list]);
     }
 
@@ -890,7 +897,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
         return view('backend.handy_pages.handy_stock_inventory_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'));
     }
- 
+
     public function handy_get_last_order_by_jan_code($jan){
         if (!vendor_item::where('jan', $jan)->first()) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
@@ -908,7 +915,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         if ($result == null) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
-        return response()->json(['status' => 200, 'result'=>$result]);        
+        return response()->json(['status' => 200, 'result'=>$result]);
     }
 
     public function handy_quotation()
@@ -1905,11 +1912,11 @@ WHERE DATE(co.shipment_date) = CURDATE()
         if($previous_stock_item_info){
             $temp_rack_number = $previous_stock_item_info->temp_rack_number;
         }
-       
+
         if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
             stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $previous_rack_number)->delete();
             $stock_item_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
-            
+
             if ($stock_item_info->case_quantity!=null) {
                 $case_quantity = $case_quantity+$stock_item_info->case_quantity;
             }
@@ -1927,7 +1934,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 'ball_quantity' => $ball_quantity,
                 'unit_quantity' => $unit_quantity
             );
-            
+
             if($stock_item_info->temp_rack_number==null){
                 $updatearr['temp_rack_number']=$temp_rack_number;
             }
@@ -1951,7 +1958,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
             }else{
                 $stock_item_id = stock_item::insertGetId($insarray);
             }
-            
+
             return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_item_id]);
 
         }
@@ -2019,7 +2026,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 $unit_quantity = $stock_item_info->unit_quantity-$damage_quantity;
                 stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity]);
             }else{
-                
+
                 $total_stock = (($stock_item_info->case_quantity*$req['case_inputs'])+($stock_item_info->ball_quantity*$req['ball_inputs'])+$stock_item_info->unit_quantity);
                 $total_stock = $total_stock-$damage_quantity;
                 if($req['case_inputs']!=0){
@@ -2041,15 +2048,15 @@ WHERE DATE(co.shipment_date) = CURDATE()
             if($existingArivalInfo){
                 $existDamageQty = $existingArivalInfo->damage_quantity;
                 $returnQty=$existDamageQty+$damage_quantity;
-                
+
                 $newQty = $req['quantity']-$returnQty;
                 $invoice_amount = $req['unit_cost_price']*$newQty;
                 vendor_invoice::where('voucher_number',$req['vendor_order_id'])->update(['invoice_amount'=>$invoice_amount]);
                 vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$returnQty,'damage_case_quantity'=>$damage_case_quantity+$existingArivalInfo->damage_case_quantity,'damage_ball_quantity'=>$existingArivalInfo->damage_ball_quantity+$damage_ball_quantity,'damage_unit_quantity'=>$damage_unit_quantity+$existingArivalInfo->damage_unit_quantity]);
             }
         }
-       
-        
+
+
         return $result = response()->json(['message' => 'success']);
     }
 

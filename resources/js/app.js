@@ -33,6 +33,7 @@ import handyProductOrderReceive from './components/handy-product-order-receive'
 import handyProductInventoryTempTanaUpdate from './components/handy-product-inventory-tmp-tana-update'
 import handyProductInventoryInquiry from './components/handy-product-inventory-inquiry'
 import handyProductInventoryReturn from './components/handy-product-inventory-return'
+import handyOrderShipmentList from './components/handy-order-shipment-list'
 import handyVendorMaster from './components/handy-vandor-master'
 import handyCustomerMaster from './components/handy-customer-master'
 import barCodeScan from './components/barcode-scan'
@@ -51,6 +52,7 @@ const app = new Vue({
         'handy-product-inventory-update' : handyProductInventoryTempTanaUpdate,
         'handy-product-inventory-inquiry' : handyProductInventoryInquiry,
         'handy-product-inventory-return' : handyProductInventoryReturn,
+        'handy-order-shipment-list' : handyOrderShipmentList,
         'bar-code-scan' : barCodeScan,
         'handy-vendor-master' : handyVendorMaster,
         'handy-customer-master' : handyCustomerMaster
