@@ -672,6 +672,7 @@ export default {
              if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
                // this.insertToJanList()
                if (reg.test(this.jan_code)) {
+                  
                     _this.insertToJanList();
                 }
             }
