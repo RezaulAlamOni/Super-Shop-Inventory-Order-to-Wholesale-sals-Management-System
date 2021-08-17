@@ -6,7 +6,7 @@
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
                         <span class="pull-left">
-                                返却(キャンセル)
+                                出荷一覧
                             </span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right"
@@ -31,20 +31,21 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"
+                                <!--@click="alertForIos" -->
+                                    <button type="button" onclick="$('#jan_input').focus()"
                                             class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "
                                             style="float: left;width: 100px">
                                         音声
                                     </button>
-<!--                                    <text-recognition :base_url="base_url"-->
-<!--                                                      @getSearchData="getSearchData"-->
-<!--                                                      @clearInput="clearInput"></text-recognition>-->
+                                    <!--                                    <text-recognition :base_url="base_url"-->
+                                    <!--                                                      @getSearchData="getSearchData"-->
+                                    <!--                                                      @clearInput="clearInput"></text-recognition>-->
 
-<!--                                    <button type="button" @click="getBarCodeScan()"-->
-<!--                                            class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"-->
-<!--                                            style="padding:0;float: left;width: 70px !important;">-->
-<!--                                        <i class="fa fa-barcode" style="font-size: 40px"></i>-->
-<!--                                    </button>-->
+                                    <!--                                    <button type="button" @click="getBarCodeScan()"-->
+                                    <!--                                            class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"-->
+                                    <!--                                            style="padding:0;float: left;width: 70px !important;">-->
+                                    <!--                                        <i class="fa fa-barcode" style="font-size: 40px"></i>-->
+                                    <!--                                    </button>-->
                                     <button type="button" v-on:click="getOrderDataByJan()"
                                             style="margin: 0px;width: 80px !important;"
                                             class="btn custom-btn btn-primary pull-right text-right show_inline">
@@ -61,7 +62,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
              aria-hidden="true" id="stock-order-show-by-jan">
@@ -88,22 +88,18 @@
                                                         <tr>
                                                             <th style="width: 50px; text-align: center;padding: 05px">
                                                                 ケース <br>
-                                                                (入数 {{ order_data_.case_inputs }})
+                                                                (入数 {{ case_inputs }})
                                                             </th>
                                                             <th style="width: 50px; text-align: center;padding: 05px">
-                                                                ボール <br> (入数 {{ order_data_.ball_inputs }})
+                                                                ボール <br> (入数 {{ ball_inputs }})
 
                                                             </th>
                                                             <th style="width: 50px; text-align: center;padding: 05px;">
                                                                 バラ
                                                             </th>
                                                             <th style="width: 50px; text-align: center; padding: 5px;">
-                                                                在庫
-                                                                合計
-                                                            </th>
-                                                            <th style="width: 50px; text-align: center; padding: 5px;">
-                                                                返却
-                                                                合計
+                                                                入庫
+                                                                棚no
                                                             </th>
                                                         </tr>
                                                         </thead>
@@ -111,57 +107,43 @@
                                                         <template v-if="order_data.length > 0">
                                                             <tr v-for="(order,index) in order_data">
                                                                 <td>
-                                                                    <input type="tel" :id="'case'+index"
-                                                                           @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'ball')"
-                                                                           v-model="return_info.return_case_qty"
+                                                                    <input type="tel" @click="selectItem($event,'case')"
+                                                                           @keypress="pressEnterAndNext($event,'case',index,order)"
+                                                                           v-model="order.case_quantity" :id="'case'+index"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
                                                                 </td>
 
                                                                 <td>
-                                                                    <input type="tel" :id="'ball'+index"
-                                                                           @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'bara')"
-                                                                           v-model="return_info.return_ball_qty"
+                                                                    <input type="tel" @click="selectItem($event,'ball')"
+                                                                           @keypress="pressEnterAndNext($event,'ball',index,order)"
+                                                                           v-model="order.ball_quantity" :id="'ball'+index"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
                                                                 </td>
 
                                                                 <td>
-                                                                    <input type="tel" :id="'bara'+index"
-                                                                           @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'reck')"
-                                                                           v-model="return_info.return_unit_qty"
-                                                                           class="form-control cmn_num_formt bara_order inputs">
+                                                                    <input type="tel" @click="selectItem($event,'bara')"
+                                                                           @keypress="pressEnterAndNext($event,'bara',index,order)"
+                                                                           v-model="order.unit_quantity" :id="'bara'+index"
+                                                                           class="form-control cmn_num_formt bara_order inputs ">
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="tel"
                                                                            @keypress="pressEnterAndSave($event,index)"
-                                                                           class="form-control  "
-                                                                           v-model="return_info.TotalQty"
-                                                                           style="border-radius: 0px; text-align: center;"
-                                                                           :readonly="readonly">
-                                                                </td>
-
-                                                                <td>
-                                                                    <input type="tel"
-                                                                           @keypress="pressEnterAndSave($event,index)"
-                                                                           class="form-control  " :id="'rack'+index"
-                                                                           v-model="return_info.returnTotalQty"
-                                                                           :readonly="readonly"
+                                                                           class="form-control  update_rack_code_exec  "
+                                                                           :id="'rack'+index"
+                                                                           v-model="order.customer_shipment.rack_number"
                                                                            style="border-radius: 0px; text-align: center;">
                                                                 </td>
 
-
                                                             </tr>
-
                                                         </template>
                                                         <template v-else>
                                                             <tr>
                                                                 <td style="font-size:16px;background: #f4c8c8;text-align:center;vertical-align:0;"
-                                                                    colspan="3">
+                                                                    colspan="4">
                                                                     データが見つかりませんでした。
                                                                 </td>
                                                             </tr>
@@ -178,7 +160,7 @@
                                                        style="float:right;margin-top: -10px">
                                                         次の商品へ</a>
                                                 </div>
-                                               <!-- <div class="input-group mb-2"
+                                                <div class="input-group mb-2"
                                                      style="border: .5px solid #b8b7b7;border-radius: 5px;width: 50%;height: 45px;margin-top: -10px;">
                                                     <div class="input-group-prepend"
                                                          style=" color: black;    /* padding: 0px 0px; */">
@@ -187,10 +169,10 @@
                                                             在庫合計
                                                         </div>
                                                     </div>
-                                                    <input type="text" class="total_stock_jaiko_new jaiko_ form-control"
+                                                    <input type="tel" class="total_stock_jaiko_new jaiko_ form-control"
                                                            readonly="" :value="total_quantity"
                                                            style="padding: 5px 5px;    font-size: 16px;">
-                                                </div>-->
+                                                </div>
                                             </div>
 
 
@@ -253,28 +235,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-             aria-hidden="true" id="bar-code-scan-area">
-            <div class="modal-dialog modal-lg mt-0">
-                <div class="modal-content">
-                    <div class="modal-body p-0">
-                        <div class="main-content-container container-fluid pt-2">
-                            <StreamBarcodeReader v-if="barCodeScan" @decode="onDecode"
-                                                 @loaded="onLoad()"></StreamBarcodeReader>
 
-                            <button type="button" @click="getBarCodeScan()"
-                                    style="float: right;margin: 5px 0;width: 95px !important;"
-                                    class="btn custom-btn btn-primary pull-right text-right show_inline">
-                                次へ
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 handdy_error hide hide_enter_outside close_aria"
              style="position: fixed; bottom: 0px; right: 0px; padding: 4px;">
             <div class="panel panel-danger"
@@ -284,22 +245,7 @@
                 </div>
             </div>
         </div>
-        <div class="jn nav_disp" style="z-index: 9999;width: 270px; right: 15px; bottom: 15px;display: none"
-             id="handy-navi-jan-list">
-            <div class="card card-warning jn_old_popup " style="padding: 6px;max-height: 70vh;overflow: auto">
-                <div class="card-body">
-                    <a class="btn btn-light float-right" href="javascript:void(0)"
-                       onclick="$('#handy-navi-jan-list').hide()">戻る</a>
-                    <ol id="handy-navi-body-for-jan-list">
-                        <li style='cursor: pointer' v-for="data in search_data"
-                            @click='GetDetailsFormSearchList(data.jan)'>{{ data.name }}
-                        </li>
-                    </ol>
 
-
-                </div>
-            </div>
-        </div>
         <div class="jn nav_disp" style="z-index: 9999;width: 270px; right: 15px; bottom: 15px;" id="handy-navi">
             <div class="card card-warning jn_old_popup " style="padding: 6px">
                 <!--                <div class="card-heading">-->
@@ -313,43 +259,24 @@
 
                     </ol>
 
-
                 </div>
             </div>
         </div>
-
     </section>
 
 </template>
 
 <script>
-import TextRecognition from "./text-recognition";
-import {StreamBarcodeReader} from "vue-barcode-reader";
-
 export default {
-    components: {TextRecognition, StreamBarcodeReader},
-    props: ['base_url', 'read_only'],
-    name: "handy-inventory-inquiry",
+    props: ['base_url'],
+    name: "handy-order-shipment-list",
     data() {
         return {
             jan_code: '',
             order_data: [],
-            order_data_: [],
-            search_data: [],
-            barCodeScan: 0,
-            return_info:{
-                vendor_order_id:'',
-                vendor_item_id:'',
-                return_case_qty:0,
-                return_ball_qty:0,
-                return_unit_qty:0,
-                retrunUnitQty:0,
-                retrunBallQty:0,
-                retrunCaseQty:0,
-                returnTotalQty:0,
-                TotalQty:0,
-                return_rack_number:'',
-            },
+            temp_order_data: [],
+            case_inputs:'',
+            ball_inputs:'',
             case_order: 0,
             boll_order: 0,
             bara_order: 0,
@@ -363,7 +290,7 @@ export default {
             loader: 0,
             total_quantity: 0,
             handi_navi: '',
-            readonly: this.read_only ? true : false
+            temp_rack_number: ''
         }
     },
     mounted() {
@@ -372,199 +299,62 @@ export default {
             _this.jan_code = ''
             setTimeout(function () {
                 $('#jan_input').focus()
-                _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
-                $('#handy-navi').show()
             }, 120)
         });
+        _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
         _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
     },
     methods: {
         getOrderDataByJan() {
             let _this = this;
-            let reg = /^\d+$/;
-            if (!reg.test(this.jan_code)) {
-                _this.getSearchData(_this.jan_code);
-                return false
-            }
             if (_this.jan_code.length <= 0) {
                 return false;
             }
             $('.loading_image_custom').show()
             _this.loader = 1
-            axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code)
+            axios.post(this.base_url + '/getCustomerOrderInfoByJan', {'jan_code': _this.jan_code})
                 .then(function (res) {
-                    _this.resetField();
-                    if(res.data.status==400){
-                            _this.handi_navi = '<li>0000000000</li>';
-                            $('#handy-navi').show();
-                            return false;
-                        }
-                    if (res.data.result.length > 0) {
-                        _this.order_data = res.data.result;
-                        _this.order_data_ = res.data.result[0];
-                        _this.product_name = _this.order_data[0].item_name;
-                        _this.return_info.vendor_item_id = _this.order_data[0].vendor_item_id;
-                        _this.return_info.vendor_order_id = _this.order_data[0].vendor_order_id;
-                        _this.return_info.return_rack_number = _this.order_data[0].rack_number;
-                        _this.return_info.return_case_qty = _this.order_data[0].arrival_case_quantity-_this.order_data[0].damage_case_quantity;
-                        _this.return_info.return_ball_qty = _this.order_data[0].arrival_ball_quantity-_this.order_data[0].damage_ball_quantity;
-                        _this.return_info.return_unit_qty = _this.order_data[0].arrival_unit_quantity-_this.order_data[0].damage_unit_quantity;
-
+                    //_this.resetField();
+                    //console.log(res);
+                    if (res.data.success > 0) {
+                        _this.order_data[0] = res.data.result;
+                        _this.temp_order_data = res.data.result;
+                        //_this.temp_rack_number = res.data.last_rack;
+                        _this.product_name = res.data.result.jan.name;
+                        _this.case_inputs = res.data.result.jan.case_inputs;
+                        _this.ball_inputs = res.data.result.jan.ball_inputs;
+                      //  console.log(_this.product_name)
                         _this.calculateTotalQuantity();
 
                         if (_this.type == 0) {
                             $('#stock-order-show-by-jan').modal({backdrop: 'static', keyboard: false})
                             setTimeout(function () {
-                                if ($('#bara' + 0).length <= 0) {
+                                if ($('#rack' + 0).length <= 0) {
                                     $('#order-place-button').focus()
                                 } else {
-                                    //if (!_this.readonly) {
-                                        $('#case' + 0).focus()
-                                        $('#case' + 0).select()
-                                    // } else {
-                                    //     $('#order-place-button').focus()
-                                    // }
+                                    $('#rack' + 0).focus()
+                                    $('#rack' + 0).select()
                                 }
                             }, 720)
                         }
-                        $('#handy-navi').hide()
                     } else {
-                        console.log('No order found');
+alert('hit herer');
                         _this.handi_navi = '<li>0000000000000000</li>';
                         $('#handy-navi').show()
-
                     }
 
                 })
                 .catch(function () {
-
+                    console.log('eror found');
+                    _this.handi_navi = '<li>00000000</li>';
+                    $('#handy-navi').show()
                 })
                 .finally(function () {
-                   // _this.jan_code = ''
+                    //_this.jan_code = ''
                     $('.loading_image_custom').hide()
                     _this.loader = 0
-
                 })
         },
-        calculateTotalQuantity() {
-            let _this = this;
-            _this.total_quantity = 0;
-
-            console.log(_this.return_info)
-            this.order_data.map(function (order) {
-                let unit = order.arrival_unit_quantity ? parseInt(order.arrival_unit_quantity) : 0;
-                let ball = order.arrival_ball_quantity ? parseInt(order.arrival_ball_quantity) : 0;
-                let case_ = order.arrival_case_quantity ? parseInt(order.arrival_case_quantity) : 0;
-                let unit_r = order.damage_unit_quantity ? parseInt(order.damage_unit_quantity) : 0;
-                let ball_r = order.damage_ball_quantity ? parseInt(order.damage_ball_quantity) : 0;
-                let case_r = order.damage_case_quantity ? parseInt(order.damage_case_quantity) : 0;
-                unit = unit-unit_r;
-                ball = ball-ball_r;
-                case_ =case_-case_r;
-                if(unit>_this.return_info.return_unit_qty){
-                     _this.return_info.retrunUnitQty = unit-_this.return_info.return_unit_qty;
-                     $('#handy-navi').hide();
-                }else{
-                    if(unit!=_this.return_info.return_unit_qty){
-                        _this.handi_navi = '<li>0000000000000000</li>';
-                        $('#handy-navi').show()
-                    }
-
-                        _this.return_info.return_unit_qty=unit;
-                        _this.return_info.retrunUnitQty = 0;
-                }
-                if(ball>_this.return_info.return_ball_qty){
-                     _this.return_info.retrunBallQty = ball-_this.return_info.return_ball_qty;
-                     $('#handy-navi').hide();
-                }else{
-                    if(ball!=_this.return_info.return_ball_qty){
-                    _this.handi_navi = '<li>0000000000000000</li>';
-                        $('#handy-navi').show();
-                        }
-                        _this.return_info.return_ball_qty = ball;
-                        _this.return_info.retrunBallQty = 0;
-                }
-                 if(case_>_this.return_info.return_case_qty){
-                     _this.return_info.retrunCaseQty = case_-_this.return_info.return_case_qty;
-                     $('#handy-navi').hide();
-                }else{
-                    if(case_!=_this.return_info.return_case_qty){
-                    _this.handi_navi = '<li>0000000000000000</li>';
-                        $('#handy-navi').show()
-                    }
-                        _this.return_info.return_case_qty = case_;
-                        _this.return_info.retrunCaseQty = 0;
-                }
-                _this.return_info.returnTotalQty = _this.return_info.retrunUnitQty + _this.return_info.retrunBallQty * parseInt(order.ball_inputs) + _this.return_info.retrunCaseQty * parseInt(order.case_inputs);
-                console.log(order.damage_quantity);
-                _this.return_info.TotalQty = parseInt(_this.return_info.return_unit_qty) + parseInt(_this.return_info.return_ball_qty) * parseInt(order.ball_inputs) + parseInt(_this.return_info.return_case_qty) * parseInt(order.case_inputs)
-            })
-
-        },
-        getSearchData(text) {
-            let _this = this;
-            if (text.length <= 0) {
-                return false;
-            }
-            $('.loading_image_custom').show()
-            _this.jan_code = text;
-            axios.post(_this.base_url + '/item_search_by_name', {'name': text})
-                .then(function (res) {
-                    res = res.data
-                    _this.search_data = res.name_list;
-                    if (_this.search_data.length > 0) {
-                        $('#handy-navi').hide()
-                        $('#handy-navi-jan-list').show()
-                    } else {
-                        _this.handi_navi = '<li>XXXXXXX。</li>';
-                        $('#handy-navi').show()
-                    }
-
-                })
-                .catch(function () {
-
-                })
-                .finally(function () {
-                    $('.loading_image_custom').hide()
-                })
-
-
-        },
-        alertForIos() {
-            this.jan_code = ""
-            this.handi_navi = '<li>キーボードの 【<img src="' + this.base_url + '/public/backend/images/mic.png' + '" height="18px" alt=""> 】マイクロフォンを押して音声検索してください。</li>';
-            $('#handy-navi').show()
-            setTimeout(function () {
-                // $('#jan_input').focus()
-
-            }, 120)
-            this.jan_code = ""
-
-        },
-        getBarCodeScan() {
-            this.barCodeScan = this.barCodeScan ? 0 : 1;
-            this.barCodeScan ? $('#bar-code-scan-area').modal({backdrop: 'static', keyboard: false}) : $('#bar-code-scan-area').modal('hide');
-        },
-        onDecode(result) {
-            console.log(result)
-            this.getBarCodeScan();
-            this.jan_code=result;
-            $('#handy-navi').hide()
-            this.getOrderDataByJan()
-        },
-        onLoad(){
-            $('#handy-navi').show()
-            this.handi_navi = '<li>********。</li>';
-        },
-        clearInput() {
-            this.jan_code = ""
-        },
-        GetDetailsFormSearchList(jan) {
-            this.jan_code = jan;
-            $('#handy-navi-jan-list').hide()
-            this.getOrderDataByJan();
-        },
-
         updateOrderQnty(type) {
             let _this = this;
             _this.input_type = type
@@ -613,29 +403,15 @@ export default {
             }, 120)
         },
         checkAndGetData(e) {
-            let _this = this;
-
-            if (this.loader === 1) {
+            if (this.loader == 1) {
                 return false;
             }
-            let reg = /^\d+$/;
-
             if (this.jan_code.length >= 13 || this.jan_code.length==8) {
-                if (reg.test(this.jan_code)) {
-                    this.getOrderDataByJan()
-                }
+                this.getOrderDataByJan()
             }
-            if (e.keyCode === 13) {
-                if (reg.test(this.jan_code)) {
-                    this.getOrderDataByJan()
-                }
+            if (e.keyCode == 13) {
+                this.getOrderDataByJan()
             }
-            if (!reg.test(this.jan_code)) {
-                setTimeout(function () {
-                    _this.getSearchData(_this.jan_code);
-                }, 1200)
-            }
-
         },
         selectItem(e, type) {
             e.target.select()
@@ -643,50 +419,140 @@ export default {
         },
         updateTemporaryTana() {
             let _this = this;
-            var orderAndReturnDetails = {
-                order_data:_this.order_data,
-                return_data:_this.return_info
-            };
-            if(_this.return_info.returnTotalQty>0){
-            axios.post(this.base_url + '/item_return_to_tonya', orderAndReturnDetails)
+            console.log(this.order_data);
+            return false;
+            let data = [];
+            $('.loading_image_custom').show()
+            this.order_data.map(function (order) {
+                if (order.rack_number.length >= 4) {
+                    let _data = {
+                        rack_number: order.rack_number,
+                        case_quantity: order.case_quantity,
+                        unit_quantity: order.unit_quantity,
+                        ball_quantity: order.ball_quantity,
+                        vendor_id: order.vendor_id,
+                        stock_item_id: order.stock_item_id,
+                        vendor_item_id: order.vendor_item_id
+                    }
+                    data.push(_data)
+                }
+            });
+            
+            if (data.length <= 0) {
+                $('.loading_image_custom').hide()
+                $('#stock-order-show-by-jan').modal('hide')
+            } else {
+                axios.post(this.base_url + '/stock_inventory_update_rack_multiple', {data: data})
                     .then(function (res) {
-                        console.log(res);
+
+                        $('#handy-navi').show()
+                        _this.handi_navi = '<li>棚入庫が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+
+                        _this.hideModelAndClearInput()
                     })
                     .then(function (er) {
-                        console.log(err);
+
                     })
-                    }
-            _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
-            $('#handy-navi').show()
-            _this.hideModelAndClearInput()
+                    .finally(function () {
+                        $('.loading_image_custom').hide()
+                        _this.loader = 0
+                    })
+            }
+
 
         },
         resetField() {
-            this.return_info={
-                vendor_order_id:'',
-                vendor_item_id:'',
-                return_case_qty:0,
-                return_ball_qty:0,
-                return_unit_qty:0,
-                retrunUnitQty:0,
-                retrunBallQty:0,
-                retrunCaseQty:0,
-                returnTotalQty:0,
-                TotalQty:0,
-                return_rack_number:'',
+            if (this.input_type == 'ケース') {
+                this.boll_order = 0;
+                this.bara_order = 0;
+            } else if (this.input_type == 'ボール') {
+                this.case_order = 0;
+                this.bara_order = 0;
+            } else {
+                this.case_order = 0;
+                this.boll_order = 0;
             }
         },
         pressEnterAndSave(e, i) {
-            this.calculateTotalQuantity();
             if (e.keyCode == 13) {
-                console.log(e);
-                console.log(i);
-                $('#' + (i + 0)).focus()
-                $('#' + (i + 0)).select()
-                if ( i == 'reck') {
+                $('#case'+ (i+1)).focus()
+                $('#case'+ (i+1)).select()
+                // $('#rack' + (i + 1)).focus()
+                // $('#rack' + (i + 1)).select()
+                if ($('#case'+ (i+1)).length <= 0) {
                     $('#order-place-button').focus()
                 }
             }
+        },
+        pressEnterAndNext(e,type, i,order) {
+           let statusE = 0;
+            if (e.keyCode == 13) {
+                console.log(order);
+                if(order.customer_shipment.inputs=='ケース'){
+                    if(order.case_quantity>order.customer_shipment.confirm_quantity){
+                        order.case_quantity = order.customer_shipment.confirm_quantity;
+                        statusE = 1;
+                    }
+                    order.ball_quantity = 0;
+                    order.unit_quantity = 0;
+                    console.log('set ball u')
+                }else if(order.customer_shipment.inputs=='ボール'){
+                    if(order.ball_quantity>order.customer_shipment.confirm_quantity){
+                        order.ball_quantity = order.customer_shipment.confirm_quantity;
+                        
+                          statusE = 1;
+                    }
+                    order.case_quantity = 0;
+                    order.unit_quantity = 0;
+                }else{
+                    if(order.unit_quantity>order.customer_shipment.confirm_quantity){
+                        order.unit_quantity = order.customer_shipment.confirm_quantity;
+                          statusE = 1;
+                    }
+                    order.case_quantity = 0;
+                    order.ball_quantity = 0;
+                }
+                this.calQty(order);
+                if(statusE==1){
+                    this.handi_navi = '<li>0000000000</li>';
+                    $('#handy-navi').show()
+
+                }
+                if (type == 'case') {
+                    $('#ball'+i).focus()
+                    $('#ball'+i).select()
+
+                    // this.input_type = 'ボール';
+
+                } else if (type == 'ball') {
+                    $('#bara'+i).focus()
+                    $('#bara'+i).select()
+                    // this.input_type = 'バラ';
+
+                } else {
+                    $('#rack' + i).focus()
+                }
+
+                // $('#rack' + (i + 1)).focus()
+                // $('#rack' + (i + 1)).select()
+                // if ($('#rack' + (i + 1)).length <= 0) {
+                //     $('#order-place-button').focus()
+                // }
+            }
+        },
+        calQty(order){
+           var _this = this;
+                if(order.customer_shipment.inputs=='ケース'){
+                                            _this.total_quantity =  parseInt(order.case_quantity) * parseInt(order.jan.case_inputs);
+
+                }else if(order.customer_shipment.inputs=='ボール'){
+                          _this.total_quantity =  parseInt(order.ball_quantity) * parseInt(order.jan.ball_inputs);
+
+                }else{
+                         _this.total_quantity = parseInt(order.unit_quantity);
+
+                }
+
         },
         insertToJanList() {
             let _this = this;
@@ -800,6 +666,36 @@ export default {
                 _this.getOrderDataByJan();
             })
         },
+        calculateTotalQuantity() {
+            let _this = this;
+            let data = [];
+            _this.total_quantity = 0;
+
+            this.order_data.map(function (order) {
+                    console.log(order);
+                    if(order.customer_shipment.inputs=="ケース"){
+                        _this.total_quantity +=  parseInt(order.customer_shipment.confirm_quantity) * parseInt(order.jan.case_inputs);
+                        order.case_quantity = order.customer_shipment.confirm_quantity;
+                        order.ball_quantity = 0;
+                        order.unit_quantity = 0;
+                    }else if(order.customer_shipment.inputs=="ボール"){
+                          _this.total_quantity +=  parseInt(order.customer_shipment.confirm_quantity) * parseInt(order.jan.ball_inputs);
+                          order.case_quantity = 0;
+                        order.ball_quantity = order.customer_shipment.confirm_quantity;
+                        order.unit_quantity = 0;
+                    }else{
+                         _this.total_quantity += parseInt(order.customer_shipment.confirm_quantity);
+                          order.case_quantity = 0;
+                        order.ball_quantity = 0;
+                        order.unit_quantity = order.customer_shipment.confirm_quantity;
+                    }
+                   // _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
+                    
+                    data.push(order)
+            })
+            this.order_data = data;
+
+        },
 
     },
     watch: {
@@ -823,15 +719,4 @@ select {
     height: 45px !important;
 }
 
-@supports (-webkit-touch-callout: none) {
-    /*/CSS specific to iOS devices */
-    .search-button-ios {
-        display: block !important;
-    }
-
-    #handy-navi {
-        top: 235px !important;
-    }
-
-}
 </style>

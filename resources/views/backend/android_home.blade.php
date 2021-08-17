@@ -44,7 +44,7 @@
                             </div>
                         </a>
 
-                        <a id="delivery_inventorys" class="btn btn-default" href="{{Config::get('app.url').'/handy_order_shipment_list'}}">
+                        <a id="delivery_inventorys" class="btn btn-default" href="{{ route('order.shipment.list') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">5</div>
                             <div class="col-md-11 text-center btnText threeLine" style="padding: 0; margin: 0;line-height:35px;">
                                 出荷<br>確定<br>後(問屋)
@@ -88,7 +88,7 @@
                                 棚・入庫<br>(正常保管)
                             </div>
                         </a>
-                   
+
                         <a  style="width: 100%;" class="btn btn-default" href="handy_customer_master">
                             <div class="numbering_col" style="padding: 0; margin: 0;">6</div>
                             <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
@@ -203,7 +203,7 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-           
+
         </div>
     </div>
 @endsection
