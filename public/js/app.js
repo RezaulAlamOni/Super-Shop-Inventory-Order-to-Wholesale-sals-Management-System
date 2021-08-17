@@ -21203,7 +21203,6 @@ __webpack_require__.r(__webpack_exports__);
             }, 720);
           }
         } else {
-          alert('hit herer');
           _this.handi_navi = '<li>0000000000000000</li>';
           $('#handy-navi').show();
         }
