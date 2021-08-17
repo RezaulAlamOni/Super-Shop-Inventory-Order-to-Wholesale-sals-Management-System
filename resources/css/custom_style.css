@@ -2782,6 +2782,15 @@
         .marginboths .handy_btn_aria a .twoLine{
             padding: 15px 5px !important;
         }
+        #installApp {
+            text-align: center;
+            margin: 0;
+            padding: 3px;
+            height: auto;
+            width: auto;
+            display: none;
+            float: right;
+        }
         /*
             new handy css
         */
@@ -2793,7 +2802,9 @@
     padding: 6px;
 }
         @media (min-width: 310px) and (max-width: 767px) {
-           
+            #installApp {
+                display: block;
+            }
             .handy_screen {
                 width: 50% !important;
                 float: left;

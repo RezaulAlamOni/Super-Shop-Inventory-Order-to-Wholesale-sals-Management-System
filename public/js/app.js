@@ -20848,6 +20848,834 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-order-shipment-list.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-order-shipment-list.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _text_recognition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./text-recognition */ "./resources/js/components/text-recognition.vue");
+/* harmony import */ var vue_barcode_reader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-barcode-reader */ "./node_modules/vue-barcode-reader/src/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    TextRecognition: _text_recognition__WEBPACK_IMPORTED_MODULE_0__["default"],
+    StreamBarcodeReader: vue_barcode_reader__WEBPACK_IMPORTED_MODULE_1__["StreamBarcodeReader"]
+  },
+  props: ['base_url', 'read_only'],
+  name: "handy-order-shipment-list",
+  data: function data() {
+    return {
+      jan_code: '',
+      order_data: [],
+      order_data_: [],
+      search_data: [],
+      barCodeScan: 0,
+      return_info: {
+        vendor_order_id: '',
+        vendor_item_id: '',
+        return_case_qty: 0,
+        return_ball_qty: 0,
+        return_unit_qty: 0,
+        retrunUnitQty: 0,
+        retrunBallQty: 0,
+        retrunCaseQty: 0,
+        returnTotalQty: 0,
+        TotalQty: 0,
+        return_rack_number: ''
+      },
+      case_order: 0,
+      boll_order: 0,
+      bara_order: 0,
+      type: 0,
+      input_type: '',
+      vendors: [],
+      product_name: '',
+      vendor_id: null,
+      vendor_item_id: null,
+      maker_id: null,
+      loader: 0,
+      total_quantity: 0,
+      handi_navi: '',
+      readonly: this.read_only ? true : false
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    $('#stock-order-show-by-jan').on('hidden.bs.modal', function () {
+      _this.jan_code = '';
+      setTimeout(function () {
+        $('#jan_input').focus();
+        _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
+        $('#handy-navi').show();
+      }, 120);
+    });
+    _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
+  },
+  methods: {
+    getOrderDataByJan: function getOrderDataByJan() {
+      var _this = this;
+
+      var reg = /^\d+$/;
+
+      if (!reg.test(this.jan_code)) {
+        _this.getSearchData(_this.jan_code);
+
+        return false;
+      }
+
+      if (_this.jan_code.length <= 0) {
+        return false;
+      }
+
+      $('.loading_image_custom').show();
+      _this.loader = 1;
+      axios.get(this.base_url + '/handy_get_last_order_by_jan_code/' + _this.jan_code).then(function (res) {
+        _this.resetField();
+
+        if (res.data.status == 400) {
+          _this.handi_navi = '<li>0000000000</li>';
+          $('#handy-navi').show();
+          return false;
+        }
+
+        if (res.data.result.length > 0) {
+          _this.order_data = res.data.result;
+          _this.order_data_ = res.data.result[0];
+          _this.product_name = _this.order_data[0].item_name;
+          _this.return_info.vendor_item_id = _this.order_data[0].vendor_item_id;
+          _this.return_info.vendor_order_id = _this.order_data[0].vendor_order_id;
+          _this.return_info.return_rack_number = _this.order_data[0].rack_number;
+          _this.return_info.return_case_qty = _this.order_data[0].arrival_case_quantity - _this.order_data[0].damage_case_quantity;
+          _this.return_info.return_ball_qty = _this.order_data[0].arrival_ball_quantity - _this.order_data[0].damage_ball_quantity;
+          _this.return_info.return_unit_qty = _this.order_data[0].arrival_unit_quantity - _this.order_data[0].damage_unit_quantity;
+
+          _this.calculateTotalQuantity();
+
+          if (_this.type == 0) {
+            $('#stock-order-show-by-jan').modal({
+              backdrop: 'static',
+              keyboard: false
+            });
+            setTimeout(function () {
+              if ($('#bara' + 0).length <= 0) {
+                $('#order-place-button').focus();
+              } else {
+                //if (!_this.readonly) {
+                $('#case' + 0).focus();
+                $('#case' + 0).select(); // } else {
+                //     $('#order-place-button').focus()
+                // }
+              }
+            }, 720);
+          }
+
+          $('#handy-navi').hide();
+        } else {
+          console.log('No order found');
+          _this.handi_navi = '<li>0000000000000000</li>';
+          $('#handy-navi').show();
+        }
+      })["catch"](function () {})["finally"](function () {
+        // _this.jan_code = ''
+        $('.loading_image_custom').hide();
+        _this.loader = 0;
+      });
+    },
+    calculateTotalQuantity: function calculateTotalQuantity() {
+      var _this = this;
+
+      _this.total_quantity = 0;
+      console.log(_this.return_info);
+      this.order_data.map(function (order) {
+        var unit = order.arrival_unit_quantity ? parseInt(order.arrival_unit_quantity) : 0;
+        var ball = order.arrival_ball_quantity ? parseInt(order.arrival_ball_quantity) : 0;
+        var case_ = order.arrival_case_quantity ? parseInt(order.arrival_case_quantity) : 0;
+        var unit_r = order.damage_unit_quantity ? parseInt(order.damage_unit_quantity) : 0;
+        var ball_r = order.damage_ball_quantity ? parseInt(order.damage_ball_quantity) : 0;
+        var case_r = order.damage_case_quantity ? parseInt(order.damage_case_quantity) : 0;
+        unit = unit - unit_r;
+        ball = ball - ball_r;
+        case_ = case_ - case_r;
+
+        if (unit > _this.return_info.return_unit_qty) {
+          _this.return_info.retrunUnitQty = unit - _this.return_info.return_unit_qty;
+          $('#handy-navi').hide();
+        } else {
+          if (unit != _this.return_info.return_unit_qty) {
+            _this.handi_navi = '<li>0000000000000000</li>';
+            $('#handy-navi').show();
+          }
+
+          _this.return_info.return_unit_qty = unit;
+          _this.return_info.retrunUnitQty = 0;
+        }
+
+        if (ball > _this.return_info.return_ball_qty) {
+          _this.return_info.retrunBallQty = ball - _this.return_info.return_ball_qty;
+          $('#handy-navi').hide();
+        } else {
+          if (ball != _this.return_info.return_ball_qty) {
+            _this.handi_navi = '<li>0000000000000000</li>';
+            $('#handy-navi').show();
+          }
+
+          _this.return_info.return_ball_qty = ball;
+          _this.return_info.retrunBallQty = 0;
+        }
+
+        if (case_ > _this.return_info.return_case_qty) {
+          _this.return_info.retrunCaseQty = case_ - _this.return_info.return_case_qty;
+          $('#handy-navi').hide();
+        } else {
+          if (case_ != _this.return_info.return_case_qty) {
+            _this.handi_navi = '<li>0000000000000000</li>';
+            $('#handy-navi').show();
+          }
+
+          _this.return_info.return_case_qty = case_;
+          _this.return_info.retrunCaseQty = 0;
+        }
+
+        _this.return_info.returnTotalQty = _this.return_info.retrunUnitQty + _this.return_info.retrunBallQty * parseInt(order.ball_inputs) + _this.return_info.retrunCaseQty * parseInt(order.case_inputs);
+        console.log(order.damage_quantity);
+        _this.return_info.TotalQty = parseInt(_this.return_info.return_unit_qty) + parseInt(_this.return_info.return_ball_qty) * parseInt(order.ball_inputs) + parseInt(_this.return_info.return_case_qty) * parseInt(order.case_inputs);
+      });
+    },
+    getSearchData: function getSearchData(text) {
+      var _this = this;
+
+      if (text.length <= 0) {
+        return false;
+      }
+
+      $('.loading_image_custom').show();
+      _this.jan_code = text;
+      axios.post(_this.base_url + '/item_search_by_name', {
+        'name': text
+      }).then(function (res) {
+        res = res.data;
+        _this.search_data = res.name_list;
+
+        if (_this.search_data.length > 0) {
+          $('#handy-navi').hide();
+          $('#handy-navi-jan-list').show();
+        } else {
+          _this.handi_navi = '<li>XXXXXXX。</li>';
+          $('#handy-navi').show();
+        }
+      })["catch"](function () {})["finally"](function () {
+        $('.loading_image_custom').hide();
+      });
+    },
+    alertForIos: function alertForIos() {
+      this.jan_code = "";
+      this.handi_navi = '<li>キーボードの 【<img src="' + this.base_url + '/public/backend/images/mic.png' + '" height="18px" alt=""> 】マイクロフォンを押して音声検索してください。</li>';
+      $('#handy-navi').show();
+      setTimeout(function () {// $('#jan_input').focus()
+      }, 120);
+      this.jan_code = "";
+    },
+    getBarCodeScan: function getBarCodeScan() {
+      this.barCodeScan = this.barCodeScan ? 0 : 1;
+      this.barCodeScan ? $('#bar-code-scan-area').modal({
+        backdrop: 'static',
+        keyboard: false
+      }) : $('#bar-code-scan-area').modal('hide');
+    },
+    onDecode: function onDecode(result) {
+      console.log(result);
+      this.getBarCodeScan();
+      this.jan_code = result;
+      $('#handy-navi').hide();
+      this.getOrderDataByJan();
+    },
+    onLoad: function onLoad() {
+      $('#handy-navi').show();
+      this.handi_navi = '<li>********。</li>';
+    },
+    clearInput: function clearInput() {
+      this.jan_code = "";
+    },
+    GetDetailsFormSearchList: function GetDetailsFormSearchList(jan) {
+      this.jan_code = jan;
+      $('#handy-navi-jan-list').hide();
+      this.getOrderDataByJan();
+    },
+    updateOrderQnty: function updateOrderQnty(type) {
+      var _this = this;
+
+      _this.input_type = type;
+      var quantity = type == 'ケース' ? this.case_order : type == 'ボール' ? this.boll_order : this.bara_order; // console.log(_this.input_type)
+      // console.log(quantity)
+
+      if (quantity > 0) {
+        var data = {
+          vendor_item_id: this.order_data.vendor_item_id,
+          field_type: type,
+          order_type: 'order_lot',
+          quantity: quantity
+        };
+        axios.post(this.base_url + '/update_receive_order_item_content', data).then(function (res) {
+          if (type == 'ケース') {
+            _this.boll_order = 0;
+            _this.bara_order = 0; // $('.boll_order').focus()
+            // $('.boll_order').select()
+          } else if (type == 'ボール') {
+            _this.case_order = 0;
+            _this.bara_order = 0; // $('.bara_order').focus()
+            // $('.bara_order').select()
+          } else {
+            _this.boll_order = 0;
+            _this.case_order = 0;
+          } // _this.type == 1
+          // _this.getOrderDataByJan()
+          // _this.type == 0
+
+        }).then(function (er) {});
+      }
+    },
+    hideModelAndClearInput: function hideModelAndClearInput() {
+      $('#stock-order-show-by-jan').modal('hide');
+      this.jan_code = '';
+      setTimeout(function () {
+        $('#jan_input').focus();
+      }, 120);
+    },
+    checkAndGetData: function checkAndGetData(e) {
+      var _this = this;
+
+      if (this.loader === 1) {
+        return false;
+      }
+
+      var reg = /^\d+$/;
+
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        if (reg.test(this.jan_code)) {
+          this.getOrderDataByJan();
+        }
+      }
+
+      if (e.keyCode === 13) {
+        if (reg.test(this.jan_code)) {
+          this.getOrderDataByJan();
+        }
+      }
+
+      if (!reg.test(this.jan_code)) {
+        setTimeout(function () {
+          _this.getSearchData(_this.jan_code);
+        }, 1200);
+      }
+    },
+    selectItem: function selectItem(e, type) {
+      e.target.select();
+      this.input_type = type;
+    },
+    updateTemporaryTana: function updateTemporaryTana() {
+      var _this = this;
+
+      var orderAndReturnDetails = {
+        order_data: _this.order_data,
+        return_data: _this.return_info
+      };
+
+      if (_this.return_info.returnTotalQty > 0) {
+        axios.post(this.base_url + '/item_return_to_tonya', orderAndReturnDetails).then(function (res) {
+          console.log(res);
+        }).then(function (er) {
+          console.log(err);
+        });
+      }
+
+      _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
+      $('#handy-navi').show();
+
+      _this.hideModelAndClearInput();
+    },
+    resetField: function resetField() {
+      this.return_info = {
+        vendor_order_id: '',
+        vendor_item_id: '',
+        return_case_qty: 0,
+        return_ball_qty: 0,
+        return_unit_qty: 0,
+        retrunUnitQty: 0,
+        retrunBallQty: 0,
+        retrunCaseQty: 0,
+        returnTotalQty: 0,
+        TotalQty: 0,
+        return_rack_number: ''
+      };
+    },
+    pressEnterAndSave: function pressEnterAndSave(e, i) {
+      this.calculateTotalQuantity();
+
+      if (e.keyCode == 13) {
+        console.log(e);
+        console.log(i);
+        $('#' + (i + 0)).focus();
+        $('#' + (i + 0)).select();
+
+        if (i == 'reck') {
+          $('#order-place-button').focus();
+        }
+      }
+    },
+    insertToJanList: function insertToJanList() {
+      var _this = this;
+
+      var jan_code = _this.jan_code;
+      axios.post(_this.base_url + '/get_jan_info', {
+        jan_code: _this.jan_code
+      }).then(function (response) {
+        var api_response = response.data.api_data;
+        var data_resource = response.data.data_resource;
+
+        if (api_response == 'invalid_jan_code') {
+          $('.handy_error_msg').html("JAN\u30B3\u30FC\u30C9\u308A\u307E\u305B\u3093");
+          $('.handdy_error').removeClass('hide').addClass('show');
+        } else {
+          _this.product_name = api_response.name;
+
+          if (response.data.vendor_item_data == 1) {
+            console.log('this jan code is already registered');
+            _this.vendor_item_id = response.data.vendor_item_data;
+            _this.maker_id = response.data.maker_id;
+
+            _this.getVendorList();
+          } else {
+            console.log('do insert ' + jan_code);
+            var item_name = api_response.name;
+            var case_qty = 0;
+            var ball_qty = 0;
+            var api_maker_name = '';
+
+            if (data_resource == 'database') {
+              case_qty = api_response.case_inputs;
+              ball_qty = api_response.ball_inputs;
+            } else if (data_resource == 'api') {
+              api_maker_name = api_response.maker_name;
+            }
+
+            var vendor_id = response.data.vendor_id;
+            var price = 100;
+            /*insert auto vendor item*/
+
+            var order_point_unit = 'ケース';
+            var order_point_quantity = 1;
+            var order_lot_unit = 'ケース';
+            var order_lot_quantity = 1;
+            var vendor_item_id = null;
+            var sale_price = 0;
+            var basic_start_date = '2020-01-01';
+            var basic_end_date = '2021-12-31';
+            var sale_start_date = '2020-01-01';
+            var sale_end_date = '2021-12-31';
+            var data = {
+              maker_id: response.data.maker_id,
+              vendor_id: vendor_id,
+              jan_code: jan_code,
+              item_name: item_name,
+              case_qty: case_qty,
+              ball_qty: ball_qty,
+              price: price,
+              vendor_item_id: vendor_item_id,
+              order_point_unit: order_point_unit,
+              order_point_quantity: order_point_quantity,
+              order_lot_unit: order_lot_unit,
+              order_lot_quantity: order_lot_quantity,
+              sale_price: sale_price,
+              basic_start_date: basic_start_date,
+              basic_end_date: basic_end_date,
+              sale_start_date: sale_start_date,
+              sale_end_date: sale_end_date,
+              api_maker_name: api_maker_name
+            };
+            axios.post(_this.base_url + '/add_vendor_item', data).then(function (response) {
+              console.log(response.data);
+
+              _this.insertToJanList();
+            })["catch"](function (er) {});
+          } //else
+
+        } //else
+
+      }).then(function (er) {});
+    },
+    getVendorList: function getVendorList() {
+      var _this = this;
+
+      axios.get(_this.base_url + '/get_all_vendor_list_for_select2').then(function (response) {
+        console.log(response.data);
+        _this.vendors = response.data.results;
+        $('#select_tonya').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+      })["catch"](function (e) {});
+    },
+    updateVendorData: function updateVendorData() {
+      var _this = this;
+
+      if (_this.vendor_id == null) {
+        $('.handy_error_msg').html("\u300C\u4ED5\u5165\u5148\u300D\u3092\u6307\u793A\u3057\u3066\u304F\u3060\u3055\u3044\u3002");
+        $('.handdy_error').removeClass('hide').addClass('show');
+        return false;
+      }
+
+      axios.post(_this.base_url + '/vendor_master_update_by_vendor_id', {
+        vendor_item_id: _this.vendor_item_id,
+        vendor_id: _this.vendor_id,
+        maker_id: _this.maker_id
+      }).then(function (response) {
+        $('#select_tonya').modal('hide');
+
+        _this.getOrderDataByJan();
+      });
+    }
+  },
+  watch: {// jan_code: function (val) {
+    //     if (val.length >= 13) {
+    //         $('#stock-order-show-by-jan').modal()
+    //         console.log('data submit')
+    //     }
+    // }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-inventory-inquiry.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-inventory-inquiry.vue?vue&type=script&lang=js& ***!
@@ -21922,6 +22750,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       jan_code: '',
       order_data: [],
+      order_data_: [],
       search_data: [],
       barCodeScan: 0,
       return_info: {
@@ -21995,6 +22824,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (res.data.result.length > 0) {
           _this.order_data = res.data.result;
+          _this.order_data_ = res.data.result[0];
           _this.product_name = _this.order_data[0].item_name;
           _this.return_info.vendor_item_id = _this.order_data[0].vendor_item_id;
           _this.return_info.vendor_order_id = _this.order_data[0].vendor_order_id;
@@ -29774,7 +30604,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.text-record-button[data-v-e08acb16] {\n    width: 90px !important;\n    height: 30px !important;\n    margin-left: 15px;\n    line-height: 20px !important;\n    text-align: left !important;\n}\n.text-record-loader[data-v-e08acb16] {\n    height: 18px;\n    width: 25px;\n    margin: 5px;\n    margin-top: -3px;\n}\n\n", ""]);
+exports.push([module.i, "\n.text-record-button[data-v-e08acb16] {\r\n    width: 90px !important;\r\n    height: 30px !important;\r\n    margin-left: 15px;\r\n    line-height: 20px !important;\r\n    text-align: left !important;\n}\n.text-record-loader[data-v-e08acb16] {\r\n    height: 18px;\r\n    width: 25px;\r\n    margin: 5px;\r\n    margin-top: -3px;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -29793,7 +30623,26 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-c9953dda] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-c9953dda] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-c9953dda] {\n        display: block !important;\n}\n#handy-navi[data-v-c9953dda] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-c9953dda] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-c9953dda] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-c9953dda] {\r\n        display: block !important;\n}\n#handy-navi[data-v-c9953dda] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.order_quantity_[data-v-df3be5d8] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-df3be5d8] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-df3be5d8] {\n        display: block !important;\n}\n#handy-navi[data-v-df3be5d8] {\n        top: 235px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -29812,7 +30661,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-7d72ea4c] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-7d72ea4c] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-7d72ea4c] {\n        display: block !important;\n}\n#handy-navi[data-v-7d72ea4c] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-7d72ea4c] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-7d72ea4c] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-7d72ea4c] {\r\n        display: block !important;\n}\n#handy-navi[data-v-7d72ea4c] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -29850,7 +30699,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-0b6cdc33] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-0b6cdc33] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-0b6cdc33] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-0b6cdc33] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -29869,7 +30718,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-69370b68] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-69370b68] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-69370b68] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-69370b68] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -29888,7 +30737,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-45a7eee8] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-45a7eee8] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-45a7eee8] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-45a7eee8] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -29907,7 +30756,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-699b886d] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-699b886d] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-699b886d] {\n        display: block !important;\n}\n#handy-navi[data-v-699b886d] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-699b886d] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-699b886d] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-699b886d] {\r\n        display: block !important;\n}\n#handy-navi[data-v-699b886d] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -30028,17 +30877,17 @@ function toComment(sourceMap) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.6.0
+ * jQuery JavaScript Library v3.5.1
  * https://jquery.com/
  *
  * Includes Sizzle.js
  * https://sizzlejs.com/
  *
- * Copyright OpenJS Foundation and other contributors
+ * Copyright JS Foundation and other contributors
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2021-03-02T17:08Z
+ * Date: 2020-05-04T22:49Z
  */
 ( function( global, factory ) {
 
@@ -30105,16 +30954,12 @@ var support = {};
 
 var isFunction = function isFunction( obj ) {
 
-		// Support: Chrome <=57, Firefox <=52
-		// In some browsers, typeof returns "function" for HTML <object> elements
-		// (i.e., `typeof document.createElement( "object" ) === "function"`).
-		// We don't want to classify *any* DOM node as a function.
-		// Support: QtWeb <=3.8.5, WebKit <=534.34, wkhtmltopdf tool <=0.12.5
-		// Plus for old WebKit, typeof returns "function" for HTML collections
-		// (e.g., `typeof document.getElementsByTagName("div") === "function"`). (gh-4756)
-		return typeof obj === "function" && typeof obj.nodeType !== "number" &&
-			typeof obj.item !== "function";
-	};
+      // Support: Chrome <=57, Firefox <=52
+      // In some browsers, typeof returns "function" for HTML <object> elements
+      // (i.e., `typeof document.createElement( "object" ) === "function"`).
+      // We don't want to classify *any* DOM node as a function.
+      return typeof obj === "function" && typeof obj.nodeType !== "number";
+  };
 
 
 var isWindow = function isWindow( obj ) {
@@ -30180,7 +31025,7 @@ function toType( obj ) {
 
 
 var
-	version = "3.6.0",
+	version = "3.5.1",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -30434,7 +31279,7 @@ jQuery.extend( {
 			if ( isArrayLike( Object( arr ) ) ) {
 				jQuery.merge( ret,
 					typeof arr === "string" ?
-						[ arr ] : arr
+					[ arr ] : arr
 				);
 			} else {
 				push.call( ret, arr );
@@ -30529,9 +31374,9 @@ if ( typeof Symbol === "function" ) {
 
 // Populate the class2type map
 jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
-	function( _i, name ) {
-		class2type[ "[object " + name + "]" ] = name.toLowerCase();
-	} );
+function( _i, name ) {
+	class2type[ "[object " + name + "]" ] = name.toLowerCase();
+} );
 
 function isArrayLike( obj ) {
 
@@ -30551,14 +31396,14 @@ function isArrayLike( obj ) {
 }
 var Sizzle =
 /*!
- * Sizzle CSS Selector Engine v2.3.6
+ * Sizzle CSS Selector Engine v2.3.5
  * https://sizzlejs.com/
  *
  * Copyright JS Foundation and other contributors
  * Released under the MIT license
  * https://js.foundation/
  *
- * Date: 2021-02-16
+ * Date: 2020-03-14
  */
 ( function( window ) {
 var i,
@@ -31141,8 +31986,8 @@ support = Sizzle.support = {};
  * @returns {Boolean} True iff elem is a non-HTML XML node
  */
 isXML = Sizzle.isXML = function( elem ) {
-	var namespace = elem && elem.namespaceURI,
-		docElem = elem && ( elem.ownerDocument || elem ).documentElement;
+	var namespace = elem.namespaceURI,
+		docElem = ( elem.ownerDocument || elem ).documentElement;
 
 	// Support: IE <=8
 	// Assume HTML when documentElement doesn't yet exist, such as inside loading iframes
@@ -33057,9 +33902,9 @@ var rneedsContext = jQuery.expr.match.needsContext;
 
 function nodeName( elem, name ) {
 
-	return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
+  return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 
-}
+};
 var rsingleTag = ( /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i );
 
 
@@ -34030,8 +34875,8 @@ jQuery.extend( {
 			resolveContexts = Array( i ),
 			resolveValues = slice.call( arguments ),
 
-			// the primary Deferred
-			primary = jQuery.Deferred(),
+			// the master Deferred
+			master = jQuery.Deferred(),
 
 			// subordinate callback factory
 			updateFunc = function( i ) {
@@ -34039,30 +34884,30 @@ jQuery.extend( {
 					resolveContexts[ i ] = this;
 					resolveValues[ i ] = arguments.length > 1 ? slice.call( arguments ) : value;
 					if ( !( --remaining ) ) {
-						primary.resolveWith( resolveContexts, resolveValues );
+						master.resolveWith( resolveContexts, resolveValues );
 					}
 				};
 			};
 
 		// Single- and empty arguments are adopted like Promise.resolve
 		if ( remaining <= 1 ) {
-			adoptValue( singleValue, primary.done( updateFunc( i ) ).resolve, primary.reject,
+			adoptValue( singleValue, master.done( updateFunc( i ) ).resolve, master.reject,
 				!remaining );
 
 			// Use .then() to unwrap secondary thenables (cf. gh-3000)
-			if ( primary.state() === "pending" ||
+			if ( master.state() === "pending" ||
 				isFunction( resolveValues[ i ] && resolveValues[ i ].then ) ) {
 
-				return primary.then();
+				return master.then();
 			}
 		}
 
 		// Multiple arguments are aggregated like Promise.all array elements
 		while ( i-- ) {
-			adoptValue( resolveValues[ i ], updateFunc( i ), primary.reject );
+			adoptValue( resolveValues[ i ], updateFunc( i ), master.reject );
 		}
 
-		return primary.promise();
+		return master.promise();
 	}
 } );
 
@@ -34213,8 +35058,8 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 			for ( ; i < len; i++ ) {
 				fn(
 					elems[ i ], key, raw ?
-						value :
-						value.call( elems[ i ], i, fn( elems[ i ], key ) )
+					value :
+					value.call( elems[ i ], i, fn( elems[ i ], key ) )
 				);
 			}
 		}
@@ -35122,7 +35967,10 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 }
 
 
-var rtypenamespace = /^([^.]*)(?:\.(.+)|)/;
+var
+	rkeyEvent = /^key/,
+	rmouseEvent = /^(?:mouse|pointer|contextmenu|drag|drop)|click/,
+	rtypenamespace = /^([^.]*)(?:\.(.+)|)/;
 
 function returnTrue() {
 	return true;
@@ -35417,8 +36265,8 @@ jQuery.event = {
 			event = jQuery.event.fix( nativeEvent ),
 
 			handlers = (
-				dataPriv.get( this, "events" ) || Object.create( null )
-			)[ event.type ] || [],
+					dataPriv.get( this, "events" ) || Object.create( null )
+				)[ event.type ] || [],
 			special = jQuery.event.special[ event.type ] || {};
 
 		// Use the fix-ed jQuery.Event rather than the (read-only) native event
@@ -35542,12 +36390,12 @@ jQuery.event = {
 			get: isFunction( hook ) ?
 				function() {
 					if ( this.originalEvent ) {
-						return hook( this.originalEvent );
+							return hook( this.originalEvent );
 					}
 				} :
 				function() {
 					if ( this.originalEvent ) {
-						return this.originalEvent[ name ];
+							return this.originalEvent[ name ];
 					}
 				},
 
@@ -35686,13 +36534,7 @@ function leverageNative( el, type, expectSync ) {
 						// Cancel the outer synthetic event
 						event.stopImmediatePropagation();
 						event.preventDefault();
-
-						// Support: Chrome 86+
-						// In Chrome, if an element having a focusout handler is blurred by
-						// clicking outside of it, it invokes the handler synchronously. If
-						// that handler calls `.remove()` on the element, the data is cleared,
-						// leaving `result` undefined. We need to guard against this.
-						return result && result.value;
+						return result.value;
 					}
 
 				// If this is an inner synthetic event for an event with a bubbling surrogate
@@ -35857,7 +36699,34 @@ jQuery.each( {
 	targetTouches: true,
 	toElement: true,
 	touches: true,
-	which: true
+
+	which: function( event ) {
+		var button = event.button;
+
+		// Add which for key events
+		if ( event.which == null && rkeyEvent.test( event.type ) ) {
+			return event.charCode != null ? event.charCode : event.keyCode;
+		}
+
+		// Add which for click: 1 === left; 2 === middle; 3 === right
+		if ( !event.which && button !== undefined && rmouseEvent.test( event.type ) ) {
+			if ( button & 1 ) {
+				return 1;
+			}
+
+			if ( button & 2 ) {
+				return 3;
+			}
+
+			if ( button & 4 ) {
+				return 2;
+			}
+
+			return 0;
+		}
+
+		return event.which;
+	}
 }, jQuery.event.addProp );
 
 jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateType ) {
@@ -35880,12 +36749,6 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 			leverageNative( this, type );
 
 			// Return non-false to allow normal event-path propagation
-			return true;
-		},
-
-		// Suppress native focus or blur as it's already being fired
-		// in leverageNative.
-		_default: function() {
 			return true;
 		},
 
@@ -36556,10 +37419,6 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 		// set in CSS while `offset*` properties report correct values.
 		// Behavior in IE 9 is more subtle than in newer versions & it passes
 		// some versions of this test; make sure not to make it pass there!
-		//
-		// Support: Firefox 70+
-		// Only Firefox includes border widths
-		// in computed dimensions. (gh-4529)
 		reliableTrDimensions: function() {
 			var table, tr, trChild, trStyle;
 			if ( reliableTrDimensionsVal == null ) {
@@ -36567,22 +37426,9 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 				tr = document.createElement( "tr" );
 				trChild = document.createElement( "div" );
 
-				table.style.cssText = "position:absolute;left:-11111px;border-collapse:separate";
-				tr.style.cssText = "border:1px solid";
-
-				// Support: Chrome 86+
-				// Height set through cssText does not get applied.
-				// Computed height then comes back as 0.
+				table.style.cssText = "position:absolute;left:-11111px";
 				tr.style.height = "1px";
 				trChild.style.height = "9px";
-
-				// Support: Android 8 Chrome 86+
-				// In our bodyBackground.html iframe,
-				// display for all div elements is set to "inline",
-				// which causes a problem only in Android 8 Chrome 86.
-				// Ensuring the div is display: block
-				// gets around this issue.
-				trChild.style.display = "block";
 
 				documentElement
 					.appendChild( table )
@@ -36590,9 +37436,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 					.appendChild( trChild );
 
 				trStyle = window.getComputedStyle( tr );
-				reliableTrDimensionsVal = ( parseInt( trStyle.height, 10 ) +
-					parseInt( trStyle.borderTopWidth, 10 ) +
-					parseInt( trStyle.borderBottomWidth, 10 ) ) === tr.offsetHeight;
+				reliableTrDimensionsVal = parseInt( trStyle.height ) > 3;
 
 				documentElement.removeChild( table );
 			}
@@ -37056,10 +37900,10 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 					// Running getBoundingClientRect on a disconnected node
 					// in IE throws an error.
 					( !elem.getClientRects().length || !elem.getBoundingClientRect().width ) ?
-					swap( elem, cssShow, function() {
-						return getWidthOrHeight( elem, dimension, extra );
-					} ) :
-					getWidthOrHeight( elem, dimension, extra );
+						swap( elem, cssShow, function() {
+							return getWidthOrHeight( elem, dimension, extra );
+						} ) :
+						getWidthOrHeight( elem, dimension, extra );
 			}
 		},
 
@@ -37118,7 +37962,7 @@ jQuery.cssHooks.marginLeft = addGetHookIf( support.reliableMarginLeft,
 					swap( elem, { marginLeft: 0 }, function() {
 						return elem.getBoundingClientRect().left;
 					} )
-			) + "px";
+				) + "px";
 		}
 	}
 );
@@ -37257,7 +38101,7 @@ Tween.propHooks = {
 			if ( jQuery.fx.step[ tween.prop ] ) {
 				jQuery.fx.step[ tween.prop ]( tween );
 			} else if ( tween.elem.nodeType === 1 && (
-				jQuery.cssHooks[ tween.prop ] ||
+					jQuery.cssHooks[ tween.prop ] ||
 					tween.elem.style[ finalPropName( tween.prop ) ] != null ) ) {
 				jQuery.style( tween.elem, tween.prop, tween.now + tween.unit );
 			} else {
@@ -37502,7 +38346,7 @@ function defaultPrefilter( elem, props, opts ) {
 
 			anim.done( function() {
 
-				/* eslint-enable no-loop-func */
+			/* eslint-enable no-loop-func */
 
 				// The final step of a "hide" animation is actually hiding the element
 				if ( !hidden ) {
@@ -37622,7 +38466,7 @@ function Animation( elem, properties, options ) {
 			tweens: [],
 			createTween: function( prop, end ) {
 				var tween = jQuery.Tween( elem, animation.opts, prop, end,
-					animation.opts.specialEasing[ prop ] || animation.opts.easing );
+						animation.opts.specialEasing[ prop ] || animation.opts.easing );
 				animation.tweens.push( tween );
 				return tween;
 			},
@@ -37795,8 +38639,7 @@ jQuery.fn.extend( {
 					anim.stop( true );
 				}
 			};
-
-		doAnimation.finish = doAnimation;
+			doAnimation.finish = doAnimation;
 
 		return empty || optall.queue === false ?
 			this.each( doAnimation ) :
@@ -38436,8 +39279,8 @@ jQuery.fn.extend( {
 				if ( this.setAttribute ) {
 					this.setAttribute( "class",
 						className || value === false ?
-							"" :
-							dataPriv.get( this, "__className__" ) || ""
+						"" :
+						dataPriv.get( this, "__className__" ) || ""
 					);
 				}
 			}
@@ -38452,7 +39295,7 @@ jQuery.fn.extend( {
 		while ( ( elem = this[ i++ ] ) ) {
 			if ( elem.nodeType === 1 &&
 				( " " + stripAndCollapse( getClass( elem ) ) + " " ).indexOf( className ) > -1 ) {
-				return true;
+					return true;
 			}
 		}
 
@@ -38742,7 +39585,9 @@ jQuery.extend( jQuery.event, {
 				special.bindType || type;
 
 			// jQuery handler
-			handle = ( dataPriv.get( cur, "events" ) || Object.create( null ) )[ event.type ] &&
+			handle = (
+					dataPriv.get( cur, "events" ) || Object.create( null )
+				)[ event.type ] &&
 				dataPriv.get( cur, "handle" );
 			if ( handle ) {
 				handle.apply( cur, data );
@@ -38889,7 +39734,7 @@ var rquery = ( /\?/ );
 
 // Cross-browser xml parsing
 jQuery.parseXML = function( data ) {
-	var xml, parserErrorElem;
+	var xml;
 	if ( !data || typeof data !== "string" ) {
 		return null;
 	}
@@ -38898,17 +39743,12 @@ jQuery.parseXML = function( data ) {
 	// IE throws on parseFromString with invalid input.
 	try {
 		xml = ( new window.DOMParser() ).parseFromString( data, "text/xml" );
-	} catch ( e ) {}
+	} catch ( e ) {
+		xml = undefined;
+	}
 
-	parserErrorElem = xml && xml.getElementsByTagName( "parsererror" )[ 0 ];
-	if ( !xml || parserErrorElem ) {
-		jQuery.error( "Invalid XML: " + (
-			parserErrorElem ?
-				jQuery.map( parserErrorElem.childNodes, function( el ) {
-					return el.textContent;
-				} ).join( "\n" ) :
-				data
-		) );
+	if ( !xml || xml.getElementsByTagName( "parsererror" ).length ) {
+		jQuery.error( "Invalid XML: " + data );
 	}
 	return xml;
 };
@@ -39009,14 +39849,16 @@ jQuery.fn.extend( {
 			// Can add propHook for "elements" to filter or add form elements
 			var elements = jQuery.prop( this, "elements" );
 			return elements ? jQuery.makeArray( elements ) : this;
-		} ).filter( function() {
+		} )
+		.filter( function() {
 			var type = this.type;
 
 			// Use .is( ":disabled" ) so that fieldset[disabled] works
 			return this.name && !jQuery( this ).is( ":disabled" ) &&
 				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
 				( this.checked || !rcheckableType.test( type ) );
-		} ).map( function( _i, elem ) {
+		} )
+		.map( function( _i, elem ) {
 			var val = jQuery( this ).val();
 
 			if ( val == null ) {
@@ -39069,8 +39911,7 @@ var
 
 	// Anchor tag for parsing the document origin
 	originAnchor = document.createElement( "a" );
-
-originAnchor.href = location.href;
+	originAnchor.href = location.href;
 
 // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
 function addToPrefiltersOrTransports( structure ) {
@@ -39451,8 +40292,8 @@ jQuery.extend( {
 			// Context for global events is callbackContext if it is a DOM node or jQuery collection
 			globalEventContext = s.context &&
 				( callbackContext.nodeType || callbackContext.jquery ) ?
-				jQuery( callbackContext ) :
-				jQuery.event,
+					jQuery( callbackContext ) :
+					jQuery.event,
 
 			// Deferreds
 			deferred = jQuery.Deferred(),
@@ -39764,10 +40605,8 @@ jQuery.extend( {
 				response = ajaxHandleResponses( s, jqXHR, responses );
 			}
 
-			// Use a noop converter for missing script but not if jsonp
-			if ( !isSuccess &&
-				jQuery.inArray( "script", s.dataTypes ) > -1 &&
-				jQuery.inArray( "json", s.dataTypes ) < 0 ) {
+			// Use a noop converter for missing script
+			if ( !isSuccess && jQuery.inArray( "script", s.dataTypes ) > -1 ) {
 				s.converters[ "text script" ] = function() {};
 			}
 
@@ -40505,6 +41344,12 @@ jQuery.offset = {
 			options.using.call( elem, props );
 
 		} else {
+			if ( typeof props.top === "number" ) {
+				props.top += "px";
+			}
+			if ( typeof props.left === "number" ) {
+				props.left += "px";
+			}
 			curElem.css( props );
 		}
 	}
@@ -40673,11 +41518,8 @@ jQuery.each( [ "top", "left" ], function( _i, prop ) {
 
 // Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
 jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
-	jQuery.each( {
-		padding: "inner" + name,
-		content: type,
-		"": "outer" + name
-	}, function( defaultExtra, funcName ) {
+	jQuery.each( { padding: "inner" + name, content: type, "": "outer" + name },
+		function( defaultExtra, funcName ) {
 
 		// Margin is only for outerHeight, outerWidth
 		jQuery.fn[ funcName ] = function( margin, value ) {
@@ -40762,8 +41604,7 @@ jQuery.fn.extend( {
 	}
 } );
 
-jQuery.each(
-	( "blur focus focusin focusout resize scroll click dblclick " +
+jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
 	function( _i, name ) {
@@ -40774,8 +41615,7 @@ jQuery.each(
 				this.on( name, null, data, fn ) :
 				this.trigger( name );
 		};
-	}
-);
+	} );
 
 
 
@@ -40934,15 +41774,14 @@ return jQuery;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.21';
+  var VERSION = '4.17.20';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
 
   /** Error message constants. */
   var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
-      FUNC_ERROR_TEXT = 'Expected a function',
-      INVALID_TEMPL_VAR_ERROR_TEXT = 'Invalid `variable` option passed into `_.template`';
+      FUNC_ERROR_TEXT = 'Expected a function';
 
   /** Used to stand-in for `undefined` hash values. */
   var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -41075,11 +41914,10 @@ return jQuery;
   var reRegExpChar = /[\\^$.*+?()[\]{}|]/g,
       reHasRegExpChar = RegExp(reRegExpChar.source);
 
-  /** Used to match leading whitespace. */
-  var reTrimStart = /^\s+/;
-
-  /** Used to match a single whitespace character. */
-  var reWhitespace = /\s/;
+  /** Used to match leading and trailing whitespace. */
+  var reTrim = /^\s+|\s+$/g,
+      reTrimStart = /^\s+/,
+      reTrimEnd = /\s+$/;
 
   /** Used to match wrap detail comments. */
   var reWrapComment = /\{(?:\n\/\* \[wrapped with .+\] \*\/)?\n?/,
@@ -41088,18 +41926,6 @@ return jQuery;
 
   /** Used to match words composed of alphanumeric characters. */
   var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
-
-  /**
-   * Used to validate the `validate` option in `_.template` variable.
-   *
-   * Forbids characters which could potentially change the meaning of the function argument definition:
-   * - "()," (modification of function parameters)
-   * - "=" (default value)
-   * - "[]{}" (destructuring of function parameters)
-   * - "/" (beginning of a comment)
-   * - whitespace
-   */
-  var reForbiddenIdentifierChars = /[()=,{}\[\]\/\s]/;
 
   /** Used to match backslashes in property paths. */
   var reEscapeChar = /\\(\\)?/g;
@@ -41930,19 +42756,6 @@ return jQuery;
   }
 
   /**
-   * The base implementation of `_.trim`.
-   *
-   * @private
-   * @param {string} string The string to trim.
-   * @returns {string} Returns the trimmed string.
-   */
-  function baseTrim(string) {
-    return string
-      ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
-      : string;
-  }
-
-  /**
    * The base implementation of `_.unary` without support for storing metadata.
    *
    * @private
@@ -42273,21 +43086,6 @@ return jQuery;
     return hasUnicode(string)
       ? unicodeToArray(string)
       : asciiToArray(string);
-  }
-
-  /**
-   * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
-   * character of `string`.
-   *
-   * @private
-   * @param {string} string The string to inspect.
-   * @returns {number} Returns the index of the last non-whitespace character.
-   */
-  function trimmedEndIndex(string) {
-    var index = string.length;
-
-    while (index-- && reWhitespace.test(string.charAt(index))) {}
-    return index;
   }
 
   /**
@@ -53458,7 +54256,7 @@ return jQuery;
       if (typeof value != 'string') {
         return value === 0 ? value : +value;
       }
-      value = baseTrim(value);
+      value = value.replace(reTrim, '');
       var isBinary = reIsBinary.test(value);
       return (isBinary || reIsOctal.test(value))
         ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
@@ -55830,12 +56628,6 @@ return jQuery;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
       }
-      // Throw an error if a forbidden character was found in `variable`, to prevent
-      // potential command injection attacks.
-      else if (reForbiddenIdentifierChars.test(variable)) {
-        throw new Error(INVALID_TEMPL_VAR_ERROR_TEXT);
-      }
-
       // Cleanup code by stripping empty strings.
       source = (isEvaluating ? source.replace(reEmptyStringLeading, '') : source)
         .replace(reEmptyStringMiddle, '$1')
@@ -55949,7 +56741,7 @@ return jQuery;
     function trim(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return baseTrim(string);
+        return string.replace(reTrim, '');
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -55984,7 +56776,7 @@ return jQuery;
     function trimEnd(string, chars, guard) {
       string = toString(string);
       if (string && (guard || chars === undefined)) {
-        return string.slice(0, trimmedEndIndex(string) + 1);
+        return string.replace(reTrimEnd, '');
       }
       if (!string || !(chars = baseToString(chars))) {
         return string;
@@ -61239,6 +62031,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-inventory-inquiry.vue?vue&type=style&index=0&id=7d72ea4c&scoped=true&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-inventory-inquiry.vue?vue&type=style&index=0&id=7d72ea4c&scoped=true&lang=css& ***!
@@ -64008,6 +64830,1223 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-order-shipment-list.vue?vue&type=template&id=df3be5d8&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-order-shipment-list.vue?vue&type=template&id=df3be5d8&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", [
+    _c("div", { staticClass: "main-content-container container-fluid px-4" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "well", staticStyle: { border: "3px solid #428bca" } },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "header col-md-12 col-xs-12",
+                staticStyle: { "font-size": "18px", padding: "10px" }
+              },
+              [
+                _c("span", { staticClass: "pull-left" }, [
+                  _vm._v(
+                    "\n                                出荷一覧\n                            "
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary pull-right",
+                    staticStyle: { float: "right" },
+                    attrs: { href: _vm.base_url + "/android_home" }
+                  },
+                  [_vm._v(" メニュー")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-offset-2 col-md-8 col-centereds" },
+              [
+                _c("div", { staticClass: "row custom_p_scan" }, [
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "p_scn_form text-right",
+                      attrs: { id: "stock_detail_by_jan_form" }
+                    },
+                    [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.jan_code,
+                                expression: "jan_code"
+                              }
+                            ],
+                            staticClass: "form-control custom-input",
+                            attrs: {
+                              type: "tel",
+                              id: "jan_input",
+                              name: "scan_by_jan_for_stock_detail",
+                              placeholder: "JANコードスキャン（13桁）",
+                              autofocus: ""
+                            },
+                            domProps: { value: _vm.jan_code },
+                            on: {
+                              keyup: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              paste: function($event) {
+                                return _vm.checkAndGetData($event)
+                              },
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.jan_code = $event.target.value
+                                },
+                                function($event) {
+                                  return _vm.checkAndGetData($event)
+                                }
+                              ],
+                              blur: function($event) {
+                                return _vm.checkAndGetData($event)
+                              }
+                            }
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "hide btn custom-btn btn-primary text-right show_inline search-button-ios ",
+                            staticStyle: { float: "left", width: "100px" },
+                            attrs: {
+                              type: "button",
+                              onclick: "$('#jan_input').focus()"
+                            },
+                            on: { click: _vm.alertForIos }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        音声\n                                    "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn custom-btn btn-primary pull-right text-right show_inline",
+                            staticStyle: {
+                              margin: "0px",
+                              width: "80px !important"
+                            },
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.getOrderDataByJan()
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        次へ\n                                    "
+                            )
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "stock-order-show-by-jan"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-body p-0" }, [
+              _c(
+                "div",
+                { staticClass: "main-content-container container-fluid" },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "well",
+                        staticStyle: { border: "3px solid rgb(66, 139, 202)" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-horizontal",
+                            attrs: { id: "handy_order_form_by_jan" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-horizontal",
+                                attrs: { id: "handy_order_form" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: {
+                                      "border-radius": "5px",
+                                      "margin-top": "18px !important",
+                                      "margin-bottom": "2px"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "product_name_aria",
+                                        attrs: { id: "search_product_name" }
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "#999",
+                                              "font-size": "20px !important"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              " " + _vm._s(_vm.product_name)
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: { "margin-bottom": "0" }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "col-md-12 col-xs-12 padding_0"
+                                      },
+                                      [
+                                        _c(
+                                          "table",
+                                          {
+                                            staticClass:
+                                              "table table-bordered physical_handy_tabls"
+                                          },
+                                          [
+                                            _c("thead", [
+                                              _c("tr", [
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "05px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                ケース "
+                                                    ),
+                                                    _c("br"),
+                                                    _vm._v(
+                                                      "\n                                                                (入数 " +
+                                                        _vm._s(
+                                                          _vm.order_data_
+                                                            .case_inputs
+                                                        ) +
+                                                        ")\n                                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "05px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                ボール "
+                                                    ),
+                                                    _c("br"),
+                                                    _vm._v(
+                                                      " (入数 " +
+                                                        _vm._s(
+                                                          _vm.order_data_
+                                                            .ball_inputs
+                                                        ) +
+                                                        ")\n\n                                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "05px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                バラ\n                                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "5px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                在庫\n                                                                合計\n                                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "5px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                返却\n                                                                合計\n                                                            "
+                                                    )
+                                                  ]
+                                                )
+                                              ])
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "tbody",
+                                              { staticClass: "physicaltbody" },
+                                              [
+                                                _vm.order_data.length > 0
+                                                  ? _vm._l(
+                                                      _vm.order_data,
+                                                      function(order, index) {
+                                                        return _c("tr", [
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .return_info
+                                                                      .return_case_qty,
+                                                                  expression:
+                                                                    "return_info.return_case_qty"
+                                                                }
+                                                              ],
+                                                              staticClass:
+                                                                "form-control inputs ",
+                                                              attrs: {
+                                                                type: "tel",
+                                                                id:
+                                                                  "case" + index
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .return_info
+                                                                    .return_case_qty
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.selectItem(
+                                                                    $event,
+                                                                    "ケース"
+                                                                  )
+                                                                },
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    "ball"
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.return_info,
+                                                                    "return_case_qty",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .return_info
+                                                                      .return_ball_qty,
+                                                                  expression:
+                                                                    "return_info.return_ball_qty"
+                                                                }
+                                                              ],
+                                                              staticClass:
+                                                                "form-control boll_order inputs",
+                                                              attrs: {
+                                                                type: "tel",
+                                                                id:
+                                                                  "ball" + index
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .return_info
+                                                                    .return_ball_qty
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.selectItem(
+                                                                    $event,
+                                                                    "ケース"
+                                                                  )
+                                                                },
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    "bara"
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.return_info,
+                                                                    "return_ball_qty",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .return_info
+                                                                      .return_unit_qty,
+                                                                  expression:
+                                                                    "return_info.return_unit_qty"
+                                                                }
+                                                              ],
+                                                              staticClass:
+                                                                "form-control cmn_num_formt bara_order inputs",
+                                                              attrs: {
+                                                                type: "tel",
+                                                                id:
+                                                                  "bara" + index
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .return_info
+                                                                    .return_unit_qty
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.selectItem(
+                                                                    $event,
+                                                                    "ケース"
+                                                                  )
+                                                                },
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    "reck"
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.return_info,
+                                                                    "return_unit_qty",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .return_info
+                                                                      .TotalQty,
+                                                                  expression:
+                                                                    "return_info.TotalQty"
+                                                                }
+                                                              ],
+                                                              staticClass:
+                                                                "form-control  ",
+                                                              staticStyle: {
+                                                                "border-radius":
+                                                                  "0px",
+                                                                "text-align":
+                                                                  "center"
+                                                              },
+                                                              attrs: {
+                                                                type: "tel",
+                                                                readonly:
+                                                                  _vm.readonly
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .return_info
+                                                                    .TotalQty
+                                                              },
+                                                              on: {
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    index
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.return_info,
+                                                                    "TotalQty",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c("td", [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .return_info
+                                                                      .returnTotalQty,
+                                                                  expression:
+                                                                    "return_info.returnTotalQty"
+                                                                }
+                                                              ],
+                                                              staticClass:
+                                                                "form-control  ",
+                                                              staticStyle: {
+                                                                "border-radius":
+                                                                  "0px",
+                                                                "text-align":
+                                                                  "center"
+                                                              },
+                                                              attrs: {
+                                                                type: "tel",
+                                                                id:
+                                                                  "rack" +
+                                                                  index,
+                                                                readonly:
+                                                                  _vm.readonly
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .return_info
+                                                                    .returnTotalQty
+                                                              },
+                                                              on: {
+                                                                keypress: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.pressEnterAndSave(
+                                                                    $event,
+                                                                    index
+                                                                  )
+                                                                },
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.return_info,
+                                                                    "returnTotalQty",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ])
+                                                        ])
+                                                      }
+                                                    )
+                                                  : [_vm._m(0)]
+                                              ],
+                                              2
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-primary pull-right custom-btn",
+                                            staticStyle: {
+                                              float: "right",
+                                              "margin-top": "-10px"
+                                            },
+                                            attrs: {
+                                              href: "javascript:void(0)",
+                                              id: "order-place-button"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.updateTemporaryTana()
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                        次の商品へ"
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "select_tonya"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-body p-0" }, [
+              _c(
+                "div",
+                { staticClass: "main-content-container container-fluid" },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "well",
+                        staticStyle: { border: "3px solid rgb(66, 139, 202)" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-horizontal",
+                            attrs: { id: "handy_order_form_by_jan_" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-horizontal",
+                                attrs: { id: "handy_order_form_" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: { "margin-bottom": "0" }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "col-md-12 col-xs-12 padding_0"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "select",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.vendor_id,
+                                                    expression: "vendor_id"
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  id: "sel1",
+                                                  onchange: "updateVendorData()"
+                                                },
+                                                on: {
+                                                  change: function($event) {
+                                                    var $$selectedVal = Array.prototype.filter
+                                                      .call(
+                                                        $event.target.options,
+                                                        function(o) {
+                                                          return o.selected
+                                                        }
+                                                      )
+                                                      .map(function(o) {
+                                                        var val =
+                                                          "_value" in o
+                                                            ? o._value
+                                                            : o.value
+                                                        return val
+                                                      })
+                                                    _vm.vendor_id = $event
+                                                      .target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "option",
+                                                  { attrs: { value: "null" } },
+                                                  [_vm._v("問屋を選択")]
+                                                ),
+                                                _vm._v(" "),
+                                                _vm._l(_vm.vendors, function(
+                                                  vendor
+                                                ) {
+                                                  return _c(
+                                                    "option",
+                                                    {
+                                                      domProps: {
+                                                        value: vendor.id
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                                " +
+                                                          _vm._s(vendor.text) +
+                                                          "\n                                                            "
+                                                      )
+                                                    ]
+                                                  )
+                                                })
+                                              ],
+                                              2
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-primary pull-right custom-btn",
+                                            staticStyle: { float: "right" },
+                                            attrs: {
+                                              href: "javascript:void(0)"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.updateVendorData()
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                        次の商品へ\n                                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: {
+                                      "border-radius": "5px",
+                                      "margin-top": "85px !important"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "product_name_aria",
+                                        attrs: { id: "search_product_name_" }
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "#999",
+                                              "font-size": "20px"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                        " +
+                                                _vm._s(_vm.product_name) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "bar-code-scan-area"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-body p-0" }, [
+              _c(
+                "div",
+                { staticClass: "main-content-container container-fluid pt-2" },
+                [
+                  _vm.barCodeScan
+                    ? _c("StreamBarcodeReader", {
+                        on: {
+                          decode: _vm.onDecode,
+                          loaded: function($event) {
+                            return _vm.onLoad()
+                          }
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn custom-btn btn-primary pull-right text-right show_inline",
+                      staticStyle: {
+                        float: "right",
+                        margin: "5px 0",
+                        width: "95px !important"
+                      },
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.getBarCodeScan()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                次へ\n                            "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "jn nav_disp",
+        staticStyle: {
+          "z-index": "9999",
+          width: "270px",
+          right: "15px",
+          bottom: "15px",
+          display: "none"
+        },
+        attrs: { id: "handy-navi-jan-list" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card card-warning jn_old_popup ",
+            staticStyle: {
+              padding: "6px",
+              "max-height": "70vh",
+              overflow: "auto"
+            }
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-light float-right",
+                  attrs: {
+                    href: "javascript:void(0)",
+                    onclick: "$('#handy-navi-jan-list').hide()"
+                  }
+                },
+                [_vm._v("戻る")]
+              ),
+              _vm._v(" "),
+              _c(
+                "ol",
+                { attrs: { id: "handy-navi-body-for-jan-list" } },
+                _vm._l(_vm.search_data, function(data) {
+                  return _c(
+                    "li",
+                    {
+                      staticStyle: { cursor: "pointer" },
+                      on: {
+                        click: function($event) {
+                          return _vm.GetDetailsFormSearchList(data.jan)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(data.name) + "\n                        ")]
+                  )
+                }),
+                0
+              )
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "jn nav_disp",
+        staticStyle: {
+          "z-index": "9999",
+          width: "270px",
+          right: "15px",
+          bottom: "15px"
+        },
+        attrs: { id: "handy-navi" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card card-warning jn_old_popup ",
+            staticStyle: { padding: "6px" }
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-light float-right",
+                  attrs: {
+                    href: "javascript:void(0)",
+                    onclick: "$('#handy-navi').hide()"
+                  }
+                },
+                [_vm._v("戻る")]
+              ),
+              _vm._v(" "),
+              _c("ol", {
+                attrs: { id: "handy-navi-body" },
+                domProps: { innerHTML: _vm._s(_vm.handi_navi) }
+              })
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "td",
+        {
+          staticStyle: {
+            "font-size": "16px",
+            background: "#f4c8c8",
+            "text-align": "center",
+            "vertical-align": "0"
+          },
+          attrs: { colspan: "3" }
+        },
+        [
+          _vm._v(
+            "\n                                                                    データが見つかりませんでした。\n                                                                "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "col-lg-4 col-md-4 col-sm-4 col-xs-12 handdy_error hide hide_enter_outside close_aria",
+        staticStyle: {
+          position: "fixed",
+          bottom: "0px",
+          right: "0px",
+          padding: "4px"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "panel panel-danger",
+            staticStyle: {
+              "margin-bottom": "2px",
+              border: "solid 2px red",
+              "border-top": "solid 5px red",
+              "box-shadow": "0 2px 6px rgba(0,0,0,0.2)"
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "panel-body", staticStyle: { padding: "10px" } },
+              [
+                _c("p", {
+                  staticClass: "text-danger handy_error_msg text-center",
+                  staticStyle: { margin: "0", "font-size": "20px" }
+                })
+              ]
+            )
+          ]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-inventory-inquiry.vue?vue&type=template&id=7d72ea4c&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-inventory-inquiry.vue?vue&type=template&id=7d72ea4c&scoped=true& ***!
@@ -65516,7 +67555,7 @@ var render = function() {
                                                     _vm._v(
                                                       "\n                                                                (入数 " +
                                                         _vm._s(
-                                                          _vm.order_data
+                                                          _vm.order_data_
                                                             .case_inputs
                                                         ) +
                                                         ")\n                                                            "
@@ -65541,7 +67580,7 @@ var render = function() {
                                                     _vm._v(
                                                       " (入数 " +
                                                         _vm._s(
-                                                          _vm.order_data
+                                                          _vm.order_data_
                                                             .ball_inputs
                                                         ) +
                                                         ")\n\n                                                            "
@@ -71219,15 +73258,14 @@ if (false) {}
   name: 'vue-speech',
 
   props: {
-    lang: {
-        type: String,
-        default: 'en-US'
-    },
-    resume: {
-        default: 0
-    }
-
-},
+      lang: {
+          type: String,
+          default: 'en-US'
+      },
+      resume: {
+          default: 0
+      }
+  },
 
   data: () => ({
     runtimeTranscription: '',
@@ -71235,56 +73273,56 @@ if (false) {}
   }),
 
   methods: {
-    checkApi() {
-        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      checkApi() {
+          window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-        if (!SpeechRecognition && "development" !== 'production') {
-            throw new Error('Speech Recognition does not exist on this browser. Use Chrome or Firefox');
-        }
+          if (!SpeechRecognition && "development" !== 'production') {
+              throw new Error('Speech Recognition does not exist on this browser. Use Chrome or Firefox');
+          }
 
-        if (!SpeechRecognition) {
-            return;
-        }
+          if (!SpeechRecognition) {
+              return;
+          }
 
-        const recognition = new SpeechRecognition();
+          const recognition = new SpeechRecognition();
 
-        recognition.lang = this.lang;
-        recognition.interimResults = true;
+          recognition.lang = this.lang;
+          recognition.interimResults = true;
 
-        recognition.addEventListener('result', event => {
-            const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('');
+          recognition.addEventListener('result', event => {
+              const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('');
 
-            this.runtimeTranscription = text;
-        });
-        recognition.start();
-        recognition.addEventListener('end', () => {
-            if (this.runtimeTranscription !== '') {
-                this.transcription.push(this.runtimeTranscription);
+              this.runtimeTranscription = text;
+          });
+          recognition.start();
+          recognition.addEventListener('end', () => {
+              if (this.runtimeTranscription !== '') {
+                  this.transcription.push(this.runtimeTranscription);
 
-                this.$emit('onTranscriptionEnd', {
-                    transcription: this.transcription,
-                    lastSentence: this.runtimeTranscription
-                });
-            }
+                  this.$emit('onTranscriptionEnd', {
+                      transcription: this.transcription,
+                      lastSentence: this.runtimeTranscription
+                  });
+              }
 
-            this.runtimeTranscription = '';
-            recognition.stop();
-        });
+              this.runtimeTranscription = '';
+              recognition.stop();
+          });
 
 
-    }
-},
+      }
+  },
 
-mounted() {
+  mounted() {
     // this.checkApi();
-},
-watch: {
-    resume: function (val) {
-        if (val) {
-            this.checkApi();
+  },
+    watch: {
+        resume: function (val) {
+            if (val) {
+                this.checkApi();
+            }
         }
     }
-}
 });
 
 /***/ }),
@@ -71432,6 +73470,7 @@ if (false) {}
 /***/ })
 /******/ ]);
 });
+
 
 /***/ }),
 
@@ -83501,9 +85540,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_handy_product_inventory_tmp_tana_update__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/handy-product-inventory-tmp-tana-update */ "./resources/js/components/handy-product-inventory-tmp-tana-update.vue");
 /* harmony import */ var _components_handy_product_inventory_inquiry__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/handy-product-inventory-inquiry */ "./resources/js/components/handy-product-inventory-inquiry.vue");
 /* harmony import */ var _components_handy_product_inventory_return__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/handy-product-inventory-return */ "./resources/js/components/handy-product-inventory-return.vue");
-/* harmony import */ var _components_handy_vandor_master__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/handy-vandor-master */ "./resources/js/components/handy-vandor-master.vue");
-/* harmony import */ var _components_handy_customer_master__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/handy-customer-master */ "./resources/js/components/handy-customer-master.vue");
-/* harmony import */ var _components_barcode_scan__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/barcode-scan */ "./resources/js/components/barcode-scan.vue");
+/* harmony import */ var _components_handy_order_shipment_list__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/handy-order-shipment-list */ "./resources/js/components/handy-order-shipment-list.vue");
+/* harmony import */ var _components_handy_vandor_master__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/handy-vandor-master */ "./resources/js/components/handy-vandor-master.vue");
+/* harmony import */ var _components_handy_customer_master__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/handy-customer-master */ "./resources/js/components/handy-customer-master.vue");
+/* harmony import */ var _components_barcode_scan__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/barcode-scan */ "./resources/js/components/barcode-scan.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -83534,6 +85574,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 
 
 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -83548,9 +85589,10 @@ var app = new Vue({
     'handy-product-inventory-update': _components_handy_product_inventory_tmp_tana_update__WEBPACK_IMPORTED_MODULE_3__["default"],
     'handy-product-inventory-inquiry': _components_handy_product_inventory_inquiry__WEBPACK_IMPORTED_MODULE_4__["default"],
     'handy-product-inventory-return': _components_handy_product_inventory_return__WEBPACK_IMPORTED_MODULE_5__["default"],
-    'bar-code-scan': _components_barcode_scan__WEBPACK_IMPORTED_MODULE_8__["default"],
-    'handy-vendor-master': _components_handy_vandor_master__WEBPACK_IMPORTED_MODULE_6__["default"],
-    'handy-customer-master': _components_handy_customer_master__WEBPACK_IMPORTED_MODULE_7__["default"]
+    'handy-order-shipment-list': _components_handy_order_shipment_list__WEBPACK_IMPORTED_MODULE_6__["default"],
+    'bar-code-scan': _components_barcode_scan__WEBPACK_IMPORTED_MODULE_9__["default"],
+    'handy-vendor-master': _components_handy_vandor_master__WEBPACK_IMPORTED_MODULE_7__["default"],
+    'handy-customer-master': _components_handy_customer_master__WEBPACK_IMPORTED_MODULE_8__["default"]
   }
 });
 
@@ -83852,6 +85894,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_customer_master_vue_vue_type_template_id_c9953dda_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_customer_master_vue_vue_type_template_id_c9953dda_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/handy-order-shipment-list.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/handy-order-shipment-list.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _handy_order_shipment_list_vue_vue_type_template_id_df3be5d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./handy-order-shipment-list.vue?vue&type=template&id=df3be5d8&scoped=true& */ "./resources/js/components/handy-order-shipment-list.vue?vue&type=template&id=df3be5d8&scoped=true&");
+/* harmony import */ var _handy_order_shipment_list_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./handy-order-shipment-list.vue?vue&type=script&lang=js& */ "./resources/js/components/handy-order-shipment-list.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _handy_order_shipment_list_vue_vue_type_style_index_0_id_df3be5d8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css& */ "./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _handy_order_shipment_list_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _handy_order_shipment_list_vue_vue_type_template_id_df3be5d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _handy_order_shipment_list_vue_vue_type_template_id_df3be5d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "df3be5d8",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/handy-order-shipment-list.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/handy-order-shipment-list.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/handy-order-shipment-list.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./handy-order-shipment-list.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-order-shipment-list.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css& ***!
+  \************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_style_index_0_id_df3be5d8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-order-shipment-list.vue?vue&type=style&index=0&id=df3be5d8&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_style_index_0_id_df3be5d8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_style_index_0_id_df3be5d8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_style_index_0_id_df3be5d8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_style_index_0_id_df3be5d8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/handy-order-shipment-list.vue?vue&type=template&id=df3be5d8&scoped=true&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/handy-order-shipment-list.vue?vue&type=template&id=df3be5d8&scoped=true& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_template_id_df3be5d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./handy-order-shipment-list.vue?vue&type=template&id=df3be5d8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-order-shipment-list.vue?vue&type=template&id=df3be5d8&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_template_id_df3be5d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_order_shipment_list_vue_vue_type_template_id_df3be5d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -84484,8 +86613,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/rv3_tonyav1/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/rv3_tonyav1/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\Xampp\htdocs\rv3_tonyav1\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\Xampp\htdocs\rv3_tonyav1\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -148,6 +148,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/getall_receiveable_items_list', 'HandyrController@getall_receiveable_items_list');
 	Route::get('/handy_order_shipment', 'HandyrController@handy_order_shipment');
 	Route::get('/handy_order_shipment_list', 'HandyrController@handy_order_shipment_list');
+	Route::get('/order_shipment_list', 'HandyrController@order_shipment_list')->name('order.shipment.list');
 	Route::get('/handy_stock', 'HandyrController@handy_stock');
 	Route::get('/handy_stock_detail_by_rack', 'HandyrController@handy_stock_detail_by_rack');
 	Route::post('/handy_stock_detail_by_jan_code', 'HandyrController@handy_stock_detail_by_jan_code');
