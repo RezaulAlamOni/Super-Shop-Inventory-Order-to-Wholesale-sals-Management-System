@@ -303,7 +303,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::get('/sendTomailportal/{vendor_id?}', 'ReceiveorderController@sendTomailportal');
 	
 	//customer manual order getCustomerOrderInfoByJan
-	Route::get('/getCustomerOrderInfoByJan', 'Customer_menual_orderController@getCustomerOrderInfoByJan');
+	Route::post('/getCustomerOrderInfoByJan', 'Customer_menual_orderController@getCustomerOrderInfoByJan');
 
 
 });

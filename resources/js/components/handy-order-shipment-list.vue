@@ -31,7 +31,8 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"
+                                <!--@click="alertForIos" -->
+                                    <button type="button" onclick="$('#jan_input').focus()"
                                             class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "
                                             style="float: left;width: 100px">
                                         音声
@@ -87,10 +88,10 @@
                                                         <tr>
                                                             <th style="width: 50px; text-align: center;padding: 05px">
                                                                 ケース <br>
-                                                                (入数 {{ order_data.case_inputs }})
+                                                                (入数 {{ case_inputs }})
                                                             </th>
                                                             <th style="width: 50px; text-align: center;padding: 05px">
-                                                                ボール <br> (入数 {{ order_data.ball_inputs }})
+                                                                ボール <br> (入数 {{ ball_inputs }})
 
                                                             </th>
                                                             <th style="width: 50px; text-align: center;padding: 05px;">
@@ -107,24 +108,24 @@
                                                             <tr v-for="(order,index) in order_data">
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'case')"
-                                                                           @keypress="pressEnterAndNext($event,'case',index)"
-                                                                           :value="order.case_quantity" :id="'case'+index"
+                                                                           @keypress="pressEnterAndNext($event,'case',index,order)"
+                                                                           v-model="order.case_quantity" :id="'case'+index"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'ball')"
-                                                                           @keypress="pressEnterAndNext($event,'ball',index)"
-                                                                           :value="order.ball_quantity" :id="'ball'+index"
+                                                                           @keypress="pressEnterAndNext($event,'ball',index,order)"
+                                                                           v-model="order.ball_quantity" :id="'ball'+index"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'bara')"
-                                                                           @keypress="pressEnterAndNext($event,'bara',index)"
-                                                                           :value="order.unit_quantity" :id="'bara'+index"
+                                                                           @keypress="pressEnterAndNext($event,'bara',index,order)"
+                                                                           v-model="order.unit_quantity" :id="'bara'+index"
                                                                            class="form-control cmn_num_formt bara_order inputs ">
                                                                 </td>
 
@@ -133,7 +134,7 @@
                                                                            @keypress="pressEnterAndSave($event,index)"
                                                                            class="form-control  update_rack_code_exec  "
                                                                            :id="'rack'+index"
-                                                                           v-model="order.rack_number"
+                                                                           v-model="order.customer_shipment.rack_number"
                                                                            style="border-radius: 0px; text-align: center;">
                                                                 </td>
 
@@ -273,6 +274,9 @@ export default {
         return {
             jan_code: '',
             order_data: [],
+            temp_order_data: [],
+            case_inputs:'',
+            ball_inputs:'',
             case_order: 0,
             boll_order: 0,
             bara_order: 0,
@@ -298,6 +302,7 @@ export default {
             }, 120)
         });
         _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
+        _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
     },
     methods: {
         getOrderDataByJan() {
@@ -307,14 +312,18 @@ export default {
             }
             $('.loading_image_custom').show()
             _this.loader = 1
-            axios.post(this.base_url + '/handy_stock_product_store_rack_code', {'scan_by_jan_for_stock_detail': _this.jan_code})
+            axios.post(this.base_url + '/getCustomerOrderInfoByJan', {'jan_code': _this.jan_code})
                 .then(function (res) {
                     //_this.resetField();
-                    if (res.data.result.length > 0) {
-                        _this.order_data = res.data.result;
-                        _this.temp_rack_number = res.data.last_rack;
-                        _this.product_name = _this.order_data[0].item_name;
-
+                    //console.log(res);
+                    if (res.data.success > 0) {
+                        _this.order_data[0] = res.data.result;
+                        _this.temp_order_data = res.data.result;
+                        //_this.temp_rack_number = res.data.last_rack;
+                        _this.product_name = res.data.result.jan.name;
+                        _this.case_inputs = res.data.result.jan.case_inputs;
+                        _this.ball_inputs = res.data.result.jan.ball_inputs;
+                      //  console.log(_this.product_name)
                         _this.calculateTotalQuantity();
 
                         if (_this.type == 0) {
@@ -329,8 +338,8 @@ export default {
                             }, 720)
                         }
                     } else {
-
-                        _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+alert('hit herer');
+                        _this.handi_navi = '<li>0000000000000000</li>';
                         $('#handy-navi').show()
                     }
 
@@ -410,6 +419,8 @@ export default {
         },
         updateTemporaryTana() {
             let _this = this;
+            console.log(this.order_data);
+            return false;
             let data = [];
             $('.loading_image_custom').show()
             this.order_data.map(function (order) {
@@ -425,7 +436,8 @@ export default {
                     }
                     data.push(_data)
                 }
-            })
+            });
+            
             if (data.length <= 0) {
                 $('.loading_image_custom').hide()
                 $('#stock-order-show-by-jan').modal('hide')
@@ -472,9 +484,40 @@ export default {
                 }
             }
         },
-        pressEnterAndNext(e,type, i) {
+        pressEnterAndNext(e,type, i,order) {
+           let statusE = 0;
             if (e.keyCode == 13) {
+                console.log(order);
+                if(order.customer_shipment.inputs=='ケース'){
+                    if(order.case_quantity>order.customer_shipment.confirm_quantity){
+                        order.case_quantity = order.customer_shipment.confirm_quantity;
+                        statusE = 1;
+                    }
+                    order.ball_quantity = 0;
+                    order.unit_quantity = 0;
+                    console.log('set ball u')
+                }else if(order.customer_shipment.inputs=='ボール'){
+                    if(order.ball_quantity>order.customer_shipment.confirm_quantity){
+                        order.ball_quantity = order.customer_shipment.confirm_quantity;
+                        
+                          statusE = 1;
+                    }
+                    order.case_quantity = 0;
+                    order.unit_quantity = 0;
+                }else{
+                    if(order.unit_quantity>order.customer_shipment.confirm_quantity){
+                        order.unit_quantity = order.customer_shipment.confirm_quantity;
+                          statusE = 1;
+                    }
+                    order.case_quantity = 0;
+                    order.ball_quantity = 0;
+                }
+                this.calQty(order);
+                if(statusE==1){
+                    this.handi_navi = '<li>0000000000</li>';
+                    $('#handy-navi').show()
 
+                }
                 if (type == 'case') {
                     $('#ball'+i).focus()
                     $('#ball'+i).select()
@@ -496,6 +539,20 @@ export default {
                 //     $('#order-place-button').focus()
                 // }
             }
+        },
+        calQty(order){
+           var _this = this;
+                if(order.customer_shipment.inputs=='ケース'){
+                                            _this.total_quantity =  parseInt(order.case_quantity) * parseInt(order.jan.case_inputs);
+
+                }else if(order.customer_shipment.inputs=='ボール'){
+                          _this.total_quantity =  parseInt(order.ball_quantity) * parseInt(order.jan.ball_inputs);
+
+                }else{
+                         _this.total_quantity = parseInt(order.unit_quantity);
+
+                }
+
         },
         insertToJanList() {
             let _this = this;
@@ -615,15 +672,26 @@ export default {
             _this.total_quantity = 0;
 
             this.order_data.map(function (order) {
-                if (order.rack_number.length == 3) {
-                    _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
-                    if (_this.temp_rack_number) {
-                        order.rack_number = _this.temp_rack_number;
+                    console.log(order);
+                    if(order.customer_shipment.inputs=="ケース"){
+                        _this.total_quantity +=  parseInt(order.customer_shipment.confirm_quantity) * parseInt(order.jan.case_inputs);
+                        order.case_quantity = order.customer_shipment.confirm_quantity;
+                        order.ball_quantity = 0;
+                        order.unit_quantity = 0;
+                    }else if(order.customer_shipment.inputs=="ボール"){
+                          _this.total_quantity +=  parseInt(order.customer_shipment.confirm_quantity) * parseInt(order.jan.ball_inputs);
+                          order.case_quantity = 0;
+                        order.ball_quantity = order.customer_shipment.confirm_quantity;
+                        order.unit_quantity = 0;
                     }else{
-                        order.rack_number ='';
+                         _this.total_quantity += parseInt(order.customer_shipment.confirm_quantity);
+                          order.case_quantity = 0;
+                        order.ball_quantity = 0;
+                        order.unit_quantity = order.customer_shipment.confirm_quantity;
                     }
+                   // _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
+                    
                     data.push(order)
-                }
             })
             this.order_data = data;
 

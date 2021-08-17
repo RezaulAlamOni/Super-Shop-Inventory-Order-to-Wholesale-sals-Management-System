@@ -438,9 +438,10 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
         //
     }
 
-    public function getCustomerOrderInfoByJan(){
+    public function getCustomerOrderInfoByJan(Request $request){
         $value = '確定済み';
-       $result = customer_order_detail::where('jan','4514603265217')->with(['customer_item','jan','customer_order','customer_shipment'])
+        $jan_code = $request->jan_code;
+       $result = customer_order_detail::where('jan',$jan_code)->with(['customer_item','jan','customer_order','customer_shipment'])
        ->whereHas('customer_order', function($q) use($value) {
         // Query the name field in status table
         $q->where('status', '=', $value); // '=' is optional
@@ -451,9 +452,9 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
  })
        ->first();
        if($result){
-            return response()->json(['success' => 1,'orderInfo'=>$result]);
+            return response()->json(['success' => 1,'result'=>$result]);
        }else{
-            return response()->json(['success' => 0,'orderInfo'=>$result]);
+            return response()->json(['success' => 0,'result'=>$result]);
        }
     }
 }
