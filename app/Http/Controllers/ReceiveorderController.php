@@ -603,7 +603,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $handle = fopen($filename, 'w+');
         $handle2 = fopen($hacchu_file, 'w+');
         $result = $this->get_tonya_order_list_by_id($vendor_id);
-        
+        $fileUrl =  url('/').'/backend/csv/file.csv';
+        $haccufileUrl =  url('/').'/backend/csv/hacchu_file.csv';
         /*
             prepare csv
         */
@@ -674,8 +675,10 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         //     $postvars .= $key . "=" . $value . "&";
         // }
         $post_array = array(
-            'file' => '@' . realpath($filename),
-            'hacchu_file' => '@' . realpath($hacchu_file),
+            'file' => '@' . realpath($fileUrl),
+            'hacchu_file' => '@' . realpath($haccufileUrl),
+            // 'file' => '@' . realpath($filename),
+            // 'hacchu_file' => '@' . realpath($hacchu_file),
             'receiver_name' => $tonyaInfo->name,
             'receiver_id' => $tonyaInfo->vendor_id,
             'receiver_phone' => $tonyaInfo->phone,
@@ -686,6 +689,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             'sender_phone' => '987654321543',
             'sender_partner_code' => '909090',
         );
+        print_r($post_array);exit;
         $headers = array();
         $headers[] = "Cookie: X-CSRF-Token=$csrfToken";
         $headers[] = "Cookie: X-CSRF-Token=$csrfToken";
