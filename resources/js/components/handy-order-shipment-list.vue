@@ -109,6 +109,7 @@
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'case')"
                                                                            @keypress="pressEnterAndNext($event,'case',index,order)"
+                                                                           @blur="pressEnterAndNextBlur(order)"
                                                                            v-model="order.case_quantity" :id="'case'+index"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
@@ -117,6 +118,7 @@
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'ball')"
                                                                            @keypress="pressEnterAndNext($event,'ball',index,order)"
+                                                                           @blur="pressEnterAndNextBlur(order)"
                                                                            v-model="order.ball_quantity" :id="'ball'+index"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
@@ -125,6 +127,7 @@
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'bara')"
                                                                            @keypress="pressEnterAndNext($event,'bara',index,order)"
+                                                                           @blur="pressEnterAndNextBlur(order)"
                                                                            v-model="order.unit_quantity" :id="'bara'+index"
                                                                            class="form-control cmn_num_formt bara_order inputs ">
                                                                 </td>
@@ -418,11 +421,47 @@ export default {
         },
         updateTemporaryTana() {
             let _this = this;
-            console.log(this.order_data);
-            return false;
-            let data = [];
+            let order_itemData =this.order_data[0]; 
+            
+            let c_quantity = order_itemData.customer_shipment.inputs == 'ケース' ? order_itemData.case_quantity : (order_itemData.customer_shipment.inputs == 'ボール' ? order_itemData.ball_quantity : order_itemData.unit_quantity);
+            //let c_quantity = 0;
+            if(order_itemData.customer_shipment.inputs=='ケース'){
+                    if(c_quantity>order_itemData.customer_shipment.confirm_quantity){
+                        _this.handi_navi = '<li>在庫量不足。</li>';
+                             $('#handy-navi').show()
+                            return false;
+                    }  
+            }else if(order_itemData.customer_shipment.inputs=='ボール'){
+                if(c_quantity>order_itemData.customer_shipment.confirm_quantity){
+                        _this.handi_navi = '<li>在庫量不足。</li>';
+                             $('#handy-navi').show()
+                            return false;
+                    }  
+            }else{
+                if(c_quantity>order_itemData.customer_shipment.confirm_quantity){
+                        _this.handi_navi = '<li>在庫量不足。</li>';
+                             $('#handy-navi').show()
+                            return false;
+                    }  
+            }          
+
+
+            let data = {
+                jan_code: _this.jan_code,
+                pname: order_itemData.jan.name,
+                c_quantity: c_quantity,
+                customer_id: order_itemData.customer_shipment.customer_id,
+                customer_item_id: order_itemData.customer_item_id,
+                customer_order_id: order_itemData.customer_shipment.customer_order_id,
+                customer_order_detail_id: order_itemData.customer_shipment.customer_order_detail_id,
+                inputs_type: order_itemData.customer_shipment.inputs,
+                customer_shipment_id: order_itemData.customer_shipment.customer_shipment_id,
+                rack_number: order_itemData.customer_shipment.rack_number
+            };
+            console.log(data);
+            //return false;
             $('.loading_image_custom').show()
-            this.order_data.map(function (order) {
+            /*this.order_data.map(function (order) {
                 if (order.rack_number.length >= 4) {
                     let _data = {
                         rack_number: order.rack_number,
@@ -435,19 +474,30 @@ export default {
                     }
                     data.push(_data)
                 }
-            });
+            });*/
             
             if (data.length <= 0) {
                 $('.loading_image_custom').hide()
                 $('#stock-order-show-by-jan').modal('hide')
             } else {
-                axios.post(this.base_url + '/stock_inventory_update_rack_multiple', {data: data})
+                axios.post(this.base_url + '/shipment_arival_insert_handy_shipmentorder', data)
                     .then(function (res) {
+                        console.log(res);
+                        if (res.data.message == 'stock_over_qty') {
+                            console.log('stock over');
+                             _this.handi_navi = '<li>在庫量不足。</li>';
+                             $('#handy-navi').show()
+                            return false;
+                        } else {
+                            console.log('stock done');
+                            _this.handi_navi = '<li>出荷が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+                            $('#handy-navi').show();
 
-                        $('#handy-navi').show()
-                        _this.handi_navi = '<li>棚入庫が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+                            _this.hideModelAndClearInput();
+                            $('#jan_input').focus();
+                        }
 
-                        _this.hideModelAndClearInput()
+                        
                     })
                     .then(function (er) {
 
@@ -483,11 +533,9 @@ export default {
                 }
             }
         },
-        pressEnterAndNext(e,type, i,order) {
-           let statusE = 0;
-            if (e.keyCode == 13) {
-                console.log(order);
-                if(order.customer_shipment.inputs=='ケース'){
+        pressEnterAndNextBlur(order){
+         /*   let statusE = 0;
+           if(order.customer_shipment.inputs=='ケース'){
                     if(order.case_quantity>order.customer_shipment.confirm_quantity){
                         order.case_quantity = order.customer_shipment.confirm_quantity;
                         statusE = 1;
@@ -517,6 +565,44 @@ export default {
                     $('#handy-navi').show()
 
                 }
+                */
+        },
+        pressEnterAndNext(e,type, i,order) {
+          /* let statusE = 0;
+           if(order.customer_shipment.inputs=='ケース'){
+                    if(order.case_quantity>order.customer_shipment.confirm_quantity){
+                        order.case_quantity = order.customer_shipment.confirm_quantity;
+                        statusE = 1;
+                    }
+                    order.ball_quantity = 0;
+                    order.unit_quantity = 0;
+                    console.log('set ball u')
+                }else if(order.customer_shipment.inputs=='ボール'){
+                    if(order.ball_quantity>order.customer_shipment.confirm_quantity){
+                        order.ball_quantity = order.customer_shipment.confirm_quantity;
+                        
+                          statusE = 1;
+                    }
+                    order.case_quantity = 0;
+                    order.unit_quantity = 0;
+                }else{
+                    if(order.unit_quantity>order.customer_shipment.confirm_quantity){
+                        order.unit_quantity = order.customer_shipment.confirm_quantity;
+                          statusE = 1;
+                    }
+                    order.case_quantity = 0;
+                    order.ball_quantity = 0;
+                }
+                this.calQty(order);
+                if(statusE==1){
+                    this.handi_navi = '<li>0000000000</li>';
+                    $('#handy-navi').show()
+
+                }
+                */
+            if (e.keyCode == 13) {
+                console.log(order);
+                
                 if (type == 'case') {
                     $('#ball'+i).focus()
                     $('#ball'+i).select()

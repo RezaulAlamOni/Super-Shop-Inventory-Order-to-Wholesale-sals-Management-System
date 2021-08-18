@@ -1219,6 +1219,8 @@ WHERE DATE(co.shipment_date) = CURDATE()
 
     public function shipment_arival_insert_handy_shipmentorder(Request $request)
     {
+        //print_r($request->all());
+        //exit;
         $jan_code = $request->jan_code;
         $c_quantity = $request->c_quantity;
         $customer_id = $request->customer_id;
