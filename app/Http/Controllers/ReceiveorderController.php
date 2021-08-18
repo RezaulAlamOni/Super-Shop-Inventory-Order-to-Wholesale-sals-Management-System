@@ -675,8 +675,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         //     $postvars .= $key . "=" . $value . "&";
         // }
         $post_array = array(
-            'file' => '@' . realpath($fileUrl),
-            'hacchu_file' => '@' . realpath($haccufileUrl),
+            'file' => $fileUrl,
+            'hacchu_file' => $haccufileUrl,
             // 'file' => '@' . realpath($filename),
             // 'hacchu_file' => '@' . realpath($hacchu_file),
             'receiver_name' => $tonyaInfo->name,
@@ -689,7 +689,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             'sender_phone' => '987654321543',
             'sender_partner_code' => '909090',
         );
-        print_r($post_array);exit;
+        print_r($post_array);
         $headers = array();
         $headers[] = "Cookie: X-CSRF-Token=$csrfToken";
         $headers[] = "Cookie: X-CSRF-Token=$csrfToken";
@@ -707,7 +707,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
         fclose($handle);
         fclose($handle2);
-        //print_r($response);exit;
+        print_r($response);exit;
         return redirect()->back()->with('message', 'メールはtonyaに正常に送信されました');
     }
 }
