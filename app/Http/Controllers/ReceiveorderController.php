@@ -592,6 +592,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
     public function sendTomailportal($vendor_id)
     {
+        //set_time_limit(0);
         $csrfToken = csrf_token();
         $tonyaInfo = vendor::where('vendor_id', $vendor_id)->first();
         if (!$tonyaInfo) {
@@ -675,8 +676,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         //     $postvars .= $key . "=" . $value . "&";
         // }
         $post_array = array(
-            'file' => '@' . realpath($fileUrl),
-            'hacchu_file' => '@' . realpath($haccufileUrl),
+            'file' => $fileUrl,
+            'hacchu_file' => $haccufileUrl,
             // 'file' => '@' . realpath($filename),
             // 'hacchu_file' => '@' . realpath($hacchu_file),
             'receiver_name' => $tonyaInfo->name,
@@ -689,25 +690,36 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             'sender_phone' => '987654321543',
             'sender_partner_code' => '909090',
         );
-        print_r($post_array);exit;
+        $postvars = '';
+        foreach($post_array as $key=>$value) {
+            $postvars .= $key . "=" . $value . "&";
+        }
         $headers = array();
         $headers[] = "Cookie: X-CSRF-Token=$csrfToken";
         $headers[] = "Cookie: X-CSRF-Token=$csrfToken";
         $url = "https://keipro.development.dhaka10.dev.jacos.jp/mail/index.php/api/File_send/mail_send";
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);                //0 for a get request
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_array);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 150);//500 second
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $response = curl_exec($ch);
+        $err = curl_error($ch);
         curl_close($ch);
+        if ($err) {
+            echo "cURL Error #:" . $err;exit;
+          } else {
+            echo $response;exit;
+          }
+        
 
         fclose($handle);
         fclose($handle2);
-        //print_r($response);exit;
+        print_r($response);exit;
         return redirect()->back()->with('message', 'メールはtonyaに正常に送信されました');
     }
 }
