@@ -600,11 +600,12 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
            // return redirect()->back()->with('message', 'メールを送信するにはtonyaを選択してください');
         }
         // $filename = storage_path('app/public/All_csv/file.csv');
-        echo $vendor_id.'OKKKKKK<br>';
+       
         $filename = public_path('backend/csv/file.csv');
         $hacchu_file = public_path('backend/csv/hacchu_file.csv');
-        $handle = fopen($filename, 'w+');
-        $handle2 = fopen($hacchu_file, 'w+');
+        $handle = fopen(public_path('backend/csv/file.csv'), 'w');
+        $handle2 = fopen(public_path('backend/csv/hacchu_file.csv'), 'w');
+        echo $vendor_id.'OKKKKKK<br>';exit;
         $result = $this->get_tonya_order_list_by_id($vendor_id);
         $fileUrl =  url('/').'/backend/csv/file.csv';
         $haccufileUrl =  url('/').'/backend/csv/hacchu_file.csv';
