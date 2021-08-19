@@ -596,7 +596,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $csrfToken = csrf_token();
         $tonyaInfo = vendor::where('vendor_id', $vendor_id)->first();
         if (!$tonyaInfo) {
-            return redirect()->back()->with('message', 'メールを送信するにはtonyaを選択してください');
+            return response()->json(['success' => 0,'message'=>'メールを送信するにはtonyaを選択してください']);
+           // return redirect()->back()->with('message', 'メールを送信するにはtonyaを選択してください');
         }
         // $filename = storage_path('app/public/All_csv/file.csv');
         $filename = public_path('backend/csv/file.csv');
@@ -678,10 +679,10 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         //     $postvars .= $key . "=" . $value . "&";
         // }
         $post_array = array(
-            //'file' => 'https://ryutu-van.dev.jacos.jp/rv3_tonyav1/public/backend/csv/file.csv',//$fileUrl,
-            //'hacchu_file' => 'https://ryutu-van.dev.jacos.jp/rv3_tonyav1/public/backend/csv/file.csv',//$haccufileUrl,
-            'file' => $fileUrl,
-            'hacchu_file' => $haccufileUrl,
+            'file' => 'https://ryutu-van.dev.jacos.jp/rv3_tonyav1/public/backend/csv/file.csv',//$fileUrl,
+            'hacchu_file' => 'https://ryutu-van.dev.jacos.jp/rv3_tonyav1/public/backend/csv/file.csv',//$haccufileUrl,
+            // 'file' => $fileUrl,
+            // 'hacchu_file' => $haccufileUrl,
             // 'file' => '@' . realpath($filename),
             // 'hacchu_file' => '@' . realpath($hacchu_file),
             'receiver_name' => $tonyaInfo->name,
@@ -726,6 +727,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
           }
         print_r($response);
         */
+        //echo $fields_string;exit;
             curl_setopt($ch,CURLOPT_URL,$url);
             curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
             curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
@@ -736,6 +738,6 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             curl_close ($ch);
              $rep_data = json_decode($response);
              
-        return redirect()->back()->with('message', 'メールはtonyaに正常に送信されました');
+        return response()->json(['success' => 1,'message'=>'メールはtonyaに正常に送信されました']);
     }
 }
