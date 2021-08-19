@@ -688,6 +688,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         fwrite($handle2, mb_convert_encoding($csv2, 'sjis-win', 'utf-8'));
         fclose($handle);
         fclose($handle2);
+        $new_file_url1 = \Config::get('app.url') . "/public/backend/csv/" . $fname;
+        $new_file_url2 = \Config::get('app.url') . "/public/backend/csv/" . $fnameH;
         $ch = curl_init();
        // print_r($result);exit;
         // $skipper = "luxury assault recreational vehicle";
@@ -700,8 +702,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $post_array = array(
             //'file' => 'https://ryutu-van.dev.jacos.jp/rv3_tonyav1/public/backend/csv/file.csv',//$fileUrl,
             //'hacchu_file' => 'https://ryutu-van.dev.jacos.jp/rv3_tonyav1/public/backend/csv/file.csv',//$haccufileUrl,
-            'file' => $fileUrl,
-            'hacchu_file' => $haccufileUrl,
+            'file' => $new_file_url1,
+            'hacchu_file' => $new_file_url2,
             // 'file' => '@' . realpath($filename),
             // 'hacchu_file' => '@' . realpath($hacchu_file),
             'receiver_name' => $tonyaInfo->name,
@@ -752,7 +754,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
             curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch,CURLOPT_CONNECTTIMEOUT ,3);
-            curl_setopt($ch,CURLOPT_TIMEOUT, 200);
+            curl_setopt($ch,CURLOPT_TIMEOUT, 500);
             $response = curl_exec($ch);
             curl_close ($ch);
              $rep_data = json_decode($response);
