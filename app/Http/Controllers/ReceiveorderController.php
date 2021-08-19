@@ -600,7 +600,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
            // return redirect()->back()->with('message', 'メールを送信するにはtonyaを選択してください');
         }
         // $filename = storage_path('app/public/All_csv/file.csv');
-        echo $vendor_id.'OKKKKKK<br>';
+        
         $filename = public_path('backend/csv/file.csv');
         $hacchu_file = public_path('backend/csv/hacchu_file.csv');
         $handle = fopen($filename, 'w+');
@@ -611,6 +611,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         /*
             prepare csv
         */
+        echo $vendor_id.'OKKKKKK<br>';
         $new_row = array();
         $new_row2 = array();
         if ($result) {
