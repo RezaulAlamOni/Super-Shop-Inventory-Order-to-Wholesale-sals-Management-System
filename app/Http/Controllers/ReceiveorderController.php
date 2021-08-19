@@ -600,23 +600,31 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
            // return redirect()->back()->with('message', 'メールを送信するにはtonyaを選択してください');
         }
         // $filename = storage_path('app/public/All_csv/file.csv');
+       $fname = 'file.csv';
+       $fnameH = 'hacchu_file.csv';
+        $filename = public_path('backend/csv/').$fname;
+        $hacchu_file = public_path('backend/csv/').$fnameH;
        
-        $filename = public_path('backend/csv/file.csv');
-        $hacchu_file = public_path('backend/csv/hacchu_file.csv');
-        $handle = fopen(public_path('backend/csv/file.csv'), 'w');
-        $handle2 = fopen(public_path('backend/csv/hacchu_file.csv'), 'w');
-        echo $vendor_id.'OKKKKKK<br>';exit;
         $result = $this->get_tonya_order_list_by_id($vendor_id);
         $fileUrl =  url('/').'/backend/csv/file.csv';
         $haccufileUrl =  url('/').'/backend/csv/hacchu_file.csv';
         /*
             prepare csv
         */
+       
         $new_row = array();
         $new_row2 = array();
+        $super_name = 'Super A';
+        $shop_name = 'Demo shop';
+        $shop_code = '654321';
+        $partner_code = '123456';
+        $csv = "super_name, shop_name, shop_code, partner_code, voucher_number, order_date, devlivery_date, item.name, jan, inputs, quantity, cost_price, store_price\n";
+        $csv2 = "NO, 画像, 品名・メーカー・規格, 区分, ケース, ボール, バラ, a原価コスト, 取引先名\n";
         if ($result) {
             $s = 1;
             foreach ($result as $value) {
+                $csv .= $super_name.','.$shop_name.','.$shop_code.','.$partner_code.','.$value->voucher_number.','.$value->order_date.','.$value->shipment_date.','.$value->item_name.','.$value->jan.',ケース,'.$value->quantity.','.$value->cost_price.','.$value->cost_price."\n"; 
+                
                 $new_row[] = array(
                     "super_name" => 'Super A',
                     "shop_name" => 'Demo shop',
@@ -632,7 +640,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                     "cost_price" => $value->cost_price,
                     "store_price" => $value->cost_price
                 );
-
+                $csv2 .= $s.',画像<br>なし,'.$value->item_name.',定,'.$value->case_inputs.','.$value->ball_inputs.',,'.$value->cost_price.','.$tonyaInfo->name."\n";
                 $new_row2[] = array(
                     "NO" => $s,
                     "logo" => '画像<br>なし',
@@ -649,7 +657,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
             }
         }
-
+/*
         fputcsv($handle, array("super_name", "shop_name", "shop_code", "partner_code", "voucher_number", "order_date", "devlivery_date", "item.name", "jan", "inputs", "quantity", "cost_price", "store_price"), ",", '"');
         fputcsv($handle2, array("NO", "画像", "品名・メーカー・規格", "区分", "ケース", "ボール", "バラ", "a原価コスト", "取引先名"), ",", '"');
 
@@ -671,11 +679,17 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $hacchu_file
         ];
         echo 'OKKKKKK<br>';
+       
+        echo 'OK';
+        */
+        $handle = fopen(public_path('backend/csv/').$fname, 'w');
+        $handle2 = fopen(public_path('backend/csv/').$fnameH, 'w');
+        fwrite($handle, mb_convert_encoding($csv, 'sjis-win', 'utf-8'));
+        fwrite($handle2, mb_convert_encoding($csv2, 'sjis-win', 'utf-8'));
         fclose($handle);
         fclose($handle2);
-        echo 'OK';
         $ch = curl_init();
-        print_r($result);exit;
+       // print_r($result);exit;
         // $skipper = "luxury assault recreational vehicle";
         //$fields = array( 'jan'=> $code_value);
         $fields = array('jan' => '93434435345345');
