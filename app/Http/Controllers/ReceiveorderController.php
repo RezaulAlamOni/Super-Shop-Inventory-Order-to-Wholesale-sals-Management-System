@@ -682,6 +682,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
        
         echo 'OK';
         */
+        echo $csv;exit;
         $handle = fopen(public_path('backend/csv/').$fname, 'W');
         $handle2 = fopen(public_path('backend/csv/').$fnameH, 'W');
         fwrite($handle, mb_convert_encoding($csv, 'sjis-win', 'utf-8'));
