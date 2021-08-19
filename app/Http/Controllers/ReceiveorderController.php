@@ -606,6 +606,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $hacchu_file = public_path('backend/csv/').$fnameH;
         $handle = fopen(public_path('backend/csv/').$fname, 'w');
         $handle2 = fopen(public_path('backend/csv/').$fnameH, 'w');
+        fclose($handle);
+        fclose($handle2);
         echo $vendor_id.'OKKKKKK<br>';exit;
         $result = $this->get_tonya_order_list_by_id($vendor_id);
         $fileUrl =  url('/').'/backend/csv/file.csv';
@@ -673,8 +675,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $hacchu_file
         ];
         echo 'OKKKKKK<br>';
-        fclose($handle);
-        fclose($handle2);
+       
         echo 'OK';
         $ch = curl_init();
         print_r($result);exit;
