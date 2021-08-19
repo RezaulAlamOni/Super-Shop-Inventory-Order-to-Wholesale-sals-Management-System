@@ -300,7 +300,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::get('/haccu-list-by-tonya/{vendor_id?}', 'ReceiveorderController@haccuListBytonya')->name('hacchu.order.list');
     Route::get('/exportCsvByTonya/{vendor_id?}', 'ReceiveorderController@exportCsvByTonya');
     Route::get('/emailCsvByTonya/{vendor_id?}', 'ReceiveorderController@emailCsvByTonya');
-	Route::get('/sendTomailportal/{vendor_id?}', 'ReceiveorderController@sendTomailportal');
+	Route::get('/sendtomailportal/{vendor_id?}', 'ReceiveorderController@sendTomailportal');
 	
 	//customer manual order getCustomerOrderInfoByJan
 	Route::post('/getCustomerOrderInfoByJan', 'Customer_menual_orderController@getCustomerOrderInfoByJan');
