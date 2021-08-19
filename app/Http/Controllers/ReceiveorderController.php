@@ -682,16 +682,14 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
        
         echo 'OK';
         */
-        echo $csv;
         $handle = fopen(public_path('backend/csv/').$fname, 'w');
         $handle2 = fopen(public_path('backend/csv/').$fnameH, 'w');
         fwrite($handle, mb_convert_encoding($csv, 'sjis-win', 'utf-8'));
         fwrite($handle2, mb_convert_encoding($csv2, 'sjis-win', 'utf-8'));
         fclose($handle);
         fclose($handle2);
-        echo $vendor_id.'OKKKKKK<br>';exit;
         $ch = curl_init();
-        print_r($result);exit;
+       // print_r($result);exit;
         // $skipper = "luxury assault recreational vehicle";
         //$fields = array( 'jan'=> $code_value);
         $fields = array('jan' => '93434435345345');
