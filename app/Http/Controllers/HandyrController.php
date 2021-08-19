@@ -1258,10 +1258,20 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 $stock_items['unit_quantity'] = $vl;
             }
             stock_item::where(['vendor_item_id' => $stock_info->vendor_item_id, 'rack_number' => $rack_number])->update($stock_items);
+            customer_shipment::where('customer_shipment_id', $request->customer_shipment_id)->update(['quantity' => $request->c_quantity, 'reload_status' => '1']);
+            customer_order::where('customer_order_id', $request->customer_order_id)->update(['status' => '出荷済み']);
+            $insert_invoice = array(
+                'invoice_amount' => $request->total_quantity_vls_price,
+                'customer_id' => $request->customer_id,
+                'customer_shipment_id' => $request->customer_shipment_id,
+                'invoice_date' => date('Y-m-d'),
+            );
+
+            customer_invoice::insert($insert_invoice);
         } else {
             return $result = response()->json(['message' => 'stock_over_qty']);
         }
-        /*decrease stock quantity*/
+        /*decrease stock quantity
 
         $data = collect(\DB::select("select customer_shipments.customer_order_id,customer_shipments.customer_shipment_id,customer_shipments.confirm_quantity,customer_shipments.quantity,jans.name,customer_orders.status,stock_items.rack_number from customer_shipments LEFT JOIN customer_order_details ON customer_order_details.customer_order_detail_id=customer_shipments.customer_order_detail_id
         INNER JOIN customer_orders ON customer_orders.customer_order_id=customer_shipments.customer_order_id
@@ -1305,7 +1315,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 }
             }
         }
-
+*/
 
         return $result = response()->json(['message' => 'success']);
     }

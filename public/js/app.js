@@ -21302,6 +21302,18 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
+      var total_quantity_vls = 0;
+      var total_quantity_vls_price = 0;
+
+      if (order_itemData.customer_shipment.inputs == 'ケース') {
+        total_quantity_vls = parseInt(order_itemData.case_quantity) * parseInt(order_itemData.jan.case_inputs);
+      } else if (order_itemData.customer_shipment.inputs == 'ボール') {
+        total_quantity_vls = parseInt(order_itemData.ball_quantity) * parseInt(order_itemData.jan.ball_inputs);
+      } else {
+        total_quantity_vls = parseInt(order_itemData.unit_quantity);
+      }
+
+      total_quantity_vls_price = total_quantity_vls * order_itemData.customer_item.selling_price;
       var data = {
         jan_code: _this.jan_code,
         pname: order_itemData.jan.name,
@@ -21312,9 +21324,10 @@ __webpack_require__.r(__webpack_exports__);
         customer_order_detail_id: order_itemData.customer_shipment.customer_order_detail_id,
         inputs_type: order_itemData.customer_shipment.inputs,
         customer_shipment_id: order_itemData.customer_shipment.customer_shipment_id,
-        rack_number: order_itemData.customer_shipment.rack_number
-      };
-      console.log(data); //return false;
+        rack_number: order_itemData.customer_shipment.rack_number,
+        total_quantity_vls: total_quantity_vls,
+        total_quantity_vls_price: total_quantity_vls_price
+      }; //return false;
 
       $('.loading_image_custom').show();
       /*this.order_data.map(function (order) {
