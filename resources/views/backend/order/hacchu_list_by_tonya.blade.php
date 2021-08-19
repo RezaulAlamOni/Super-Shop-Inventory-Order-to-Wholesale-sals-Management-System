@@ -48,7 +48,7 @@ settings_voice
             <!-- <button class="btn btn-danger show_tonya_list_for_haccu  btn-lg pull-right">tonya list</button> -->
             <button class="btn btn-primary show_tonya_list_for_haccu  btn-lg pull-right">仕入先一覧</button>
 
-            <a href="{{Config::get('app.url').'/sendTomailportal/'.$tonya_id}}" class="btn btn-primary  btn-lg pull-right">
+            <a href="{{Config::get('app.url').'/sendtomailportal/'.$tonya_id}}" id="sendMailToCsv" class="btn btn-primary btn-lg pull-right">
 メールポータルに送信</a>
             <a href="{{Config::get('app.url').'/exportCsvByTonya/'.$tonya_id}}" class="btn btn-primary  btn-lg pull-right">csvを送信</a>
             <button class="btn btn-danger deletes_vendor_item  btn-lg pull-right"
@@ -91,6 +91,7 @@ settings_voice
 
     <div class="row">
         <div class="col-md-12 haccu_list_by_tonya_table">
+        <div id="shipment_js_message"></div>
             <table class="table table-striped table-bordered product-table" id="product-table">
                 <thead>
                     <tr>

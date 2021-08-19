@@ -10360,6 +10360,40 @@ $(document).ready(function () {
 
     });
 
+    $(document).delegate('#sendMailToCsv', 'click', function (e) {
+        e.preventDefault();
+        let urlTo = $(this).attr('href');
+        $('#shipment_js_message').html('<center><img src="' + Globals.base_url + '/public/backend/images/ajax-loader.gif"></center>');
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            },
+            type: "GET",
+            url: urlTo,
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            dataType: "JSON",
+            success: function (response) {
+        $('#shipment_js_message').html('');
+
+                    const tempmsg = {
+                        csv_import: {
+                            message: [
+                                {message: response.message}
+                            ],
+                            buttons: [{button: '<center><a href="javascript:close_default_page_navi(909)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}]
+                        }
+                    }
+                    nav_width = '300px';
+                    display_positionX = '15px';
+                    display_positionY = '15px';
+                    error_nav = view(tempmsg['csv_import'], def_center_mesg_template);
+                    show_hide_nav_icn(0);
+
+            }
+        });
+    })
     $(document).delegate('#shipment_csv_input, #shipment_csv_input_nav', 'change', function () {
         // $('#shipment_csv_input').change(function() {
         var fileInput = $(this).val();
