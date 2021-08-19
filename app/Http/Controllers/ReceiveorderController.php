@@ -601,11 +601,12 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         }
         // $filename = storage_path('app/public/All_csv/file.csv');
         
-        $filename = public_path('backend/csv/file.csv');
-        $hacchu_file = public_path('backend/csv/hacchu_file.csv');
+       echo $filename = public_path('backend/csv/file.csv');
+       echo $hacchu_file = public_path('backend/csv/hacchu_file.csv');
+        echo $vendor_id.'OKKKKKK<br>';
         $handle = fopen($filename, 'w+');
         $handle2 = fopen($hacchu_file, 'w+');
-        echo $vendor_id.'OKKKKKK<br>';
+       
         $result = $this->get_tonya_order_list_by_id($vendor_id);
         $fileUrl =  url('/').'/backend/csv/file.csv';
         $haccufileUrl =  url('/').'/backend/csv/hacchu_file.csv';
