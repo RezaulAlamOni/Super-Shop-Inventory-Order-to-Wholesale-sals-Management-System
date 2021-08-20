@@ -489,6 +489,11 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
     public function exportCsvByTonya($vendor_id)
     {
+        $tonyaInfo = vendor::where('vendor_id', $vendor_id)->first();
+        if (!$tonyaInfo) {
+           // return response()->json(['success' => 0,'message'=>'メールを送信するにはtonyaを選択してください']);
+            return redirect()->back()->with('message', 'メールを送信するにはtonyaを選択してください');
+        }
         $filename = storage_path('app/public/All_csv/file.csv');
         $handle = fopen($filename, 'w+');
         $tonyaInfo = vendor::where('vendor_id', $vendor_id)->first();
@@ -531,6 +536,11 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
     public function emailCsvByTonya($vendor_id)
     {
+        $tonyaInfo = vendor::where('vendor_id', $vendor_id)->first();
+        if (!$tonyaInfo) {
+           // return response()->json(['success' => 0,'message'=>'メールを送信するにはtonyaを選択してください']);
+            return redirect()->back()->with('message', 'メールを送信するにはtonyaを選択してください');
+        }
         // $filename = storage_path('app/public/All_csv/file.csv');
         $filename = public_path('backend/csv/file.csv');
         $handle = fopen($filename, 'w+');
