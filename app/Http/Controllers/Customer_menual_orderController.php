@@ -326,6 +326,30 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
         $id = $request->c_id;
         $jan = $request->jan;
         $order_category = $request->order_category;
+        
+        if($jan!='' && $id!=null){
+           
+            if($id>0){
+                
+                $cus_item = customer_item::where(['customer_id'=>$id,'jan'=>$jan])->first();
+                if(!$cus_item){
+                    $cusItemInfo = customer_item::where(['jan'=>$jan])->first();
+                    customer_item::insert(['customer_id'=>$id,
+                    'jan'=>$jan,
+                    'vendor_id'=>$cusItemInfo->vendor_id,
+                    'order_class'=>$cusItemInfo->order_class,
+                    'cost_price'=>$cusItemInfo->cost_price,
+                    'selling_price'=>$cusItemInfo->selling_price,
+                    'sale_selling_price'=>$cusItemInfo->sale_selling_price,
+                    'shop_price'=>$cusItemInfo->shop_price,
+                    'gross_profit'=>$cusItemInfo->gross_profit,
+                    'gross_profit_margin'=>$cusItemInfo->gross_profit_margin,
+                    'start_date'=>$cusItemInfo->start_date,
+                    'end_date'=>$cusItemInfo->end_date
+                    ]);
+                }
+            }
+        }
         $wh = '';
         if($jan!=''){
             $wh = ' and customer_order_details.jan='.$jan.'';
