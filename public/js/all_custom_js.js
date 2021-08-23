@@ -5443,7 +5443,24 @@ function get_manual_order_item(c_id = 0, c_name = '') {
                 var online_order_count = Object.keys(order).length;
             } else {
                 var online_order_count = response.online_order.length;
+                console.log(online_order_count);
                 var online_order = response.online_order;
+                if(online_order_count==0){
+                    const tempmsg = {
+                        csv_import: {
+                            message: [
+                                {message: 'XXXXXXXXXXXXXXXXXXXXXXX'}
+                            ],
+                            buttons: [{button: '<center><a href="javascript:close_default_page_navi(909)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}]
+                        }
+                    }
+                    nav_width = '300px';
+                    display_positionX = '15px';
+                    display_positionY = '15px';
+                    error_nav = view(tempmsg['csv_import'], def_center_mesg_template);
+                    show_hide_nav_icn(0);
+                    return false;
+                }
             }
             var shop_name = '';
             var shop_count = 0;
