@@ -481,4 +481,28 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
             return response()->json(['success' => 0,'result'=>$result]);
        }
     }
+
+    public function getCustomerOrderInfoByJanForHandy(Request $request){
+        $value = '確定済み';
+        $jan_code = $request->jan_code;
+        if (!customer_item::where('jan', $jan_code)->first()){
+            return response()->json(['status' => 401]);
+        }
+       $result = customer_order_detail::where('jan',$jan_code)->with(['customer_item','jan','customer_order','customer_shipment'])
+       //->whereHas('customer_order', function($q) use($value) {
+        // Query the name field in status table
+      //  $q->where('status', '=', $value); // '=' is optional
+ //})
+       //->whereHas('customer_shipment', function($q) use($value) {
+        // Query the name field in status table
+       // $q->whereNotNull('rack_number'); // '=' is optional
+ //})
+ ->orderBy('customer_order_detail_id', 'DESC')->first();
+       if($result){
+            return response()->json(['status' => 200,'data'=>$result]);
+       }else{
+            $result = customer_item::where('jan', $jan_code)->with('jan')->first();
+            return response()->json(['status' => 402,'data'=>$result]);
+       }
+    }
 }

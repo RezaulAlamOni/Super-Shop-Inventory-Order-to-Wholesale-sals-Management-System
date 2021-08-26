@@ -162,6 +162,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/update_stock_by_rack_by_handy', 'HandyrController@update_stock_by_rack_by_handy');
 	Route::get('/handy_quotation', 'HandyrController@handy_quotation');
 	Route::get('/handy_store_order', 'HandyrController@handy_store_order')->name('handy.store.order');
+	Route::get('/handy_kouri_order', 'HandyrController@handy_kouri_order')->name('handy.kouri.order');
 	Route::get('/handy_vendor_item_batch_insert', 'VendorController@handy_vendor_item_batch_insert');
 	Route::get('/handy_customer_master', 'HandyrController@handy_customer_master');
 	Route::get('/inventoryentrybyjancode', 'HandyrController@inventoryentrybyjancode');
@@ -212,6 +213,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/get_shipment_order_info', 'HandyrController@get_shipment_order_info');
 	Route::post('/insert_shipment_order_info', 'HandyrController@insert_shipment_order_info');
 	Route::post('/shipment_arival_insert_handy_shipmentorder', 'HandyrController@shipment_arival_insert_handy_shipmentorder');
+	//Route::get('/kouri-order-info-for-handy/{jan}', 'ReceiveorderController@orderInfoForHandy');
 
 	/* shimpent order */
 	Route::post('/shipment_update', 'ShipmentController@update');
@@ -297,6 +299,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     // oni 10.02.2021
     Route::post('/stock_inventory_update_rack_multiple', 'HandyrController@stock_inventory_update_rack_multiple');
     Route::get('/get_all_vendor_list_for_select2', 'VendorController@get_all_vendor_list_for_select2');
+    Route::get('/get_all_customer_list_for_select2', 'VendorController@get_all_customer_list_for_select2');
     Route::post('/vendor_master_update_by_vendor_id', 'VendorController@vendor_master_update_by_vendor_id');
     Route::get('/haccu-list-by-tonya/{vendor_id?}', 'ReceiveorderController@haccuListBytonya')->name('hacchu.order.list');
     Route::get('/exportCsvByTonya/{vendor_id?}', 'ReceiveorderController@exportCsvByTonya');
@@ -305,6 +308,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 
 	//customer manual order getCustomerOrderInfoByJan
 	Route::post('/getCustomerOrderInfoByJan', 'Customer_menual_orderController@getCustomerOrderInfoByJan');
+	Route::post('/kouri-order-info-for-handy', 'Customer_menual_orderController@getCustomerOrderInfoByJanForHandy');
 
 
 });

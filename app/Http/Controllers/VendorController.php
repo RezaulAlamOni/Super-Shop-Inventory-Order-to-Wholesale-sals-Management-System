@@ -142,6 +142,14 @@ class VendorController extends Controller
         //$searchTerm = $request->
     }
 
+    public function get_all_customer_list_for_select2(Request $request)
+    {
+        $vendor_name = $request->searchTerm;
+        $results = customer::select('customer_id as id', 'name as text')->where('is_deleted', 0)->where('name', 'like', "%{$vendor_name}%")->get();
+        return response()->json(['results' => $results]);
+        //$searchTerm = $request->
+    }
+
     /**
      * Remove the specified resource from storage.
      *

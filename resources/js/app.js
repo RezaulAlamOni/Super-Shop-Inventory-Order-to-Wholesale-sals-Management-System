@@ -28,6 +28,7 @@ Vue.use(VueSpeech)
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 // Vue.component('bar-code-scan', require('./components/barcode-scan'));
 
+import handyProductOrderPlaceKouri from './components/handy-product-order-place-kouri'
 import handyProductOrderPlace from './components/handy-product-order-place'
 import handyProductOrderReceive from './components/handy-product-order-receive'
 import handyProductInventoryTempTanaUpdate from './components/handy-product-inventory-tmp-tana-update'
@@ -48,6 +49,7 @@ import barCodeScan from './components/barcode-scan'
 const app = new Vue({
     el: '#app',
     components : {
+        'handy-product-order-kouri' : handyProductOrderPlaceKouri,
         'handy-product-order' : handyProductOrderPlace,
         'handy-product-receive' : handyProductOrderReceive,
         'handy-product-inventory-update' : handyProductInventoryTempTanaUpdate,

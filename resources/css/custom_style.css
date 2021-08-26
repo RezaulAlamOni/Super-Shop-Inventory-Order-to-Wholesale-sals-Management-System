@@ -2319,7 +2319,7 @@
 
         .handy_main button:hover,
         .handy_main a:hover {
-            background-color: #ffecec;
+            /*background-color: #ffecec;*/
             border: 2px solid red;
         }
 
