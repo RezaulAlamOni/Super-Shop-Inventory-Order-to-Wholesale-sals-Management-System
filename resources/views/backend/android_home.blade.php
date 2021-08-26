@@ -51,7 +51,7 @@
                             </div>
                         </a>
 
-                        <a href="{{ route('inventory.inquiry') }}" class="btn btn-default" style="padding: 15px 5px;">
+                        <a href="{{ route('inventory.inquiry') }}" class="btn btn-success" style="padding: 15px 5px;">
                             <div class="numbering_col" style="padding: 0; margin: 0;">7</div>
                             <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
                                 在庫問い<br>合わせ
@@ -59,14 +59,14 @@
                         </a>
 
 
-                        <a  href="{{Config::get('app.url').'/stock_details_by_handy'}}" style="padding: 15px 5px;" class="btn btn-default">
+                        <a  href="{{Config::get('app.url').'/stock_details_by_handy'}}" style="padding: 15px 5px;" class="btn btn-success">
                             <div class="numbering_col" style="padding: 0; margin: 0;">9</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                                 商品検索
                             </div>
                         </a>
 
-                        <a  href="javascript:managementsheetPopup('vendormangementsheet')" style="padding: 15px 5px;" class="btn btn-default">
+                        <a  href="javascript:managementsheetPopup('vendormangementsheet')" style="padding: 15px 5px;background:#FF872A !important;color:#fff;" class="btn btn-default">
                             <div class="numbering_col" style="padding: 0; margin: 0;">11</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                             買掛
@@ -89,25 +89,25 @@
                             </div>
                         </a>
 
-                        <a  style="width: 100%;" class="btn btn-default" href="handy_customer_master">
+                        <a  style="width: 100%;" class="btn btn-success" href="handy_customer_master">
                             <div class="numbering_col" style="padding: 0; margin: 0;">6</div>
                             <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
                             販売<br>マスター
                             </div>
                         </a>
-                        <a id="handy_order_btn" style="width: 100%;" class="btn btn-default" href="handy_vendor_master">
+                        <a id="handy_order_btn" style="width: 100%;" class="btn btn-success" href="handy_vendor_master">
                             <div class="numbering_col" style="padding: 0; margin: 0;">8</div>
                             <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
                             仕入<br>マスター
                             </div>
                         </a>
-                        <a id="" style="width: 100%" class="btn btn-default" href="{{ route('inventory.return') }}">
+                        <a id="" style="width: 100%" class="btn btn-success" href="{{ route('inventory.return') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">10</div>
                             <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
                                 返却<br>(キャンセル)
                             </div>
                         </a>
-                        <a id="" style="width: 100%;padding: 15px 5px;" class="btn btn-default" href="javascript:managementsheetPopup('shipmentmangementsheet')">
+                        <a id="" style="width: 100%;padding: 15px 5px;background:#550A8A !important;color:#fff;" class="btn btn-default" href="javascript:managementsheetPopup('shipmentmangementsheet')">
                             <div class="numbering_col" style="padding: 0; margin: 0;">12</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                             売掛
