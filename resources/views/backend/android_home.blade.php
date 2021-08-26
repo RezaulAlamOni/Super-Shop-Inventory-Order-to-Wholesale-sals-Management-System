@@ -105,7 +105,7 @@
                             </div>
                         </a>
                        
-                        <a id="delivery_inventorys" class="btn btn-default" href="{{ route('order.shipment.list') }}">
+                        <a id="delivery_inventorys" class="btn btn-default" href="{{ route('handy.kouri.order') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">6</div>
                             <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
                             受注<br>(小売から)
