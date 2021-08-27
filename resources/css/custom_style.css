@@ -2362,7 +2362,10 @@
         .kouri_shipment_btn{
             background:#f0e68c !important;
         }
-
+        .handymangement_sheet_btn{
+            background: #fffee0;
+            color: #000;
+        }
         .content_popuparea {
             border: 3px solid #428bca;
             padding: 30px;
