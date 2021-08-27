@@ -83,7 +83,7 @@
                             </div>
                         </a>
 
-                        <a  href="javascript:managementsheetPopup('vendormangementsheet')" style="padding: 15px 5px;background:#fa8072 !important;color:#fff;" class="btn btn-default">
+                        <a  href="javascript:managementsheetPopup('vendormangementsheet')" style="padding: 15px 5px;" class="btn btn-default handymangement_sheet_btn">
                             <div class="numbering_col" style="padding: 0; margin: 0;">15</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                             買掛
@@ -134,7 +134,7 @@
                             </div>
                         </a>
                        
-                        <a id="" style="width: 100%;padding: 15px 5px;background:#6a5acd !important;color:#fff;" class="btn btn-default" href="javascript:managementsheetPopup('shipmentmangementsheet')">
+                        <a id="" style="width: 100%;padding: 15px 5px;" class="btn btn-default handymangement_sheet_btn" href="javascript:managementsheetPopup('shipmentmangementsheet')">
                             <div class="numbering_col" style="padding: 0; margin: 0;">14</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                             売掛
