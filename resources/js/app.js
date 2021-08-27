@@ -29,6 +29,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 // Vue.component('bar-code-scan', require('./components/barcode-scan'));
 
 import handyProductOrderPlaceKouri from './components/handy-product-order-place-kouri'
+import handyProductOrderConfirmKouri from './components/handy-product-order-confirm-kouri'
 import handyProductOrderPlace from './components/handy-product-order-place'
 import handyProductOrderReceive from './components/handy-product-order-receive'
 import handyProductInventoryTempTanaUpdate from './components/handy-product-inventory-tmp-tana-update'
@@ -49,6 +50,7 @@ const app = new Vue({
     el: '#app',
     components : {
         'handy-product-order-kouri' : handyProductOrderPlaceKouri,
+        'handy-product-order-confirm-kouri' : handyProductOrderConfirmKouri,
         'handy-product-order' : handyProductOrderPlace,
         'handy-product-receive' : handyProductOrderReceive,
         'handy-product-inventory-update' : handyProductInventoryTempTanaUpdate,

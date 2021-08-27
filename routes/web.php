@@ -162,6 +162,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::get('/handy_quotation', 'HandyrController@handy_quotation');
 	Route::get('/handy_store_order', 'HandyrController@handy_store_order')->name('handy.store.order');
 	Route::get('/handy_kouri_order', 'HandyrController@handy_kouri_order')->name('handy.kouri.order');
+	Route::get('/handy_kouri_order_confirm', 'HandyrController@handy_kouri_order_confirm')->name('order.kouri.confirm');
 	Route::get('/handy_vendor_item_batch_insert', 'VendorController@handy_vendor_item_batch_insert');
 	Route::get('/handy_customer_master', 'HandyrController@handy_customer_master');
 	Route::get('/inventoryentrybyjancode', 'HandyrController@inventoryentrybyjancode');
@@ -308,6 +309,8 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	//customer manual order getCustomerOrderInfoByJan
 	Route::post('/getCustomerOrderInfoByJan', 'Customer_menual_orderController@getCustomerOrderInfoByJan');
 	Route::post('/kouri-order-info-for-handy', 'Customer_menual_orderController@getCustomerOrderInfoByJanForHandy');
+	Route::post('/kouri-order-confirm-for-handy', 'Customer_menual_orderController@getCustomerOrderConfirmByJanForHandy');
+	Route::post('/kouri_order_insert', 'Customer_menual_orderController@kouri_order_insert');
 
 
 });
