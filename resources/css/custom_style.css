@@ -2353,6 +2353,15 @@
             text-align: center !important;
             border: none !important;
         }
+        .orderbtnhandy{
+            background: #b0e0e6 !important;
+        }
+        .tourokobtn{
+            background:#FAEBD7 !important;
+        }
+        .kouri_shipment_btn{
+            background:#f0e68c !important;
+        }
 
         .content_popuparea {
             border: 3px solid #428bca;
