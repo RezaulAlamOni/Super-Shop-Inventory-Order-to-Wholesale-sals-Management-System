@@ -6,7 +6,7 @@
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
                         <span class="pull-left">
-                                受注(小売から)
+                                受注、確定
                             </span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right"
@@ -298,7 +298,7 @@ export default {
             }
             $('.loading_image_custom').show()
             _this.loader = 1
-            axios.post(this.base_url + '/kouri-order-info-for-handy',{'jan_code': _this.jan_code})
+            axios.post(this.base_url + '/kouri-order-confirm-for-handy',{'jan_code': _this.jan_code})
                 .then(function (res) {
                     //_this.resetField();
                     
@@ -311,9 +311,9 @@ export default {
                         _this.getCustomerList();
                         console.log(res);
                         //if(Object.keys(res.get_last_order_info).length>0){
-                        _this.case_order = (res.order_case_quantity==null?0:res.order_case_quantity);//_this.order_data.order_lot_case_quantity;
-                        _this.boll_order = (res.order_ball_quantity==null?0:res.order_ball_quantity);//_this.order_data.order_lot_ball_quantity;
-                        _this.bara_order = (res.order_unit_quantity==null?0:res.order_unit_quantity);//_this.order_data.order_lot_unit_quantity;
+                        _this.case_order = (res.customer_shipment.confirm_case_quantity==null?0:res.customer_shipment.confirm_case_quantity);//_this.order_data.order_lot_case_quantity;
+                        _this.boll_order = (res.customer_shipment.confirm_ball_quantity==null?0:res.customer_shipment.confirm_ball_quantity);//_this.order_data.order_lot_ball_quantity;
+                        _this.bara_order = (res.customer_shipment.confirm_unit_quantity==null?0:res.customer_shipment.confirm_unit_quantity);//_this.order_data.order_lot_unit_quantity;
                          
                         _this.customer_id = res.customer_order.customer_id;
                        
@@ -335,28 +335,9 @@ export default {
                             $('.loading_image_custom').hide()
                         }
                     } else if (res.data.status == 402) {
-                        _this.case_order = 0;//(res.order_case_quantity==null?0:res.order_case_quantity);//_this.order_data.order_lot_case_quantity;
-                        _this.boll_order = 0;//(res.order_ball_quantity==null?0:res.order_ball_quantity);//_this.order_data.order_lot_ball_quantity;
-                        _this.bara_order = 0;//(res.order_unit_quantity==null?0:res.order_unit_quantity);//_this.order_data.order_lot_unit_quantity;
-                         
-                        //_this.customer_id = res.customer_order.customer_id;
-                         res = res.data.data; 
-                                           
-                        _this.case_inputs=res.jan.case_inputs;
-                        _this.ball_inputs=res.jan.ball_inputs;
-                        _this.item_name=res.jan.name;
-                         setTimeout(function () {
-                            $('.case_order').focus();
-                            $('.case_order').select();
-                        }, 1000)
-
-                        if (_this.type == 0) {
-                          
-                            // $('#stock-order-show-by-jan').modal()
-                            $('#stock-order-show-by-jan').modal({backdrop: 'static', keyboard: false})
-                            $('.loading_image_custom').hide()
-                        }
-                         console.log(res);   
+                       _this.handi_navi = '<li>0000000000</li>';
+                        $('#handy-navi').show()
+                        $('.loading_image_custom').hide()  
                     } else if (res.data.status == 401) {
                         _this.handi_navi = '<li>【' + res.data.data.name + '】商品の問屋が見つかりません。仕入れ先 マスター画面から問屋を選択して発注してください。<a href="'+_this.base_url+'/handy_vendor_master" class="btn btn-primary">仕入れ先 マスター</a></li>';
                         $('#handy-navi').show()
@@ -455,6 +436,11 @@ export default {
                 _this.handi_navi = '<li>0000000</li>';
                 return false;
             }
+            $('#handy-navi').show()
+                        _this.handi_navi = '<li>受注、確定が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+
+                        _this.hideModelAndClearInput();
+                        return false;
            console.log(_this.ball_order);
          var data_post ={
                     'case_order_quantity': _this.case_order,
