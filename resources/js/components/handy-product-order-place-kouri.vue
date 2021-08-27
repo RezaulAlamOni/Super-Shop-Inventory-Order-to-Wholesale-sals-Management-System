@@ -358,7 +358,7 @@ export default {
                         }
                          console.log(res);   
                     } else if (res.data.status == 401) {
-                        _this.handi_navi = '<li>【' + res.data.data.name + '】商品の問屋が見つかりません。仕入れ先 マスター画面から問屋を選択して発注してください。<a href="'+_this.base_url+'/handy_vendor_master" class="btn btn-primary">仕入れ先 マスター</a></li>';
+                        _this.handi_navi = '<li>0000000000000</li>';
                         $('#handy-navi').show()
                         $('.loading_image_custom').hide()
 
