@@ -30,8 +30,9 @@ class CreateVendorOrdersTable extends Migration
             $table->enum('status',['未入荷','入荷済み'])->default('未入荷')->comment('Status');
             $table->dateTime('order_date')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Order date');
             $table->dateTime('shipment_date')->nullable()->comment('Shipment date');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+            //$table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 

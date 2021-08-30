@@ -40,9 +40,9 @@ class CreateVendorItemsTable extends Migration
             $table->smallInteger('order_lot_unit_quantity')->default('0')->comment('Vendor Order Lot Quantity');
             $table->smallInteger('order_lot_quantity')->nullable()->comment('Vendor Order Lot Quantity');
             $table->enum('is_special', ['0', '1'])->default('0')->comment('0defaul1special');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-            $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
-            
+            //$table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+            //$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
         });
     }
 

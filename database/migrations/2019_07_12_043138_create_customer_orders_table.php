@@ -30,8 +30,9 @@ class CreateCustomerOrdersTable extends Migration
             $table->date('delivery_date')->nullable()->comment('Delivery date');
             $table->mediumInteger('cost_price_total')->nullable()->comment('Cost Price total');
             $table->mediumInteger('selling_price_total')->nullable()->comment('Selling Price total');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+            //$table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 

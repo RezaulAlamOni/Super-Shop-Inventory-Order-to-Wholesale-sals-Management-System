@@ -23,8 +23,9 @@ class CreateCustomersTable extends Migration
             $table->string('address',200)->nullable()->comment('Customer Address');
             $table->string('image',240)->nullable()->comment('Customer Image Name');
             $table->boolean('is_deleted')->default(0)->comment('delete status');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+            //$table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 
