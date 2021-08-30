@@ -18,7 +18,7 @@ class CreateVendorArrivalsTable extends Migration
             $table->integer('vendor_id')->comment('Vendor Id');
             $table->integer('vendor_order_id')->comment('Vendor Order Id');
             $table->integer('vendor_order_detail_id')->nullable()->comment('Vendor Order Detail Id');
-            $table->dateTime('arrival_date')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Arrival date');
+            $table->dateTime('arrival_date')->nullable()->comment('Arrival date');
             $table->integer('arrival_case_quantity')->nullable()->comment('Case quantity');
             $table->integer('arrival_ball_quantity')->nullable()->comment('Ball quantity');
             $table->integer('arrival_unit_quantity')->nullable()->comment('Unit quantity');
