@@ -2785,14 +2785,16 @@
         }
         .marginboths .handy_btn_aria a .btnText,
         .marginboths .handy_btn_aria a .numbering_col{
-            line-height: 23px !important;
+            /* line-height: 23px !important; */
+            line-height: 35px !important;
+            font-size: 30px;
         }
         .marginboths .handy_btn_aria a .oneLine,
         .marginboths .handy_btn_aria a .numbering_col{
             line-height: 70px !important;
         }
         .marginboths .handy_btn_aria a .twoLine{
-            padding: 15px 5px !important;
+            /* padding: 15px 5px !important; */
         }
         #installApp {
             text-align: center;

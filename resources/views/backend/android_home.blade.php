@@ -108,8 +108,8 @@
                         
                         <a href="{{Config::get('app.url').'/handy_order_receive_scan_jan'}}" class="btn btn-default orderbtnhandy"><!--"handy_order_receive_list" comment by oni 29.01.2021-->
                             <div class="numbering_col" style="padding: 0; margin: 0;">6</div>
-                            <div class="col-md-11 text-center btnText threeLine" style="padding: 0; margin: 0;line-height:35px;">
-                                検品<br>仮置き<br>(一時保存)
+                            <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
+                                検品仮置き<br>(一時保存)
                             </div>
                         </a>
                        
@@ -122,8 +122,8 @@
                        
                         <a id="delivery_inventorys" class="btn btn-default kouri_shipment_btn" href="{{ route('order.shipment.list') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">10</div>
-                            <div class="col-md-11 text-center btnText threeLine" style="padding: 0; margin: 0;line-height:35px;">
-                                出荷<br>確定<br>後(問屋)
+                            <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
+                                出荷確定<br>後(問屋)
                             </div>
                         </a>
 
