@@ -27,8 +27,9 @@ class CreateUsersDetailsTable extends Migration
             $table->string('time_zone', 40)->comment('time_zone')->nullable();
             $table->string('citi_time_zone', 40)->comment('citime_zone')->nullable();
             $table->string('image', 240)->comment('Image of user')->nullable();
-			$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+			//$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+            //$table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
             $table->foreign('users_id')
                 ->references('id')
                 ->on('users')
