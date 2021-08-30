@@ -21,8 +21,9 @@ class CreateCustomerInvoicesTable extends Migration
             $table->integer('invoice_amount')->nullable()->comment('invoice amount');
             $table->date('invoice_date')->nullable()->comment('invoice date');
             $table->enum('status', ['未請求', '請求中','支払済'])->default('未請求')->comment('status');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+            //$table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 
