@@ -24,8 +24,9 @@ class CreateStockItemsTable extends Migration
             $table->integer('ball_quantity')->comment('Ball quantity');
             $table->integer('unit_quantity')->comment('Unit quantity');
             $table->dateTime('expiration_date')->nullable()->comment('Expiration date');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+           // $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+		//	$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 

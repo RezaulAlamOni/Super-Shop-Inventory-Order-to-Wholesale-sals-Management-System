@@ -19,8 +19,9 @@ class CreateVendorDueBlancesTable extends Migration
             $table->integer('opening_due_amount')->default('0')->comment('opening due amount');
             $table->integer('payment_due_amount')->default('0')->comment('payemnt due amount');
             $table->integer('orginal_due_amount')->default('0')->comment('orginal due amount');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+           // $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 

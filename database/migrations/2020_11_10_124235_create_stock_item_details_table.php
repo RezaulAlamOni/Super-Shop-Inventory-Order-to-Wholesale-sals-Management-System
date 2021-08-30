@@ -21,8 +21,9 @@ class CreateStockItemDetailsTable extends Migration
             $table->enum('inc_dec_inputs', ['ケース', 'ボール','バラ'])->default('ケース')->comment('Inputs');
             $table->integer('actual_quantity')->comment('Quantity');
             $table->integer('inc_dec_quantity')->comment('Quantity');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+            //$table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 

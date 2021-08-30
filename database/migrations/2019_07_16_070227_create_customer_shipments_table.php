@@ -29,8 +29,9 @@ class CreateCustomerShipmentsTable extends Migration
             $table->smallInteger('stock_out_quantity')->default(0)->comment('stock out quantity');
             $table->smallInteger('damage_quantity')->default(0)->comment('damage quantity');
             $table->enum('reload_status',['0','1'])->default('0')->comment('reload Status');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+           // $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+		//	$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 
