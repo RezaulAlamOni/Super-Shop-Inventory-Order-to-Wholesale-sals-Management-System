@@ -2292,6 +2292,7 @@
             border: 2px solid red;
             text-align: left;
             height: 75px;
+            position: relative;
         }
 
         .cstm_cl_label_icon {
@@ -2782,17 +2783,21 @@
         }
         .marginboths .handy_btn_aria a .numbering_col{
             position: absolute;
+            top:25%;
         }
-        .marginboths .handy_btn_aria a .btnText,
-        .marginboths .handy_btn_aria a .numbering_col{
+        .marginboths .handy_btn_aria a .btnText{
             /* line-height: 23px !important; */
             line-height: 35px !important;
             font-size: 30px;
         }
-        .marginboths .handy_btn_aria a .oneLine,
+        .marginboths .handy_btn_aria a .oneLine{
+            line-height: 70px !important;
+        }
+        /*
         .marginboths .handy_btn_aria a .numbering_col{
             line-height: 70px !important;
         }
+        */
         .marginboths .handy_btn_aria a .twoLine{
             /* padding: 15px 5px !important; */
         }
@@ -2816,6 +2821,22 @@
     padding: 6px;
 }
         @media (min-width: 310px) and (max-width: 767px) {
+
+            /*HANDY ANDROID*/
+            .marginboths .handy_btn_aria a .btnText{
+            font-size: 20px !important;
+        }
+        .marginboths .handy_btn_aria a .oneLine{
+            line-height: 70px !important;
+        }
+        .marginboths .handy_btn_aria a .twoLine{
+            padding: 15px 5px !important;
+            line-height: 23px !important;
+        }
+        .marginboths .handy_btn_aria a .threeLine{
+            /* line-height: 70px !important; */
+        }
+            /*HANDY ANDROID*/
             #installApp {
                 display: block;
             }
