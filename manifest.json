@@ -34,29 +34,23 @@
     }
   ],
   "lang": "en-US",
-  "start_url": "/rv3_superv1/android_home",
-  "scope": "/rv3_superv1/android_home,/rv3_superv1/inventory-update,/rv3_superv1/*",
+  "start_url": "/android_home",
+  "scope": "/android_home,/inventory-update,/*",
   "display": "standalone",
   "background_color": "green",
-<<<<<<< HEAD
-  "theme_color": "orange"
-}
-=======
   "theme_color": "orange",
-    "shortcuts": [
+  "shortcuts": [
+    {
+      "name": "流通",
+      "description": " ---",
+      "url": "/android_home",
+      "icons": [
         {
-            "name": "流通",
-            "description": " ---",
-            "url": "/rv3_tonyav1/android_home",
-            "icons": [
-                {
-                    "src": "images/RV3log-128x128.png",
-                    "type": "image/svg+xml",
-                    "purpose": "any"
-                }
-            ]
+          "src": "images/RV3log-128x128.png",
+          "type": "image/svg+xml",
+          "purpose": "any"
         }
-    ]
+      ]
+    }
+  ]
 }
-
->>>>>>> 417440d6b7e774f6c585e6b08422813ec57bad65
