@@ -51,9 +51,7 @@ class Shipment_mangementsheetController extends Controller
         cs.inputs,
         ct.selling_price,
         SUM(cs.quantity) as qty,
-        (CASE WHEN cs.inputs ='ケース' THEN j.case_inputs*SUM(cs.quantity) ELSE 0 END+
-        CASE WHEN cs.inputs ='ボール' THEN j.ball_inputs*SUM(cs.quantity) ELSE 0 END+
-        CASE WHEN cs.inputs ='バラ' THEN 1*SUM(cs.quantity) ELSE 0 END) as t_qty,
+       cs.quantity as t_qty,
         ci.invoice_amount,
         ci.customer_id,
         cp.payment,

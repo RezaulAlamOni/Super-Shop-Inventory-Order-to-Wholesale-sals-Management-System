@@ -21134,7 +21134,19 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       jan_code: '',
-      order_data: [],
+      order_data: {
+        jan: {
+          case_inputs: 0,
+          ball_inputs: 0
+        },
+        customer_shipment: {
+          'confirm_case_quantity': 0,
+          'confirm_ball_quantity': 0,
+          'confirm_unit_quantity': 0,
+          'rack_number': ''
+        },
+        vendor_item_id: ''
+      },
       temp_order_data: [],
       case_inputs: '',
       ball_inputs: '',
@@ -21142,6 +21154,7 @@ __webpack_require__.r(__webpack_exports__);
       boll_order: 0,
       bara_order: 0,
       type: 0,
+      cus_index: 0,
       input_type: '',
       vendors: [],
       product_name: '',
@@ -21151,7 +21164,8 @@ __webpack_require__.r(__webpack_exports__);
       loader: 0,
       total_quantity: 0,
       handi_navi: '',
-      temp_rack_number: ''
+      temp_rack_number: '',
+      success: 0
     };
   },
   mounted: function mounted() {
@@ -21181,8 +21195,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         //_this.resetField();
         //console.log(res);
+        _this.success = res.data.success;
+
         if (res.data.success > 0) {
-          _this.order_data[0] = res.data.result;
+          _this.order_data = res.data.result;
           _this.temp_order_data = res.data.result; //_this.temp_rack_number = res.data.last_rack;
 
           _this.product_name = res.data.result.jan.name;
@@ -21350,6 +21366,61 @@ __webpack_require__.r(__webpack_exports__);
         $('#stock-order-show-by-jan').modal('hide');
       } else {
         axios.post(this.base_url + '/shipment_arival_insert_handy_shipmentorder', data).then(function (res) {
+          console.log(res);
+
+          if (res.data.message == 'stock_over_qty') {
+            console.log('stock over');
+            _this.handi_navi = '<li>在庫量不足。</li>';
+            $('#handy-navi').show();
+            return false;
+          } else {
+            console.log('stock done');
+            _this.handi_navi = '<li>出荷が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+            $('#handy-navi').show();
+
+            _this.hideModelAndClearInput();
+
+            $('#jan_input').focus();
+          }
+        }).then(function (er) {})["finally"](function () {
+          $('.loading_image_custom').hide();
+          _this.loader = 0;
+        });
+      }
+    },
+    shipmentTosuper: function shipmentTosuper() {
+      var _this = this;
+
+      var order_itemData = this.order_data;
+      var c_quantity = parseInt(_this.order_data.customer_shipment.confirm_unit_quantity) + parseInt(_this.order_data.customer_shipment.confirm_ball_quantity) * parseInt(_this.order_data.jan.ball_inputs) + parseInt(_this.order_data.customer_shipment.confirm_case_quantity) * parseInt(_this.order_data.jan.case_inputs);
+      var total_quantity_vls = c_quantity;
+      var total_quantity_vls_price = total_quantity_vls * order_itemData.customer_item.selling_price;
+      var data = {
+        jan_code: _this.jan_code,
+        pname: order_itemData.jan.name,
+        c_quantity: c_quantity,
+        customer_id: order_itemData.customer_shipment.customer_id,
+        customer_item_id: order_itemData.customer_item_id,
+        customer_order_id: order_itemData.customer_shipment.customer_order_id,
+        customer_order_detail_id: order_itemData.customer_shipment.customer_order_detail_id,
+        inputs_type: order_itemData.customer_shipment.inputs,
+        confirm_case_quantity: order_itemData.customer_shipment.confirm_case_quantity,
+        confirm_ball_quantity: order_itemData.customer_shipment.confirm_ball_quantity,
+        confirm_unit_quantity: order_itemData.customer_shipment.confirm_unit_quantity,
+        customer_shipment_id: order_itemData.customer_shipment.customer_shipment_id,
+        rack_number: order_itemData.customer_shipment.rack_number,
+        total_quantity_vls: total_quantity_vls,
+        total_quantity_vls_price: total_quantity_vls_price
+      };
+      console.log(data); //return false;
+
+      $('.loading_image_custom').show();
+
+      if (data.length <= 0) {
+        $('.loading_image_custom').hide();
+        $('#stock-order-show-by-jan').modal('hide');
+      } else {
+        axios.post(this.base_url + '/shipment_arival_insert_handy_shipmentorder_to_super', data).then(function (res) {
           console.log(res);
 
           if (res.data.message == 'stock_over_qty') {
@@ -21603,34 +21674,36 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     calculateTotalQuantity: function calculateTotalQuantity() {
-      var _this = this;
+      var _this = this; // let data = [];
 
-      var data = [];
+
       _this.total_quantity = 0;
-      this.order_data.map(function (order) {
-        console.log(order);
+      /*
+                  this.order_data.map(function (order) {
+                          console.log(order);
+                          if(order.customer_shipment.inputs=="ケース"){
+                              _this.total_quantity +=  parseInt(order.customer_shipment.confirm_quantity) * parseInt(order.jan.case_inputs);
+                              order.case_quantity = order.customer_shipment.confirm_quantity;
+                              order.ball_quantity = 0;
+                              order.unit_quantity = 0;
+                          }else if(order.customer_shipment.inputs=="ボール"){
+                                _this.total_quantity +=  parseInt(order.customer_shipment.confirm_quantity) * parseInt(order.jan.ball_inputs);
+                                order.case_quantity = 0;
+                              order.ball_quantity = order.customer_shipment.confirm_quantity;
+                              order.unit_quantity = 0;
+                          }else{
+                               _this.total_quantity += parseInt(order.customer_shipment.confirm_quantity);
+                                order.case_quantity = 0;
+                              order.ball_quantity = 0;
+                              order.unit_quantity = order.customer_shipment.confirm_quantity;
+                          }
+                         // _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
+                          
+                          data.push(order)
+                  })
+                  */
 
-        if (order.customer_shipment.inputs == "ケース") {
-          _this.total_quantity += parseInt(order.customer_shipment.confirm_quantity) * parseInt(order.jan.case_inputs);
-          order.case_quantity = order.customer_shipment.confirm_quantity;
-          order.ball_quantity = 0;
-          order.unit_quantity = 0;
-        } else if (order.customer_shipment.inputs == "ボール") {
-          _this.total_quantity += parseInt(order.customer_shipment.confirm_quantity) * parseInt(order.jan.ball_inputs);
-          order.case_quantity = 0;
-          order.ball_quantity = order.customer_shipment.confirm_quantity;
-          order.unit_quantity = 0;
-        } else {
-          _this.total_quantity += parseInt(order.customer_shipment.confirm_quantity);
-          order.case_quantity = 0;
-          order.ball_quantity = 0;
-          order.unit_quantity = order.customer_shipment.confirm_quantity;
-        } // _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
-
-
-        data.push(order);
-      });
-      this.order_data = data;
+      _this.total_quantity += parseInt(_this.order_data.customer_shipment.confirm_unit_quantity) + parseInt(_this.order_data.customer_shipment.confirm_ball_quantity) * parseInt(_this.order_data.jan.ball_inputs) + parseInt(_this.order_data.customer_shipment.confirm_case_quantity) * parseInt(_this.order_data.jan.case_inputs); //this.order_data = data;
     }
   },
   watch: {// jan_code: function (val) {
@@ -66619,294 +66692,303 @@ var render = function() {
                                               "tbody",
                                               { staticClass: "physicaltbody" },
                                               [
-                                                _vm.order_data.length > 0
-                                                  ? _vm._l(
-                                                      _vm.order_data,
-                                                      function(order, index) {
-                                                        return _c("tr", [
-                                                          _c("td", [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    order.case_quantity,
-                                                                  expression:
-                                                                    "order.case_quantity"
-                                                                }
-                                                              ],
-                                                              staticClass:
-                                                                "form-control inputs ",
-                                                              attrs: {
-                                                                type: "tel",
-                                                                id:
-                                                                  "case" + index
-                                                              },
-                                                              domProps: {
+                                                _vm.success > 0
+                                                  ? [
+                                                      _c("tr", [
+                                                        _c("td", [
+                                                          _c("input", {
+                                                            directives: [
+                                                              {
+                                                                name: "model",
+                                                                rawName:
+                                                                  "v-model",
                                                                 value:
-                                                                  order.case_quantity
-                                                              },
-                                                              on: {
-                                                                click: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.selectItem(
-                                                                    $event,
-                                                                    "case"
-                                                                  )
-                                                                },
-                                                                keypress: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.pressEnterAndNext(
-                                                                    $event,
-                                                                    "case",
-                                                                    index,
-                                                                    order
-                                                                  )
-                                                                },
-                                                                blur: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.pressEnterAndNextBlur(
-                                                                    order
-                                                                  )
-                                                                },
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    order,
-                                                                    "case_quantity",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]),
-                                                          _vm._v(" "),
-                                                          _c("td", [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    order.ball_quantity,
-                                                                  expression:
-                                                                    "order.ball_quantity"
-                                                                }
-                                                              ],
-                                                              staticClass:
-                                                                "form-control boll_order inputs",
-                                                              attrs: {
-                                                                type: "tel",
-                                                                id:
-                                                                  "ball" + index
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  order.ball_quantity
-                                                              },
-                                                              on: {
-                                                                click: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.selectItem(
-                                                                    $event,
-                                                                    "ball"
-                                                                  )
-                                                                },
-                                                                keypress: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.pressEnterAndNext(
-                                                                    $event,
-                                                                    "ball",
-                                                                    index,
-                                                                    order
-                                                                  )
-                                                                },
-                                                                blur: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.pressEnterAndNextBlur(
-                                                                    order
-                                                                  )
-                                                                },
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    order,
-                                                                    "ball_quantity",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]),
-                                                          _vm._v(" "),
-                                                          _c("td", [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    order.unit_quantity,
-                                                                  expression:
-                                                                    "order.unit_quantity"
-                                                                }
-                                                              ],
-                                                              staticClass:
-                                                                "form-control cmn_num_formt bara_order inputs ",
-                                                              attrs: {
-                                                                type: "tel",
-                                                                id:
-                                                                  "bara" + index
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  order.unit_quantity
-                                                              },
-                                                              on: {
-                                                                click: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.selectItem(
-                                                                    $event,
-                                                                    "bara"
-                                                                  )
-                                                                },
-                                                                keypress: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.pressEnterAndNext(
-                                                                    $event,
-                                                                    "bara",
-                                                                    index,
-                                                                    order
-                                                                  )
-                                                                },
-                                                                blur: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.pressEnterAndNextBlur(
-                                                                    order
-                                                                  )
-                                                                },
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    order,
-                                                                    "unit_quantity",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]),
-                                                          _vm._v(" "),
-                                                          _c("td", [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    order
-                                                                      .customer_shipment
-                                                                      .rack_number,
-                                                                  expression:
-                                                                    "order.customer_shipment.rack_number"
-                                                                }
-                                                              ],
-                                                              staticClass:
-                                                                "form-control  update_rack_code_exec  ",
-                                                              staticStyle: {
-                                                                "border-radius":
-                                                                  "0px",
-                                                                "text-align":
-                                                                  "center"
-                                                              },
-                                                              attrs: {
-                                                                type: "tel",
-                                                                id:
-                                                                  "rack" + index
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  order
+                                                                  _vm.order_data
                                                                     .customer_shipment
-                                                                    .rack_number
-                                                              },
-                                                              on: {
-                                                                keypress: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.pressEnterAndSave(
-                                                                    $event,
-                                                                    index
-                                                                  )
-                                                                },
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    order.customer_shipment,
-                                                                    "rack_number",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
+                                                                    .confirm_case_quantity,
+                                                                expression:
+                                                                  "order_data.customer_shipment.confirm_case_quantity"
                                                               }
-                                                            })
-                                                          ])
+                                                            ],
+                                                            staticClass:
+                                                              "form-control inputs ",
+                                                            attrs: {
+                                                              type: "tel",
+                                                              id:
+                                                                "case" +
+                                                                _vm.cus_index
+                                                            },
+                                                            domProps: {
+                                                              value:
+                                                                _vm.order_data
+                                                                  .customer_shipment
+                                                                  .confirm_case_quantity
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.selectItem(
+                                                                  $event,
+                                                                  "case"
+                                                                )
+                                                              },
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.pressEnterAndNext(
+                                                                  $event,
+                                                                  "case",
+                                                                  _vm.cus_index,
+                                                                  _vm.order_data
+                                                                )
+                                                              },
+                                                              blur: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.pressEnterAndNextBlur(
+                                                                  _vm.order_data
+                                                                )
+                                                              },
+                                                              input: function(
+                                                                $event
+                                                              ) {
+                                                                if (
+                                                                  $event.target
+                                                                    .composing
+                                                                ) {
+                                                                  return
+                                                                }
+                                                                _vm.$set(
+                                                                  _vm.order_data
+                                                                    .customer_shipment,
+                                                                  "confirm_case_quantity",
+                                                                  $event.target
+                                                                    .value
+                                                                )
+                                                              }
+                                                            }
+                                                          })
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("td", [
+                                                          _c("input", {
+                                                            directives: [
+                                                              {
+                                                                name: "model",
+                                                                rawName:
+                                                                  "v-model",
+                                                                value:
+                                                                  _vm.order_data
+                                                                    .customer_shipment
+                                                                    .confirm_ball_quantity,
+                                                                expression:
+                                                                  "order_data.customer_shipment.confirm_ball_quantity"
+                                                              }
+                                                            ],
+                                                            staticClass:
+                                                              "form-control boll_order inputs",
+                                                            attrs: {
+                                                              type: "tel",
+                                                              id:
+                                                                "ball" +
+                                                                _vm.cus_index
+                                                            },
+                                                            domProps: {
+                                                              value:
+                                                                _vm.order_data
+                                                                  .customer_shipment
+                                                                  .confirm_ball_quantity
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.selectItem(
+                                                                  $event,
+                                                                  "ball"
+                                                                )
+                                                              },
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.pressEnterAndNext(
+                                                                  $event,
+                                                                  "ball",
+                                                                  _vm.cus_index,
+                                                                  _vm.order_data
+                                                                )
+                                                              },
+                                                              blur: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.pressEnterAndNextBlur(
+                                                                  _vm.order_data
+                                                                )
+                                                              },
+                                                              input: function(
+                                                                $event
+                                                              ) {
+                                                                if (
+                                                                  $event.target
+                                                                    .composing
+                                                                ) {
+                                                                  return
+                                                                }
+                                                                _vm.$set(
+                                                                  _vm.order_data
+                                                                    .customer_shipment,
+                                                                  "confirm_ball_quantity",
+                                                                  $event.target
+                                                                    .value
+                                                                )
+                                                              }
+                                                            }
+                                                          })
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("td", [
+                                                          _c("input", {
+                                                            directives: [
+                                                              {
+                                                                name: "model",
+                                                                rawName:
+                                                                  "v-model",
+                                                                value:
+                                                                  _vm.order_data
+                                                                    .customer_shipment
+                                                                    .confirm_unit_quantity,
+                                                                expression:
+                                                                  "order_data.customer_shipment.confirm_unit_quantity"
+                                                              }
+                                                            ],
+                                                            staticClass:
+                                                              "form-control cmn_num_formt bara_order inputs ",
+                                                            attrs: {
+                                                              type: "tel",
+                                                              id:
+                                                                "bara" +
+                                                                _vm.cus_index
+                                                            },
+                                                            domProps: {
+                                                              value:
+                                                                _vm.order_data
+                                                                  .customer_shipment
+                                                                  .confirm_unit_quantity
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.selectItem(
+                                                                  $event,
+                                                                  "bara"
+                                                                )
+                                                              },
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.pressEnterAndNext(
+                                                                  $event,
+                                                                  "bara",
+                                                                  _vm.cus_index,
+                                                                  _vm.order_data
+                                                                )
+                                                              },
+                                                              blur: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.pressEnterAndNextBlur(
+                                                                  _vm.order_data
+                                                                )
+                                                              },
+                                                              input: function(
+                                                                $event
+                                                              ) {
+                                                                if (
+                                                                  $event.target
+                                                                    .composing
+                                                                ) {
+                                                                  return
+                                                                }
+                                                                _vm.$set(
+                                                                  _vm.order_data
+                                                                    .customer_shipment,
+                                                                  "confirm_unit_quantity",
+                                                                  $event.target
+                                                                    .value
+                                                                )
+                                                              }
+                                                            }
+                                                          })
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("td", [
+                                                          _c("input", {
+                                                            directives: [
+                                                              {
+                                                                name: "model",
+                                                                rawName:
+                                                                  "v-model",
+                                                                value:
+                                                                  _vm.order_data
+                                                                    .customer_shipment
+                                                                    .rack_number,
+                                                                expression:
+                                                                  "order_data.customer_shipment.rack_number"
+                                                              }
+                                                            ],
+                                                            staticClass:
+                                                              "form-control  update_rack_code_exec  ",
+                                                            staticStyle: {
+                                                              "border-radius":
+                                                                "0px",
+                                                              "text-align":
+                                                                "center"
+                                                            },
+                                                            attrs: {
+                                                              type: "tel",
+                                                              id:
+                                                                "rack" +
+                                                                _vm.cus_index
+                                                            },
+                                                            domProps: {
+                                                              value:
+                                                                _vm.order_data
+                                                                  .customer_shipment
+                                                                  .rack_number
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.pressEnterAndSave(
+                                                                  $event,
+                                                                  _vm.cus_index
+                                                                )
+                                                              },
+                                                              input: function(
+                                                                $event
+                                                              ) {
+                                                                if (
+                                                                  $event.target
+                                                                    .composing
+                                                                ) {
+                                                                  return
+                                                                }
+                                                                _vm.$set(
+                                                                  _vm.order_data
+                                                                    .customer_shipment,
+                                                                  "rack_number",
+                                                                  $event.target
+                                                                    .value
+                                                                )
+                                                              }
+                                                            }
+                                                          })
                                                         ])
-                                                      }
-                                                    )
+                                                      ])
+                                                    ]
                                                   : [_vm._m(0)]
                                               ],
                                               2
@@ -66929,7 +67011,7 @@ var render = function() {
                                             },
                                             on: {
                                               click: function($event) {
-                                                return _vm.updateTemporaryTana()
+                                                return _vm.shipmentTosuper()
                                               }
                                             }
                                           },

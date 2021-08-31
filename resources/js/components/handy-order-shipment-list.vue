@@ -104,40 +104,40 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody class="physicaltbody">
-                                                        <template v-if="order_data.length > 0">
-                                                            <tr v-for="(order,index) in order_data">
+                                                        <template v-if="success > 0">
+                                                            <tr>
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'case')"
-                                                                           @keypress="pressEnterAndNext($event,'case',index,order)"
-                                                                           @blur="pressEnterAndNextBlur(order)"
-                                                                           v-model="order.case_quantity" :id="'case'+index"
+                                                                           @keypress="pressEnterAndNext($event,'case',cus_index,order_data)"
+                                                                           @blur="pressEnterAndNextBlur(order_data)"
+                                                                           v-model="order_data.customer_shipment.confirm_case_quantity" :id="'case'+cus_index"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'ball')"
-                                                                           @keypress="pressEnterAndNext($event,'ball',index,order)"
-                                                                           @blur="pressEnterAndNextBlur(order)"
-                                                                           v-model="order.ball_quantity" :id="'ball'+index"
+                                                                           @keypress="pressEnterAndNext($event,'ball',cus_index,order_data)"
+                                                                           @blur="pressEnterAndNextBlur(order_data)"
+                                                                           v-model="order_data.customer_shipment.confirm_ball_quantity" :id="'ball'+cus_index"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="tel" @click="selectItem($event,'bara')"
-                                                                           @keypress="pressEnterAndNext($event,'bara',index,order)"
-                                                                           @blur="pressEnterAndNextBlur(order)"
-                                                                           v-model="order.unit_quantity" :id="'bara'+index"
+                                                                           @keypress="pressEnterAndNext($event,'bara',cus_index,order_data)"
+                                                                           @blur="pressEnterAndNextBlur(order_data)"
+                                                                           v-model="order_data.customer_shipment.confirm_unit_quantity" :id="'bara'+cus_index"
                                                                            class="form-control cmn_num_formt bara_order inputs ">
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="tel"
-                                                                           @keypress="pressEnterAndSave($event,index)"
+                                                                           @keypress="pressEnterAndSave($event,cus_index)"
                                                                            class="form-control  update_rack_code_exec  "
-                                                                           :id="'rack'+index"
-                                                                           v-model="order.customer_shipment.rack_number"
+                                                                           :id="'rack'+cus_index"
+                                                                           v-model="order_data.customer_shipment.rack_number"
                                                                            style="border-radius: 0px; text-align: center;">
                                                                 </td>
 
@@ -159,7 +159,7 @@
                                                     <a href="javascript:void(0)"
                                                        class="btn btn-primary pull-right custom-btn"
                                                        id="order-place-button"
-                                                       v-on:click="updateTemporaryTana()"
+                                                       v-on:click="shipmentTosuper()"
                                                        style="float:right;margin-top: -10px">
                                                         次の商品へ</a>
                                                 </div>
@@ -276,7 +276,19 @@ export default {
     data() {
         return {
             jan_code: '',
-            order_data: [],
+            order_data: {
+                jan:{
+                    case_inputs:0,
+                    ball_inputs:0,
+                },
+                customer_shipment:{
+                    'confirm_case_quantity':0,
+                    'confirm_ball_quantity':0,
+                    'confirm_unit_quantity':0,
+                    'rack_number':'',
+                },
+                vendor_item_id:'',
+            },
             temp_order_data: [],
             case_inputs:'',
             ball_inputs:'',
@@ -284,6 +296,7 @@ export default {
             boll_order: 0,
             bara_order: 0,
             type: 0,
+            cus_index: 0,
             input_type: '',
             vendors: [],
             product_name: '',
@@ -293,7 +306,8 @@ export default {
             loader: 0,
             total_quantity: 0,
             handi_navi: '',
-            temp_rack_number: ''
+            temp_rack_number: '',
+            success:0
         }
     },
     mounted() {
@@ -319,8 +333,9 @@ export default {
                 .then(function (res) {
                     //_this.resetField();
                     //console.log(res);
+                    _this.success = res.data.success;
                     if (res.data.success > 0) {
-                        _this.order_data[0] = res.data.result;
+                        _this.order_data = res.data.result;
                         _this.temp_order_data = res.data.result;
                         //_this.temp_rack_number = res.data.last_rack;
                         _this.product_name = res.data.result.jan.name;
@@ -523,6 +538,71 @@ total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selli
 
 
         },
+        
+        shipmentTosuper() {
+            let _this = this;
+            let order_itemData =this.order_data; 
+            
+            let c_quantity = parseInt(_this.order_data.customer_shipment.confirm_unit_quantity) + parseInt(_this.order_data.customer_shipment.confirm_ball_quantity) * parseInt(_this.order_data.jan.ball_inputs) + parseInt(_this.order_data.customer_shipment.confirm_case_quantity) * parseInt(_this.order_data.jan.case_inputs);
+                 
+let total_quantity_vls = c_quantity;
+let total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selling_price;
+            let data = {
+                jan_code: _this.jan_code,
+                pname: order_itemData.jan.name,
+                c_quantity: c_quantity,
+                customer_id: order_itemData.customer_shipment.customer_id,
+                customer_item_id: order_itemData.customer_item_id,
+                customer_order_id: order_itemData.customer_shipment.customer_order_id,
+                customer_order_detail_id: order_itemData.customer_shipment.customer_order_detail_id,
+                inputs_type: order_itemData.customer_shipment.inputs,
+                confirm_case_quantity: order_itemData.customer_shipment.confirm_case_quantity,
+                confirm_ball_quantity: order_itemData.customer_shipment.confirm_ball_quantity,
+                confirm_unit_quantity: order_itemData.customer_shipment.confirm_unit_quantity,
+                customer_shipment_id: order_itemData.customer_shipment.customer_shipment_id,
+                rack_number: order_itemData.customer_shipment.rack_number,
+                total_quantity_vls:total_quantity_vls,
+                total_quantity_vls_price:total_quantity_vls_price
+
+            };
+            console.log(data);
+            //return false;
+            $('.loading_image_custom').show()
+            if (data.length <= 0) {
+                $('.loading_image_custom').hide()
+                $('#stock-order-show-by-jan').modal('hide')
+            } else {
+                axios.post(this.base_url + '/shipment_arival_insert_handy_shipmentorder_to_super', data)
+                    .then(function (res) {
+                        console.log(res);
+                        if (res.data.message == 'stock_over_qty') {
+                            console.log('stock over');
+                             _this.handi_navi = '<li>在庫量不足。</li>';
+                             $('#handy-navi').show()
+                            return false;
+                        } else {
+                            console.log('stock done');
+                            _this.handi_navi = '<li>出荷が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+                            $('#handy-navi').show();
+
+                            _this.hideModelAndClearInput();
+                            $('#jan_input').focus();
+                        }
+
+                        
+                    })
+                    .then(function (er) {
+
+                    })
+                    .finally(function () {
+                        $('.loading_image_custom').hide()
+                        _this.loader = 0
+                    })
+            }
+
+
+        },
+
         resetField() {
             if (this.input_type == 'ケース') {
                 this.boll_order = 0;
@@ -766,9 +846,9 @@ total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selli
         },
         calculateTotalQuantity() {
             let _this = this;
-            let data = [];
+            // let data = [];
             _this.total_quantity = 0;
-
+/*
             this.order_data.map(function (order) {
                     console.log(order);
                     if(order.customer_shipment.inputs=="ケース"){
@@ -791,7 +871,10 @@ total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selli
                     
                     data.push(order)
             })
-            this.order_data = data;
+            */
+                 _this.total_quantity += parseInt(_this.order_data.customer_shipment.confirm_unit_quantity) + parseInt(_this.order_data.customer_shipment.confirm_ball_quantity) * parseInt(_this.order_data.jan.ball_inputs) + parseInt(_this.order_data.customer_shipment.confirm_case_quantity) * parseInt(_this.order_data.jan.case_inputs)
+
+            //this.order_data = data;
 
         },
 
