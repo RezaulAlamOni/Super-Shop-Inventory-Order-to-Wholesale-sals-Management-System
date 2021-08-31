@@ -59,32 +59,31 @@
                             </div>
                         </a>
                         
-                        <a id="delivery_inventorys" class="btn btn-default kouri_shipment_btn" href="{{ route('order.kouri.confirm') }}">
+                       <!-- <a id="delivery_inventorys" class="btn btn-default kouri_shipment_btn" href="{{ route('order.kouri.confirm') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">9</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                             受注確定
                             </div>
-                        </a>
+                        </a>-->
 
-                        <a id="" style="width: 100%;background:#F0FFFF;" class="btn btn-default" href="{{ route('inventory.return') }}">
-                            <div class="numbering_col" style="padding: 0; margin: 0;">11</div>
-                            <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
-                                返却<br>(キャンセル)
+                        <a id="delivery_inventorys" class="btn btn-default kouri_shipment_btn" href="{{ route('order.shipment.list') }}">
+                            <div class="numbering_col" style="padding: 0; margin: 0;">9</div>
+                            <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
+                                出荷確定
                             </div>
                         </a>
 
                        
-
-
-                        <a  href="{{Config::get('app.url').'/stock_details_by_handy'}}" style="padding: 15px 5px;background:#F0FFFF;" class="btn btn-default">
-                            <div class="numbering_col" style="padding: 0; margin: 0;">13</div>
-                            <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
-                                商品検索
+                        <a href="{{ route('inventory.inquiry') }}" class="btn btn-default" style="padding: 15px 5px;background:#F0FFFF;">
+                            <div class="numbering_col" style="padding: 0; margin: 0;">11</div>
+                            <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
+                                在庫<br>問い合わせ
                             </div>
                         </a>
 
+
                         <a  href="javascript:managementsheetPopup('vendormangementsheet')" style="padding: 15px 5px;" class="btn btn-default handymangement_sheet_btn">
-                            <div class="numbering_col" style="padding: 0; margin: 0;">15</div>
+                            <div class="numbering_col" style="padding: 0; margin: 0;">13</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
                             買掛
                             </div>
@@ -115,24 +114,26 @@
                        
                         <a id="delivery_inventorys" class="btn btn-default kouri_shipment_btn" href="{{ route('handy.kouri.order') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">8</div>
-                            <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
-                            受注<br>(小売から)
+                            <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
+                            受注
                             </div>
                         </a>
                        
-                        <a id="delivery_inventorys" class="btn btn-default kouri_shipment_btn" href="{{ route('order.shipment.list') }}">
+                        <a id="" style="width: 100%;background:#F0FFFF;" class="btn btn-default" href="{{ route('inventory.return') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">10</div>
                             <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
-                                出荷確定<br>後(問屋)
+                                返却<br>(キャンセル)
                             </div>
                         </a>
+                      
 
-                        <a href="{{ route('inventory.inquiry') }}" class="btn btn-default" style="padding: 15px 5px;background:#F0FFFF;">
+                        <a  href="{{Config::get('app.url').'/stock_details_by_handy'}}" style="padding: 15px 5px;background:#F0FFFF;" class="btn btn-default">
                             <div class="numbering_col" style="padding: 0; margin: 0;">12</div>
-                            <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
-                                在庫問い<br>合わせ
+                            <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
+                                商品検索
                             </div>
                         </a>
+                       
                        
                         <a id="" style="width: 100%;padding: 15px 5px;" class="btn btn-default handymangement_sheet_btn" href="javascript:managementsheetPopup('shipmentmangementsheet')">
                             <div class="numbering_col" style="padding: 0; margin: 0;">14</div>
