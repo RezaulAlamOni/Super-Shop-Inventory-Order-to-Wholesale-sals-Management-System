@@ -52,6 +52,13 @@ class HandyrController extends Controller
         return view('backend.handy_pages.inventory_inquiry', compact('title', 'active'));
     }
 
+    public function mitsumury()
+    {
+        $title = "Mitsumury";
+        $active = 'Mitsumury';
+        return view('backend.handy_pages.mitsumury', compact('title', 'active'));
+    }
+
     public function inventoryentrybyhandy()
     {
         $title = "Dashboard";
