@@ -25591,11 +25591,11 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         //_this.resetField();
         // false;
+        _this.getCustomerList();
+
         if (res.data.status == 200) {
           _this.order_data = res.data.data;
           res = res.data.data; //_this.input_type = _this.order_data.order_lot_inputs;
-
-          _this.getCustomerList();
 
           console.log(res); //if(Object.keys(res.get_last_order_info).length>0){
 
@@ -73698,7 +73698,7 @@ var render = function() {
               [
                 _c("span", { staticClass: "pull-left" }, [
                   _vm._v(
-                    "\n                            受注(小売から)\n                        "
+                    "\n                            受注\n                        "
                   )
                 ]),
                 _vm._v(" "),

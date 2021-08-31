@@ -6,7 +6,7 @@
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
                         <span class="pull-left">
-                                受注(小売から)
+                                受注
                             </span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right"
@@ -303,12 +303,12 @@ export default {
                     //_this.resetField();
                     
                    // false;
+                        _this.getCustomerList();
                     if (res.data.status == 200) {
                        
                         _this.order_data = res.data.data;
                          res = res.data.data;
                         //_this.input_type = _this.order_data.order_lot_inputs;
-                        _this.getCustomerList();
                         console.log(res);
                         //if(Object.keys(res.get_last_order_info).length>0){
                         _this.case_order = (res.order_case_quantity==null?0:res.order_case_quantity);//_this.order_data.order_lot_case_quantity;
