@@ -1336,6 +1336,110 @@ WHERE DATE(co.shipment_date) = CURDATE()
         return $result = response()->json(['message' => 'success']);
     }
 
+    public function shipment_arival_insert_handy_shipmentorder_to_super(Request $request)
+    {
+        //print_r($request->all());
+        //exit;
+        $jan_code = $request->jan_code;
+        $c_quantity = $request->c_quantity;
+        $customer_id = $request->customer_id;
+        $customer_item_id = $request->customer_item_id;
+        $customer_order_id = $request->customer_order_id;
+        $customer_order_detail_id = $request->customer_order_detail_id;
+        $inputs_type = $request->inputs_type;
+        $customer_shipment_id = $request->customer_shipment_id;
+        $rack_number = $request->rack_number;
+        $confirm_case_quantity = $request->confirm_case_quantity;
+        $confirm_ball_quantity = $request->confirm_ball_quantity;
+        $confirm_unit_quantity = $request->confirm_unit_quantity;
+
+        /*decrease stock quantity*/
+        $stock_info = collect(\DB::select("select * from stock_items inner join vendor_items on stock_items.vendor_item_id=vendor_items.vendor_item_id inner join jans on jans.jan = vendor_items.jan where vendor_items.jan = '" . $jan_code . "' and stock_items.rack_number='" . $rack_number . "'"))->first();
+        if ($stock_info) {
+            $stock_items = array();
+                if ($confirm_case_quantity > $stock_info->case_quantity) {
+                    return $result = response()->json(['message' => 'stock_over_qty']);
+                }
+                if ($confirm_ball_quantity > $stock_info->ball_quantity) {
+                    return $result = response()->json(['message' => 'stock_over_qty']);
+                }
+                if ($confirm_unit_quantity > $stock_info->unit_quantity) {
+                    return $result = response()->json(['message' => 'stock_over_qty']);
+                }
+                $vl_c = $stock_info->case_quantity - $confirm_case_quantity;
+                $vl_c = ($vl_c < 0 ? 0 : $vl_c);
+                $stock_items['case_quantity'] = $vl_c;
+                
+                $vl_b = $stock_info->ball_quantity - $confirm_ball_quantity;
+                $vl_b = ($vl_b < 0 ? 0 : $vl_b);
+                $stock_items['ball_quantity'] = $vl_b;
+               
+                $vl_u = $stock_info->unit_quantity - $confirm_unit_quantity;
+                $vl_u = ($vl_u < 0 ? 0 : $vl_u);
+                $stock_items['unit_quantity'] = $vl_u;
+            stock_item::where(['vendor_item_id' => $stock_info->vendor_item_id, 'rack_number' => $rack_number])->update($stock_items);
+            customer_shipment::where('customer_shipment_id', $request->customer_shipment_id)->update(['quantity' => $request->c_quantity, 'reload_status' => '1']);
+            customer_order::where('customer_order_id', $request->customer_order_id)->update(['status' => '出荷済み']);
+            $insert_invoice = array(
+                'invoice_amount' => $request->total_quantity_vls_price,
+                'customer_id' => $request->customer_id,
+                'customer_shipment_id' => $request->customer_shipment_id,
+                'invoice_date' => date('Y-m-d'),
+            );
+
+            customer_invoice::insert($insert_invoice);
+        } else {
+            return $result = response()->json(['message' => 'stock_over_qty']);
+        }
+        /*decrease stock quantity
+
+        $data = collect(\DB::select("select customer_shipments.customer_order_id,customer_shipments.customer_shipment_id,customer_shipments.confirm_quantity,customer_shipments.quantity,jans.name,customer_orders.status,stock_items.rack_number from customer_shipments LEFT JOIN customer_order_details ON customer_order_details.customer_order_detail_id=customer_shipments.customer_order_detail_id
+        INNER JOIN customer_orders ON customer_orders.customer_order_id=customer_shipments.customer_order_id
+        LEFT JOIN jans ON jans.jan=customer_order_details.jan
+        LEFT JOIN vendor_items ON vendor_items.jan=customer_order_details.jan
+        LEFT JOIN stock_items ON stock_items.vendor_item_id=vendor_items.vendor_item_id
+        WHERE customer_shipments.quantity=0 and customer_orders.status='確定済み' and customer_order_details.jan='" . $jan_code . "'"));
+        if ($data) {
+            foreach ($data as $ordr) {
+                $insertableqty = 0;
+                if ($c_quantity > $ordr->confirm_quantity) {
+                    $c_quantity = $c_quantity - $ordr->confirm_quantity;
+                    $insertableqty = $ordr->confirm_quantity;
+                } else {
+                    $insertableqty = $c_quantity;
+                    $c_quantity = 0;
+                }
+
+                customer_shipment::where('customer_shipment_id', $ordr->customer_shipment_id)->update(['quantity' => $insertableqty, 'reload_status' => '1']);
+                customer_order::where('customer_order_id', $ordr->customer_order_id)->update(['status' => '出荷済み']);
+                if ($insertableqty != 0) {
+                    $invoice_amount = 0;
+                    $amount = collect(\DB::select("SELECT (
+                     case when customer_shipments.inputs = 'ケース' THEN jans.case_inputs*customer_shipments.quantity*customer_items.cost_price ELSE 0 END+
+                        case when customer_shipments.inputs = 'ボール' THEN jans.ball_inputs*customer_shipments.quantity*customer_items.cost_price ELSE 0 END+
+                 case when customer_shipments.inputs = 'バラ' THEN 1*customer_shipments.quantity*customer_items.cost_price ELSE 0 END) as total_invoice_amount FROM `customer_shipments`
+                  INNER join customer_order_details on customer_order_details.customer_order_detail_id = customer_shipments.customer_order_detail_id
+                   inner join customer_items on customer_items.customer_item_id = customer_order_details.customer_item_id
+                   INNER JOIN jans on jans.jan = customer_order_details.jan  WHERE customer_shipments.customer_shipment_id='" . $ordr->customer_shipment_id . "'"))->first();
+                    if ($amount) {
+                        $invoice_amount = $amount->total_invoice_amount;
+                    }
+                    $insert_invoice = array(
+                        'invoice_amount' => $invoice_amount,
+                        'customer_id' => $customer_id,
+                        'customer_shipment_id' => $ordr->customer_shipment_id,
+                        'invoice_date' => date('Y-m-d'),
+                    );
+
+                    customer_invoice::insert($insert_invoice);
+                }
+            }
+        }
+*/
+
+        return $result = response()->json(['message' => 'success']);
+    }
+
     public function insert_shipment_order_info(Request $request)
     {
         $shipment_number = $request->shipment_number;
