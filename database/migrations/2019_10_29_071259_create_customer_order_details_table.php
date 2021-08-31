@@ -27,8 +27,9 @@ class CreateCustomerOrderDetailsTable extends Migration
             $table->mediumInteger('cost_price')->nullable()->comment('Cost Price');
             $table->mediumInteger('selling_price')->nullable()->comment('Selling Price');
             $table->enum('update_status', ['0', '1'])->default('0')->comment('Update status');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+            // $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 

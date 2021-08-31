@@ -25,8 +25,9 @@ class CreateJansTable extends Migration
             $table->smallInteger('ball_inputs')->default(0)->comment('Ball Inputs');
             $table->dateTime('jan_start_date')->nullable()->comment('Jan Start Date');
             $table->dateTime('jan_end_date')->nullable()->comment('Jan End Date');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+            //$table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 

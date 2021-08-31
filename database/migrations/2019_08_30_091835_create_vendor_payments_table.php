@@ -19,8 +19,9 @@ class CreateVendorPaymentsTable extends Migration
             $table->integer('vendor_invoice_id')->comment('vendor_invoice_id');
             $table->integer('payment')->nullable()->comment('payment');
             $table->date('payment_date')->nullable()->comment('payment date');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+            //$table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+			//$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 

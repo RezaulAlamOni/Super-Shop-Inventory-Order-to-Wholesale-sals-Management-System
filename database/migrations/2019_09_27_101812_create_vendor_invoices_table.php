@@ -22,8 +22,9 @@ class CreateVendorInvoicesTable extends Migration
             $table->date('payment_due_date')->nullable()->comment('payment due date');
             $table->date('invoice_date')->nullable()->comment('invoice date');
             $table->enum('status', ['未支払', '一部支払','支払済','協議中'])->default('未支払')->comment('status');
-            $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
-			$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
+            $table->timestamps();
+           // $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Time of creation');
+		//	$table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('Time of Update');
         });
     }
 
