@@ -128,6 +128,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 
 	Route::get('/inventory-update', 'HandyrController@inventoryUpdate')->name('inventory.update'); // Oni for new design handy
 	Route::get('/inventory-inquiry', 'HandyrController@inventoryInquiry')->name('inventory.inquiry'); // Oni for new design handy
+	Route::get('/mitsumury', 'HandyrController@mitsumury')->name('mitsumury'); // Oni for new design handy
 
     //oni
     Route::get('/inventory-return', 'HandyrController@inventoryReturn')->name('inventory.return'); // Oni for new design handy
@@ -306,7 +307,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::get('/exportCsvByTonya/{vendor_id?}', 'ReceiveorderController@exportCsvByTonya');
     Route::get('/emailCsvByTonya/{vendor_id?}', 'ReceiveorderController@emailCsvByTonya');
 	Route::get('/sendtomailportal/{vendor_id?}', 'ReceiveorderController@sendTomailportal');
-	
+
 	//customer manual order getCustomerOrderInfoByJan
 	Route::post('/getCustomerOrderInfoByJan', 'Customer_menual_orderController@getCustomerOrderInfoByJan');
 	Route::post('/kouri-order-info-for-handy', 'Customer_menual_orderController@getCustomerOrderInfoByJanForHandy');
