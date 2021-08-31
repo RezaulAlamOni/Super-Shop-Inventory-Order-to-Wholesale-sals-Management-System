@@ -289,7 +289,7 @@
       
     </div><br/>
     <!-- Login Form -->
-    <form method="POST" action="<?php echo(\Config::get('app.url').'login')?>">
+    <form method="POST" action="<?php echo(\Config::get('app.url').'/login')?>">
     @csrf
     <input id="email" type="email" placeholder="{{ __('messages.email_text') }}" class="fadeIn second{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
     @if ($errors->has('email'))
