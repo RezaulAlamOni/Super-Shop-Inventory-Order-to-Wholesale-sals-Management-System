@@ -1,11 +1,7 @@
 var cacheName = 'rv3-pwa-v3'+Math.random();
 var filesToCache = [
   // '/rv3_super',
-<<<<<<< HEAD
-  '/rv3_superv1/android_home',
-=======
   // '/rv3_tonyav1/android_home',
->>>>>>> 417440d6b7e774f6c585e6b08422813ec57bad65
   // '/css/style.css',
   // '/js/main.js'
 ];
