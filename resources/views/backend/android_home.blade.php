@@ -147,7 +147,7 @@
                 <div class="clearfix"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="appss_install" id="installapplications">ハンディブ ラウザ インストールしますか？</p>
+                        <!-- <p class="appss_install" id="installapplications">ハンディブ ラウザ インストールしますか？</p> -->
                     </div>
                 </div>
                 <!--receive handy popup-->
