@@ -360,7 +360,7 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
            if($id>0){
             $shop_list =customer_shop::where('customer_id',$id)->orderBy('customer_shop_id', 'asc')->get();
 
-            $online_order = collect(\DB::select("select customer_shipments.confirm_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity, stock_items.ball_quantity, stock_items.unit_quantity,jans.name from customer_orders inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id
+            $online_order = collect(\DB::select("select customer_shipments.confirm_quantity,customer_shipments.confirm_case_quantity,customer_shipments.confirm_ball_quantity,customer_shipments.confirm_unit_quantity,customer_order_details.*,customer_orders.*,stock_items.case_quantity, stock_items.ball_quantity, stock_items.unit_quantity,jans.name from customer_orders inner join customer_order_details on customer_orders.customer_order_id = customer_order_details.customer_order_id
             inner join jans on jans.jan = customer_order_details.jan
             inner join vendor_items on jans.jan=vendor_items.jan
 left join stock_items on vendor_items.vendor_item_id = stock_items.vendor_item_id
