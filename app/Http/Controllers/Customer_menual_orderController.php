@@ -598,27 +598,17 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
             $shiptment['customer_order_detail_id']=$customer_order_detail_id;
             $shiptment['shipment_date']=date('Y-m-d H:i:s');
             $shiptment['inputs']=$inputs_type;
-            
+            $shiptment['confirm_case_quantity']=$request->case_order_quantity;
+            $shiptment['confirm_ball_quantity']=$request->ball_order_quantity;
+            $shiptment['confirm_unit_quantity']=$request->unit_order_quantity;
+
             $shiptment['confirm_quantity']=$c_quantity;
             
             
             
             if($stock_info){
                 $shiptment['rack_number']=$stock_info->rack_number;
-                $customer_shipment = 0;
-                if($stock_info->case_quantity>=$request->case_order_quantity){
-                    $shiptment['confirm_case_quantity']=$request->case_order_quantity;
-                    $customer_shipment = 1;
-                }
-                if($stock_info->ball_quantity>=$request->ball_order_quantity){
-                    $customer_shipment = 1;
-                    $shiptment['confirm_ball_quantity']=$request->ball_order_quantity;
-                }
-                if($stock_info->unit_quantity>=$request->unit_order_quantity){
-                    $customer_shipment = 1;
-                    $shiptment['confirm_unit_quantity']=$request->unit_order_quantity;
-                }
-                if($customer_shipment == 1){
+                if($stock_info->case_quantity>=$request->case_order_quantity && $stock_info->ball_quantity>=$request->ball_order_quantity && $stock_info->unit_quantity>=$request->unit_order_quantity){
                     customer_shipment::insert($shiptment);
                     customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
                 }
