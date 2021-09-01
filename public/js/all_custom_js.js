@@ -5539,22 +5539,18 @@ function get_manual_order_item(c_id = 0, c_name = '') {
 
                                 //if (online_order[n].customer_shop_id) {
                                 if (typeof idx != "undefined") {
-                                    if (online_order[idx].inputs == 'ケース') {
-                                        case_qty = online_order[idx].quantity;
+                                    //if (online_order[idx].inputs == 'ケース') {
+                                        case_qty = online_order[idx].order_case_quantity;
                                         case_total += case_qty;
-                                        ball_qty = '';
-                                        unit_qty = '';
-                                    } else if (online_order[idx].inputs == 'ボール') {
-                                        case_qty = '';
-                                        ball_qty = online_order[idx].quantity;
+                                       
+                                    //} else if (online_order[idx].inputs == 'ボール') {
+                                      
+                                        ball_qty = online_order[idx].order_ball_quantity;
                                         ball_total += ball_qty;
-                                        unit_qty = '';
-                                    } else {
-                                        case_qty = '';
-                                        ball_qty = '';
-                                        unit_qty = online_order[idx].quantity;
+                                    //} else {
+                                        unit_qty = online_order[idx].order_unit_quantity;
                                         unit_total += unit_qty;
-                                    }
+                                    //}
                                 }
                                 htmls += '<td style="border-right: 1px solid #ddd;" data_stock_total="" class="smOfordrqty"><input data_input_type="ケース" data_shop_id="' + response.shop_list[n].customer_shop_id + '" type="tel" class="form-control cmn_o_d_qty sum_of_o_d_qty" value="' + case_qty + '"></td>';
                                 htmls += '<td style="border-right: 1px solid #ddd;" data_stock_total="" class="smOfordrqty"><input data_input_type="ボール" data_shop_id="' + response.shop_list[n].customer_shop_id + '" type="tel" class="form-control cmn_o_d_qty sum_of_o_d_qty" value="' + ball_qty + '"></td>';
@@ -5589,35 +5585,33 @@ function get_manual_order_item(c_id = 0, c_name = '') {
                                 })[0];
                                 if (typeof idx_conf != "undefined") {
 
-                                    if (online_order[idx_conf].inputs == 'ケース') {
-                                        case_qty = online_order[idx_conf].quantity;
+                                        case_qty = online_order[idx_conf].order_case_quantity;
 
-                                        if (online_order[idx_conf].confirm_quantity !== null) {
-                                            case_qty_confirm = online_order[idx_conf].confirm_quantity;
+                                        if (online_order[idx_conf].confirm_case_quantity !== 0) {
+                                            case_qty_confirm = online_order[idx_conf].confirm_case_quantity;
                                             class_case_suffcient = (case_qty > case_qty_confirm ? 'insufcients_stocks' : 'sufcients_stocks');
                                             case_confirm_total += case_qty_confirm;
-                                        } else if (case_qty != '') {
+                                        } else if (case_qty != '0') {
                                             class_case_suffcient = 'insufcients_stocks';
                                         }
-                                    } else if (online_order[idx_conf].inputs == 'ボール') {
-                                        ball_qty = online_order[idx_conf].quantity;
-                                        if (online_order[idx_conf].confirm_quantity !== null) {
-                                            ball_qty_confirm = online_order[idx_conf].confirm_quantity;
+
+                                        ball_qty = online_order[idx_conf].order_ball_quantity;
+                                        if (online_order[idx_conf].confirm_ball_quantity !== null) {
+                                            ball_qty_confirm = online_order[idx_conf].confirm_ball_quantity;
                                             class_ball_suffcient = (ball_qty > ball_qty_confirm ? 'insufcients_stocks' : 'sufcients_stocks');
                                             ball_confirm_total += ball_qty_confirm;
-                                        } else if (ball_qty != '') {
+                                        } else if (ball_qty != '0') {
                                             class_ball_suffcient = 'insufcients_stocks';
                                         }
-                                    } else {
-                                        unit_qty = online_order[idx_conf].quantity;
-                                        if (online_order[idx_conf].confirm_quantity !== null) {
-                                            unit_qty_confirm = online_order[idx_conf].confirm_quantity;
+
+                                        unit_qty = online_order[idx_conf].order_unit_quantity;
+                                        if (online_order[idx_conf].confirm_unit_quantity !== null) {
+                                            unit_qty_confirm = online_order[idx_conf].confirm_unit_quantity;
                                             class_unit_suffcient = (unit_qty > unit_qty_confirm ? 'insufcients_stocks' : 'sufcients_stocks');
                                             unit_confirm_total += unit_qty_confirm;
                                         } else if (unit_qty != '') {
                                             class_unit_suffcient = 'insufcients_stocks';
                                         }
-                                    }
                                 }
 
                                 htmls += '<td style="border-right: 1px solid #ddd;" data_stock_total="" class="smOfordrqty ' + class_case_suffcient + '"><input type="tel" class="form-control cmn_o_d_qty sum_of_o_d_qty" value="' + case_qty_confirm + '"></td>';
