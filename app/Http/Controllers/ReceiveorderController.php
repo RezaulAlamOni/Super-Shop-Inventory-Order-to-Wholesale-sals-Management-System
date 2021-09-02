@@ -614,6 +614,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
        $fnameH = 'hacchu_file.csv';
         $filename = public_path('backend/csv/').$fname;
         $hacchu_file = public_path('backend/csv/').$fnameH;
+        $handle = fopen($filename, 'w+');
+        $handle2 = fopen($hacchu_file, 'w+');
        
         $result = $this->get_tonya_order_list_by_id($vendor_id);
         $fileUrl =  url('/').'/backend/csv/file.csv';
@@ -667,7 +669,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
             }
         }
-/*
+
         fputcsv($handle, array("super_name", "shop_name", "shop_code", "partner_code", "voucher_number", "order_date", "devlivery_date", "item.name", "jan", "inputs", "quantity", "cost_price", "store_price"), ",", '"');
         fputcsv($handle2, array("NO", "画像", "品名・メーカー・規格", "区分", "ケース", "ボール", "バラ", "a原価コスト", "取引先名"), ",", '"');
 
@@ -688,14 +690,14 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $filename,
             $hacchu_file
         ];
-        echo 'OKKKKKK<br>';
+      /*  echo 'OKKKKKK<br>';
        
         echo 'OK';
-        */
+       
         $handle = fopen(public_path('backend/csv/').$fname, 'w');
         $handle2 = fopen(public_path('backend/csv/').$fnameH, 'w');
         fwrite($handle, mb_convert_encoding($csv, 'sjis-win', 'utf-8'));
-        fwrite($handle2, mb_convert_encoding($csv2, 'sjis-win', 'utf-8'));
+        fwrite($handle2, mb_convert_encoding($csv2, 'sjis-win', 'utf-8')); */
         fclose($handle);
         fclose($handle2);
         $new_file_url1 = \Config::get('app.url') . "/public/backend/csv/" . $fname;
