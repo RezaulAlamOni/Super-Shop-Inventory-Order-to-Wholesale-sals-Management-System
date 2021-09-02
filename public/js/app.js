@@ -24629,6 +24629,704 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['base_url'],
+  name: "handy-product-order-place",
+  data: function data() {
+    return {
+      jan_code: '',
+      order_data: [],
+      case_inputs: '',
+      ball_inputs: '',
+      item_name: '',
+      get_last_order_info: [],
+      case_order: 0,
+      boll_order: 0,
+      bara_order: 0,
+      type: 0,
+      input_type: '',
+      vendors: [],
+      customers: [],
+      product_name: '',
+      vendor_id: null,
+      customer_id: null,
+      vendor_item_id: null,
+      maker_id: null,
+      loader: 0,
+      total_quantity: 0,
+      handi_navi: ''
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    setTimeout(function () {
+      $('#jan_input').focus();
+    }, 220);
+    $('#stock-order-show-by-jan').on('hidden.bs.modal', function () {
+      _this.jan_code = '';
+      setTimeout(function () {
+        $('#jan_input').focus();
+      }, 120);
+    });
+    _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
+  },
+  methods: {
+    importcsvfile: function importcsvfile(e) {
+      var _this = this;
+
+      var name = event.target.files[0].name;
+      var lastDot = name.lastIndexOf('.');
+      var ext = name.substring(lastDot + 1);
+      console.log(ext);
+      $('.loading_image_custom').show();
+      _this.loader = 1;
+      var formData = new FormData();
+      formData.append('file', e.target.files[0]);
+      formData.append('file_type', ext);
+      axios.post(this.base_url + '/shipment_csv_insert_brand', formData).then(function (res) {
+        if (res.data.success != 1) {
+          _this.handi_navi = '<li>0000000000000</li>';
+        } else {
+          _this.handi_navi = '<li>XXXXXX</li>';
+        }
+
+        $('#handy-navi').show();
+        $('.loading_image_custom').hide();
+      })["catch"](function () {
+        $('.loading_image_custom').hide();
+        console.log('errrr');
+      })["finally"](function () {
+        // _this.jan_code = ''
+        _this.loader = 0;
+      });
+    },
+    getCustomerList: function getCustomerList() {
+      var _this = this;
+
+      axios.get(_this.base_url + '/get_all_customer_list_for_select2').then(function (response) {
+        // console.log(response.data)
+        _this.customers = response.data.results; // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
+      })["catch"](function (e) {});
+    },
+    getOrderDataByJan: function getOrderDataByJan() {
+      var _this = this;
+
+      if (_this.jan_code.length <= 0) {
+        return false;
+      }
+
+      $('.loading_image_custom').show();
+      _this.loader = 1;
+      axios.post(this.base_url + '/kouri-order-info-for-handy', {
+        'jan_code': _this.jan_code
+      }).then(function (res) {
+        //_this.resetField();
+        // false;
+        _this.getCustomerList();
+
+        if (res.data.status == 200) {
+          _this.order_data = res.data.data;
+          res = res.data.data; //_this.input_type = _this.order_data.order_lot_inputs;
+
+          console.log(res); //if(Object.keys(res.get_last_order_info).length>0){
+
+          _this.case_order = res.order_case_quantity == null ? 0 : res.order_case_quantity; //_this.order_data.order_lot_case_quantity;
+
+          _this.boll_order = res.order_ball_quantity == null ? 0 : res.order_ball_quantity; //_this.order_data.order_lot_ball_quantity;
+
+          _this.bara_order = res.order_unit_quantity == null ? 0 : res.order_unit_quantity; //_this.order_data.order_lot_unit_quantity;
+
+          _this.customer_id = res.customer_order.customer_id;
+          _this.case_inputs = res.jan.case_inputs;
+          _this.ball_inputs = res.jan.ball_inputs;
+          _this.item_name = res.jan.name; //}
+
+          _this.calculateTotalQuantity();
+
+          setTimeout(function () {
+            $('.case_order').focus();
+            $('.case_order').select();
+          }, 1000);
+
+          if (_this.type == 0) {
+            // $('#stock-order-show-by-jan').modal()
+            $('#stock-order-show-by-jan').modal({
+              backdrop: 'static',
+              keyboard: false
+            });
+            $('.loading_image_custom').hide();
+          }
+        } else if (res.data.status == 402) {
+          _this.case_order = 0; //(res.order_case_quantity==null?0:res.order_case_quantity);//_this.order_data.order_lot_case_quantity;
+
+          _this.boll_order = 0; //(res.order_ball_quantity==null?0:res.order_ball_quantity);//_this.order_data.order_lot_ball_quantity;
+
+          _this.bara_order = 0; //(res.order_unit_quantity==null?0:res.order_unit_quantity);//_this.order_data.order_lot_unit_quantity;
+          //_this.customer_id = res.customer_order.customer_id;
+
+          res = res.data.data;
+          _this.case_inputs = res.jan.case_inputs;
+          _this.ball_inputs = res.jan.ball_inputs;
+          _this.item_name = res.jan.name;
+          setTimeout(function () {
+            $('.case_order').focus();
+            $('.case_order').select();
+          }, 1000);
+
+          if (_this.type == 0) {
+            // $('#stock-order-show-by-jan').modal()
+            $('#stock-order-show-by-jan').modal({
+              backdrop: 'static',
+              keyboard: false
+            });
+            $('.loading_image_custom').hide();
+          }
+
+          console.log(res);
+        } else if (res.data.status == 401) {
+          _this.handi_navi = '<li>0000000000000</li>';
+          $('#handy-navi').show();
+          $('.loading_image_custom').hide(); // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
+          // _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+          // $('#handy-navi').show()
+        } else {
+          _this.insertToJanList(); // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
+          // _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+          // $('#handy-navi').show()
+
+        }
+      })["catch"](function () {})["finally"](function () {
+        // _this.jan_code = ''
+        _this.loader = 0;
+      });
+    },
+    updateOrderQnty: function updateOrderQnty(type) {
+      var _this = this;
+
+      _this.input_type = type;
+      var quantity = type == 'ケース' ? this.case_order : type == 'ボール' ? this.boll_order : this.bara_order; // console.log(_this.input_type)
+      // console.log(quantity)
+
+      if (quantity > 0) {
+        var data = {
+          vendor_item_id: this.order_data.vendor_item_id,
+          field_type: type,
+          order_type: 'order_lot',
+          quantity: quantity
+        };
+        axios.post(this.base_url + '/update_receive_order_item_content', data).then(function (res) {
+          if (type == 'ケース') {
+            _this.boll_order = 0;
+            _this.bara_order = 0; // $('.boll_order').focus()
+            // $('.boll_order').select()
+          } else if (type == 'ボール') {
+            _this.case_order = 0;
+            _this.bara_order = 0; // $('.bara_order').focus()
+            // $('.bara_order').select()
+          } else {
+            _this.boll_order = 0;
+            _this.case_order = 0;
+          } // _this.type == 1
+          // _this.getOrderDataByJan()
+          // _this.type == 0
+
+        }).then(function (er) {});
+      }
+    },
+    hideModelAndClearInput: function hideModelAndClearInput() {
+      $('#stock-order-show-by-jan').modal('hide');
+      this.jan_code = '';
+      setTimeout(function () {
+        $('#jan_input').focus();
+      }, 120);
+    },
+    checkAndGetData: function checkAndGetData(e) {
+      if (this.loader == 1) {
+        return false;
+      }
+
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        this.getOrderDataByJan();
+      }
+
+      if (e.keyCode == 13) {
+        this.getOrderDataByJan();
+      }
+    },
+    selectItem: function selectItem(e, type) {
+      e.target.select();
+      this.input_type = type;
+    },
+    orderPlace: function orderPlace() {
+      var _this = this;
+
+      if (_this.customer_id == null) {
+        $('#handy-navi').show();
+        _this.handi_navi = '<li>0000000</li>';
+        return false;
+      }
+
+      if (_this.total_quantity <= 0) {
+        $('#handy-navi').show();
+        _this.handi_navi = '<li>0000000</li>';
+        return false;
+      }
+
+      console.log(_this.ball_order);
+      var data_post = {
+        'case_order_quantity': _this.case_order,
+        "ball_order_quantity": _this.boll_order,
+        'unit_order_quantity': _this.bara_order,
+        'total_quantity': _this.total_quantity,
+        'customer_id': _this.customer_id,
+        'jan_code': _this.jan_code
+      };
+      $('.loading_image_custom').show();
+
+      if (_this.loader == 1) {
+        return false;
+      }
+
+      _this.loader = 1;
+      setTimeout(function () {
+        // return false
+        axios.post(this.base_url + '/kouri_order_insert', data_post).then(function (res) {
+          if (res.data.status == 200) {
+            $('#handy-navi').show();
+            _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+
+            _this.hideModelAndClearInput();
+          } else {
+            $('#handy-navi').show();
+            _this.handi_navi = '<li>Kouri order exists please confirmed</li>';
+            return false;
+          }
+        }).then(function (er) {})["finally"](function () {
+          $('.loading_image_custom').hide();
+          _this.loader = 0;
+        });
+      }, 1000);
+    },
+    resetField: function resetField() {
+      if (this.input_type == 'ケース') {
+        this.boll_order = 0;
+        this.bara_order = 0;
+      } else if (this.input_type == 'ボール') {
+        this.case_order = 0;
+        this.bara_order = 0;
+      } else {
+        this.case_order = 0;
+        this.boll_order = 0;
+      }
+    },
+    enterEvent: function enterEvent(e, type) {
+      if (e.keyCode == 13) {
+        this.pressEnterAndSave(e, type);
+      }
+    },
+    pressEnterAndSave: function pressEnterAndSave(e, type) {
+      // if (e.keyCode == 13) {
+      this.calculateTotalQuantity();
+
+      if (type == 'case') {
+        $('.boll_order').focus();
+        $('.boll_order').select(); // this.input_type = 'ボール';
+      } else if (type == 'boll') {
+        $('.bara_order').focus();
+        $('.bara_order').select(); // this.input_type = 'バラ';
+      } else {
+        $('#order-place-button').focus(); // this.orderPlace()
+      } // this.updateOrderQnty(this.input_type)
+      // }
+
+    },
+    insertToJanList: function insertToJanList() {
+      var _this = this;
+
+      var jan_code = _this.jan_code;
+      axios.post(_this.base_url + '/get_jan_info', {
+        jan_code: _this.jan_code
+      }).then(function (response) {
+        var api_response = response.data.api_data;
+        var data_resource = response.data.data_resource;
+
+        if (api_response == 'invalid_jan_code') {
+          _this.handi_navi = '<li>JANコードりません</li>';
+          $('#handy-navi').show();
+        } else {
+          _this.product_name = api_response.name;
+
+          if (response.data.vendor_item_data == 1) {
+            // console.log('this jan code is already registered');
+            _this.vendor_item_id = response.data.vendor_item_data;
+            _this.maker_id = response.data.maker_id;
+            _this.handi_navi = '<li>【' + _this.product_name + '】商品の問屋が見つかりません。小売マスターメンテ画面から問屋を選択して発注してください。</li>';
+            $('#handy-navi').show(); // _this.getVendorList();
+          } else {
+            // console.log('do insert ' + jan_code);
+            var item_name = api_response.name;
+            var case_qty = 0;
+            var ball_qty = 0;
+            var api_maker_name = '';
+
+            if (data_resource == 'database') {
+              case_qty = api_response.case_inputs;
+              ball_qty = api_response.ball_inputs;
+            } else if (data_resource == 'api') {
+              api_maker_name = api_response.maker_name;
+            }
+
+            var vendor_id = response.data.vendor_id;
+            var price = 100;
+            /*insert auto vendor item*/
+
+            var order_point_unit = 'ケース';
+            var order_point_quantity = 1;
+            var order_lot_unit = 'ケース';
+            var order_lot_quantity = 1;
+            var vendor_item_id = null;
+            var sale_price = 0;
+            var basic_start_date = '2020-01-01';
+            var basic_end_date = '2021-12-31';
+            var sale_start_date = '2020-01-01';
+            var sale_end_date = '2021-12-31';
+            var data = {
+              maker_id: response.data.maker_id,
+              vendor_id: vendor_id,
+              jan_code: jan_code,
+              item_name: item_name,
+              case_qty: case_qty,
+              ball_qty: ball_qty,
+              price: price,
+              vendor_item_id: vendor_item_id,
+              order_point_unit: order_point_unit,
+              order_point_quantity: order_point_quantity,
+              order_lot_unit: order_lot_unit,
+              order_lot_quantity: order_lot_quantity,
+              sale_price: sale_price,
+              basic_start_date: basic_start_date,
+              basic_end_date: basic_end_date,
+              sale_start_date: sale_start_date,
+              sale_end_date: sale_end_date,
+              api_maker_name: api_maker_name
+            };
+            axios.post(_this.base_url + '/add_vendor_item', data).then(function (response) {
+              console.log(response.data);
+              _this.jan_code = jan_code;
+
+              _this.getOrderDataByJan(); // _this.handi_navi = '<li>【' + _this.product_name + '】商品の問屋が見つかりません。小売マスターメンテ画面から問屋を選択して発注してください。</li>';
+              // $('#handy-navi').show()
+              // _this.insertToJanList()
+
+            })["catch"](function (er) {})["finally"](function () {
+              $('.loading_image_custom').hide();
+              _this.loader = 0;
+            });
+          } //else
+
+        } //else
+
+      }).then(function (er) {})["finally"](function () {
+        $('.loading_image_custom').hide();
+        _this.loader = 0;
+      });
+    },
+    getVendorList: function getVendorList() {
+      var _this = this;
+
+      axios.get(_this.base_url + '/get_all_vendor_list_for_select2').then(function (response) {
+        console.log(response.data);
+        _this.vendors = response.data.results;
+        $('#select_tonya').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+      })["catch"](function (e) {});
+    },
+    updateVendorData: function updateVendorData() {
+      var _this = this;
+
+      if (_this.vendor_id == null) {
+        $('.handy_error_msg').html("\u300C\u4ED5\u5165\u5148\u300D\u3092\u6307\u793A\u3057\u3066\u304F\u3060\u3055\u3044\u3002");
+        $('.handdy_error').removeClass('hide').addClass('show');
+        return false;
+      }
+
+      axios.post(_this.base_url + '/vendor_master_update_by_vendor_id', {
+        vendor_item_id: _this.vendor_item_id,
+        vendor_id: _this.vendor_id,
+        maker_id: _this.maker_id
+      }).then(function (response) {
+        $('#select_tonya').modal('hide');
+
+        _this.getOrderDataByJan();
+      });
+    },
+    calculateTotalQuantity: function calculateTotalQuantity() {
+      this.total_quantity = parseInt(this.bara_order) + parseInt(this.boll_order) * parseInt(this.ball_inputs) + parseInt(this.case_order) * parseInt(this.case_inputs);
+    }
+  },
+  watch: {// jan_code: function (val) {
+    //     if (val.length >= 13) {
+    //         $('#stock-order-show-by-jan').modal()
+    //         console.log('data submit')
+    //     }
+    // }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-order-confirm-kouri.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-order-confirm-kouri.vue?vue&type=script&lang=js& ***!
@@ -32814,6 +33512,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.order_quantity_[data-v-0b6cdc33] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-0b6cdc33] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.order_quantity_[data-v-66bd217b] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-66bd217b] {\n    font-size: 18px;\n    height: 45px !important;\n}\n.file-upload-contain[data-v-66bd217b]{\n    text-align: center;\n    border: 2px dotted;\n    padding: 30px 10px;\n}\n#shipment_csv_input_handy[data-v-66bd217b]{\n    position:absolute;\n        line-height: 82px;\n    left: 1px;\n    top: 16px;\n    width: 100%;\n    opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -64390,6 +65107,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-order-confirm-kouri.vue?vue&type=style&index=0&id=4e553b00&scoped=true&lang=css&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-order-confirm-kouri.vue?vue&type=style&index=0&id=4e553b00&scoped=true&lang=css& ***!
@@ -72651,6 +73398,916 @@ var staticRenderFns = [
           [
             _vm._v(
               "\n                                                        在庫合計\n                                                    "
+            )
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "col-lg-4 col-md-4 col-sm-4 col-xs-12 handdy_error hide hide_enter_outside close_aria",
+        staticStyle: {
+          position: "fixed",
+          bottom: "0px",
+          right: "0px",
+          padding: "4px"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "panel panel-danger",
+            staticStyle: {
+              "margin-bottom": "2px",
+              border: "solid 2px red",
+              "border-top": "solid 5px red",
+              "box-shadow": "0 2px 6px rgba(0,0,0,0.2)"
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "panel-body", staticStyle: { padding: "10px" } },
+              [
+                _c("p", {
+                  staticClass: "text-danger handy_error_msg text-center",
+                  staticStyle: { margin: "0", "font-size": "20px" }
+                })
+              ]
+            )
+          ]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=template&id=66bd217b&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=template&id=66bd217b&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", [
+    _c("div", { staticClass: "main-content-container container-fluid px-4" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "well", staticStyle: { border: "3px solid #428bca" } },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "header col-md-12 col-xs-12",
+                staticStyle: { "font-size": "18px", padding: "10px" }
+              },
+              [
+                _c("span", { staticClass: "pull-left" }, [
+                  _vm._v(
+                    "\n                            オンライン受注\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary pull-right",
+                    staticStyle: { float: "right" },
+                    attrs: { href: _vm.base_url + "/android_home" }
+                  },
+                  [_vm._v(" メニュー")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-offset-2 col-md-8 col-centereds" },
+              [
+                _c("div", { staticClass: "row custom_p_scan" }, [
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "p_scn_form text-right",
+                      attrs: { id: "stock_detail_by_jan_form" }
+                    },
+                    [
+                      _c("div", { staticClass: "file-upload-contain" }, [
+                        _c("button", { staticClass: "btn btn-success" }, [
+                          _vm._v("受注データ取込")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: {
+                            type: "file",
+                            id: "shipment_csv_input_handy",
+                            name: "shipment_csv",
+                            accept: ".csv"
+                          },
+                          on: { change: _vm.importcsvfile }
+                        })
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "stock-order-show-by-jan"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-body p-0" }, [
+              _c(
+                "div",
+                { staticClass: "main-content-container container-fluid" },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "well",
+                        staticStyle: { border: "3px solid rgb(66, 139, 202)" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-horizontal",
+                            attrs: { id: "handy_order_form_by_jan" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-horizontal",
+                                attrs: { id: "handy_order_form" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: {
+                                      "border-radius": "5px",
+                                      "margin-top": "18px !important",
+                                      "margin-bottom": "2px"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "product_name_aria",
+                                        attrs: { id: "search_product_name" }
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "#999",
+                                              "font-size": "20px"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(_vm.item_name) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.customer_id,
+                                          expression: "customer_id"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { id: "sel1" },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.customer_id = $event.target
+                                            .multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "null" } },
+                                        [_vm._v("小売を選択")]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.customers, function(customer) {
+                                        return _c(
+                                          "option",
+                                          { domProps: { value: customer.id } },
+                                          [
+                                            _vm._v(
+                                              "\n                                                            " +
+                                                _vm._s(customer.text) +
+                                                "\n                                                        "
+                                            )
+                                          ]
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: { "margin-bottom": "0" }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "col-md-12 col-xs-12 padding_0"
+                                      },
+                                      [
+                                        _c(
+                                          "table",
+                                          {
+                                            staticClass:
+                                              "table table-bordered physical_handy_tabls"
+                                          },
+                                          [
+                                            _c("thead", [
+                                              _c("tr", [
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "05px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                            ケース "
+                                                    ),
+                                                    _c("br"),
+                                                    _vm._v(
+                                                      "\n                                                            (入数 " +
+                                                        _vm._s(
+                                                          _vm.case_inputs
+                                                        ) +
+                                                        ")\n                                                        "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "05px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                            ボール "
+                                                    ),
+                                                    _c("br"),
+                                                    _vm._v(
+                                                      " (入数 " +
+                                                        _vm._s(
+                                                          _vm.ball_inputs
+                                                        ) +
+                                                        ")\n\n                                                        "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "th",
+                                                  {
+                                                    staticStyle: {
+                                                      width: "50px",
+                                                      "text-align": "center",
+                                                      padding: "05px"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                            バラ\n                                                        "
+                                                    )
+                                                  ]
+                                                )
+                                              ])
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "tbody",
+                                              { staticClass: "physicaltbody" },
+                                              [
+                                                _c("tr", [
+                                                  _c("td", [
+                                                    _c("input", {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value: _vm.case_order,
+                                                          expression:
+                                                            "case_order"
+                                                        }
+                                                      ],
+                                                      staticClass:
+                                                        "form-control cmn_num_formt case_order inputs custom-input",
+                                                      attrs: { type: "tel" },
+                                                      domProps: {
+                                                        value: _vm.case_order
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.selectItem(
+                                                            $event,
+                                                            "ケース"
+                                                          )
+                                                        },
+                                                        blur: function($event) {
+                                                          return _vm.pressEnterAndSave(
+                                                            $event,
+                                                            "case"
+                                                          )
+                                                        },
+                                                        keypress: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.enterEvent(
+                                                            $event,
+                                                            "case"
+                                                          )
+                                                        },
+                                                        input: function(
+                                                          $event
+                                                        ) {
+                                                          if (
+                                                            $event.target
+                                                              .composing
+                                                          ) {
+                                                            return
+                                                          }
+                                                          _vm.case_order =
+                                                            $event.target.value
+                                                        }
+                                                      }
+                                                    })
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _c("input", {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value: _vm.boll_order,
+                                                          expression:
+                                                            "boll_order"
+                                                        }
+                                                      ],
+                                                      staticClass:
+                                                        "form-control cmn_num_formt boll_order inputs custom-input",
+                                                      attrs: { type: "tel" },
+                                                      domProps: {
+                                                        value: _vm.boll_order
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.selectItem(
+                                                            $event,
+                                                            "ボール"
+                                                          )
+                                                        },
+                                                        blur: function($event) {
+                                                          return _vm.pressEnterAndSave(
+                                                            $event,
+                                                            "boll"
+                                                          )
+                                                        },
+                                                        keypress: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.enterEvent(
+                                                            $event,
+                                                            "boll"
+                                                          )
+                                                        },
+                                                        input: function(
+                                                          $event
+                                                        ) {
+                                                          if (
+                                                            $event.target
+                                                              .composing
+                                                          ) {
+                                                            return
+                                                          }
+                                                          _vm.boll_order =
+                                                            $event.target.value
+                                                        }
+                                                      }
+                                                    })
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _c("input", {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value: _vm.bara_order,
+                                                          expression:
+                                                            "bara_order"
+                                                        }
+                                                      ],
+                                                      staticClass:
+                                                        "form-control cmn_num_formt bara_order inputs custom-input",
+                                                      attrs: { type: "tel" },
+                                                      domProps: {
+                                                        value: _vm.bara_order
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.selectItem(
+                                                            $event,
+                                                            "バラ"
+                                                          )
+                                                        },
+                                                        blur: function($event) {
+                                                          return _vm.pressEnterAndSave(
+                                                            $event,
+                                                            "bara"
+                                                          )
+                                                        },
+                                                        keypress: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.enterEvent(
+                                                            $event,
+                                                            "bara"
+                                                          )
+                                                        },
+                                                        input: function(
+                                                          $event
+                                                        ) {
+                                                          if (
+                                                            $event.target
+                                                              .composing
+                                                          ) {
+                                                            return
+                                                          }
+                                                          _vm.bara_order =
+                                                            $event.target.value
+                                                        }
+                                                      }
+                                                    })
+                                                  ])
+                                                ])
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-primary pull-right custom-btn",
+                                            staticStyle: {
+                                              float: "right",
+                                              "margin-top": "-10px"
+                                            },
+                                            attrs: {
+                                              href: "javascript:void(0)",
+                                              id: "order-place-button"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.orderPlace()
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    次の商品へ"
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "input-group mb-2",
+                                        staticStyle: {
+                                          border: ".5px solid #b8b7b7",
+                                          "border-radius": "5px",
+                                          width: "50%",
+                                          height: "45px",
+                                          "margin-top": "-10px"
+                                        }
+                                      },
+                                      [
+                                        _vm._m(0),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          staticClass:
+                                            "total_stock_jaiko_new jaiko_ form-control",
+                                          staticStyle: {
+                                            padding: "5px 5px",
+                                            "font-size": "16px"
+                                          },
+                                          attrs: { type: "tel", readonly: "" },
+                                          domProps: {
+                                            value: _vm.total_quantity
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "select_tonya"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-body p-0" }, [
+              _c(
+                "div",
+                { staticClass: "main-content-container container-fluid" },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "well",
+                        staticStyle: { border: "3px solid rgb(66, 139, 202)" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-horizontal",
+                            attrs: { id: "handy_order_form_by_jan_" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-horizontal",
+                                attrs: { id: "handy_order_form_" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: { "margin-bottom": "0" }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "col-md-12 col-xs-12 padding_0"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "select",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.vendor_id,
+                                                    expression: "vendor_id"
+                                                  }
+                                                ],
+                                                staticClass: "form-control",
+                                                attrs: {
+                                                  id: "sel1",
+                                                  onchange: "updateVendorData()"
+                                                },
+                                                on: {
+                                                  change: function($event) {
+                                                    var $$selectedVal = Array.prototype.filter
+                                                      .call(
+                                                        $event.target.options,
+                                                        function(o) {
+                                                          return o.selected
+                                                        }
+                                                      )
+                                                      .map(function(o) {
+                                                        var val =
+                                                          "_value" in o
+                                                            ? o._value
+                                                            : o.value
+                                                        return val
+                                                      })
+                                                    _vm.vendor_id = $event
+                                                      .target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "option",
+                                                  { attrs: { value: "null" } },
+                                                  [_vm._v("問屋を選択")]
+                                                ),
+                                                _vm._v(" "),
+                                                _vm._l(_vm.vendors, function(
+                                                  vendor
+                                                ) {
+                                                  return _c(
+                                                    "option",
+                                                    {
+                                                      domProps: {
+                                                        value: vendor.id
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                            " +
+                                                          _vm._s(vendor.text) +
+                                                          "\n                                                        "
+                                                      )
+                                                    ]
+                                                  )
+                                                })
+                                              ],
+                                              2
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-primary pull-right custom-btn",
+                                            staticStyle: { float: "right" },
+                                            attrs: {
+                                              href: "javascript:void(0)"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.updateVendorData()
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    次の商品へ\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: {
+                                      "border-radius": "5px",
+                                      "margin-top": "85px !important"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "product_name_aria",
+                                        attrs: { id: "search_product_name_" }
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "#999",
+                                              "font-size": "20px"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.product_name) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "jn nav_disp",
+        staticStyle: {
+          "z-index": "9999",
+          width: "270px",
+          right: "15px",
+          bottom: "15px"
+        },
+        attrs: { id: "handy-navi" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card card-warning jn_old_popup ",
+            staticStyle: { padding: "6px" }
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-light float-right",
+                  attrs: {
+                    href: "javascript:void(0)",
+                    onclick: "$('#handy-navi').hide()"
+                  }
+                },
+                [_vm._v("戻る")]
+              ),
+              _vm._v(" "),
+              _c("ol", {
+                attrs: { id: "handy-navi-body" },
+                domProps: { innerHTML: _vm._s(_vm.handi_navi) }
+              })
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "input-group-prepend",
+        staticStyle: { color: "black", "/* padding": "0px 0px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "input-group-text",
+            staticStyle: {
+              color: "black",
+              "font-weight": "bold",
+              padding: "0 11px",
+              "font-size": "16px"
+            }
+          },
+          [
+            _vm._v(
+              "\n                                                        発注合計\n                                                    "
             )
           ]
         )
@@ -90728,17 +92385,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_speech__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-speech */ "./node_modules/vue-speech/dist/vue-speech.js");
 /* harmony import */ var vue_speech__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_speech__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_handy_product_order_place_kouri__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/handy-product-order-place-kouri */ "./resources/js/components/handy-product-order-place-kouri.vue");
-/* harmony import */ var _components_handy_product_order_confirm_kouri__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/handy-product-order-confirm-kouri */ "./resources/js/components/handy-product-order-confirm-kouri.vue");
-/* harmony import */ var _components_handy_product_order_place__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/handy-product-order-place */ "./resources/js/components/handy-product-order-place.vue");
-/* harmony import */ var _components_handy_product_order_receive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/handy-product-order-receive */ "./resources/js/components/handy-product-order-receive.vue");
-/* harmony import */ var _components_handy_product_inventory_tmp_tana_update__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/handy-product-inventory-tmp-tana-update */ "./resources/js/components/handy-product-inventory-tmp-tana-update.vue");
-/* harmony import */ var _components_handy_product_inventory_inquiry__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/handy-product-inventory-inquiry */ "./resources/js/components/handy-product-inventory-inquiry.vue");
-/* harmony import */ var _components_handy_product_inventory_mitsumury__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/handy-product-inventory-mitsumury */ "./resources/js/components/handy-product-inventory-mitsumury.vue");
-/* harmony import */ var _components_handy_product_inventory_return__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/handy-product-inventory-return */ "./resources/js/components/handy-product-inventory-return.vue");
-/* harmony import */ var _components_handy_order_shipment_list__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/handy-order-shipment-list */ "./resources/js/components/handy-order-shipment-list.vue");
-/* harmony import */ var _components_handy_vandor_master__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/handy-vandor-master */ "./resources/js/components/handy-vandor-master.vue");
-/* harmony import */ var _components_handy_customer_master__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/handy-customer-master */ "./resources/js/components/handy-customer-master.vue");
-/* harmony import */ var _components_barcode_scan__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/barcode-scan */ "./resources/js/components/barcode-scan.vue");
+/* harmony import */ var _components_handy_product_online_order_kouri__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/handy-product-online-order-kouri */ "./resources/js/components/handy-product-online-order-kouri.vue");
+/* harmony import */ var _components_handy_product_order_confirm_kouri__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/handy-product-order-confirm-kouri */ "./resources/js/components/handy-product-order-confirm-kouri.vue");
+/* harmony import */ var _components_handy_product_order_place__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/handy-product-order-place */ "./resources/js/components/handy-product-order-place.vue");
+/* harmony import */ var _components_handy_product_order_receive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/handy-product-order-receive */ "./resources/js/components/handy-product-order-receive.vue");
+/* harmony import */ var _components_handy_product_inventory_tmp_tana_update__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/handy-product-inventory-tmp-tana-update */ "./resources/js/components/handy-product-inventory-tmp-tana-update.vue");
+/* harmony import */ var _components_handy_product_inventory_inquiry__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/handy-product-inventory-inquiry */ "./resources/js/components/handy-product-inventory-inquiry.vue");
+/* harmony import */ var _components_handy_product_inventory_mitsumury__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/handy-product-inventory-mitsumury */ "./resources/js/components/handy-product-inventory-mitsumury.vue");
+/* harmony import */ var _components_handy_product_inventory_return__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/handy-product-inventory-return */ "./resources/js/components/handy-product-inventory-return.vue");
+/* harmony import */ var _components_handy_order_shipment_list__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/handy-order-shipment-list */ "./resources/js/components/handy-order-shipment-list.vue");
+/* harmony import */ var _components_handy_vandor_master__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/handy-vandor-master */ "./resources/js/components/handy-vandor-master.vue");
+/* harmony import */ var _components_handy_customer_master__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/handy-customer-master */ "./resources/js/components/handy-customer-master.vue");
+/* harmony import */ var _components_barcode_scan__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/barcode-scan */ "./resources/js/components/barcode-scan.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -90773,6 +92431,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 
 
 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -90783,17 +92442,18 @@ var app = new Vue({
   el: '#app',
   components: {
     'handy-product-order-kouri': _components_handy_product_order_place_kouri__WEBPACK_IMPORTED_MODULE_1__["default"],
-    'handy-product-order-confirm-kouri': _components_handy_product_order_confirm_kouri__WEBPACK_IMPORTED_MODULE_2__["default"],
-    'handy-product-order': _components_handy_product_order_place__WEBPACK_IMPORTED_MODULE_3__["default"],
-    'handy-product-receive': _components_handy_product_order_receive__WEBPACK_IMPORTED_MODULE_4__["default"],
-    'handy-product-inventory-update': _components_handy_product_inventory_tmp_tana_update__WEBPACK_IMPORTED_MODULE_5__["default"],
-    'handy-product-inventory-inquiry': _components_handy_product_inventory_inquiry__WEBPACK_IMPORTED_MODULE_6__["default"],
-    'handy-product-inventory-mistumury': _components_handy_product_inventory_mitsumury__WEBPACK_IMPORTED_MODULE_7__["default"],
-    'handy-product-inventory-return': _components_handy_product_inventory_return__WEBPACK_IMPORTED_MODULE_8__["default"],
-    'handy-order-shipment-list': _components_handy_order_shipment_list__WEBPACK_IMPORTED_MODULE_9__["default"],
-    'bar-code-scan': _components_barcode_scan__WEBPACK_IMPORTED_MODULE_12__["default"],
-    'handy-vendor-master': _components_handy_vandor_master__WEBPACK_IMPORTED_MODULE_10__["default"],
-    'handy-customer-master': _components_handy_customer_master__WEBPACK_IMPORTED_MODULE_11__["default"]
+    'handy-product-online-order-kouri': _components_handy_product_online_order_kouri__WEBPACK_IMPORTED_MODULE_2__["default"],
+    'handy-product-order-confirm-kouri': _components_handy_product_order_confirm_kouri__WEBPACK_IMPORTED_MODULE_3__["default"],
+    'handy-product-order': _components_handy_product_order_place__WEBPACK_IMPORTED_MODULE_4__["default"],
+    'handy-product-receive': _components_handy_product_order_receive__WEBPACK_IMPORTED_MODULE_5__["default"],
+    'handy-product-inventory-update': _components_handy_product_inventory_tmp_tana_update__WEBPACK_IMPORTED_MODULE_6__["default"],
+    'handy-product-inventory-inquiry': _components_handy_product_inventory_inquiry__WEBPACK_IMPORTED_MODULE_7__["default"],
+    'handy-product-inventory-mistumury': _components_handy_product_inventory_mitsumury__WEBPACK_IMPORTED_MODULE_8__["default"],
+    'handy-product-inventory-return': _components_handy_product_inventory_return__WEBPACK_IMPORTED_MODULE_9__["default"],
+    'handy-order-shipment-list': _components_handy_order_shipment_list__WEBPACK_IMPORTED_MODULE_10__["default"],
+    'bar-code-scan': _components_barcode_scan__WEBPACK_IMPORTED_MODULE_13__["default"],
+    'handy-vendor-master': _components_handy_vandor_master__WEBPACK_IMPORTED_MODULE_11__["default"],
+    'handy-customer-master': _components_handy_customer_master__WEBPACK_IMPORTED_MODULE_12__["default"]
   }
 });
 
@@ -91530,6 +93190,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_inventory_tmp_tana_update_vue_vue_type_template_id_0b6cdc33_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_inventory_tmp_tana_update_vue_vue_type_template_id_0b6cdc33_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/handy-product-online-order-kouri.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/handy-product-online-order-kouri.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _handy_product_online_order_kouri_vue_vue_type_template_id_66bd217b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./handy-product-online-order-kouri.vue?vue&type=template&id=66bd217b&scoped=true& */ "./resources/js/components/handy-product-online-order-kouri.vue?vue&type=template&id=66bd217b&scoped=true&");
+/* harmony import */ var _handy_product_online_order_kouri_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./handy-product-online-order-kouri.vue?vue&type=script&lang=js& */ "./resources/js/components/handy-product-online-order-kouri.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _handy_product_online_order_kouri_vue_vue_type_style_index_0_id_66bd217b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css& */ "./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _handy_product_online_order_kouri_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _handy_product_online_order_kouri_vue_vue_type_template_id_66bd217b_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _handy_product_online_order_kouri_vue_vue_type_template_id_66bd217b_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "66bd217b",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/handy-product-online-order-kouri.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/handy-product-online-order-kouri.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/handy-product-online-order-kouri.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./handy-product-online-order-kouri.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************!*\
+  !*** ./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_style_index_0_id_66bd217b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=style&index=0&id=66bd217b&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_style_index_0_id_66bd217b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_style_index_0_id_66bd217b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_style_index_0_id_66bd217b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_style_index_0_id_66bd217b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/handy-product-online-order-kouri.vue?vue&type=template&id=66bd217b&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/handy-product-online-order-kouri.vue?vue&type=template&id=66bd217b&scoped=true& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_template_id_66bd217b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./handy-product-online-order-kouri.vue?vue&type=template&id=66bd217b&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/handy-product-online-order-kouri.vue?vue&type=template&id=66bd217b&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_template_id_66bd217b_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_handy_product_online_order_kouri_vue_vue_type_template_id_66bd217b_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
