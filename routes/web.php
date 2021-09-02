@@ -313,7 +313,8 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/kouri-order-info-for-handy', 'Customer_menual_orderController@getCustomerOrderInfoByJanForHandy');
 	Route::post('/kouri-order-confirm-for-handy', 'Customer_menual_orderController@getCustomerOrderConfirmByJanForHandy');
 	Route::post('/kouri_order_insert', 'Customer_menual_orderController@kouri_order_insert');
-
+    Route::get('/online_csv_import', 'HandyrController@online_csv_import')->name('online.kouri.csvimport');
+	
 
 });
 
