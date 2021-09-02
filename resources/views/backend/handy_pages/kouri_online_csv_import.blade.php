@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    <title>小売 Product Scan Form</title>
+    <title>オンライン受注</title>
 @endsection
 <style>
     td>input {
@@ -10,6 +10,6 @@
 
 @section('content')
 
-    <handy-product-order-kouri base_url="{{config('app.url')}}"></handy-product-order-kouri>
+    <handy-product-online-order-kouri base_url="{{config('app.url')}}"></handy-product-online-order-kouri>
 
 @endsection

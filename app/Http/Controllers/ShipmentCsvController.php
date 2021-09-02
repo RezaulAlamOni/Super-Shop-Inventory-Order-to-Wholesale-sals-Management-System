@@ -341,6 +341,7 @@ class ShipmentCsvController extends Controller
             'j_code' => $jan_code,
             'cost_price' => $selling_price
             );
+            print_r($csarray);exit;
             return $insertTocus = $this->insertIntocustomeritem($csarray);
 
             // $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
@@ -408,6 +409,7 @@ class ShipmentCsvController extends Controller
         $error_item_list=array();
         $error_item_duplicate=array();
         $chunckedArray=array_chunk($dataArr,50);
+        
         foreach ($chunckedArray as $chnkdata) {
         foreach ($chnkdata as $key => $value) {
             $cus_name = $value[0];
@@ -422,6 +424,7 @@ class ShipmentCsvController extends Controller
             $cost_price = (int)$value[9];
             $selling_price = (int)$value[10];
            // $customer_id=$this->customer_search_byname($cus_name);
+
             $customer_id=$this->customer_findOrInsert($cus_name,$cus_code);
             if($customer_id==null){
                 // @unlink($baseUrl);
@@ -441,8 +444,10 @@ class ShipmentCsvController extends Controller
                 continue;
             }
             //$customer_item_id=$this->customer_item_search($jan_code,$customer_id);
-            $customer_item_id=$this->customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price);
-            if($customer_item_id==null){
+            
+           $customer_item_id=$this->customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price);
+           
+           if($customer_item_id==null){
                 // @unlink($baseUrl);
                 // Session::flash('message', 'jan code not exist：[jan code]'); 
                 // Session::flash('class_name', 'alert-danger'); 
@@ -458,15 +463,44 @@ class ShipmentCsvController extends Controller
             if($inputs_type!='ケース' || $inputs_type!='ボール' || $inputs_type!='バラ'){
                 $inputs_type ='バラ';
             }
-            
-            $is_exist_customer_order = customer_order::join('customer_order_details','customer_order_details.customer_order_id','=','customer_orders.customer_order_id')->where(['customer_orders.customer_id'=>$customer_id,'customer_orders.customer_shop_id'=>$customer_shop_id,'customer_order_details.customer_item_id'=>$customer_item_id,'status'=>'未出荷'])->orWhere('status','確定済み')->first();
-            if($is_exist_customer_order){
+            $stock_info = $this->get_stock_info($jan_code);
+           
+            $is_exist_customer_order = customer_order_detail::join('customer_orders','customer_order_details.customer_order_id','=','customer_orders.customer_order_id')->where('customer_orders.customer_id',$customer_id)->where('customer_orders.customer_shop_id',$customer_shop_id)->where('customer_order_details.customer_item_id',$customer_item_id)->first();
+            $error_item_list[]=$is_exist_customer_order;
+            //->where('customer_orders.status','未出荷')->orWhere('customer_orders.status','確定済み')
+            if(isset($is_exist_customer_order) && ($is_exist_customer_order->status=='未出荷' || $is_exist_customer_order->status=='確定済み')){
                 //$error_item_duplicate[]=array('customer_item_id'=>$value[2]);
                 $exitQty = $is_exist_customer_order->quantity;
                 $newQty= (int)$is_exist_customer_order->quantity+$quantity;
                 $newfrquency =$is_exist_customer_order->order_frequency_num+1; 
                 customer_order::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['order_frequency_num'=>$newfrquency]);
                 customer_order_detail::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['quantity'=>$newQty,'last_qty'=>$quantity]);
+                if(customer_shipment::where('customer_order_id',$is_exist_customer_order->customer_order_id)->first()){
+                    if($stock_info){
+                        if($stock_info->unit_quantity>=$newQty){
+                            customer_shipment::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['confirm_quantity'=>$newQty,'confirm_unit_quantity'=>$newQty]);
+                        }
+                    }
+                }else{
+                    if($stock_info){
+                        if($stock_info->unit_quantity>=$newQty){
+                            customer_shipment::insert([
+                                'rack_number'=>$stock_info->rack_number,
+                                'customer_id'=>$customer_id,
+                                'shipment_date'=>date('Y-m-d H:i:s'),
+                                'inputs'=>$inputs_type,
+                                'confirm_quantity'=>$newQty,
+                                'confirm_case_quantity'=>0,
+                                'confirm_ball_quantity'=>0,
+                                'confirm_unit_quantity'=>$newQty,
+                                'customer_order_detail_id'=>$is_exist_customer_order->customer_order_id,
+                                'customer_order_id'=>$is_exist_customer_order->customer_order_id
+                            ]);
+                            customer_order::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['status'=>'確定済み']);
+                        }
+                        
+                    }
+                }
                 continue;
             }
             $customer_order_demo['customer_id']=$customer_id;
@@ -492,9 +526,12 @@ class ShipmentCsvController extends Controller
             $customer_order_id = customer_order::insertGetId($customer_order_demo);
             $customer_order_demo_detail['customer_order_id']=$customer_order_id;
             $customer_order_detail_id = customer_order_detail::insertGetId($customer_order_demo_detail);
-            $stock_info = $this->get_stock_info($jan_code);
+            
             
             $c_quantity = $quantity;
+            $order_case_quantity = 0;
+            $order_ball_quantity = 0;
+            $order_unit_quantity = $quantity;
             $shiptment['customer_id']=$customer_id;
             $shiptment['customer_order_id']=$customer_order_id;
             $shiptment['customer_order_detail_id']=$customer_order_detail_id;
@@ -524,11 +561,11 @@ class ShipmentCsvController extends Controller
         if(count($error_item_duplicate)==0){
         Session::flash('message', '受注データの取り込みが完了しました'); 
         Session::flash('class_name', 'alert-success'); 
-        return response()->json(['message' => '受注データの取り込みが完了しました','success'=>1]);
+        return response()->json(['message' => '受注データの取り込みが完了しました','success'=>1,'error_item_list'=>$error_item_list]);
     }else{
         Session::flash('message', '同じデータを2回入力することはできません'); 
         Session::flash('class_name', 'alert-success'); 
-        return response()->json(['message' => '同じデータを2回入力することはできません','success'=>0]);
+        return response()->json(['message' => '同じデータを2回入力することはできません','success'=>0,'error_item_list'=>$error_item_list]);
     }
 
     }
