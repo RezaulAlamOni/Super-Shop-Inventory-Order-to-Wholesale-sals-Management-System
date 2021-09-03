@@ -737,6 +737,11 @@ export default {
                 vendor.selling_price = vendor.selling_price.toFixed(2)
             }
 
+if(parseFloat(vendor.cost_price)>parseFloat(vendor.selling_price)){
+                 _this.handi_navi = 'XXXXX';
+                    $('#handy-navi').show()
+                    return false;
+            }
             let data = {
                 vendor_item_id: vendor.vendor_item_id,
                 product_name: vendor.item_name,
