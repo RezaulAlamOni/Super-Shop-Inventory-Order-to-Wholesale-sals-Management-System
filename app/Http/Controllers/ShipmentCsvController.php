@@ -341,7 +341,6 @@ class ShipmentCsvController extends Controller
             'j_code' => $jan_code,
             'cost_price' => $selling_price
             );
-            print_r($csarray);exit;
             return $insertTocus = $this->insertIntocustomeritem($csarray);
 
             // $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
