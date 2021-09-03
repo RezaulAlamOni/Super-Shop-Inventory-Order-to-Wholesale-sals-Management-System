@@ -20698,6 +20698,12 @@ __webpack_require__.r(__webpack_exports__);
         vendor.selling_price = vendor.selling_price.toFixed(2);
       }
 
+      if (parseFloat(vendor.cost_price) > parseFloat(vendor.selling_price)) {
+        _this.handi_navi = 'XXXXX';
+        $('#handy-navi').show();
+        return false;
+      }
+
       var data = {
         jan: vendor.jan,
         product_name: vendor.item_name,
@@ -28708,6 +28714,12 @@ __webpack_require__.r(__webpack_exports__);
       } else if (type == 'cost') {
         vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat(vendor.cost_price * vendor.profit_margin / 100);
         vendor.selling_price = vendor.selling_price.toFixed(2);
+      }
+
+      if (parseFloat(vendor.cost_price) > parseFloat(vendor.selling_price)) {
+        _this.handi_navi = 'XXXXX';
+        $('#handy-navi').show();
+        return false;
       }
 
       var data = {
