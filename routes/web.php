@@ -129,6 +129,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::get('/inventory-update', 'HandyrController@inventoryUpdate')->name('inventory.update'); // Oni for new design handy
 	Route::get('/inventory-inquiry', 'HandyrController@inventoryInquiry')->name('inventory.inquiry'); // Oni for new design handy
 	Route::get('/mitsumury', 'HandyrController@mitsumury')->name('mitsumury'); // Oni for new design handy
+	Route::get('/get-all-products', 'MistumuryController@index')->name('mitsumury.get.products'); // Oni for new design handy
 
     //oni
     Route::get('/inventory-return', 'HandyrController@inventoryReturn')->name('inventory.return'); // Oni for new design handy
@@ -316,7 +317,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::get('/online_csv_import', 'HandyrController@online_csv_import')->name('online.kouri.csvimport');
     Route::get('/handy_order_mail', 'HandyrController@handy_order_mail')->name('handy.order.mail');
     Route::get('/get_all_haccue_list/{vendor_id?}', 'ReceiveorderController@haccuListBytonyaHandy')->name('handy.order.mail');
-	
+
 
 });
 
