@@ -6,7 +6,7 @@
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
                         <span class="pull-left">
-                                受注
+                                オンライン受注
                             </span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right"
@@ -18,7 +18,7 @@
                             <br>
                             <br>
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
-                                <div class="form-group row">
+                                <!--<div class="form-group row">
                                     <div class="col-md-12">
                                         <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code"
@@ -33,8 +33,10 @@
                                 <button type="button" v-on:click="getOrderDataByJan()"
                                         class="btn custom-btn btn-primary pull-right text-right show_inline">
                                     次へ
-                                </button>
-
+                                </button>-->
+                                <div class="file-upload-contain">
+                    <button class="btn btn-success">受注データ取込</button> <input type="file" @change="importcsvfile" id="shipment_csv_input_handy" name="shipment_csv" accept=".csv">
+                </div>
                             </div>
 
                         </div>
@@ -279,6 +281,39 @@ export default {
         _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
     },
     methods: {
+        importcsvfile(e){
+            let _this = this;
+            
+            const name = event.target.files[0].name;
+  const lastDot = name.lastIndexOf('.');
+  const ext = name.substring(lastDot + 1);
+
+            console.log(ext);
+             $('.loading_image_custom').show()
+            _this.loader = 1;
+             var formData = new FormData();
+        formData.append('file', e.target.files[0]);
+        formData.append('file_type',ext);
+            axios.post(this.base_url + '/shipment_csv_insert_brand',formData)
+                .then(function (res) {
+                   if (res.data.success != 1) {
+                       _this.handi_navi = '<li>0000000000000</li>';
+                   }else{
+                       _this.handi_navi = '<li>XXXXXX</li>';
+                   }
+                    
+                        $('#handy-navi').show()
+                        $('.loading_image_custom').hide()
+                })
+                .catch(function () {
+                    $('.loading_image_custom').hide();
+                    console.log('errrr');
+                })
+                .finally(function () {
+                   // _this.jan_code = ''
+                    _this.loader = 0
+                })
+        },
         getCustomerList() {
             let _this = this;
             axios.get(_this.base_url + '/get_all_customer_list_for_select2')
@@ -685,5 +720,17 @@ select {
     font-size: 18px;
     height: 45px !important;
 }
-
+.file-upload-contain{
+    text-align: center;
+    border: 2px dotted;
+    padding: 30px 10px;
+}
+#shipment_csv_input_handy{
+    position:absolute;
+        line-height: 82px;
+    left: 1px;
+    top: 16px;
+    width: 100%;
+    opacity: 0;
+}
 </style>

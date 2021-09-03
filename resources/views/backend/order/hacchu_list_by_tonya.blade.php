@@ -158,7 +158,4 @@ settings_voice
     </div>
 
 </div>
-    <style>
-
-    </style>
 @endsection

@@ -214,6 +214,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/get_shipment_order_info', 'HandyrController@get_shipment_order_info');
 	Route::post('/insert_shipment_order_info', 'HandyrController@insert_shipment_order_info');
 	Route::post('/shipment_arival_insert_handy_shipmentorder', 'HandyrController@shipment_arival_insert_handy_shipmentorder');
+	Route::post('/shipment_arival_insert_handy_shipmentorder_to_super', 'HandyrController@shipment_arival_insert_handy_shipmentorder_to_super');
 	//Route::get('/kouri-order-info-for-handy/{jan}', 'ReceiveorderController@orderInfoForHandy');
 
 	/* shimpent order */
@@ -312,7 +313,8 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/kouri-order-info-for-handy', 'Customer_menual_orderController@getCustomerOrderInfoByJanForHandy');
 	Route::post('/kouri-order-confirm-for-handy', 'Customer_menual_orderController@getCustomerOrderConfirmByJanForHandy');
 	Route::post('/kouri_order_insert', 'Customer_menual_orderController@kouri_order_insert');
-
+    Route::get('/online_csv_import', 'HandyrController@online_csv_import')->name('online.kouri.csvimport');
+	
 
 });
 

@@ -70,6 +70,7 @@ class ShipmentCsvController extends Controller
                 continue;
             }
              $jan_code=$value[8];
+             $janInfo = jan::where('jan',$jan_code)->first();
             $customer_item_id=$this->customer_item_search($jan_code,$customer_id);
             if($customer_item_id==null){
                 // @unlink($baseUrl);
@@ -96,45 +97,51 @@ class ShipmentCsvController extends Controller
             $customer_order_demo_detail['customer_item_id']=$customer_item_id;
             $customer_order_demo_detail['jan']=$jan_code;
             $customer_order_demo_detail['inputs']=$inputs_type;
-            $customer_order_demo_detail['quantity']=$value[10];
+            if($inputs_type=='ケース'){
+                $order_case_quantity = $value[10];
+                $order_ball_quantity = 0;
+                $order_unit_quantity = 0;
+            }else if($inputs_type=='ボール'){
+                $order_case_quantity = 0;
+                $order_ball_quantity = $value[10];
+                $order_unit_quantity = 0;
+            }else{
+                $order_case_quantity = 0;
+                $order_ball_quantity = 0;
+                $order_unit_quantity = $value[10];
+            }
+            $c_quantity = $order_unit_quantity+($order_ball_quantity*$janInfo->ball_inputs)+($order_case_quantity*$janInfo->case_inputs);
+            $customer_order_demo_detail['quantity']=$c_quantity;
             $customer_order_demo_detail['cost_price']=$value[11];
             $customer_order_demo_detail['selling_price']=$value[12];
+            $customer_order_demo_detail['order_case_quantity']=$order_case_quantity;
+            $customer_order_demo_detail['order_ball_quantity']=$order_ball_quantity;
+            $customer_order_demo_detail['order_unit_quantity']=$order_unit_quantity;
             $customer_order_id = customer_order::insertGetId($customer_order_demo);
             $customer_order_demo_detail['customer_order_id']=$customer_order_id;
             $customer_order_detail_id = customer_order_detail::insertGetId($customer_order_demo_detail);
             $stock_info = $this->get_stock_info($jan_code);
             
-            $c_quantity = $value[10];
+           
             $shiptment['customer_id']=$customer_id;
             $shiptment['customer_order_id']=$customer_order_id;
             $shiptment['customer_order_detail_id']=$customer_order_detail_id;
             $shiptment['shipment_date']=date('Y-m-d H:i:s',strtotime($value[6]));
             $shiptment['inputs']=$inputs_type;
+            $shiptment['confirm_case_quantity']=$order_case_quantity;
+            $shiptment['confirm_ball_quantity']=$order_ball_quantity;
+            $shiptment['confirm_unit_quantity']=$order_unit_quantity;
             $shiptment['confirm_quantity']=$c_quantity;
-            
             
             
             if($stock_info){
                 $shiptment['rack_number']=$stock_info->rack_number;
-                $conf_qty = $stock_info->conf_qty;
-                $conf_qty = ($conf_qty!=''?$conf_qty:0);
-                if ($inputs_type == 'ケース') {
-                    if($c_quantity<=$stock_info->case_quantity-$conf_qty){
-                        customer_shipment::insert($shiptment);
-                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
-                    }
-                    
-                } else if ($inputs_type == 'ボール') {
-                    if($c_quantity<=$stock_info->ball_quantity-$conf_qty){ 
-                        customer_shipment::insert($shiptment);
-                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
-                    }
-                } else {
-                    if($c_quantity<=$stock_info->unit_quantity-$conf_qty){
-                        customer_shipment::insert($shiptment);
-                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
-                    }
+                if($stock_info->case_quantity>=$order_case_quantity && $stock_info->ball_quantity>=$order_ball_quantity && $stock_info->unit_quantity>=$order_unit_quantity){
+                    customer_shipment::insert($shiptment);
+                    customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
                 }
+               
+                
             }
 
             //$customer_order_array[]=$customer_order_demo;
@@ -401,6 +408,7 @@ class ShipmentCsvController extends Controller
         $error_item_list=array();
         $error_item_duplicate=array();
         $chunckedArray=array_chunk($dataArr,50);
+        
         foreach ($chunckedArray as $chnkdata) {
         foreach ($chnkdata as $key => $value) {
             $cus_name = $value[0];
@@ -415,6 +423,7 @@ class ShipmentCsvController extends Controller
             $cost_price = (int)$value[9];
             $selling_price = (int)$value[10];
            // $customer_id=$this->customer_search_byname($cus_name);
+
             $customer_id=$this->customer_findOrInsert($cus_name,$cus_code);
             if($customer_id==null){
                 // @unlink($baseUrl);
@@ -434,8 +443,10 @@ class ShipmentCsvController extends Controller
                 continue;
             }
             //$customer_item_id=$this->customer_item_search($jan_code,$customer_id);
-            $customer_item_id=$this->customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price);
-            if($customer_item_id==null){
+            
+           $customer_item_id=$this->customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price);
+           
+           if($customer_item_id==null){
                 // @unlink($baseUrl);
                 // Session::flash('message', 'jan code not exist：[jan code]'); 
                 // Session::flash('class_name', 'alert-danger'); 
@@ -447,18 +458,48 @@ class ShipmentCsvController extends Controller
             
             $this->QR_var->folder_create('/app/public/shipment_numbers');
             $this->QR_var->qr_code_gen($shipment_number,'/app/public/shipment_numbers');
-            $inputs_type = 'ケース';//$value[9];
+            $inputs_type = 'バラ';//$value[9];
             if($inputs_type!='ケース' || $inputs_type!='ボール' || $inputs_type!='バラ'){
-                $inputs_type ='ケース';
+                $inputs_type ='バラ';
             }
-            $is_exist_customer_order = customer_order::join('customer_order_details','customer_order_details.customer_order_id','=','customer_orders.customer_order_id')->where(['customer_orders.customer_id'=>$customer_id,'customer_orders.customer_shop_id'=>$customer_shop_id,'customer_order_details.customer_item_id'=>$customer_item_id,'status'=>'未出荷'])->orWhere('status','確定済み')->first();
-            if($is_exist_customer_order){
+            $stock_info = $this->get_stock_info($jan_code);
+           
+            $is_exist_customer_order = customer_order_detail::join('customer_orders','customer_order_details.customer_order_id','=','customer_orders.customer_order_id')->where('customer_orders.customer_id',$customer_id)->where('customer_orders.customer_shop_id',$customer_shop_id)->where('customer_order_details.customer_item_id',$customer_item_id)->first();
+            $error_item_list[]=$is_exist_customer_order;
+            //->where('customer_orders.status','未出荷')->orWhere('customer_orders.status','確定済み')
+            if(isset($is_exist_customer_order) && ($is_exist_customer_order->status=='未出荷' || $is_exist_customer_order->status=='確定済み')){
                 //$error_item_duplicate[]=array('customer_item_id'=>$value[2]);
                 $exitQty = $is_exist_customer_order->quantity;
                 $newQty= (int)$is_exist_customer_order->quantity+$quantity;
                 $newfrquency =$is_exist_customer_order->order_frequency_num+1; 
                 customer_order::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['order_frequency_num'=>$newfrquency]);
                 customer_order_detail::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['quantity'=>$newQty,'last_qty'=>$quantity]);
+                if(customer_shipment::where('customer_order_id',$is_exist_customer_order->customer_order_id)->first()){
+                    if($stock_info){
+                        if($stock_info->unit_quantity>=$newQty){
+                            customer_shipment::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['confirm_quantity'=>$newQty,'confirm_unit_quantity'=>$newQty]);
+                        }
+                    }
+                }else{
+                    if($stock_info){
+                        if($stock_info->unit_quantity>=$newQty){
+                            customer_shipment::insert([
+                                'rack_number'=>$stock_info->rack_number,
+                                'customer_id'=>$customer_id,
+                                'shipment_date'=>date('Y-m-d H:i:s'),
+                                'inputs'=>$inputs_type,
+                                'confirm_quantity'=>$newQty,
+                                'confirm_case_quantity'=>0,
+                                'confirm_ball_quantity'=>0,
+                                'confirm_unit_quantity'=>$newQty,
+                                'customer_order_detail_id'=>$is_exist_customer_order->customer_order_id,
+                                'customer_order_id'=>$is_exist_customer_order->customer_order_id
+                            ]);
+                            customer_order::where('customer_order_id',$is_exist_customer_order->customer_order_id)->update(['status'=>'確定済み']);
+                        }
+                        
+                    }
+                }
                 continue;
             }
             $customer_order_demo['customer_id']=$customer_id;
@@ -475,45 +516,38 @@ class ShipmentCsvController extends Controller
             $customer_order_demo_detail['jan']=$jan_code;
             $customer_order_demo_detail['inputs']=$inputs_type;
             $customer_order_demo_detail['quantity']=$quantity;
+            $customer_order_demo_detail['order_case_quantity']=0;
+            $customer_order_demo_detail['order_ball_quantity']=0;
+            $customer_order_demo_detail['order_unit_quantity']=$quantity;
             $customer_order_demo_detail['last_qty']=$quantity;
             $customer_order_demo_detail['cost_price']=$cost_price;
             $customer_order_demo_detail['selling_price']=$selling_price;
             $customer_order_id = customer_order::insertGetId($customer_order_demo);
             $customer_order_demo_detail['customer_order_id']=$customer_order_id;
             $customer_order_detail_id = customer_order_detail::insertGetId($customer_order_demo_detail);
-            $stock_info = $this->get_stock_info($jan_code);
+            
             
             $c_quantity = $quantity;
+            $order_case_quantity = 0;
+            $order_ball_quantity = 0;
+            $order_unit_quantity = $quantity;
             $shiptment['customer_id']=$customer_id;
             $shiptment['customer_order_id']=$customer_order_id;
             $shiptment['customer_order_detail_id']=$customer_order_detail_id;
             $shiptment['shipment_date']=date('Y-m-d H:i:s',strtotime($value[6]));
             $shiptment['inputs']=$inputs_type;
             $shiptment['confirm_quantity']=$c_quantity;
-            
-            
+            $shiptment['confirm_case_quantity']=0;
+            $shiptment['confirm_ball_quantity']=0;
+            $shiptment['confirm_unit_quantity']=$c_quantity;
             
             if($stock_info){
                 $shiptment['rack_number']=$stock_info->rack_number;
-                $conf_qty = $stock_info->conf_qty;
-                $conf_qty = ($conf_qty!=''?$conf_qty:0);
-                if ($inputs_type == 'ケース') {
-                    if($c_quantity<=$stock_info->case_quantity-$conf_qty){
-                        customer_shipment::insert($shiptment);
-                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
-                    }
-                    
-                } else if ($inputs_type == 'ボール') {
-                    if($c_quantity<=$stock_info->ball_quantity-$conf_qty){ 
-                        customer_shipment::insert($shiptment);
-                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
-                    }
-                } else {
-                    if($c_quantity<=$stock_info->unit_quantity-$conf_qty){
-                        customer_shipment::insert($shiptment);
-                        customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
-                    }
+                if($stock_info->case_quantity>=$order_case_quantity && $stock_info->ball_quantity>=$order_ball_quantity && $stock_info->unit_quantity>=$c_quantity){
+                    customer_shipment::insert($shiptment);
+                    customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
                 }
+                
             }
 
             //$customer_order_array[]=$customer_order_demo;
@@ -526,11 +560,11 @@ class ShipmentCsvController extends Controller
         if(count($error_item_duplicate)==0){
         Session::flash('message', '受注データの取り込みが完了しました'); 
         Session::flash('class_name', 'alert-success'); 
-        return response()->json(['message' => '受注データの取り込みが完了しました','success'=>1]);
+        return response()->json(['message' => '受注データの取り込みが完了しました','success'=>1,'error_item_list'=>$error_item_list]);
     }else{
         Session::flash('message', '同じデータを2回入力することはできません'); 
         Session::flash('class_name', 'alert-success'); 
-        return response()->json(['message' => '同じデータを2回入力することはできません','success'=>0]);
+        return response()->json(['message' => '同じデータを2回入力することはできません','success'=>0,'error_item_list'=>$error_item_list]);
     }
 
     }
@@ -663,10 +697,79 @@ class ShipmentCsvController extends Controller
         $customer_id = $request->customer_id;
         $jan_code = $request->jan;
         $orders = $request->manual_order;
+        $newcaseballOrder = array();
+        $caseballarr = array(
+            'case_order'=>0,
+            'ball_order'=>0,
+            'unit_order'=>0
+        );
+        foreach($orders as $vl){
+            if ($vl['input_type'] == 'ケース') {
+                $caseballarr['case_order']=$vl['quantity'];
+            }else if($vl['input_type'] == 'ボール'){
+                $caseballarr['ball_order']=$vl['quantity'];
+            }else{
+                $caseballarr['unit_order']=$vl['quantity'];
+            }
+            $newcaseballOrder[$vl['shop_id']]=$caseballarr;
+        }
         $items_info = customer_item::where('jan',$jan_code)->where('customer_id',$customer_id)->first();
         $vendoritems_info = vendor_item::where('jan',$jan_code)->first();
+        $janInfo = jan::where('jan',$jan_code)->first();
+
+        foreach($newcaseballOrder as $k=>$v){
+            $inputs_type = 'ケース';
+            $case_order_quantity=$v['case_order'];
+            $ball_order_quantity=$v['ball_order'];
+            $unit_order_quantity=$v['unit_order'];
+            $total_quantity = $v['unit_order']+($ball_order_quantity*$janInfo->ball_inputs)+($case_order_quantity*$janInfo->case_inputs);
+            $c_quantity = $total_quantity;
+            $customer_order_demo['customer_id']=$customer_id;
+            $customer_order_demo['customer_shop_id']=$k;
+            $customer_order_demo['shipment_number']=rand();
+            $customer_order_demo['category']='manual';
+            $customer_order_demo['voucher_number']=rand();
+            $customer_order_demo['order_date']= date('Y-m-d H:i:s');
+            $customer_order_demo['shipment_date']= date('Y-m-d');
+            $customer_order_demo['delivery_date']= date('Y-m-d H:i:s');
+
+            $customer_order_demo_detail['customer_item_id']=$items_info->customer_item_id;
+            $customer_order_demo_detail['jan']=$jan_code;
+            $customer_order_demo_detail['inputs']=$inputs_type;
+            $customer_order_demo_detail['quantity']=$c_quantity;
+            $customer_order_demo_detail['order_case_quantity']=$case_order_quantity;
+            $customer_order_demo_detail['order_ball_quantity']=$ball_order_quantity;
+            $customer_order_demo_detail['order_unit_quantity']=$unit_order_quantity;
+            $customer_order_demo_detail['cost_price']=$vendoritems_info->cost_price;
+            $customer_order_demo_detail['selling_price']=$vendoritems_info->selling_price;
+            $customer_order_id = customer_order::insertGetId($customer_order_demo);
+            $customer_order_demo_detail['customer_order_id']=$customer_order_id;
+            $customer_order_detail_id = customer_order_detail::insertGetId($customer_order_demo_detail);
+            $stock_info = $this->get_stock_info($jan_code);
+            
+            $shiptment['customer_id']=$customer_id;
+            $shiptment['customer_order_id']=$customer_order_id;
+            $shiptment['customer_order_detail_id']=$customer_order_detail_id;
+            $shiptment['shipment_date']=date('Y-m-d H:i:s');
+            $shiptment['inputs']=$inputs_type;
+            $shiptment['confirm_case_quantity']=$case_order_quantity;
+            $shiptment['confirm_ball_quantity']=$ball_order_quantity;
+            $shiptment['confirm_unit_quantity']=$unit_order_quantity;
+            $shiptment['confirm_quantity']=$c_quantity;
+            
+            
+            
+            if($stock_info){
+                $shiptment['rack_number']=$stock_info->rack_number;
+                if($stock_info->case_quantity>=$case_order_quantity && $stock_info->ball_quantity>=$ball_order_quantity && $stock_info->unit_quantity>=$unit_order_quantity){
+                    customer_shipment::insert($shiptment);
+                    customer_order::where('customer_order_id',$customer_order_id)->update(['status'=>'確定済み']);
+                }
+                
+            }
+        }
+/*
         foreach($orders as $value){
-            /*insert ordr info*/
             $inputs_type = $value['input_type'];
             $c_quantity = $value['quantity'];
             $customer_order_demo['customer_id']=$customer_id;
@@ -732,8 +835,8 @@ class ShipmentCsvController extends Controller
                     }
                 }
             }
-            /*insert ordr info*/
         }
+        */
         return response()->json(['message' => 'manual order has been inserted','success'=>1]);
     }
     /**
