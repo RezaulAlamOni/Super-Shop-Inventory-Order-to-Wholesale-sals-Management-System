@@ -14,7 +14,7 @@
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-2"
                            :class="select_status ? 'select' : ''"
                            @click="setSelectStatus()"
-                           style="float:right"> Select </a>
+                           style="float:right"> **** </a>
 
                     </div>
                     <div class="col-md-offset-2 col-md-8 col-centereds">
@@ -35,8 +35,8 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr @click="selectProduct()" v-for="product in products">
-                                        <td>{{ product.janinfo.name }}</td>
+                                    <tr @click="selectProduct(product)" v-for="product in products" :class="selected_products.indexOf(product.jan) > -1 ? 'select-row' : ''">
+                                        <td style="font-weight: bold    ">{{ product.janinfo.name }}</td>
                                         <td style="text-align: center;word-break: unset">{{ product.janinfo.case_inputs }}</td>
                                         <td style="text-align: center;word-break: unset">{{ product.janinfo.ball_inputs }}</td>
                                         <td style="text-align: center;word-break: unset">{{ parseInt(product.cost_price) }}</td>
@@ -55,7 +55,28 @@
             </div>
         </div>
 
+        <div class="jn nav_disp-w" style="z-index: 9999;width: 270px; right: 15px; bottom: 15px;"
+             id="handy-navi" >
+            <div class="card card-warning jn_old_popup " style="padding: 6px">
+                <!--                <div class="card-heading">-->
+                <!--                    <a class="btn btn-light float-right" href="javascript:void(0)"-->
+                <!--                       onclick="$('#handy-navi').hide()">戻る</a>-->
+                <!--                </div>-->
+                <div class="card-body">
+                    <a class="btn btn-light float-right" href="javascript:void(0)" v-if="selected_products.length <= 0"
+                       onclick="$('#handy-navi').hide()">戻る</a>
 
+                    <a class="btn btn-light float-right" href="javascript:void(0)"  v-else
+                       @click="confirm()">***</a>
+
+                    <ol id="handy-navi-body" v-html="handi_navi">
+
+                    </ol>
+
+
+                </div>
+            </div>
+        </div>
     </section>
 
 </template>
@@ -72,7 +93,8 @@ export default {
             jan_code: '',
             select_status: 0,
             products : [],
-            selected_products : []
+            selected_products : [],
+            handi_navi : ''
 
         }
     },
@@ -86,23 +108,48 @@ export default {
                 .then(function (res) {
                     let data  = res.data;
                     _this.products = data.products;
-
+                    _this.handi_navi  = '........';
+                    $('#handy-navi').show();
                 })
                 .catch(function () {
 
                 })
                 .finally(function () {
-                    //_this.jan_code = ''
-                    $('.loading_image_custom').hide()
-                    _this.loader = 0
 
                 })
         },
         setSelectStatus() {
             this.select_status = this.select_status ? 0 : 1;
+            if(this.select_status === 1){
+                this.handi_navi = '0000000000000';
+                $('#handy-navi').show();
+            } else {
+                this.selected_products = [];
+            }
         },
         selectProduct(product){
+            if (!this.select_status) {
+                return false;
+            }
+            let index = this.selected_products.indexOf(product.jan);
+            if (index < 0) {
+                this.selected_products.push(product.jan)
+            } else {
+                this.selected_products.splice(index, 1);
+            }
 
+            if (this.selected_products.length > 0) {
+                this.handi_navi = '***********';
+                $('#handy-navi').show();
+            }
+
+
+        },
+        confirm() {
+            this.select_status = 0;
+            this.selected_products = [];
+            this.handi_navi  = '---------';
+            $('#handy-navi').show();
         }
 
 
@@ -119,6 +166,11 @@ export default {
 .select {
     border-color: #ad5ba1;
     background-color: #ffb400;
+}
+
+.select-row {
+    border-color: #fd85ea;
+    background-color: #f4fc71;
 }
 
 td {

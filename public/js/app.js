@@ -20905,6 +20905,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -20915,7 +20936,8 @@ __webpack_require__.r(__webpack_exports__);
       jan_code: '',
       select_status: 0,
       products: [],
-      selected_products: []
+      selected_products: [],
+      handi_navi: ''
     };
   },
   mounted: function mounted() {
@@ -20928,16 +20950,44 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(this.base_url + '/get-all-products').then(function (res) {
         var data = res.data;
         _this.products = data.products;
-      })["catch"](function () {})["finally"](function () {
-        //_this.jan_code = ''
-        $('.loading_image_custom').hide();
-        _this.loader = 0;
-      });
+        _this.handi_navi = '........';
+        $('#handy-navi').show();
+      })["catch"](function () {})["finally"](function () {});
     },
     setSelectStatus: function setSelectStatus() {
       this.select_status = this.select_status ? 0 : 1;
+
+      if (this.select_status === 1) {
+        this.handi_navi = '0000000000000';
+        $('#handy-navi').show();
+      } else {
+        this.selected_products = [];
+      }
     },
-    selectProduct: function selectProduct(product) {}
+    selectProduct: function selectProduct(product) {
+      if (!this.select_status) {
+        return false;
+      }
+
+      var index = this.selected_products.indexOf(product.jan);
+
+      if (index < 0) {
+        this.selected_products.push(product.jan);
+      } else {
+        this.selected_products.splice(index, 1);
+      }
+
+      if (this.selected_products.length > 0) {
+        this.handi_navi = '***********';
+        $('#handy-navi').show();
+      }
+    },
+    confirm: function confirm() {
+      this.select_status = 0;
+      this.selected_products = [];
+      this.handi_navi = '---------';
+      $('#handy-navi').show();
+    }
   },
   watch: {}
 });
@@ -32800,7 +32850,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -67321,7 +67371,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v(" Select ")]
+                  [_vm._v(" **** ")]
                 )
               ]
             ),
@@ -67349,16 +67399,23 @@ var render = function() {
                             return _c(
                               "tr",
                               {
+                                class:
+                                  _vm.selected_products.indexOf(product.jan) >
+                                  -1
+                                    ? "select-row"
+                                    : "",
                                 on: {
                                   click: function($event) {
-                                    return _vm.selectProduct()
+                                    return _vm.selectProduct(product)
                                   }
                                 }
                               },
                               [
-                                _c("td", [
-                                  _vm._v(_vm._s(product.janinfo.name))
-                                ]),
+                                _c(
+                                  "td",
+                                  { staticStyle: { "font-weight": "bold" } },
+                                  [_vm._v(_vm._s(product.janinfo.name))]
+                                ),
                                 _vm._v(" "),
                                 _c(
                                   "td",
@@ -67421,7 +67478,64 @@ var render = function() {
           ]
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "jn nav_disp-w",
+        staticStyle: {
+          "z-index": "9999",
+          width: "270px",
+          right: "15px",
+          bottom: "15px"
+        },
+        attrs: { id: "handy-navi" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card card-warning jn_old_popup ",
+            staticStyle: { padding: "6px" }
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _vm.selected_products.length <= 0
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-light float-right",
+                      attrs: {
+                        href: "javascript:void(0)",
+                        onclick: "$('#handy-navi').hide()"
+                      }
+                    },
+                    [_vm._v("戻る")]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-light float-right",
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          return _vm.confirm()
+                        }
+                      }
+                    },
+                    [_vm._v("***")]
+                  ),
+              _vm._v(" "),
+              _c("ol", {
+                attrs: { id: "handy-navi-body" },
+                domProps: { innerHTML: _vm._s(_vm.handi_navi) }
+              })
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
