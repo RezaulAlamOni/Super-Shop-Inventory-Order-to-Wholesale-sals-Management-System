@@ -956,6 +956,14 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 //        return view('backend.handy_pages.handy_store_order', compact('title', 'active'));
     }
 
+    public function handy_order_mail()
+    {
+        $title = "Dashboard";
+        $active = 'handy_order_mail';
+        return view('backend.handy_pages.handy_order_mail', compact('title', 'active'));
+//        return view('backend.handy_pages.handy_store_order', compact('title', 'active'));
+    }
+
     public function handy_kouri_order_confirm()
     {
         $title = "Dashboard";

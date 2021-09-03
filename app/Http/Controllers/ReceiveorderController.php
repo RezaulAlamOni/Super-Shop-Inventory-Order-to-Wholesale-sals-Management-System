@@ -486,6 +486,26 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         // print_r($result);exit;
         return view('backend.order.hacchu_list_by_tonya', compact('title', 'active', 'tonya_name', 'tonya_id', 'result'));
     }
+    public function haccuListBytonyaHandy($vendor_id = 0)
+    {
+        $title = "小売マスタ";
+        $active = 'vendor_master';
+        /*hacchu order list*/
+        $result = $this->get_tonya_order_list_by_id($vendor_id);
+        $total = count($result);
+        /*hacchu order list*/
+        $tonya_name = '';
+        $tonya_id = 0;
+        $tonyaInfo = vendor::where('vendor_id', $vendor_id)->first();
+        if ($tonyaInfo) {
+            $tonya_name = $tonyaInfo->name;
+            $tonya_id = $tonyaInfo->vendor_id;
+        }
+        return $result = response()->json(['results' => $result, 'tonya_name'=>$tonya_name,'tonya_id'=>$tonya_id]);
+
+        // print_r($result);exit;
+        //return view('backend.order.hacchu_list_by_tonya', compact('title', 'active', 'tonya_name', 'tonya_id', 'result'));
+    }
 
     public function exportCsvByTonya($vendor_id)
     {

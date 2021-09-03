@@ -115,8 +115,8 @@
 
                         <a id="delivery_inventorys" class="btn btn-default kouri_shipment_btn" href="{{ route('handy.kouri.order') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">8</div>
-                            <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
-                            受注
+                            <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
+                            手書<br>受注
                             </div>
                         </a>
 

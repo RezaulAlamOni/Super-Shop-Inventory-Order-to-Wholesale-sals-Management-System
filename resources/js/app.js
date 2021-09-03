@@ -30,6 +30,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 import handyProductOrderPlaceKouri from './components/handy-product-order-place-kouri'
 import handyProductOrderOnlineOrderKouri from './components/handy-product-online-order-kouri'
+import handyProductOrdermail from './components/handy-product-order-mail'
 import handyProductOrderConfirmKouri from './components/handy-product-order-confirm-kouri'
 import handyProductOrderPlace from './components/handy-product-order-place'
 import handyProductOrderReceive from './components/handy-product-order-receive'
@@ -53,6 +54,7 @@ const app = new Vue({
     components : {
         'handy-product-order-kouri' : handyProductOrderPlaceKouri,
         'handy-product-online-order-kouri' : handyProductOrderOnlineOrderKouri,
+        'handy-product-order-mail' : handyProductOrdermail,
         'handy-product-order-confirm-kouri' : handyProductOrderConfirmKouri,
         'handy-product-order' : handyProductOrderPlace,
         'handy-product-receive' : handyProductOrderReceive,
