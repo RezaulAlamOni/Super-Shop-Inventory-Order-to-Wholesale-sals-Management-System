@@ -10,6 +10,7 @@ public/dashboard/images/*
 public/All_QR/*
 public/shipment_numbers/*
 public/All_csv/*
+public/backend/csv/*
 
 storage/Csv_for_test/
 storage/app/public/csv/
