@@ -11,6 +11,9 @@ public/All_QR/*
 public/shipment_numbers/*
 public/All_csv/*
 public/backend/csv/*
+public/js/build_component/*
+public/js/app.js
+public/js/mix-manifest.json
 
 storage/Csv_for_test/
 storage/app/public/csv/

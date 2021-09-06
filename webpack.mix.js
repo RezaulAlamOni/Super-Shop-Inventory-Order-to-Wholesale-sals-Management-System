@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
-
+require('dotenv').config();
+const app_url = process.env.APP_URL;
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -10,6 +11,13 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.config.webpackConfig.output = {
+    // chunkFilename: 'js/build_component/[name].[chunkhash:8].js',
+    chunkFilename: 'js/build_component/[name].js?id=[chunkhash]',
+    // publicPath: '/public/', //For server
+    publicPath: app_url + '/public/',
+    // publicPath: app_url,
+};
 mix.js('resources/js/app.js', 'public/js/app.js')
     .scripts([
         'resources/js/role_permission.js',
