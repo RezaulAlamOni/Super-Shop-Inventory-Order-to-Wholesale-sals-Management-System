@@ -329,7 +329,27 @@ export default {
     },
     methods: {
         sendMailto(){
+            let _this = this;
+            if(_this.maker_id==0){
+                _this.handi_navi = '<li>XXXXXX</li>';
+                $('#handy-navi').show()
+                return false;
+            }
+            axios.get(_this.base_url + '/sendtomailportal/'+_this.maker_id)
+                .then(function (response) {
+                  console.log(response);
+                  if(response.data.success==1){
+                        _this.handi_navi = '<li>'+response.data.message+'</li>';
+                  }else{
+                        _this.handi_navi = '<li>XXXXXX</li>';
 
+                  }
+                    $('#handy-navi').show()
+                    $('.loading_image_custom').hide()
+                })
+                .catch(function (e) {
+                    console.log(e);
+                })
         },
         filterbyvendorId(){
             this.getHacchuList(this.maker_id);
