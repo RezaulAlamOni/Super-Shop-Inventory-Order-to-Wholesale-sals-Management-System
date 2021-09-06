@@ -28,21 +28,22 @@ Vue.use(VueSpeech)
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 // Vue.component('bar-code-scan', require('./components/barcode-scan'));
 
-const handyProductOrderPlaceKouri =()=>import(/* webpackChunkName: "handyProductOrderPlaceKouri" */ './components/handy-product-order-place-kouri')
-const handyProductOrderOnlineOrderKouri =()=>import(/* webpackChunkName: "handyProductOrderOnlineOrderKouri" */ './components/handy-product-online-order-kouri')
-//import handyProductOrderOnlineOrderKouri from './components/handy-product-online-order-kouri'
-import handyProductOrdermail from './components/handy-product-order-mail'
-import handyProductOrderConfirmKouri from './components/handy-product-order-confirm-kouri'
-import handyProductOrderPlace from './components/handy-product-order-place'
-import handyProductOrderReceive from './components/handy-product-order-receive'
-import handyProductInventoryTempTanaUpdate from './components/handy-product-inventory-tmp-tana-update'
-import handyProductInventoryInquiry from './components/handy-product-inventory-inquiry'
-import handyProductInventoryMitsumry from './components/handy-mitsumury'
-import handyProductInventoryReturn from './components/handy-product-inventory-return'
-import handyOrderShipmentList from './components/handy-order-shipment-list'
-import handyVendorMaster from './components/handy-vandor-master'
-import handyCustomerMaster from './components/handy-customer-master'
-import barCodeScan from './components/barcode-scan'
+const handyProductOrderPlaceKouri =()=>import(/* webpackChunkName: "handyProductOrderPlaceKouri" */ './components/handy-product-order-place-kouri');
+const handyProductOrderOnlineOrderKouri =()=>import(/* webpackChunkName: "handyProductOrderOnlineOrderKouri" */ './components/handy-product-online-order-kouri');
+const handyProductOrdermail =()=>import(/* webpackChunkName: "handyProductOrdermail" */ './components/handy-product-order-mail');
+const handyProductOrderConfirmKouri =()=>import(/* webpackChunkName: "handyProductOrderConfirmKouri" */ './components/handy-product-order-confirm-kouri');
+// import handyProductOrderPlace from './components/handy-product-order-place';
+const handyProductOrderPlace =()=>import(/* webpackChunkName: "handyProductOrderPlace" */ './components/handy-product-order-place');
+const handyProductOrderReceive =()=>import(/* webpackChunkName: "handyProductOrderReceive" */ './components/handy-product-order-receive');
+const handyProductInventoryTempTanaUpdate =()=>import(/* webpackChunkName: "handyProductInventoryTempTanaUpdate" */ './components/handy-product-inventory-tmp-tana-update');
+const handyProductInventoryInquiry =()=>import(/* webpackChunkName: "handyProductInventoryInquiry" */ './components/handy-product-inventory-inquiry');
+const handyProductInventoryMitsumry =()=>import(/* webpackChunkName: "handyProductInventoryMitsumry" */ './components/handy-mitsumury');
+const handyProductInventoryReturn =()=>import(/* webpackChunkName: "handyProductInventoryReturn" */ './components/handy-product-inventory-return');
+const handyOrderShipmentList =()=>import(/* webpackChunkName: "handyOrderShipmentList" */ './components/handy-order-shipment-list');
+const handyVendorMaster =()=>import(/* webpackChunkName: "handyVendorMaster" */ './components/handy-vandor-master');
+const handyCustomerMaster =()=>import(/* webpackChunkName: "handyCustomerMaster" */ './components/handy-customer-master');
+const barCodeScan =()=>import(/* webpackChunkName: "barCodeScan" */ './components/barcode-scan');
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
