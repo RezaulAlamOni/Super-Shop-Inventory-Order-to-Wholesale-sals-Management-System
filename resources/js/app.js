@@ -28,8 +28,9 @@ Vue.use(VueSpeech)
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 // Vue.component('bar-code-scan', require('./components/barcode-scan'));
 
-import handyProductOrderPlaceKouri from './components/handy-product-order-place-kouri'
-import handyProductOrderOnlineOrderKouri from './components/handy-product-online-order-kouri'
+const handyProductOrderPlaceKouri =()=>import(/* webpackChunkName: "handyProductOrderPlaceKouri" */ './components/handy-product-order-place-kouri')
+const handyProductOrderOnlineOrderKouri =()=>import(/* webpackChunkName: "handyProductOrderOnlineOrderKouri" */ './components/handy-product-online-order-kouri')
+//import handyProductOrderOnlineOrderKouri from './components/handy-product-online-order-kouri'
 import handyProductOrdermail from './components/handy-product-order-mail'
 import handyProductOrderConfirmKouri from './components/handy-product-order-confirm-kouri'
 import handyProductOrderPlace from './components/handy-product-order-place'
