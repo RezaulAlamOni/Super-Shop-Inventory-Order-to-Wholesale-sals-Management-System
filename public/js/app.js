@@ -20926,6 +20926,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -20940,8 +20984,7 @@ __webpack_require__.r(__webpack_exports__);
       handi_navi: ''
     };
   },
-  mounted: function mounted() {
-    this.getProducts();
+  mounted: function mounted() {// this.getProducts();
   },
   methods: {
     getProducts: function getProducts() {
@@ -20987,6 +21030,11 @@ __webpack_require__.r(__webpack_exports__);
       this.selected_products = [];
       this.handi_navi = '---------';
       $('#handy-navi').show();
+    },
+    viewInfoForImage: function viewInfoForImage(img_type) {
+      $('#mistumury-mage-preview').modal({
+        backdrop: 'static'
+      });
     }
   },
   watch: {}
@@ -33608,7 +33656,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b]{\n    font-size: 24px;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 14px;\n}\n.header span[data-v-3ee7490b]{\n        font-size: 18px;\n}\n}\n", ""]);
 
 // exports
 
@@ -68149,143 +68197,125 @@ var render = function() {
                 staticStyle: { "font-size": "18px", padding: "10px" }
               },
               [
-                _c("span", { staticClass: "pull-left" }, [
-                  _vm._v(
-                    "\n                            見積り\n                    "
-                  )
-                ]),
+                _vm._m(0),
                 _vm._v(" "),
                 _c(
                   "a",
                   {
-                    staticClass: "btn btn-primary pull-right",
+                    staticClass: "btn btn-primary pull-right top-button",
                     staticStyle: { float: "right" },
                     attrs: { href: _vm.base_url + "/android_home" }
                   },
-                  [_vm._v(" メニュー")]
+                  [_vm._v("メニュー")]
                 ),
                 _vm._v(" "),
                 _c(
                   "a",
                   {
-                    staticClass: "btn btn-success pull-right mr-2",
-                    class: _vm.select_status ? "select" : "",
+                    staticClass: "btn btn-success pull-right mr-1 top-button",
                     staticStyle: { float: "right" },
-                    attrs: { href: "javascript:void(0)" },
-                    on: {
-                      click: function($event) {
-                        return _vm.setSelectStatus()
-                      }
-                    }
+                    attrs: { href: "javascript:void(0)" }
                   },
-                  [_vm._v(" **** ")]
+                  [_vm._v(" 発注")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-success pull-right mr-1 top-button",
+                    staticStyle: { float: "right" },
+                    attrs: { href: "javascript:void(0)" }
+                  },
+                  [_vm._v(" 採用")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-success pull-right mr-1 top-button",
+                    staticStyle: { float: "right" },
+                    attrs: { href: "javascript:void(0)" }
+                  },
+                  [_vm._v(" 詳細")]
                 )
               ]
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-offset-2 col-md-8 col-centereds" },
-              [
-                _c("div", { staticClass: "row custom_p_scan" }, [
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "p_scn_form text-right",
-                      attrs: { id: "stock_detail_by_jan_form" }
-                    },
-                    [
-                      _c("table", { staticClass: "table table-bordered" }, [
-                        _vm._m(0),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          _vm._l(_vm.products, function(product) {
-                            return _c(
-                              "tr",
-                              {
-                                class:
-                                  _vm.selected_products.indexOf(product.jan) >
-                                  -1
-                                    ? "select-row"
-                                    : "",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectProduct(product)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "td",
-                                  { staticStyle: { "font-weight": "bold" } },
-                                  [_vm._v(_vm._s(product.janinfo.name))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticStyle: {
-                                      "text-align": "center",
-                                      "word-break": "unset"
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(product.janinfo.case_inputs))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticStyle: {
-                                      "text-align": "center",
-                                      "word-break": "unset"
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(product.janinfo.ball_inputs))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticStyle: {
-                                      "text-align": "center",
-                                      "word-break": "unset"
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(parseInt(product.cost_price)))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticStyle: {
-                                      "text-align": "center",
-                                      "word-break": "unset"
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      _vm._s(parseInt(product.selling_price))
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      ])
-                    ]
-                  )
-                ])
-              ]
-            )
+            _c("div", { staticClass: " col-centereds " }, [
+              _c("div", [
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(1)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(2)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(1)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(2)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(1)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(2)
+                    }
+                  }
+                })
+              ])
+            ])
           ]
         )
       ])
     ]),
+    _vm._v(" "),
+    _vm._m(1),
     _vm._v(" "),
     _c(
       "div",
@@ -68350,27 +68380,194 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("品名")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { "text-align": "center", padding: "0" } }, [
-          _vm._v("ケース")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { "text-align": "center", padding: "0" } }, [
-          _vm._v("ボール")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { "text-align": "center", padding: "0" } }, [
-          _vm._v("原価")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { "text-align": "center", padding: "0" } }, [
-          _vm._v("売価")
-        ])
-      ])
+    return _c("span", { staticClass: "pull-left" }, [
+      _vm._v("\n                        小売 "),
+      _c("br"),
+      _vm._v("\n                            見積り\n                    ")
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "mistumury-mage-preview"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-body p-0" }, [
+              _c(
+                "div",
+                { staticClass: "main-content-container container-fluid" },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "well",
+                        staticStyle: { border: "3px solid rgb(66, 139, 202)" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-horizontal",
+                            attrs: { id: "handy_order_form_by_jan" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-horizontal",
+                                attrs: { id: "handy_order_form" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: {
+                                      "border-radius": "5px",
+                                      "margin-top": "18px !important",
+                                      "margin-bottom": "2px"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "product_name_aria",
+                                        attrs: { id: "search_product_name" }
+                                      },
+                                      [
+                                        _c("span", {
+                                          staticStyle: {
+                                            color: "#999",
+                                            "font-size": "20px !important"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    staticStyle: { "margin-bottom": "0" }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "col-md-12 col-xs-12 padding_0"
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-primary pull-right custom-btn",
+                                            staticStyle: {
+                                              float: "right",
+                                              "margin-top": "-10px"
+                                            },
+                                            attrs: {
+                                              href: "javascript:void(0)",
+                                              id: "order-place-button"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    次の商品へ"
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "input-group mb-2",
+                                        staticStyle: {
+                                          border: ".5px solid #b8b7b7",
+                                          "border-radius": "5px",
+                                          width: "50%",
+                                          height: "45px",
+                                          "margin-top": "-10px"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "input-group-prepend",
+                                            staticStyle: {
+                                              color: "black",
+                                              "/* padding": "0px 0px"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "input-group-text",
+                                                staticStyle: {
+                                                  color: "black",
+                                                  "font-weight": "bold",
+                                                  padding: "0 11px",
+                                                  "font-size": "16px"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                        在庫合計\n                                                    "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          staticClass:
+                                            "total_stock_jaiko_new jaiko_ form-control",
+                                          staticStyle: {
+                                            padding: "5px 5px",
+                                            "font-size": "16px"
+                                          },
+                                          attrs: { type: "tel", readonly: "" }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
