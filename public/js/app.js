@@ -33646,7 +33646,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n    max-height: 400px !important;\n}\n.custom-img-preview[data-v-3ee7490b] {\n    max-width: 98%;\n    min-width: 60%;\n    margin: 5px;\n    max-height: 600px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b]{\n    font-size: 24px;\n}\n.table-borderless[data-v-3ee7490b] {\n    margin: 10px;\n}\n.table-borderless tbody tr td[data-v-3ee7490b] {\n    border: none !important;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 14px;\n}\n.header span[data-v-3ee7490b]{\n        font-size: 18px;\n}\n.custom-img-preview[data-v-3ee7490b] {\n        min-width: 58%;\n        max-width: 98%;\n        margin: 5px;\n        max-height: 500px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.well[data-v-3ee7490b] {\n    padding: 0 !important;\n}\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n    max-height: 400px !important;\n}\n.custom-img-preview[data-v-3ee7490b] {\n    max-width: 98%;\n    min-width: 60%;\n    margin: 5px;\n    max-height: 600px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b]{\n    font-size: 24px;\n}\n.table-borderless[data-v-3ee7490b] {\n    margin: 10px;\n}\n.table-borderless tbody tr td[data-v-3ee7490b] {\n    border: none !important;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 13px;\n}\n.header span[data-v-3ee7490b]{\n        font-size: 18px;\n}\n.custom-img-preview[data-v-3ee7490b] {\n        min-width: 58%;\n        max-width: 98%;\n        margin: 5px;\n        max-height: 500px;\n}\n}\n", ""]);
 
 // exports
 
@@ -80686,75 +80686,65 @@ if (false) {}
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-                name: 'vue-speech',
+  name: 'vue-speech',
 
-                props: {
-                    lang: {
-                        type: String,
-                        default: 'en-US'
-                    },
-                    resume : {
-                        default : 0
-                    }
+  props: {
+    lang: {
+      type: String,
+      default: 'en-US'
+    }
+  },
 
-                },
+  data: () => ({
+    runtimeTranscription: '',
+    transcription: []
+  }),
 
-                data: () => ({
-                    runtimeTranscription: '',
-                    transcription: []
-                }),
+  methods: {
+    checkApi() {
+      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-                methods: {
-                    checkApi() {
-                        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition && "development" !== 'production') {
+        throw new Error('Speech Recognition does not exist on this browser. Use Chrome or Firefox');
+      }
 
-                        if (!SpeechRecognition && "development" !== 'production') {
-                            throw new Error('Speech Recognition does not exist on this browser. Use Chrome or Firefox');
-                        }
+      if (!SpeechRecognition) {
+        return;
+      }
 
-                        if (!SpeechRecognition) {
-                            return;
-                        }
+      const recognition = new SpeechRecognition();
 
-                        const recognition = new SpeechRecognition();
+      recognition.lang = this.lang;
+      recognition.interimResults = true;
 
-                        recognition.lang = this.lang;
-                        recognition.interimResults = true;
+      recognition.addEventListener('result', event => {
+        const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('');
 
-                        recognition.addEventListener('result', event => {
-                            const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('');
+        this.runtimeTranscription = text;
+      });
 
-                            this.runtimeTranscription = text;
-                        });
-                        recognition.start();
-                        recognition.addEventListener('end', () => {
-                            if (this.runtimeTranscription !== '') {
-                                this.transcription.push(this.runtimeTranscription);
+      recognition.addEventListener('end', () => {
+        if (this.runtimeTranscription !== '') {
+          this.transcription.push(this.runtimeTranscription);
 
-                                this.$emit('onTranscriptionEnd', {
-                                    transcription: this.transcription,
-                                    lastSentence: this.runtimeTranscription
-                                });
-                            }
+          this.$emit('onTranscriptionEnd', {
+            transcription: this.transcription,
+            lastSentence: this.runtimeTranscription
+          });
+        }
 
-                            this.runtimeTranscription = '';
-                            recognition.stop();
-                        });
+        this.runtimeTranscription = '';
 
+        recognition.start();
+      });
 
-                    }
-                },
+      recognition.start();
+    }
+  },
 
-                mounted() {
-                    // this.checkApi();
-                },
-                watch : {
-                    resume :function (val) {
-                        if (val){
-                            this.checkApi();
-                        }
-                    }
-                }
+  mounted() {
+    this.checkApi();
+  }
 });
 
 /***/ }),
@@ -80902,7 +80892,6 @@ if (false) {}
 /***/ })
 /******/ ]);
 });
-
 
 /***/ }),
 

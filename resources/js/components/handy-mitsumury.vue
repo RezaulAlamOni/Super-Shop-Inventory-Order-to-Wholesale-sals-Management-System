@@ -196,6 +196,9 @@ export default {
 
 <style scoped>
 
+.well {
+    padding: 0 !important;
+}
 
 .order_quantity_ {
     /*background: #F3F885 !important;*/
@@ -265,7 +268,7 @@ table thead tr th, table tbody tr td {
     }
     .top-button {
         padding: 5px;
-        font-size: 14px;
+        font-size: 13px;
     }
     .header span{
         font-size: 18px;
