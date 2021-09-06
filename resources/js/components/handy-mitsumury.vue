@@ -23,19 +23,19 @@
                     <div class=" col-centereds ">
 
                         <div>
-                            <img src="public/svg/403.svg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(1)"
+                            <img src="public/backend/images/products/cocacola.jpg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(1)"
                                  style="cursor: pointer">
-                            <img src="public/svg/403.svg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(2)"
-                                 style="cursor: pointer">
-
-                            <img src="public/svg/403.svg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(1)"
-                                 style="cursor: pointer">
-                            <img src="public/svg/403.svg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(2)"
+                            <img src="public/backend/images/products/cocacola.jpg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(2)"
                                  style="cursor: pointer">
 
-                            <img src="public/svg/403.svg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(1)"
+                            <img src="public/backend/images/products/cocacola.jpg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(1)"
                                  style="cursor: pointer">
-                            <img src="public/svg/403.svg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(2)"
+                            <img src="public/backend/images/products/cocacola.jpg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(2)"
+                                 style="cursor: pointer">
+
+                            <img src="public/backend/images/products/cocacola.jpg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(1)"
+                                 style="cursor: pointer">
+                            <img src="public/backend/images/products/cocacola.jpg" class="img-thumbnail custom-img" alt="Cinque Terre" @click="viewInfoForImage(2)"
                                  style="cursor: pointer">
                         </div>
 
@@ -48,51 +48,33 @@
              aria-hidden="true" id="mistumury-mage-preview">
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
-                    <div class="modal-body p-0">
-                        <div class="main-content-container container-fluid">
-                            <div class="row">
-                                <div class="well" style="border: 3px solid rgb(66, 139, 202);">
-                                    <div id="handy_order_form_by_jan" class="form-horizontal">
-                                        <div class="form-horizontal" id="handy_order_form">
-                                            <div class="form-group"
-                                                 style="border-radius: 5px; margin-top: 18px !important; margin-bottom: 2px">
-                                                <p id="search_product_name" class="product_name_aria">
-                                                    <span style="color: #999; font-size: 20px !important;"> </span>
-                                                </p>
-                                            </div>
-                                            <div class="form-group" style="margin-bottom: 0">
-                                                <div class="col-md-12 col-xs-12 padding_0">
-
-
-                                                    <a href="javascript:void(0)"
-                                                       class="btn btn-primary pull-right custom-btn"
-                                                       id="order-place-button"
-
-                                                       style="float:right;margin-top: -10px">
-                                                        次の商品へ</a>
-                                                </div>
-                                                <div class="input-group mb-2"
-                                                     style="border: .5px solid #b8b7b7;border-radius: 5px;width: 50%;height: 45px;margin-top: -10px;">
-                                                    <div class="input-group-prepend"
-                                                         style=" color: black;    /* padding: 0px 0px; */">
-                                                        <div class="input-group-text"
-                                                             style="color: black;font-weight: bold;padding: 0 11px;font-size: 16px;">
-                                                            在庫合計
-                                                        </div>
-                                                    </div>
-                                                    <input type="tel" class="total_stock_jaiko_new jaiko_ form-control"
-                                                           readonly=""
-                                                           style="padding: 5px 5px;    font-size: 16px;">
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="modal-header" style="padding: 5px;justify-content: right">
+                        <a class="btn btn-success float-right mr-1">採用</a>
+                        <a class="btn btn-success float-right">発注</a>
+                    </div>
+                    <div class="modal-body p-0" style="text-align: center">
+                        <div>
+                            <img src="public/backend/images/products/cocacola.jpg" class="img-thumbnail custom-img-preview" alt="Cinque Terre"
+                                 style="cursor: pointer">
                         </div>
+                        <div>
+                            <table class="table table-borderless">
+                                <tbody>
+                                <tr>
+                                    <td>定番 価格: </td><td>350</td>
+                                </tr>
+                                <tr>
+                                    <td>特売価格期限:</td>
+                                    <td> 0000 </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer " style="padding: 6px">
+                        <button class="btn btn-info float-right p-2"  @click="confirmAndHide()">戻る</button>
                     </div>
                 </div>
             </div>
@@ -144,6 +126,8 @@ export default {
     },
     mounted() {
         // this.getProducts();
+        this.handi_navi = '........';
+        $('#handy-navi').show();
     },
     methods: {
         getProducts() {
@@ -196,7 +180,12 @@ export default {
             $('#handy-navi').show();
         },
         viewInfoForImage(img_type) {
+            this.handi_navi = '*******';
+            $('#handy-navi').show();
             $('#mistumury-mage-preview').modal({backdrop:'static'})
+        },
+        confirmAndHide() {
+            $('#mistumury-mage-preview').modal('hide')
         }
 
 
@@ -245,6 +234,13 @@ table thead tr th, table tbody tr td {
 .custom-img {
     width: 24%;
     margin: 5px;
+    max-height: 400px !important;
+}
+.custom-img-preview {
+    max-width: 98%;
+    min-width: 60%;
+    margin: 5px;
+    max-height: 600px;
 }
 
 .top-button {
@@ -255,7 +251,12 @@ table thead tr th, table tbody tr td {
 .header span{
     font-size: 24px;
 }
-
+.table-borderless {
+    margin: 10px;
+}
+.table-borderless tbody tr td {
+    border: none !important;
+}
 
 @media screen and (max-width: 351px) {
     .custom-img {
@@ -268,6 +269,13 @@ table thead tr th, table tbody tr td {
     }
     .header span{
         font-size: 18px;
+    }
+
+    .custom-img-preview {
+        min-width: 58%;
+        max-width: 98%;
+        margin: 5px;
+        max-height: 500px;
     }
 
 }

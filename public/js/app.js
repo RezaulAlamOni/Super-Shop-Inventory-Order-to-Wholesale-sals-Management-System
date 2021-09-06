@@ -20952,24 +20952,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -20984,7 +20966,10 @@ __webpack_require__.r(__webpack_exports__);
       handi_navi: ''
     };
   },
-  mounted: function mounted() {// this.getProducts();
+  mounted: function mounted() {
+    // this.getProducts();
+    this.handi_navi = '........';
+    $('#handy-navi').show();
   },
   methods: {
     getProducts: function getProducts() {
@@ -21032,9 +21017,14 @@ __webpack_require__.r(__webpack_exports__);
       $('#handy-navi').show();
     },
     viewInfoForImage: function viewInfoForImage(img_type) {
+      this.handi_navi = '*******';
+      $('#handy-navi').show();
       $('#mistumury-mage-preview').modal({
         backdrop: 'static'
       });
+    },
+    confirmAndHide: function confirmAndHide() {
+      $('#mistumury-mage-preview').modal('hide');
     }
   },
   watch: {}
@@ -33656,7 +33646,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b]{\n    font-size: 24px;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 14px;\n}\n.header span[data-v-3ee7490b]{\n        font-size: 18px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n    max-height: 400px !important;\n}\n.custom-img-preview[data-v-3ee7490b] {\n    max-width: 98%;\n    min-width: 60%;\n    margin: 5px;\n    max-height: 600px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b]{\n    font-size: 24px;\n}\n.table-borderless[data-v-3ee7490b] {\n    margin: 10px;\n}\n.table-borderless tbody tr td[data-v-3ee7490b] {\n    border: none !important;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 14px;\n}\n.header span[data-v-3ee7490b]{\n        font-size: 18px;\n}\n.custom-img-preview[data-v-3ee7490b] {\n        min-width: 58%;\n        max-width: 98%;\n        margin: 5px;\n        max-height: 500px;\n}\n}\n", ""]);
 
 // exports
 
@@ -68246,7 +68236,10 @@ var render = function() {
                 _c("img", {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
-                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  attrs: {
+                    src: "public/backend/images/products/cocacola.jpg",
+                    alt: "Cinque Terre"
+                  },
                   on: {
                     click: function($event) {
                       return _vm.viewInfoForImage(1)
@@ -68257,7 +68250,10 @@ var render = function() {
                 _c("img", {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
-                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  attrs: {
+                    src: "public/backend/images/products/cocacola.jpg",
+                    alt: "Cinque Terre"
+                  },
                   on: {
                     click: function($event) {
                       return _vm.viewInfoForImage(2)
@@ -68268,7 +68264,10 @@ var render = function() {
                 _c("img", {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
-                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  attrs: {
+                    src: "public/backend/images/products/cocacola.jpg",
+                    alt: "Cinque Terre"
+                  },
                   on: {
                     click: function($event) {
                       return _vm.viewInfoForImage(1)
@@ -68279,7 +68278,10 @@ var render = function() {
                 _c("img", {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
-                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  attrs: {
+                    src: "public/backend/images/products/cocacola.jpg",
+                    alt: "Cinque Terre"
+                  },
                   on: {
                     click: function($event) {
                       return _vm.viewInfoForImage(2)
@@ -68290,7 +68292,10 @@ var render = function() {
                 _c("img", {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
-                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  attrs: {
+                    src: "public/backend/images/products/cocacola.jpg",
+                    alt: "Cinque Terre"
+                  },
                   on: {
                     click: function($event) {
                       return _vm.viewInfoForImage(1)
@@ -68301,7 +68306,10 @@ var render = function() {
                 _c("img", {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
-                  attrs: { src: "public/svg/403.svg", alt: "Cinque Terre" },
+                  attrs: {
+                    src: "public/backend/images/products/cocacola.jpg",
+                    alt: "Cinque Terre"
+                  },
                   on: {
                     click: function($event) {
                       return _vm.viewInfoForImage(2)
@@ -68315,7 +68323,47 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(1),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "mistumury-mage-preview"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-footer ", staticStyle: { padding: "6px" } },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info float-right p-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.confirmAndHide()
+                      }
+                    }
+                  },
+                  [_vm._v("戻る")]
+                )
+              ]
+            )
+          ])
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -68393,176 +68441,55 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "modal fade bd-example-modal-lg",
-        attrs: {
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "myLargeModalLabel",
-          "aria-hidden": "true",
-          id: "mistumury-mage-preview"
-        }
+        staticClass: "modal-header",
+        staticStyle: { padding: "5px", "justify-content": "right" }
       },
       [
-        _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-body p-0" }, [
-              _c(
-                "div",
-                { staticClass: "main-content-container container-fluid" },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "well",
-                        staticStyle: { border: "3px solid rgb(66, 139, 202)" }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "form-horizontal",
-                            attrs: { id: "handy_order_form_by_jan" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "form-horizontal",
-                                attrs: { id: "handy_order_form" }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "form-group",
-                                    staticStyle: {
-                                      "border-radius": "5px",
-                                      "margin-top": "18px !important",
-                                      "margin-bottom": "2px"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "p",
-                                      {
-                                        staticClass: "product_name_aria",
-                                        attrs: { id: "search_product_name" }
-                                      },
-                                      [
-                                        _c("span", {
-                                          staticStyle: {
-                                            color: "#999",
-                                            "font-size": "20px !important"
-                                          }
-                                        })
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "form-group",
-                                    staticStyle: { "margin-bottom": "0" }
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "col-md-12 col-xs-12 padding_0"
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "btn btn-primary pull-right custom-btn",
-                                            staticStyle: {
-                                              float: "right",
-                                              "margin-top": "-10px"
-                                            },
-                                            attrs: {
-                                              href: "javascript:void(0)",
-                                              id: "order-place-button"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                    次の商品へ"
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "input-group mb-2",
-                                        staticStyle: {
-                                          border: ".5px solid #b8b7b7",
-                                          "border-radius": "5px",
-                                          width: "50%",
-                                          height: "45px",
-                                          "margin-top": "-10px"
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "input-group-prepend",
-                                            staticStyle: {
-                                              color: "black",
-                                              "/* padding": "0px 0px"
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass: "input-group-text",
-                                                staticStyle: {
-                                                  color: "black",
-                                                  "font-weight": "bold",
-                                                  padding: "0 11px",
-                                                  "font-size": "16px"
-                                                }
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                        在庫合計\n                                                    "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("input", {
-                                          staticClass:
-                                            "total_stock_jaiko_new jaiko_ form-control",
-                                          staticStyle: {
-                                            padding: "5px 5px",
-                                            "font-size": "16px"
-                                          },
-                                          attrs: { type: "tel", readonly: "" }
-                                        })
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ])
-                ]
-              )
+        _c("a", { staticClass: "btn btn-success float-right mr-1" }, [
+          _vm._v("採用")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "btn btn-success float-right" }, [
+          _vm._v("発注")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal-body p-0",
+        staticStyle: { "text-align": "center" }
+      },
+      [
+        _c("div", [
+          _c("img", {
+            staticClass: "img-thumbnail custom-img-preview",
+            staticStyle: { cursor: "pointer" },
+            attrs: {
+              src: "public/backend/images/products/cocacola.jpg",
+              alt: "Cinque Terre"
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("table", { staticClass: "table table-borderless" }, [
+            _c("tbody", [
+              _c("tr", [
+                _c("td", [_vm._v("定番 価格: ")]),
+                _c("td", [_vm._v("350")])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [_vm._v("特売価格期限:")]),
+                _vm._v(" "),
+                _c("td", [_vm._v(" 0000 ")])
+              ])
             ])
           ])
         ])
