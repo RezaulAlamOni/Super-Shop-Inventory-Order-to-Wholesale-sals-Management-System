@@ -1,8 +1,23 @@
 {
-    "/js/app.js": "/js/app.js?id=c95b1d22a4e99d074eb7",
+    "/js/app.js": "/js/app.js?id=cb16b01b234abb528ef1",
     "/css/app.css": "/css/app.css?id=005ab6a70f134b94f0d3",
-    "/js/all_custom_js.js": "/js/all_custom_js.js?id=bc85817b079a1d682962",
-    "/js/all_online_js.js": "/js/all_online_js.js?id=60ffee0b30ba78cfa602",
-    "/css/all_custom_css.css": "/css/all_custom_css.css?id=01b52cfc611c59d91517",
-    "/css/all_online_css.css": "/css/all_online_css.css?id=10397b18e7d0fffa535a"
+    "/js/build_component/barCodeScan.js": "/js/build_component/barCodeScan.js?id=74183b29edc8e30395e5",
+    "/js/build_component/handyCustomerMaster.js": "/js/build_component/handyCustomerMaster.js?id=39ce2b2fde0068c46164",
+    "/js/build_component/handyOrderShipmentList.js": "/js/build_component/handyOrderShipmentList.js?id=5536a8cd326a5b202361",
+    "/js/build_component/handyProductInventoryInquiry.js": "/js/build_component/handyProductInventoryInquiry.js?id=da4488888af5e5eff0d1",
+    "/js/build_component/handyProductInventoryMitsumry.js": "/js/build_component/handyProductInventoryMitsumry.js?id=d09b73acf9f78502f72b",
+    "/js/build_component/handyProductInventoryReturn.js": "/js/build_component/handyProductInventoryReturn.js?id=360a19379b434a084eda",
+    "/js/build_component/handyProductInventoryTempTanaUpdate.js": "/js/build_component/handyProductInventoryTempTanaUpdate.js?id=6386ac6a5a6ba7504f89",
+    "/js/build_component/handyProductOrderConfirmKouri.js": "/js/build_component/handyProductOrderConfirmKouri.js?id=81b93ab3dc601faab87a",
+    "/js/build_component/handyProductOrderOnlineOrderKouri.js": "/js/build_component/handyProductOrderOnlineOrderKouri.js?id=6f6a1a45fe4eaa0b9200",
+    "/js/build_component/handyProductOrderPlace.js": "/js/build_component/handyProductOrderPlace.js?id=bdb4e8cd3731c25af20c",
+    "/js/build_component/handyProductOrderPlaceKouri.js": "/js/build_component/handyProductOrderPlaceKouri.js?id=c6fb238c7d2d868b5680",
+    "/js/build_component/handyProductOrderReceive.js": "/js/build_component/handyProductOrderReceive.js?id=bd60bd876249824f6ffe",
+    "/js/build_component/handyProductOrdermail.js": "/js/build_component/handyProductOrdermail.js?id=048827b5397738b1700b",
+    "/js/build_component/handyVendorMaster.js": "/js/build_component/handyVendorMaster.js?id=8a6d2603aa5a8a735a68",
+    "/js/build_component/vendors~barCodeScan~handyProductInventoryInquiry~handyProductInventoryMitsumry~handyProductInventoryReturn.js": "/js/build_component/vendors~barCodeScan~handyProductInventoryInquiry~handyProductInventoryMitsumry~handyProductInventoryReturn.js?id=db3de3a6938f0fde5da3",
+    "/js/all_custom_js.js": "/js/all_custom_js.js?id=63653192c391d420566b",
+    "/js/all_online_js.js": "/js/all_online_js.js?id=f408ee55b4a92c6465b3",
+    "/css/all_custom_css.css": "/css/all_custom_css.css?id=23d8568ca501577f46f7",
+    "/css/all_online_css.css": "/css/all_online_css.css?id=e70c1c033da5ec6b14db"
 }

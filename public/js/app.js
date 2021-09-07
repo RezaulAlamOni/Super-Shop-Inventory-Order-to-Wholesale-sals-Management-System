@@ -77,7 +77,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/";
+/******/ 	__webpack_require__.p = "http://localhost/rv3_tonyav1/public/";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -20952,6 +20952,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -20963,7 +21022,8 @@ __webpack_require__.r(__webpack_exports__);
       select_status: 0,
       products: [],
       selected_products: [],
-      handi_navi: ''
+      handi_navi: '',
+      search_data: null
     };
   },
   mounted: function mounted() {
@@ -21025,6 +21085,123 @@ __webpack_require__.r(__webpack_exports__);
     },
     confirmAndHide: function confirmAndHide() {
       $('#mistumury-mage-preview').modal('hide');
+    },
+    getOrderDataByJan: function getOrderDataByJan() {
+      var _this = this;
+
+      var reg = /^\d+$/;
+
+      if (!reg.test(this.jan_code)) {
+        _this.getSearchData(_this.jan_code);
+
+        return false;
+      }
+
+      if (_this.jan_code.length <= 0) {
+        return false;
+      }
+
+      $('.loading_image_custom').show();
+      _this.loader = 1;
+      axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code).then(function (res) {
+        //_this.resetField();
+        if (res.data.status == 400) {
+          console.log('log here');
+          _this.handi_navi = '<li>0000000</li>';
+          $('#handy-navi').show();
+          return false;
+        }
+
+        if (res.data.result.length > 0) {
+          _this.order_data = res.data.result;
+          _this.order_data_ = _this.order_data[0];
+          _this.product_name = _this.order_data[0].item_name;
+
+          _this.calculateTotalQuantity();
+
+          if (_this.type == 0) {
+            $('#stock-order-show-by-jan').modal({
+              backdrop: 'static',
+              keyboard: false
+            });
+            setTimeout(function () {
+              $('#case0').focus();
+              $('#case0').select();
+
+              if ($('#rack' + 0).length <= 0) {// $('#order-place-button').focus()
+              } else {// if (!_this.readonly) {
+                //     $('#rack' + 0).focus()
+                //     $('#rack' + 0).select()
+                // } else {
+                //     $('#order-place-button').focus()
+                // }
+              }
+            }, 720);
+          }
+
+          $('#handy-navi').hide();
+        } else {
+          _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+          $('#handy-navi').show();
+        }
+      })["catch"](function () {})["finally"](function () {
+        //_this.jan_code = ''
+        $('.loading_image_custom').hide();
+        _this.loader = 0;
+      });
+    },
+    checkAndGetData: function checkAndGetData(e) {
+      var _this = this;
+
+      if (this.loader === 1) {
+        return false;
+      }
+
+      var reg = /^\d+$/;
+
+      if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+        if (reg.test(this.jan_code)) {
+          this.getOrderDataByJan();
+        }
+      }
+
+      if (e.keyCode === 13) {
+        if (reg.test(this.jan_code)) {
+          this.getOrderDataByJan();
+        }
+      }
+
+      if (!reg.test(this.jan_code)) {
+        setTimeout(function () {
+          _this.getSearchData(_this.jan_code);
+        }, 1200);
+      }
+    },
+    getSearchData: function getSearchData(text) {
+      var _this = this;
+
+      if (text.length <= 0) {
+        return false;
+      }
+
+      $('.loading_image_custom').show();
+      _this.jan_code = text;
+      axios.post(_this.base_url + '/item_search_by_name', {
+        'name': text
+      }).then(function (res) {
+        res = res.data;
+        _this.search_data = res.name_list;
+
+        if (_this.search_data.length > 0) {
+          $('#handy-navi').hide();
+          $('#handy-navi-jan-list').show();
+        } else {
+          _this.handi_navi = '<li>XXXXXXX。</li>';
+          $('#handy-navi').show();
+        }
+      })["catch"](function () {})["finally"](function () {
+        $('.loading_image_custom').hide();
+      });
     }
   },
   watch: {}
@@ -21680,7 +21857,7 @@ __webpack_require__.r(__webpack_exports__);
              if(statusE==1){
                  this.handi_navi = '<li>0000000000</li>';
                  $('#handy-navi').show()
-              }
+               }
              */
     },
     pressEnterAndNext: function pressEnterAndNext(e, type, i, order) {
@@ -21713,7 +21890,7 @@ __webpack_require__.r(__webpack_exports__);
             if(statusE==1){
                 this.handi_navi = '<li>0000000000</li>';
                 $('#handy-navi').show()
-             }
+              }
             */
       if (e.keyCode == 13) {
         console.log(order);
@@ -33631,7 +33808,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.text-record-button[data-v-e08acb16] {\n    width: 90px !important;\n    height: 30px !important;\n    margin-left: 15px;\n    line-height: 20px !important;\n    text-align: left !important;\n}\n.text-record-loader[data-v-e08acb16] {\n    height: 18px;\n    width: 25px;\n    margin: 5px;\n    margin-top: -3px;\n}\n\n", ""]);
+exports.push([module.i, "\n.text-record-button[data-v-e08acb16] {\r\n    width: 90px !important;\r\n    height: 30px !important;\r\n    margin-left: 15px;\r\n    line-height: 20px !important;\r\n    text-align: left !important;\n}\n.text-record-loader[data-v-e08acb16] {\r\n    height: 18px;\r\n    width: 25px;\r\n    margin: 5px;\r\n    margin-top: -3px;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -33650,7 +33827,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-c9953dda] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-c9953dda] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-c9953dda] {\n        display: block !important;\n}\n#handy-navi[data-v-c9953dda] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-c9953dda] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-c9953dda] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-c9953dda] {\r\n        display: block !important;\n}\n#handy-navi[data-v-c9953dda] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -33669,7 +33846,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.well[data-v-3ee7490b] {\n    padding: 0 !important;\n}\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n    max-height: 400px !important;\n}\n.custom-img-preview[data-v-3ee7490b] {\n    max-width: 98%;\n    min-width: 60%;\n    margin: 5px;\n    max-height: 600px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b]{\n    font-size: 24px;\n}\n.table-borderless[data-v-3ee7490b] {\n    margin: 10px;\n}\n.table-borderless tbody tr td[data-v-3ee7490b] {\n    border: none !important;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 13px;\n}\n.header span[data-v-3ee7490b]{\n        font-size: 18px;\n}\n.custom-img-preview[data-v-3ee7490b] {\n        min-width: 58%;\n        max-width: 98%;\n        margin: 5px;\n        max-height: 500px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.well[data-v-3ee7490b] {\n    padding: 0 !important;\n}\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n    max-height: 400px !important;\n}\n.custom-img-preview[data-v-3ee7490b] {\n    max-width: 98%;\n    min-width: 60%;\n    margin: 5px;\n    max-height: 600px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b] {\n    font-size: 24px;\n}\n.table-borderless[data-v-3ee7490b] {\n    margin: 10px;\n}\n.table-borderless tbody tr td[data-v-3ee7490b] {\n    border: none !important;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 13px;\n}\n.header span[data-v-3ee7490b] {\n        font-size: 18px;\n}\n.custom-img-preview[data-v-3ee7490b] {\n        min-width: 58%;\n        max-width: 98%;\n        margin: 5px;\n        max-height: 500px;\n}\n}\n", ""]);
 
 // exports
 
@@ -33688,7 +33865,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-df3be5d8] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-df3be5d8] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-df3be5d8] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-df3be5d8] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -33707,7 +33884,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-7d72ea4c] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-7d72ea4c] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-7d72ea4c] {\n        display: block !important;\n}\n#handy-navi[data-v-7d72ea4c] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-7d72ea4c] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-7d72ea4c] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-7d72ea4c] {\r\n        display: block !important;\n}\n#handy-navi[data-v-7d72ea4c] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -33726,7 +33903,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-e7f2bb26] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-e7f2bb26] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-e7f2bb26] {\n        display: block !important;\n}\n#handy-navi[data-v-e7f2bb26] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-e7f2bb26] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-e7f2bb26] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-e7f2bb26] {\r\n        display: block !important;\n}\n#handy-navi[data-v-e7f2bb26] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -33745,7 +33922,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-0b6cdc33] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-0b6cdc33] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-0b6cdc33] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-0b6cdc33] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -33764,7 +33941,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-66bd217b] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-66bd217b] {\n    font-size: 18px;\n    height: 45px !important;\n}\n.file-upload-contain[data-v-66bd217b]{\n    text-align: center;\n    border: 2px dotted;\n    padding: 30px 10px;\n}\n#shipment_csv_input_handy[data-v-66bd217b]{\n    position:absolute;\n        line-height: 82px;\n    left: 1px;\n    top: 16px;\n    width: 100%;\n    opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-66bd217b] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-66bd217b] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n.file-upload-contain[data-v-66bd217b]{\r\n    text-align: center;\r\n    border: 2px dotted;\r\n    padding: 30px 10px;\n}\n#shipment_csv_input_handy[data-v-66bd217b]{\r\n    position:absolute;\r\n        line-height: 82px;\r\n    left: 1px;\r\n    top: 16px;\r\n    width: 100%;\r\n    opacity: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -33783,7 +33960,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-4e553b00] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-4e553b00] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-4e553b00] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-4e553b00] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -33802,7 +33979,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-5d46c102] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-5d46c102] {\n    font-size: 18px;\n    height: 45px !important;\n}\n.cus_br[data-v-5d46c102]{\n    border-bottom: 0px solid #ddd !important;\n    margin: 0;\n    padding: 0;\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-5d46c102] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-5d46c102] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n.cus_br[data-v-5d46c102]{\r\n    border-bottom: 0px solid #ddd !important;\r\n    margin: 0;\r\n    padding: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -33821,7 +33998,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-7143cf47] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-7143cf47] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-7143cf47] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-7143cf47] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -33840,7 +34017,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-69370b68] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-69370b68] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-69370b68] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-69370b68] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -33859,7 +34036,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-45a7eee8] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-45a7eee8] {\n    font-size: 18px;\n    height: 45px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-45a7eee8] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-45a7eee8] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -33878,7 +34055,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.order_quantity_[data-v-699b886d] {\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-699b886d] {\n    font-size: 18px;\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-699b886d] {\n        display: block !important;\n}\n#handy-navi[data-v-699b886d] {\n        top: 235px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.order_quantity_[data-v-699b886d] {\r\n    /*background: #F3F885 !important;*/\n}\nselect[data-v-699b886d] {\r\n    font-size: 18px;\r\n    height: 45px !important;\n}\n@supports (-webkit-touch-callout: none) {\r\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-699b886d] {\r\n        display: block !important;\n}\n#handy-navi[data-v-699b886d] {\r\n        top: 235px !important;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -68254,13 +68431,99 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "p_scn_form text-right mt-0",
+                attrs: { id: "stock_detail_by_jan_form" }
+              },
+              [
+                _c("div", { staticClass: "form-group m-0" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.jan_code,
+                        expression: "jan_code"
+                      }
+                    ],
+                    staticClass: "form-control custom-input",
+                    staticStyle: {
+                      padding: "5px 10px !important",
+                      height: "45px !important",
+                      margin: "5px 0 !important"
+                    },
+                    attrs: {
+                      type: "tel",
+                      id: "jan_input",
+                      name: "scan_by_jan_for_stock_detail",
+                      placeholder: "JANコードスキャン（13桁）",
+                      autofocus: ""
+                    },
+                    domProps: { value: _vm.jan_code },
+                    on: {
+                      keyup: function($event) {
+                        return _vm.checkAndGetData($event)
+                      },
+                      blur: function($event) {
+                        return _vm.checkAndGetData($event)
+                      },
+                      paste: function($event) {
+                        return _vm.checkAndGetData($event)
+                      },
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.jan_code = $event.target.value
+                        },
+                        function($event) {
+                          return _vm.checkAndGetData($event)
+                        }
+                      ]
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn custom-btn btn-primary pull-right text-right show_inline",
+                      staticStyle: {
+                        margin: "0px",
+                        width: "80px !important",
+                        height: "30px !important",
+                        "line-height": "18px !important",
+                        "font-size": "18px !important"
+                      },
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.getOrderDataByJan()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            次へ\n                        "
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: " col-centereds " }, [
               _c("div", [
                 _c("img", {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/products/cocacola.jpg",
+                    src: "public/backend/images/fish.jpg",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68274,7 +68537,7 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/products/cocacola.jpg",
+                    src: "public/backend/images/fish.jpg",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68288,7 +68551,7 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/products/cocacola.jpg",
+                    src: "public/backend/images/fish.jpg",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68302,7 +68565,7 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/products/cocacola.jpg",
+                    src: "public/backend/images/fish.jpg",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68316,7 +68579,7 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/products/cocacola.jpg",
+                    src: "public/backend/images/fish.jpg",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68330,7 +68593,63 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/products/cocacola.jpg",
+                    src: "public/backend/images/fish.jpg",
+                    alt: "Cinque Terre"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(2)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: {
+                    src: "public/backend/images/fish.jpg",
+                    alt: "Cinque Terre"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(1)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: {
+                    src: "public/backend/images/fish.jpg",
+                    alt: "Cinque Terre"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(2)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: {
+                    src: "public/backend/images/fish.jpg",
+                    alt: "Cinque Terre"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(1)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: {
+                    src: "public/backend/images/fish.jpg",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68504,14 +68823,15 @@ var staticRenderFns = [
           _c("table", { staticClass: "table table-borderless" }, [
             _c("tbody", [
               _c("tr", [
-                _c("td", [_vm._v("定番 価格: ")]),
+                _c("td", [_vm._v("定番 価格:")]),
+                _vm._v(" "),
                 _c("td", [_vm._v("350")])
               ]),
               _vm._v(" "),
               _c("tr", [
                 _c("td", [_vm._v("特売価格期限:")]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" 0000 ")])
+                _c("td", [_vm._v(" 0000")])
               ])
             ])
           ])
@@ -94556,8 +94876,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/rv3_tonyav1/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/rv3_tonyav1/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\xampp\htdocs\rv3_tonyav1\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\xampp\htdocs\rv3_tonyav1\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
