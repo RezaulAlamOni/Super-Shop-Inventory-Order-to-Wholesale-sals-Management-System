@@ -331,7 +331,7 @@ export default {
         sendMailto(){
             let _this = this;
             if(_this.maker_id==0){
-                _this.handi_navi = '<li>XXXXXX</li>';
+                _this.handi_navi = '<li>XXXXXXXXX</li>';
                 $('#handy-navi').show()
                 return false;
             }
