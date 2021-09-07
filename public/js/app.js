@@ -21036,6 +21036,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21103,6 +21105,12 @@ __webpack_require__.r(__webpack_exports__);
       $('#handy-navi').show();
     },
     viewInfoForImage: function viewInfoForImage(img_type) {
+      if (img_type != 100) {
+        this.handi_navi = '*******';
+        $('#handy-navi').show();
+        return false;
+      }
+
       this.handi_navi = '*******';
       $('#handy-navi').show();
       $('#mistumury-mage-preview').modal({
@@ -33872,7 +33880,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.well[data-v-3ee7490b] {\n    padding: 0 !important;\n}\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n    max-height: 400px !important;\n}\n.custom-img-preview[data-v-3ee7490b] {\n    max-width: 98%;\n    min-width: 60%;\n    margin: 5px;\n    max-height: 600px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b] {\n    font-size: 24px;\n}\n.table-borderless[data-v-3ee7490b] {\n    margin: 10px;\n}\n.table-borderless tbody tr td[data-v-3ee7490b] {\n    border: none !important;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 13px;\n}\n.header span[data-v-3ee7490b] {\n        font-size: 18px;\n}\n.custom-img-preview[data-v-3ee7490b] {\n        min-width: 58%;\n        max-width: 98%;\n        margin: 5px;\n        max-height: 500px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.well[data-v-3ee7490b] {\n    padding: 0 !important;\n}\n.order_quantity_[data-v-3ee7490b] {\n    /*background: #F3F885 !important;*/\n}\n.select[data-v-3ee7490b] {\n    border-color: #ad5ba1;\n    background-color: #ffb400;\n}\n.select-row[data-v-3ee7490b] {\n    border-color: #fd85ea;\n    background-color: #f4fc71;\n}\ntd[data-v-3ee7490b] {\n    padding: 0 0 0 5px;\n    word-break: break-all;\n}\ntable thead tr th[data-v-3ee7490b], table tbody tr td[data-v-3ee7490b] {\n    border: 1px solid #9f9f9f !important;\n}\n@supports (-webkit-touch-callout: none) {\n    /*/CSS specific to iOS devices */\n.search-button-ios[data-v-3ee7490b] {\n        display: block !important;\n}\n#handy-navi[data-v-3ee7490b] {\n        top: 235px !important;\n}\n}\n.custom-img[data-v-3ee7490b] {\n    width: 24%;\n    margin: 5px;\n    max-height: 145px !important;\n}\n.custom-img-preview[data-v-3ee7490b] {\n    max-width: 98%;\n    min-width: 60%;\n    margin: 5px;\n    max-height: 600px;\n}\n.top-button[data-v-3ee7490b] {\n    padding: 5px 20px;\n    font-size: 20px;\n    font-weight: bold;\n}\n.header span[data-v-3ee7490b] {\n    font-size: 24px;\n}\n.table-borderless[data-v-3ee7490b] {\n    margin: 10px;\n}\n.table-borderless tbody tr td[data-v-3ee7490b] {\n    border: none !important;\n}\n@media screen and (max-width: 351px) {\n.custom-img[data-v-3ee7490b] {\n        width: 49%;\n        margin: 3px 0px;\n}\n.top-button[data-v-3ee7490b] {\n        padding: 5px;\n        font-size: 13px;\n}\n.header span[data-v-3ee7490b] {\n        font-size: 18px;\n}\n.custom-img-preview[data-v-3ee7490b] {\n        min-width: 58%;\n        max-width: 98%;\n        margin: 5px;\n        max-height: 500px;\n}\n}\n", ""]);
 
 // exports
 
@@ -68526,7 +68534,35 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/fish.jpg",
+                    src: "public/backend/images/products/57.jpg",
+                    alt: "Cinque Terre"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(2)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: {
+                    src: "public/backend/images/products/Whocoded.jpg",
+                    alt: "Cinque Terre"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.viewInfoForImage(1)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: {
+                    src: "public/backend/images/products/69813_11.png",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68545,6 +68581,20 @@ var render = function() {
                   },
                   on: {
                     click: function($event) {
+                      return _vm.viewInfoForImage(100)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-thumbnail custom-img",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: {
+                    src: "public/backend/images/products/chocolate.jpg",
+                    alt: "Cinque Terre"
+                  },
+                  on: {
+                    click: function($event) {
                       return _vm.viewInfoForImage(2)
                     }
                   }
@@ -68554,7 +68604,7 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/fish.jpg",
+                    src: "public/backend/images/products/4901005109803.jpg",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68568,21 +68618,7 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/fish.jpg",
-                    alt: "Cinque Terre"
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.viewInfoForImage(2)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "img-thumbnail custom-img",
-                  staticStyle: { cursor: "pointer" },
-                  attrs: {
-                    src: "public/backend/images/fish.jpg",
+                    src: "public/backend/images/products/s-l1600.jpg",
                     alt: "Cinque Terre"
                   },
                   on: {
@@ -68596,68 +68632,12 @@ var render = function() {
                   staticClass: "img-thumbnail custom-img",
                   staticStyle: { cursor: "pointer" },
                   attrs: {
-                    src: "public/backend/images/fish.jpg",
-                    alt: "Cinque Terre"
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.viewInfoForImage(2)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "img-thumbnail custom-img",
-                  staticStyle: { cursor: "pointer" },
-                  attrs: {
-                    src: "public/backend/images/fish.jpg",
+                    src: "public/backend/images/products/cocacola.jpeg",
                     alt: "Cinque Terre"
                   },
                   on: {
                     click: function($event) {
                       return _vm.viewInfoForImage(1)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "img-thumbnail custom-img",
-                  staticStyle: { cursor: "pointer" },
-                  attrs: {
-                    src: "public/backend/images/fish.jpg",
-                    alt: "Cinque Terre"
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.viewInfoForImage(2)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "img-thumbnail custom-img",
-                  staticStyle: { cursor: "pointer" },
-                  attrs: {
-                    src: "public/backend/images/fish.jpg",
-                    alt: "Cinque Terre"
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.viewInfoForImage(1)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "img-thumbnail custom-img",
-                  staticStyle: { cursor: "pointer" },
-                  attrs: {
-                    src: "public/backend/images/fish.jpg",
-                    alt: "Cinque Terre"
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.viewInfoForImage(2)
                     }
                   }
                 })
@@ -68838,7 +68818,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                            グリコ バンホーテンチョコレートビター ５３ｇ\n                        "
+              "\n                            【ふるさと納税】a15-194　焼津漬魚専門店「魚魚(toto)」の粕漬セット\n                        "
             )
           ]
         ),

@@ -74,39 +74,41 @@
 
                     <div class=" col-centereds ">
                         <div>
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
-                                 style="cursor: pointer">
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
+<!--                            v-for="(peoduct , i ) in products"-->
+
+                            <img src="public/backend/images/products/57.jpg" class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(2)"
                                  style="cursor: pointer">
 
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
+                            <img src="public/backend/images/products/Whocoded.jpg" class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(1)"
                                  style="cursor: pointer">
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(2)"
+
+                            <img src="public/backend/images/products/69813_11.png" class="img-thumbnail custom-img"
+                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
                                  style="cursor: pointer">
 
                             <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
+                                 alt="Cinque Terre" @click="viewInfoForImage(100)"
                                  style="cursor: pointer">
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(2)"
-                                 style="cursor: pointer">
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
-                                 style="cursor: pointer">
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
+                            <img src="public/backend/images/products/chocolate.jpg" class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(2)"
                                  style="cursor: pointer">
 
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
+                            <img src="public/backend/images/products/4901005109803.jpg" class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(1)"
                                  style="cursor: pointer">
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(2)"
+
+
+                            <img src="public/backend/images/products/s-l1600.jpg" class="img-thumbnail custom-img"
+                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
                                  style="cursor: pointer">
+                            <img src="public/backend/images/products/cocacola.jpeg"
+                                 class="img-thumbnail custom-img"
+                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
+                                 style="cursor: pointer">
+
+
                         </div>
 
                     </div>
@@ -125,7 +127,7 @@
                     <div class="modal-body p-0" style="text-align: center">
                         <div
                             style="font-size: 18px;text-align: left;padding: 5px 10px;background: #c3ff8f80;font-weight: bold;">
-                            グリコ バンホーテンチョコレートビター ５３ｇ
+                            【ふるさと納税】a15-194　焼津漬魚専門店「魚魚(toto)」の粕漬セット
                         </div>
                         <div>
                             <img src="public/backend/images/fish.jpg"
@@ -266,6 +268,11 @@ export default {
             $('#handy-navi').show();
         },
         viewInfoForImage(img_type) {
+            if (img_type != 100) {
+                this.handi_navi = '*******';
+                $('#handy-navi').show();
+                return false;
+            }
             this.handi_navi = '*******';
             $('#handy-navi').show();
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
@@ -442,7 +449,7 @@ table thead tr th, table tbody tr td {
 .custom-img {
     width: 24%;
     margin: 5px;
-    max-height: 400px !important;
+    max-height: 145px !important;
 }
 
 .custom-img-preview {
