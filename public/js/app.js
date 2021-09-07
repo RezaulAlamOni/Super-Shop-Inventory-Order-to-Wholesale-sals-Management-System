@@ -25768,7 +25768,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (_this.maker_id == 0) {
-        _this.handi_navi = '<li>XXXXXX</li>';
+        _this.handi_navi = '<li>XXXXXXXXX</li>';
         $('#handy-navi').show();
         return false;
       }
