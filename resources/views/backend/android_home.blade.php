@@ -86,6 +86,13 @@
                                 商品検索
                             </div>
                         </a>
+                       
+                        <a  href="{{Config::get('app.url').'/handy_order_mail'}}" style="padding: 15px 5px;background:#F0FFFF;" class="btn btn-default">
+                            <div class="numbering_col" style="padding: 0; margin: 0;">17</div>
+                            <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
+                            メール
+                            </div>
+                        </a>
 
 
                         
