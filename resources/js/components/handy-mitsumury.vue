@@ -138,12 +138,16 @@
                             <table class="table table-borderless" style="margin: 10px 0!important;">
                                 <tbody>
                                 <tr>
+                                    <td>定番価格 :</td>
+                                    <td>250</td>
+                                </tr>
+                                <tr>
                                     <td>原価 :</td>
-                                    <td>350</td>
+                                    <td>220</td>
                                 </tr>
                                 <tr>
                                     <td>売価 :</td>
-                                    <td>350</td>
+                                    <td>360</td>
                                 </tr>
                                 <tr>
                                     <td>特売価格期限:</td>
