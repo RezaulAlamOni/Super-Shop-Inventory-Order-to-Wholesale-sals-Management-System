@@ -6,8 +6,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     @yield('title')
     <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
+<meta http-equiv="cache-control" content="no-store" />
+<meta http-equiv="cache-control" content="must-revalidate" />
     <link rel="shortcut icon" href="{{Config::get('app.url').'/public/backend/images/logo/favicon.ico'}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
