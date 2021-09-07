@@ -11,13 +11,11 @@ const app_url = process.env.APP_URL;
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.config.webpackConfig.output = {
-    // chunkFilename: 'js/build_component/[name].[chunkhash:8].js',
-    chunkFilename: 'js/build_component/[name].js?id=[chunkhash]',
-    // publicPath: '/public/', //For server
-    publicPath: app_url + '/public/',
-    // publicPath: app_url,
-};
+// Override mix internal webpack output configuration
+// mix.config.webpackConfig.output = {
+//     chunkFilename: 'js/build_component/[name].js?id=[chunkhash]',
+//     publicPath: app_url + '/public/',
+// };
 mix.js('resources/js/app.js', 'public/js/app.js')
     .scripts([
         'resources/js/role_permission.js',
@@ -61,4 +59,10 @@ mix.js('resources/js/app.js', 'public/js/app.js')
         'resources/css/online_css/backdrop.css',
         'resources/css/online_css/multifreezer.css',
     ], 'public/css/all_online_css.css')
+    .webpackConfig({
+        output: { 
+            chunkFilename: 'js/build_component/[name].js?id=[chunkhash]',
+            publicPath: app_url + '/public/',
+        }
+    })
     .version();
