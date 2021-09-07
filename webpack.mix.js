@@ -60,7 +60,7 @@ mix.js('resources/js/app.js', 'public/js/app.js')
         'resources/css/online_css/multifreezer.css',
     ], 'public/css/all_online_css.css')
     .webpackConfig({
-        output: { 
+        output: {
             chunkFilename: 'js/build_component/[name].js?id=[chunkhash]',
             publicPath: app_url + '/public/',
         }
