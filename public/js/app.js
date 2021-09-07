@@ -21011,6 +21011,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21023,11 +21048,12 @@ __webpack_require__.r(__webpack_exports__);
       products: [],
       selected_products: [],
       handi_navi: '',
-      search_data: null
+      search_data: null,
+      product_pics: []
     };
   },
   mounted: function mounted() {
-    // this.getProducts();
+    this.getProducts();
     this.handi_navi = '........';
     $('#handy-navi').show();
   },
@@ -68438,7 +68464,7 @@ var render = function() {
                 attrs: { id: "stock_detail_by_jan_form" }
               },
               [
-                _c("div", { staticClass: "form-group m-0" }, [
+                _c("div", { staticClass: "input-group m-0 my-1" }, [
                   _c("input", {
                     directives: [
                       {
@@ -68448,18 +68474,19 @@ var render = function() {
                         expression: "jan_code"
                       }
                     ],
-                    staticClass: "form-control custom-input",
+                    staticClass: "form-control",
                     staticStyle: {
-                      padding: "5px 10px !important",
-                      height: "45px !important",
-                      margin: "5px 0 !important"
+                      "border-radius": "0px",
+                      padding: "5px",
+                      "font-size": "16px"
                     },
                     attrs: {
                       type: "tel",
-                      id: "jan_input",
-                      name: "scan_by_jan_for_stock_detail",
                       placeholder: "JANコードスキャン（13桁）",
-                      autofocus: ""
+                      autofocus: "",
+                      name: "scan_by_jan_for_stock_detail",
+                      "aria-label": "Recipient's username",
+                      "aria-describedby": "basic-addon2"
                     },
                     domProps: { value: _vm.jan_code },
                     on: {
@@ -68484,36 +68511,12 @@ var render = function() {
                         }
                       ]
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm._m(1)
                 ]),
                 _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn custom-btn btn-primary pull-right text-right show_inline",
-                      staticStyle: {
-                        margin: "0px",
-                        width: "80px !important",
-                        height: "30px !important",
-                        "line-height": "18px !important",
-                        "font-size": "18px !important"
-                      },
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.getOrderDataByJan()
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                            次へ\n                        "
-                      )
-                    ]
-                  )
-                ])
+                _c("div", { staticClass: "form-group m-0" })
               ]
             ),
             _vm._v(" "),
@@ -68680,9 +68683,9 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-lg mt-0" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(1),
-            _vm._v(" "),
             _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
             _vm._v(" "),
             _c(
               "div",
@@ -68771,9 +68774,23 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "pull-left" }, [
-      _vm._v("\n                        小売 "),
+      _vm._v("\n                            小売 "),
       _c("br"),
-      _vm._v("\n                            見積り\n                    ")
+      _vm._v(
+        "\n                                見積り\n                        "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("次へ")]
+      )
     ])
   },
   function() {
@@ -68808,33 +68825,78 @@ var staticRenderFns = [
         staticStyle: { "text-align": "center" }
       },
       [
+        _c(
+          "div",
+          {
+            staticStyle: {
+              "font-size": "18px",
+              "text-align": "left",
+              padding: "5px 10px",
+              background: "#c3ff8f80",
+              "font-weight": "bold"
+            }
+          },
+          [
+            _vm._v(
+              "\n                            グリコ バンホーテンチョコレートビター ５３ｇ\n                        "
+            )
+          ]
+        ),
+        _vm._v(" "),
         _c("div", [
           _c("img", {
             staticClass: "img-thumbnail custom-img-preview",
             staticStyle: { cursor: "pointer" },
             attrs: {
-              src: "public/backend/images/products/cocacola.jpg",
+              src: "public/backend/images/fish.jpg",
               alt: "Cinque Terre"
             }
           })
         ]),
         _vm._v(" "),
         _c("div", [
-          _c("table", { staticClass: "table table-borderless" }, [
-            _c("tbody", [
-              _c("tr", [
-                _c("td", [_vm._v("定番 価格:")]),
+          _c(
+            "table",
+            {
+              staticClass: "table table-borderless",
+              staticStyle: { margin: "10px 0!important" }
+            },
+            [
+              _c("tbody", [
+                _c("tr", [
+                  _c("td", [_vm._v("原価 :")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("350")])
+                ]),
                 _vm._v(" "),
-                _c("td", [_vm._v("350")])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", [_vm._v("特売価格期限:")]),
+                _c("tr", [
+                  _c("td", [_vm._v("売価 :")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("350")])
+                ]),
                 _vm._v(" "),
-                _c("td", [_vm._v(" 0000")])
+                _c("tr", [
+                  _c("td", [_vm._v("特売価格期限:")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      staticClass: "form-control custom-input",
+                      staticStyle: {
+                        height: "35px !important",
+                        width: "105px"
+                      },
+                      attrs: {
+                        type: "tel",
+                        id: "special_input",
+                        value: "0",
+                        placeholder: ""
+                      }
+                    })
+                  ])
+                ])
               ])
-            ])
-          ])
+            ]
+          )
         ])
       ]
     )

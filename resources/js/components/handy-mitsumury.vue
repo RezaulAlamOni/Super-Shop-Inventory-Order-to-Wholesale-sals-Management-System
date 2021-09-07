@@ -21,20 +21,33 @@
 
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
+                        <div class="input-group m-0 my-1">
+                            <input type="tel" class="form-control" placeholder="JANコードスキャン（13桁）"
+                                   style="border-radius: 0px;padding: 5px;font-size: 16px;" autofocus
+                                   v-model="jan_code"
+                                   name="scan_by_jan_for_stock_detail"
+                                   v-on:keyup="checkAndGetData($event)"
+                                   @blur="checkAndGetData($event)"
+                                   @paste="checkAndGetData($event)"
+                                   @input="checkAndGetData($event)"
+                                   aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">次へ</button>
+                            </div>
+                        </div>
                         <div class="form-group m-0">
 
-                                <input type="tel" id="jan_input" class="form-control custom-input"
-                                       v-model="jan_code"
-                                       style="padding: 5px 10px !important;height: 45px !important; margin: 5px 0 !important;"
-                                       name="scan_by_jan_for_stock_detail"
-                                       v-on:keyup="checkAndGetData($event)"
-                                       @blur="checkAndGetData($event)"
-                                       @paste="checkAndGetData($event)"
-                                       @input="checkAndGetData($event)"
-                                       placeholder="JANコードスキャン（13桁）" autofocus>
+<!--                            <input type="tel" id="jan_input" class="form-control custom-input"-->
+<!--                                   v-model="jan_code"-->
+<!--                                   style="padding: 5px 10px !important;height: 45px !important; margin: 5px 0 !important;"-->
+<!--                                   name="scan_by_jan_for_stock_detail"-->
+<!--                                   v-on:keyup="checkAndGetData($event)"-->
+<!--                                   @blur="checkAndGetData($event)"-->
+<!--                                   @paste="checkAndGetData($event)"-->
+<!--                                   @input="checkAndGetData($event)"-->
+<!--                                   placeholder="JANコードスキャン（13桁）" autofocus>-->
 
-                        </div>
-                        <div>
+
                             <!--                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"-->
                             <!--                                            class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "-->
                             <!--                                            style="float: left;width: 100px">-->
@@ -49,11 +62,11 @@
                             <!--                                            style="padding:0;float: left;width: 70px !important;">-->
                             <!--                                        <i class="fa fa-barcode" style="font-size: 40px"></i>-->
                             <!--                                    </button>-->
-                            <button type="button" v-on:click="getOrderDataByJan()"
-                                    style="margin: 0px;width: 80px !important; height: 40px;height: 30px !important;line-height: 18px !important;font-size: 18px !important;"
-                                    class="btn custom-btn btn-primary pull-right text-right show_inline">
-                                次へ
-                            </button>
+<!--                            <button type="button" v-on:click="getOrderDataByJan()"-->
+<!--                                    style="margin: 0px;width: 80px !important; height: 40px;height: 30px !important;line-height: 18px !important;font-size: 18px !important;"-->
+<!--                                    class="btn custom-btn btn-primary pull-right text-right show_inline">-->
+<!--                                次へ-->
+<!--                            </button>-->
                         </div>
 
 
@@ -110,21 +123,33 @@
                         <a class="btn btn-success float-right">発注</a>
                     </div>
                     <div class="modal-body p-0" style="text-align: center">
+                        <div
+                            style="font-size: 18px;text-align: left;padding: 5px 10px;background: #c3ff8f80;font-weight: bold;">
+                            グリコ バンホーテンチョコレートビター ５３ｇ
+                        </div>
                         <div>
-                            <img src="public/backend/images/products/cocacola.jpg"
+                            <img src="public/backend/images/fish.jpg"
                                  class="img-thumbnail custom-img-preview" alt="Cinque Terre"
                                  style="cursor: pointer">
                         </div>
                         <div>
-                            <table class="table table-borderless">
+                            <table class="table table-borderless" style="margin: 10px 0!important;">
                                 <tbody>
                                 <tr>
-                                    <td>定番 価格:</td>
+                                    <td>原価 :</td>
+                                    <td>350</td>
+                                </tr>
+                                <tr>
+                                    <td>売価 :</td>
                                     <td>350</td>
                                 </tr>
                                 <tr>
                                     <td>特売価格期限:</td>
-                                    <td> 0000</td>
+                                    <td>
+                                        <input type="tel" id="special_input" value="0"
+                                               style="height: 35px !important; width: 105px;" placeholder=""
+                                               class="form-control custom-input">
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -180,12 +205,13 @@ export default {
             products: [],
             selected_products: [],
             handi_navi: '',
-            search_data :null
+            search_data: null,
+            product_pics : []
 
         }
     },
     mounted() {
-        // this.getProducts();
+        this.getProducts();
         this.handi_navi = '........';
         $('#handy-navi').show();
     },
@@ -262,7 +288,7 @@ export default {
             axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code)
                 .then(function (res) {
                     //_this.resetField();
-                    if(res.data.status==400){
+                    if (res.data.status == 400) {
                         console.log('log here');
                         _this.handi_navi = '<li>0000000</li>';
                         $('#handy-navi').show();
