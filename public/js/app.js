@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-inventory-return","1":"handy-product-inventory-inquiry","2":"handy-mitsumury","3":"barcode-scan","4":"handy-vandor-master","5":"handy-product-order-receive","6":"handy-product-order-place","7":"handy-product-order-place-kouri","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"26a26099621f132dea95","1":"debe18d8c8231e103814","2":"ba8a5825d4a3e274230b","3":"8b63738db2396ecea4e1","4":"ac429db9c9614b7c339a","5":"702935002b8d81846a5f","6":"1f15179f12e532a8b920","7":"26b754caf6736839f467","8":"101ab8791fb8b601d01d","9":"8c524d7dfff958e2bf8f","10":"4f473aac84d1583939f5","11":"2fe3e42be72fd538daea","12":"a85716c0dbfee24c04ca","13":"3801cd96d5f260429971","14":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-inventory-return","1":"handy-product-inventory-inquiry","2":"handy-mitsumury","3":"barcode-scan","4":"handy-vandor-master","5":"handy-product-order-receive","6":"handy-product-order-place","7":"handy-product-order-place-kouri","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"54d2862fce92895131b1","1":"9d3bdcf08a3f41cf3e10","2":"74e9f7795a09947ad841","3":"f8e7b20d2132f8149bc1","4":"122c59cba41185314d4d","5":"575e3cf627011ee8dea0","6":"669fcd382166d607d7a3","7":"1bd945210b55266fa5fc","8":"b1ac5a546155534a3f7b","9":"47f54edc01db6491e023","10":"4da5888fb324e3751f67","11":"3acfbf5e8708fb685524","12":"560f805c9c655769757d","13":"91f76640b4576380efcf","14":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -136,7 +136,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "http://localhost/rv3_tonyav1/public/";
+/******/ 	__webpack_require__.p = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/public/";
 /******/
 /******/ 	// on error function for async loading
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
