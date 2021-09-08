@@ -14,8 +14,8 @@
                            style="float:right">メニュー</a>
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 発注</a>
-                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
-                           style="float:right"> 採用</a>
+                        <!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
+                        <!--                           style="float:right"> 採用</a>-->
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 詳細</a>
 
@@ -37,15 +37,15 @@
                         </div>
                         <div class="form-group m-0">
 
-<!--                            <input type="tel" id="jan_input" class="form-control custom-input"-->
-<!--                                   v-model="jan_code"-->
-<!--                                   style="padding: 5px 10px !important;height: 45px !important; margin: 5px 0 !important;"-->
-<!--                                   name="scan_by_jan_for_stock_detail"-->
-<!--                                   v-on:keyup="checkAndGetData($event)"-->
-<!--                                   @blur="checkAndGetData($event)"-->
-<!--                                   @paste="checkAndGetData($event)"-->
-<!--                                   @input="checkAndGetData($event)"-->
-<!--                                   placeholder="JANコードスキャン（13桁）" autofocus>-->
+                            <!--                            <input type="tel" id="jan_input" class="form-control custom-input"-->
+                            <!--                                   v-model="jan_code"-->
+                            <!--                                   style="padding: 5px 10px !important;height: 45px !important; margin: 5px 0 !important;"-->
+                            <!--                                   name="scan_by_jan_for_stock_detail"-->
+                            <!--                                   v-on:keyup="checkAndGetData($event)"-->
+                            <!--                                   @blur="checkAndGetData($event)"-->
+                            <!--                                   @paste="checkAndGetData($event)"-->
+                            <!--                                   @input="checkAndGetData($event)"-->
+                            <!--                                   placeholder="JANコードスキャン（13桁）" autofocus>-->
 
 
                             <!--                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"-->
@@ -62,11 +62,11 @@
                             <!--                                            style="padding:0;float: left;width: 70px !important;">-->
                             <!--                                        <i class="fa fa-barcode" style="font-size: 40px"></i>-->
                             <!--                                    </button>-->
-<!--                            <button type="button" v-on:click="getOrderDataByJan()"-->
-<!--                                    style="margin: 0px;width: 80px !important; height: 40px;height: 30px !important;line-height: 18px !important;font-size: 18px !important;"-->
-<!--                                    class="btn custom-btn btn-primary pull-right text-right show_inline">-->
-<!--                                次へ-->
-<!--                            </button>-->
+                            <!--                            <button type="button" v-on:click="getOrderDataByJan()"-->
+                            <!--                                    style="margin: 0px;width: 80px !important; height: 40px;height: 30px !important;line-height: 18px !important;font-size: 18px !important;"-->
+                            <!--                                    class="btn custom-btn btn-primary pull-right text-right show_inline">-->
+                            <!--                                次へ-->
+                            <!--                            </button>-->
                         </div>
 
 
@@ -74,7 +74,7 @@
 
                     <div class=" col-centereds ">
                         <div>
-<!--                            v-for="(peoduct , i ) in products"-->
+                            <!--                            v-for="(peoduct , i ) in products"-->
 
                             <img src="public/backend/images/products/57.jpg" class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(2)"
@@ -88,7 +88,7 @@
                                  alt="Cinque Terre" @click="viewInfoForImage(1)"
                                  style="cursor: pointer">
 
-                            <img src="public/backend/images/fish.jpg" class="img-thumbnail custom-img"
+                            <img src="public/backend/images/products/fish.jpeg" class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(100)"
                                  style="cursor: pointer">
                             <img src="public/backend/images/products/chocolate.jpg" class="img-thumbnail custom-img"
@@ -121,40 +121,77 @@
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
                     <div class="modal-header" style="padding: 5px;justify-content: right">
-                        <a class="btn btn-success float-right mr-1">採用</a>
-                        <a class="btn btn-success float-right">発注</a>
+                        <!--                        <a class="btn btn-success float-right mr-1">採用</a>-->
+                        <a class="btn btn-success float-right mr-2">発注</a>
+                        <a class="btn btn-info float-right" @click="confirmAndHide()">戻る</a>
+
                     </div>
                     <div class="modal-body p-0" style="text-align: center">
                         <div
                             style="font-size: 18px;text-align: left;padding: 5px 10px;background: #c3ff8f80;font-weight: bold;">
-                            【ふるさと納税】a15-194　焼津漬魚専門店「魚魚(toto)」の粕漬セット
+                            {{preview_product.title }}
                         </div>
                         <div>
-                            <img src="public/backend/images/fish.jpg"
+                            <img src="public/backend/images/products/fish.jpeg"
                                  class="img-thumbnail custom-img-preview" alt="Cinque Terre"
                                  style="cursor: pointer">
                         </div>
                         <div>
-                            <table class="table table-borderless" style="margin: 10px 0!important;">
-                                <tbody>
-                                <tr>
-                                    <td>定番価格 :</td>
-                                    <td>250</td>
+                            <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
+                                <thead data-v-c9953dda="">
+                                <tr data-v-c9953dda="">
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;" >
+                                        特売価格期限
+                                    </th>
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        原価
+                                    </th>
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        売価
+                                    </th>
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        粗利
+                                    </th>
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        ％
+                                    </th>
                                 </tr>
-                                <tr>
-                                    <td>原価 :</td>
-                                    <td>220</td>
-                                </tr>
-                                <tr>
-                                    <td>売価 :</td>
-                                    <td>360</td>
-                                </tr>
-                                <tr>
-                                    <td>特売価格期限:</td>
-                                    <td>
-                                        <input type="tel" id="special_input" value="0"
-                                               style="height: 35px !important; width: 105px;" placeholder=""
-                                               class="form-control custom-input">
+                                </thead>
+                                <tbody data-v-c9953dda="" class="physicaltbody">
+                                <tr data-v-c9953dda="">
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="special-price" v-model="preview_product.special_price"
+                                               class="form-control  "  @click="selectItem($event)"
+                                               @keypress="pressEnterAndSave($event,'cost')"
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                    </td>
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="cost" @click="selectItem($event)"
+                                               class="form-control  " v-model="preview_product.cost"
+                                               @keypress="pressEnterAndSave($event,'sell')"
+                                               @keyup="calculatePrice('cost')"
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                    </td>
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
+                                               class="form-control  " v-model="preview_product.sell"
+                                               @keypress="pressEnterAndSave($event,'profit')"
+                                               @keyup="calculatePrice('sell')"
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                    </td>
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
+                                               class="form-control  " v-model="preview_product.profit"
+                                               @keypress="pressEnterAndSave($event,'profit_margin')"
+                                               @keyup="calculatePrice('profit')"
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                    </td>
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="profit_margin" @click="selectItem($event)"
+                                               @keypress="pressEnterAndSave($event,'special-price')"
+                                               class="form-control  " v-model="preview_product.profit_margin"
+                                               @keyup="calculatePrice('profit_margin')"
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                 </tr>
                                 </tbody>
@@ -163,9 +200,8 @@
 
 
                     </div>
-                    <div class="modal-footer " style="padding: 6px">
-                        <button class="btn btn-info float-right p-2" @click="confirmAndHide()">戻る</button>
-                    </div>
+                    <!--                    <div class="modal-footer " style="padding: 6px">-->
+                    <!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -212,13 +248,14 @@ export default {
             selected_products: [],
             handi_navi: '',
             search_data: null,
-            product_pics : []
+            product_pics: [],
+            preview_product : {}
 
         }
     },
     mounted() {
-        this.getProducts();
-        this.handi_navi = '........';
+        // this.getProducts();
+        this.handi_navi = '送品押してください';
         $('#handy-navi').show();
     },
     methods: {
@@ -228,8 +265,8 @@ export default {
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
-                    _this.handi_navi = '........';
-                    $('#handy-navi').show();
+                    // _this.handi_navi = '........';
+                    // $('#handy-navi').show();
                 })
                 .catch(function () {
 
@@ -268,18 +305,38 @@ export default {
         confirm() {
             this.select_status = 0;
             this.selected_products = [];
-            this.handi_navi = '---------';
-            $('#handy-navi').show();
+            // this.handi_navi = '---------';
+            // $('#handy-navi').show();
         },
         viewInfoForImage(img_type) {
+            let _this = this;
+            let preview_product = localStorage.getItem('preview_product');
+            if (preview_product) {
+                _this.preview_product = JSON.parse(preview_product);
+            } else {
+                _this.preview_product = {
+                    title : 'ふるさと納税 那智勝浦町 和歌山魚鶴仕込の魚切身詰め合わせセット',
+                    cost : 120,
+                    sell : 144,
+                    profit : 0,
+                    profit_margin : 0,
+                    special_price: 0
+                }
+            }
+            _this.preview_product.profit = _this.preview_product.sell - _this.preview_product.cost
+            _this.preview_product.profit_margin = (((_this.preview_product.sell - _this.preview_product.cost)/ _this.preview_product.cost)*100).toFixed(2)
+
+            localStorage.setItem('preview_product', JSON.stringify(_this.preview_product));
             if (img_type != 100) {
-                this.handi_navi = '*******';
-                $('#handy-navi').show();
+                // this.handi_navi = '*******';
+                // $('#handy-navi').show();
                 return false;
             }
-            this.handi_navi = '*******';
-            $('#handy-navi').show();
+            // this.handi_navi = '*******';
+            // $('#handy-navi').show();
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
+            $('#special-price').focus();
+            $('#special-price').select();
         },
         confirmAndHide() {
             $('#mistumury-mage-preview').modal('hide')
@@ -402,6 +459,41 @@ export default {
 
 
         },
+        selectItem(e) {
+            e.target.select()
+        },
+        pressEnterAndSave(e, type) {
+            if (e.keyCode == 13) {
+                $('#'+type).focus()
+                $('#'+type).select()
+            }
+        },
+        calculatePrice(type) {
+
+            let _this = this;
+
+            if (type == 'profit_margin') {
+                _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
+                _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
+                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+            } else if (type == 'sell') {
+                _this.preview_product.profit_margin = ((parseFloat( _this.preview_product.sell) - parseFloat( _this.preview_product.cost)) * 100) /  _this.preview_product.cost
+                _this.preview_product.profit_margin =  _this.preview_product.profit_margin.toFixed(2);
+                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+            } else if (type == 'profit') {
+                _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat($('#profit').val())
+                _this.preview_product.profit_margin = ((parseFloat(_this.preview_product.sell) - parseFloat(_this.preview_product.cost)) * 100) / _this.preview_product.cost;
+                _this.preview_product.sell = _this.preview_product.sell.toFixed(2);
+                _this.preview_product.profit_margin = _this.preview_product.profit_margin.toFixed(2);
+            } else if (type == 'cost') {
+                _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
+                _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
+                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+            }
+
+            localStorage.setItem('preview_product', JSON.stringify(_this.preview_product));
+
+        }
 
 
     },
