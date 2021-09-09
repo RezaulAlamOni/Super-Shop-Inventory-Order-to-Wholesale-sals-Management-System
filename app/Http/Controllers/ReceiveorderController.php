@@ -105,11 +105,11 @@ class ReceiveorderController extends Controller
         vi.created_at,
         vi.vendor_id,
         jans.name as item_name,
-        jans.case_inputs,
-        si.case_quantity,
-        jans.ball_inputs,
-        si.ball_quantity,
-        si.unit_quantity,
+        IFNULL(jans.case_inputs,0) as case_inputs,
+        IFNULL(si.case_quantity,0) as case_quantity,
+        IFNULL(jans.ball_inputs,0) as ball_inputs,
+        IFNULL(si.ball_quantity,0) as ball_quantity,
+        IFNULL(si.unit_quantity,0) as unit_quantity,
         si.rack_number,
         jans.jan,
         vendors.name AS vendor_name,
@@ -154,13 +154,21 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                 $arr[$row]->case_quantity = $vl->case_quantity + $arr[$row]->case_quantity;
                 $arr[$row]->ball_quantity = $vl->ball_quantity + $arr[$row]->ball_quantity;
                 $arr[$row]->unit_quantity = $vl->unit_quantity + $arr[$row]->unit_quantity;
+                $total_stock_quantity = (($arr[$row]->case_quantity*$vl->case_inputs)+($arr[$row]->ball_quantity*$vl->ball_inputs)+$arr[$row]->unit_quantity);
+                $arr[$row]->total_stock =$total_stock_quantity;
                 $duplicates[] = $vl->jan;
-
+               
             } else {
+                
+                $total_stock_quantity = (($vl->case_quantity*$vl->case_inputs)+($vl->ball_quantity*$vl->ball_inputs)+$vl->unit_quantity);
+                $vl->total_stock=$total_stock_quantity;
                 $arr[] = $vl;
+
             }
             $newarr[] = $vl->jan;
         }
+        $tStockTotal = array_column($arr, 'total_stock');
+array_multisort($tStockTotal, SORT_DESC, $arr);
         //print_r($arr);
         return $arr;
     }
@@ -486,6 +494,26 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         // print_r($result);exit;
         return view('backend.order.hacchu_list_by_tonya', compact('title', 'active', 'tonya_name', 'tonya_id', 'result'));
     }
+    public function haccuListBytonyaHandy($vendor_id = 0)
+    {
+        $title = "小売マスタ";
+        $active = 'vendor_master';
+        /*hacchu order list*/
+        $result = $this->get_tonya_order_list_by_id($vendor_id);
+        $total = count($result);
+        /*hacchu order list*/
+        $tonya_name = '';
+        $tonya_id = 0;
+        $tonyaInfo = vendor::where('vendor_id', $vendor_id)->first();
+        if ($tonyaInfo) {
+            $tonya_name = $tonyaInfo->name;
+            $tonya_id = $tonyaInfo->vendor_id;
+        }
+        return $result = response()->json(['results' => $result, 'tonya_name'=>$tonya_name,'tonya_id'=>$tonya_id]);
+
+        // print_r($result);exit;
+        //return view('backend.order.hacchu_list_by_tonya', compact('title', 'active', 'tonya_name', 'tonya_id', 'result'));
+    }
 
     public function exportCsvByTonya($vendor_id)
     {
@@ -614,6 +642,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
        $fnameH = 'hacchu_file.csv';
         $filename = public_path('backend/csv/').$fname;
         $hacchu_file = public_path('backend/csv/').$fnameH;
+        $handle = fopen($filename, 'w+');
+        $handle2 = fopen($hacchu_file, 'w+');
        
         $result = $this->get_tonya_order_list_by_id($vendor_id);
         $fileUrl =  url('/').'/backend/csv/file.csv';
@@ -667,7 +697,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 
             }
         }
-/*
+
         fputcsv($handle, array("super_name", "shop_name", "shop_code", "partner_code", "voucher_number", "order_date", "devlivery_date", "item.name", "jan", "inputs", "quantity", "cost_price", "store_price"), ",", '"');
         fputcsv($handle2, array("NO", "画像", "品名・メーカー・規格", "区分", "ケース", "ボール", "バラ", "a原価コスト", "取引先名"), ",", '"');
 
@@ -688,14 +718,14 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $filename,
             $hacchu_file
         ];
-        echo 'OKKKKKK<br>';
+      /*  echo 'OKKKKKK<br>';
        
         echo 'OK';
-        */
+       
         $handle = fopen(public_path('backend/csv/').$fname, 'w');
         $handle2 = fopen(public_path('backend/csv/').$fnameH, 'w');
         fwrite($handle, mb_convert_encoding($csv, 'sjis-win', 'utf-8'));
-        fwrite($handle2, mb_convert_encoding($csv2, 'sjis-win', 'utf-8'));
+        fwrite($handle2, mb_convert_encoding($csv2, 'sjis-win', 'utf-8')); */
         fclose($handle);
         fclose($handle2);
         $new_file_url1 = \Config::get('app.url') . "/public/backend/csv/" . $fname;

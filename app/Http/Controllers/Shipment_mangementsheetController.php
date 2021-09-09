@@ -90,13 +90,19 @@ class Shipment_mangementsheetController extends Controller
         ci.invoice_amount,
         ci.customer_id,
         cp.payment,
+        j.name as item_name,
+        cs.quantity,
+        cod.selling_price,
         cp.payment_date
         FROM
         customer_invoices AS ci
         INNER JOIN customers AS c ON c.customer_id=ci.customer_id
+        INNER JOIN customer_shipments AS cs ON cs.customer_shipment_id=ci.customer_shipment_id
+        INNER JOIN customer_order_details AS cod ON cod.customer_order_detail_id=cs.customer_order_detail_id
+        INNER JOIN jans AS j ON j.jan=cod.jan
         left JOIN customer_payments AS cp ON cp.customer_invoice_id=ci.customer_invoice_id
         WHERE
-        ci.invoice_date BETWEEN '".$shipment_start_date."' and '".$shipment_end_date."' $wh order By ci.customer_id asc,ci.customer_invoice_id DESC"));
+        ci.invoice_date BETWEEN '".$shipment_start_date."' and '".$shipment_end_date."' $wh order By ci.invoice_date DESC,ci.customer_id ASC,ci.customer_invoice_id DESC"));
 
         $customer_dues = customer_due_blance::all();
         return $result = response()->json(['all_data' => $shipment_items_data,'previous_dues'=> $customer_dues]);

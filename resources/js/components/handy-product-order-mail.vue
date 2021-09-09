@@ -6,7 +6,7 @@
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
                         <span class="pull-left">
-                                受注
+                                発注リスト
                             </span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right"
@@ -18,7 +18,7 @@
                             <br>
                             <br>
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
-                                <div class="form-group row">
+                                <!--<div class="form-group row">
                                     <div class="col-md-12">
                                         <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code"
@@ -33,8 +33,53 @@
                                 <button type="button" v-on:click="getOrderDataByJan()"
                                         class="btn custom-btn btn-primary pull-right text-right show_inline">
                                     次へ
-                                </button>
-
+                                </button>-->
+                                    <div class="form-group">
+                                    <div class="row" style="margin:0">
+                                        <select class="form-control col-md-8" id="vendprs" @change="filterbyvendorId" v-model="maker_id">
+                                            <option value="0">問屋を選択</option>
+                                            <option v-for="vendor in vendors" :value="vendor.id">
+                                                {{ vendor.text }}
+                                            </option>
+                                        </select>
+                                        <button class="btn btn-primary col-md-4" @click="sendMailto">メール</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">NO</th>
+                                                    <th rowspan="2">品名・メーカー・規格</th>
+                                                    <th colspan="3">入数</th>
+                                                    <th rowspan="2">在庫合計</th>
+                                                </tr>
+                                                <tr>
+                                                    <th nowrap>ケース</th>
+                                                    <th nowrap>ボール</th>
+                                                    <th nowrap>バラ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(value,index) in haccu_lists">
+                                                    <td class="text-center">{{index+1}}</td>
+                                                    <td>{{value.item_name}}</td>
+                                                    <td class="text-center">
+                                                    {{value.order_case_quantity}}
+                                                    <hr class="cus_br">
+                                                    {{value.case_inputs}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                    {{value.order_ball_quantity}}
+                                                    <hr class="cus_br">
+                                                    {{value.ball_inputs}}
+                                                    </td>
+                                                    <td class="text-right">{{value.order_unit_quantity}}</td>
+                                                    <td class="text-right">{{(value.order_unit_quantity==''?0:value.order_unit_quantity)+(value.order_case_quantity*value.case_inputs)+(value.order_ball_quantity*value.ball_inputs)}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                             </div>
 
                         </div>
@@ -244,6 +289,7 @@ export default {
         return {
             jan_code: '',
             order_data: [],
+            haccu_lists: [],
             case_inputs:'',
             ball_inputs:'',
             item_name:'',
@@ -259,7 +305,7 @@ export default {
             vendor_id: null,
             customer_id: null,
             vendor_item_id: null,
-            maker_id: null,
+            maker_id: 0,
             loader: 0,
             total_quantity: 0,
             handi_navi: ''
@@ -277,8 +323,84 @@ export default {
             }, 120)
         });
         _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
+                            _this.getVendorList();
+                            _this.getHacchuList();
+
     },
     methods: {
+        sendMailto(){
+            let _this = this;
+            if(_this.maker_id==0){
+                _this.handi_navi = '<li>XXXXXXXXX</li>';
+                $('#handy-navi').show()
+                return false;
+            }
+            axios.get(_this.base_url + '/sendtomailportal/'+_this.maker_id)
+                .then(function (response) {
+                  console.log(response);
+                  if(response.data.success==1){
+                        _this.handi_navi = '<li>'+response.data.message+'</li>';
+                  }else{
+                        _this.handi_navi = '<li>XXXXXX</li>';
+
+                  }
+                    $('#handy-navi').show()
+                    $('.loading_image_custom').hide()
+                })
+                .catch(function (e) {
+                    console.log(e);
+                })
+        },
+        filterbyvendorId(){
+            this.getHacchuList(this.maker_id);
+        },
+        getHacchuList(maker_id=0){
+            let _this = this;
+            _this.maker_id=maker_id;
+            axios.get(_this.base_url + '/get_all_haccue_list/'+_this.maker_id)
+                .then(function (response) {
+                    // console.log(response.data)
+                    _this.haccu_lists = response.data.results;
+                    console.log(_this.haccu_lists);
+                    // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
+                })
+                .catch(function (e) {
+
+                })
+        },
+        importcsvfile(e){
+            let _this = this;
+            
+            const name = event.target.files[0].name;
+  const lastDot = name.lastIndexOf('.');
+  const ext = name.substring(lastDot + 1);
+
+            console.log(ext);
+             $('.loading_image_custom').show()
+            _this.loader = 1;
+             var formData = new FormData();
+        formData.append('file', e.target.files[0]);
+        formData.append('file_type',ext);
+            axios.post(this.base_url + '/shipment_csv_insert_brand',formData)
+                .then(function (res) {
+                   if (res.data.success != 1) {
+                       _this.handi_navi = '<li>0000000000000</li>';
+                   }else{
+                       _this.handi_navi = '<li>XXXXXX</li>';
+                   }
+                    
+                        $('#handy-navi').show()
+                        $('.loading_image_custom').hide()
+                })
+                .catch(function () {
+                    $('.loading_image_custom').hide();
+                    console.log('errrr');
+                })
+                .finally(function () {
+                   // _this.jan_code = ''
+                    _this.loader = 0
+                })
+        },
         getCustomerList() {
             let _this = this;
             axios.get(_this.base_url + '/get_all_customer_list_for_select2')
@@ -638,7 +760,7 @@ export default {
                 .then(function (response) {
                     console.log(response.data)
                     _this.vendors = response.data.results;
-                    $('#select_tonya').modal({backdrop: 'static', keyboard: false})
+                   // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
                 })
                 .catch(function (e) {
 
@@ -666,6 +788,7 @@ export default {
         }
     },
     watch: {
+        
         // jan_code: function (val) {
         //     if (val.length >= 13) {
         //         $('#stock-order-show-by-jan').modal()
@@ -685,5 +808,10 @@ select {
     font-size: 18px;
     height: 45px !important;
 }
+.cus_br{
+    border-bottom: 0px solid #ddd !important;
+    margin: 0;
+    padding: 0;
 
+}
 </style>
