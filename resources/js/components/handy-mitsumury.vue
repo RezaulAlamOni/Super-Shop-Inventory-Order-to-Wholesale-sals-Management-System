@@ -90,7 +90,7 @@
 
                             <img v-for="(product,i) in products" :src="'public/backend/images/products/'+product.img"
                                  class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(product,images[i+2])"
+                                 alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                  style="cursor: pointer">
 
                             <!--                            <img src="public/backend/images/products/chocolate.jpg " class="img-thumbnail custom-img"-->
@@ -135,7 +135,7 @@
                         </div>
                         <div>
                             <img
-                                :src="'public/backend/images/products/'+ (preview_product.img ? preview_product.img : images[3]) "
+                                :src="'public/backend/images/products/'+ ( preview_product.jan == '4901005500341' ? 'chocolate.jpg' : (preview_product.img ? preview_product.img : 'chocolate.jpg')) "
                                 class="img-thumbnail custom-img-preview" alt="Cinque Terre"
                                 style="cursor: pointer">
                         </div>
@@ -273,7 +273,7 @@ export default {
     },
     mounted() {
         // this.getProducts();
-        this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg', 'chocolate.jpg', '69813_11.png', 'Whocoded.jpg'];
+        this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg',  '69813_11.png', '69813_11.png', 'Whocoded.jpg'];
         $('#jan_').focus()
         $('#jan_').select()
         this.handi_navi = '送品押してください';
@@ -289,7 +289,7 @@ export default {
                     let data = res.data;
                     _this.products = data.products;
                     _this.products = _this.products.map(function (product) {
-                        product.img = _this.images[Math.floor(Math.random() * 7)];
+                        product.img = product.jan == '4901005500341' ? 'chocolate.jpg' : _this.images[Math.floor(Math.random() * 7)];
                         return product;
                     })
                     // _this.handi_navi = '........';
@@ -402,6 +402,8 @@ export default {
                         _this.order_data = res.data.result;
                         _this.order_data_ = _this.order_data[0];
                         _this.product_name = _this.order_data[0].item_name;
+                        _this.order_data[0].img = _this.order_data[0].jan == '4901005500341' ? 'chocolate.jpg' : _this.images[Math.floor(Math.random() * 7)];
+
 
                         _this.previewProductInfoWithImage(_this.order_data[0]);
 
