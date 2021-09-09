@@ -88,7 +88,7 @@
                             <!--                                 alt="Cinque Terre" @click="viewInfoForImage(1)"-->
                             <!--                                 style="cursor: pointer">-->
 
-                            <img v-for="(product,i) in products" :src="'public/backend/images/products/'+images[Math.floor(Math.random() * 7)]"
+                            <img v-for="(product,i) in products" :src="'public/backend/images/products/'+product.img"
                                  class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(product,images[i+2])"
                                  style="cursor: pointer">
@@ -288,6 +288,10 @@ export default {
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
+                    _this.products = _this.products.map(function (product) {
+                        product.img = _this.images[Math.floor(Math.random() * 7)];
+                        return product;
+                    })
                     // _this.handi_navi = '........';
                     // $('#handy-navi').show();
                 })
@@ -333,7 +337,7 @@ export default {
         },
         viewInfoForImage(product, img) {
             product.item_name = product.janinfo.name;
-            product.img = img;
+            // product.img = img;
             product.profit_margin = product.gross_profit_margin;
             this.previewProductInfoWithImage(product);
             // setTimeout(function () {
