@@ -290,7 +290,7 @@ class VendorController extends Controller
             $api_response = $this->api_request->get_api_data($jan_code);
             //print_r($api_response->data);exit;
             $api_data_check = json_decode(json_encode($api_response->data));
-            
+
             if (is_null($api_data_check->jan_code) || $api_data_check->jan_code=='') {
                 $api_data = 'invalid_jan_code';
                 $data_resource = 'api_invalid';
@@ -477,7 +477,7 @@ class VendorController extends Controller
                     vendor_item::insert($vendor_data_ins_array);
                     return $result = response()->json(['message' => 'insert_success']);
                 }
-               
+
             }
         } else {
             $vendor_data_update_array = array(
@@ -596,7 +596,12 @@ class VendorController extends Controller
         jan::where('jan', '=', $vendor_info->jan)->update($jan_update_array);
 
         /*update in_cmpany*/
-        vendor_item::where('vendor_item_id', '=', $vendor_item_id)->update(['cost_price' => $price, 'selling_price' => $selling_price, 'gross_profit' => $gross_profit, 'gross_profit_margin' => $gross_profit_margin]);
+        vendor_item::where('vendor_item_id', '=', $vendor_item_id)->update(['cost_price' => $price,'selling_price' => $selling_price, 'gross_profit' => $gross_profit, 'gross_profit_margin' => $gross_profit_margin]);
+
+        if (isset($request->sale_selling_price)) {
+            vendor_item::where('vendor_item_id', '=', $vendor_item_id)->update(['sale_selling_price'=>$request->sale_selling_price]);
+        }
+
         $selling_price = floatval($selling_price);
         if ($selling_price > 0) {
             $customer_cost_price = $selling_price;

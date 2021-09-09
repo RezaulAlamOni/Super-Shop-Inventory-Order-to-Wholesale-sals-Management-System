@@ -14,8 +14,8 @@
                            style="float:right">メニュー</a>
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 発注</a>
-                        <!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
-                        <!--                           style="float:right"> 採用</a>-->
+                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
+                           style="float:right"> 採用</a>
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 詳細</a>
 
@@ -24,7 +24,7 @@
                         <div class="input-group m-0 my-1">
                             <input type="tel" class="form-control" placeholder="JANコードスキャン（13桁）"
                                    style="border-radius: 0px;padding: 5px;font-size: 16px;" autofocus
-                                   v-model="jan_code"
+                                   v-model="jan_code" id="jan_"
                                    name="scan_by_jan_for_stock_detail"
                                    v-on:keyup="checkAndGetData($event)"
                                    @blur="checkAndGetData($event)"
@@ -76,37 +76,39 @@
                         <div>
                             <!--                            v-for="(peoduct , i ) in products"-->
 
-                            <img src="public/backend/images/products/57.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(2)"
-                                 style="cursor: pointer">
+                            <!--                            <img src="public/backend/images/products/57.jpg" class="img-thumbnail custom-img"-->
+                            <!--                                 alt="Cinque Terre" @click="viewInfoForImage(2)"-->
+                            <!--                                 style="cursor: pointer">-->
 
-                            <img src="public/backend/images/products/Whocoded.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
-                                 style="cursor: pointer">
+                            <!--                            <img src="public/backend/images/products/Whocoded.jpg" class="img-thumbnail custom-img"-->
+                            <!--                                 alt="Cinque Terre" @click="viewInfoForImage(1)"-->
+                            <!--                                 style="cursor: pointer">-->
 
-                            <img src="public/backend/images/products/69813_11.png" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
-                                 style="cursor: pointer">
+                            <!--                            <img src="public/backend/images/products/69813_11.png " class="img-thumbnail custom-img"-->
+                            <!--                                 alt="Cinque Terre" @click="viewInfoForImage(1)"-->
+                            <!--                                 style="cursor: pointer">-->
 
-                            <img src="public/backend/images/products/fish.jpeg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(100)"
-                                 style="cursor: pointer">
-                            <img src="public/backend/images/products/chocolate.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(2)"
-                                 style="cursor: pointer">
-
-                            <img src="public/backend/images/products/4901005109803.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
-                                 style="cursor: pointer">
-
-
-                            <img src="public/backend/images/products/s-l1600.jpg" class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
-                                 style="cursor: pointer">
-                            <img src="public/backend/images/products/cocacola.jpeg"
+                            <img v-for="(product,i) in products" :src="'public/backend/images/products/'+images[i+2]"
                                  class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(1)"
+                                 alt="Cinque Terre" @click="viewInfoForImage(product,images[i+2])"
                                  style="cursor: pointer">
+
+                            <!--                            <img src="public/backend/images/products/chocolate.jpg " class="img-thumbnail custom-img"-->
+                            <!--                                 alt="Cinque Terre" @click="viewInfoForImage(2)"-->
+                            <!--                                 style="cursor: pointer">-->
+
+                            <!--                            <img src="public/backend/images/products/4901005109803.jpg " class="img-thumbnail custom-img"-->
+                            <!--                                 alt="Cinque Terre" @click="viewInfoForImage(1)"-->
+                            <!--                                 style="cursor: pointer">-->
+
+
+                            <!--                            <img src="public/backend/images/products/s-l1600.jpg " class="img-thumbnail custom-img"-->
+                            <!--                                 alt="Cinque Terre" @click="viewInfoForImage(1)"-->
+                            <!--                                 style="cursor: pointer">-->
+                            <!--                            <img src="public/backend/images/products/cocacola.jpeg "-->
+                            <!--                                 class="img-thumbnail custom-img"-->
+                            <!--                                 alt="Cinque Terre" @click="viewInfoForImage(1)"-->
+                            <!--                                 style="cursor: pointer">-->
 
 
                         </div>
@@ -129,18 +131,19 @@
                     <div class="modal-body p-0" style="text-align: center">
                         <div
                             style="font-size: 18px;text-align: left;padding: 5px 10px;background: #c3ff8f80;font-weight: bold;">
-                            {{preview_product.title }}
+                            {{ preview_product.title }}
                         </div>
                         <div>
-                            <img src="public/backend/images/products/fish.jpeg"
-                                 class="img-thumbnail custom-img-preview" alt="Cinque Terre"
-                                 style="cursor: pointer">
+                            <img
+                                :src="'public/backend/images/products/'+ (preview_product.img ? preview_product.img : images[3]) "
+                                class="img-thumbnail custom-img-preview" alt="Cinque Terre"
+                                style="cursor: pointer">
                         </div>
                         <div>
                             <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
                                 <thead data-v-c9953dda="">
                                 <tr data-v-c9953dda="">
-                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;" >
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
                                         特売価格期限
                                     </th>
                                     <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
@@ -160,8 +163,9 @@
                                 <tbody data-v-c9953dda="" class="physicaltbody">
                                 <tr data-v-c9953dda="">
                                     <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="special-price" v-model="preview_product.special_price"
-                                               class="form-control  "  @click="selectItem($event)"
+                                        <input data-v-c9953dda="" type="tel" id="special-price"
+                                               v-model="preview_product.sale_selling_price"
+                                               class="form-control  " @click="selectItem($event)"
                                                @keypress="pressEnterAndSave($event,'cost')"
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
@@ -187,7 +191,8 @@
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="profit_margin" @click="selectItem($event)"
+                                        <input data-v-c9953dda="" type="tel" id="profit_margin"
+                                               @click="selectItem($event)"
                                                @keypress="pressEnterAndSave($event,'special-price')"
                                                class="form-control  " v-model="preview_product.profit_margin"
                                                @keyup="calculatePrice('profit_margin')"
@@ -196,6 +201,15 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="vendprs" v-model="maker_id"
+                                    @change="updateVendorData()">
+                                <option value="0">問屋を選択</option>
+                                <option v-for="vendor in vendors" :value="vendor.id">
+                                    {{ vendor.text }}
+                                </option>
+                            </select>
                         </div>
 
 
@@ -243,20 +257,29 @@ export default {
     data() {
         return {
             jan_code: '',
+            order_data: [],
             select_status: 0,
             products: [],
             selected_products: [],
             handi_navi: '',
             search_data: null,
             product_pics: [],
-            preview_product : {}
+            preview_product: {},
+            maker_id: 0,
+            vendors: [],
+            images: []
 
         }
     },
     mounted() {
         // this.getProducts();
+        this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg', 'chocolate.jpg', '69813_11.png', 'Whocoded.jpg'];
+        $('#jan_').focus()
+        $('#jan_').select()
         this.handi_navi = '送品押してください';
         $('#handy-navi').show();
+        this.getVendorList();
+        this.getProducts();
     },
     methods: {
         getProducts() {
@@ -308,35 +331,44 @@ export default {
             // this.handi_navi = '---------';
             // $('#handy-navi').show();
         },
-        viewInfoForImage(img_type) {
-            let _this = this;
-            let preview_product = localStorage.getItem('preview_product');
-            if (preview_product) {
-                _this.preview_product = JSON.parse(preview_product);
-            } else {
-                _this.preview_product = {
-                    title : 'ふるさと納税 那智勝浦町 和歌山魚鶴仕込の魚切身詰め合わせセット',
-                    cost : 120,
-                    sell : 144,
-                    profit : 0,
-                    profit_margin : 0,
-                    special_price: 0
-                }
-            }
-            _this.preview_product.profit = _this.preview_product.sell - _this.preview_product.cost
-            _this.preview_product.profit_margin = (((_this.preview_product.sell - _this.preview_product.cost)/ _this.preview_product.cost)*100).toFixed(2)
-
-            localStorage.setItem('preview_product', JSON.stringify(_this.preview_product));
-            if (img_type != 100) {
-                // this.handi_navi = '*******';
-                // $('#handy-navi').show();
-                return false;
-            }
-            // this.handi_navi = '*******';
-            // $('#handy-navi').show();
-            $('#mistumury-mage-preview').modal({backdrop: 'static'})
-            $('#special-price').focus();
-            $('#special-price').select();
+        viewInfoForImage(product, img) {
+            product.item_name = product.janinfo.name;
+            product.img = img;
+            product.profit_margin = product.gross_profit_margin;
+            this.previewProductInfoWithImage(product);
+            // setTimeout(function () {
+            //     $('#special-price').focus();
+            //     $('#special-price').select();
+            // },200)
+            return true;
+            // let _this = this;
+            // let preview_product = localStorage.getItem('preview_product');
+            // if (preview_product) {
+            //     _this.preview_product = JSON.parse(preview_product);
+            // } else {
+            //     _this.preview_product = {
+            //         title : 'ふるさと納税 那智勝浦町 和歌山魚鶴仕込の魚切身詰め合わせセット',
+            //         cost : 120,
+            //         sell : 144,
+            //         profit : 0,
+            //         profit_margin : 0,
+            //         special_price: 0
+            //     }
+            // }
+            // _this.preview_product.profit = _this.preview_product.sell - _this.preview_product.cost
+            // _this.preview_product.profit_margin = (((_this.preview_product.sell - _this.preview_product.cost)/ _this.preview_product.cost)*100).toFixed(2)
+            //
+            // localStorage.setItem('preview_product', JSON.stringify(_this.preview_product));
+            // if (img_type != 100) {
+            //     // this.handi_navi = '*******';
+            //     // $('#handy-navi').show();
+            //     return false;
+            // }
+            // // this.handi_navi = '*******';
+            // // $('#handy-navi').show();
+            // $('#mistumury-mage-preview').modal({backdrop: 'static'})
+            // $('#special-price').focus();
+            // $('#special-price').select();
         },
         confirmAndHide() {
             $('#mistumury-mage-preview').modal('hide')
@@ -367,6 +399,7 @@ export default {
                         _this.order_data_ = _this.order_data[0];
                         _this.product_name = _this.order_data[0].item_name;
 
+                        _this.previewProductInfoWithImage(_this.order_data[0]);
 
                         _this.calculateTotalQuantity();
 
@@ -415,12 +448,12 @@ export default {
 
             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
                 if (reg.test(this.jan_code)) {
-                    this.getOrderDataByJan()
+                    this.insertToJanList()
                 }
             }
             if (e.keyCode === 13) {
-                if (reg.test(this.jan_code)) {
-                    this.getOrderDataByJan()
+                if (reg.test(this.jan_code) && this.jan_code.length >= 8) {
+                    this.insertToJanList()
                 }
             }
             if (!reg.test(this.jan_code)) {
@@ -463,9 +496,38 @@ export default {
             e.target.select()
         },
         pressEnterAndSave(e, type) {
+            let _this = this;
             if (e.keyCode == 13) {
-                $('#'+type).focus()
-                $('#'+type).select()
+                $('#' + type).focus()
+                $('#' + type).select()
+                if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
+                    _this.handi_navi = 'XXXXX';
+                    $('#handy-navi').show()
+                    return false;
+                }
+                let data = {
+                    vendor_item_id: _this.preview_product.vendor_item_id,
+                    product_name: _this.preview_product.item_name,
+                    case_qty: parseInt(_this.preview_product.case_inputs),
+                    ball_qty: parseInt(_this.preview_product.ball_inputs),
+                    price: parseInt(_this.preview_product.cost),
+                    gross_profit_margin: parseInt(_this.preview_product.profit_margin),
+                    gross_profit: parseInt(_this.preview_product.sell - _this.preview_product.cost),
+                    selling_price: parseInt(_this.preview_product.sell),
+                    sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
+                }
+
+                axios.post(_this.base_url + '/update_vendor_master_item_content', data)
+                    .then(function (response) {
+                        // _this.getOrderDataByJan();
+                        _this.getProducts();
+                        _this.handi_navi = '000000';
+                        $('#handy-navi').show()
+                    })
+                    .catch(function (e) {
+                        console.log(e)
+                    })
+
             }
         },
         calculatePrice(type) {
@@ -477,8 +539,8 @@ export default {
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
                 _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
             } else if (type == 'sell') {
-                _this.preview_product.profit_margin = ((parseFloat( _this.preview_product.sell) - parseFloat( _this.preview_product.cost)) * 100) /  _this.preview_product.cost
-                _this.preview_product.profit_margin =  _this.preview_product.profit_margin.toFixed(2);
+                _this.preview_product.profit_margin = ((parseFloat(_this.preview_product.sell) - parseFloat(_this.preview_product.cost)) * 100) / _this.preview_product.cost
+                _this.preview_product.profit_margin = _this.preview_product.profit_margin.toFixed(2);
                 _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
             } else if (type == 'profit') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat($('#profit').val())
@@ -491,9 +553,199 @@ export default {
                 _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
             }
 
-            localStorage.setItem('preview_product', JSON.stringify(_this.preview_product));
+            // localStorage.setItem('preview_product', JSON.stringify(_this.preview_product));
 
-        }
+        },
+        updateVendorData() {
+            let _this = this;
+            if (_this.maker_id == null) {
+                _this.handi_navi = '「仕入先」を指示してください。';
+                $('#handy-navi').show()
+                return false;
+            }
+            axios.post(_this.base_url + '/vendor_master_update_by_vendor_id', {
+                vendor_item_id: _this.preview_product.vendor_item_id,
+                vendor_id: _this.maker_id,
+                maker_id: _this.preview_product.maker_id
+            }).then(function (response) {
+                _this.getOrderDataByJan();
+                _this.handi_navi = '000000';
+                $('#handy-navi').show()
+            })
+        },
+        getVendorList() {
+            let _this = this;
+            axios.get(_this.base_url + '/get_all_vendor_list_for_select2')
+                .then(function (response) {
+                    // console.log(response.data)
+                    _this.vendors = response.data.results;
+                    // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
+                })
+                .catch(function (e) {
+
+                })
+        },
+        previewProductInfoWithImage(product) {
+            let _this = this;
+            _this.preview_product = product;
+            _this.maker_id = product.vendor_id;
+            _this.preview_product.title = product.item_name;
+            _this.preview_product.cost = product.cost_price;
+            _this.preview_product.sell = product.selling_price;
+            _this.preview_product.profit = product.selling_price - product.cost_price;
+            $('#mistumury-mage-preview').modal({backdrop: 'static'})
+            // $('#special-price').focus();
+            // $('#special-price').select();
+            setTimeout(function () {
+                $('#special-price').focus();
+                $('#special-price').select();
+            }, 700)
+        },
+        updateVendorItemProperty(vendor, type = null) {
+            let _this = this;
+            console.log(vendor)
+            if (type == 'profit_margin') {
+                vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat((vendor.cost_price * vendor.profit_margin) / 100);
+                vendor.selling_price = vendor.selling_price.toFixed(2)
+            } else if (type == 'sell') {
+                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.cost_price
+                vendor.profit_margin = vendor.profit_margin.toFixed(2);
+            } else if (type == 'profit') {
+                vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat($('#profit').val())
+                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.cost_price;
+                vendor.selling_price = vendor.selling_price.toFixed(2);
+                vendor.profit_margin = vendor.profit_margin.toFixed(2);
+            } else if (type == 'cost') {
+                vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat((vendor.cost_price * vendor.profit_margin) / 100);
+                vendor.selling_price = vendor.selling_price.toFixed(2)
+            }
+
+            if (parseFloat(vendor.cost_price) > parseFloat(vendor.selling_price)) {
+                _this.handi_navi = 'XXXXX';
+                $('#handy-navi').show()
+                return false;
+            }
+            let data = {
+                vendor_item_id: vendor.vendor_item_id,
+                product_name: vendor.item_name,
+                case_qty: parseInt(vendor.case_inputs),
+                ball_qty: parseInt(vendor.ball_inputs),
+                price: parseInt(vendor.cost_price),
+                gross_profit_margin: parseInt(vendor.profit_margin),
+                gross_profit: parseInt(vendor.selling_price - vendor.cost_price),
+                selling_price: parseInt(vendor.selling_price)
+            }
+
+            axios.post(_this.base_url + '/update_vendor_master_item_content', data)
+                .then(function (response) {
+                    _this.getOrderDataByJan();
+                    _this.handi_navi = '000000';
+                    $('#handy-navi').show()
+                })
+                .catch(function (e) {
+                    console.log(e)
+                })
+
+
+        },
+        insertToJanList() {
+            let _this = this;
+            if (_this.jan_code.length <= 0) {
+                return false
+            }
+            $('.loading_image_custom').show()
+            _this.loader = 1;
+            let jan_code = _this.jan_code;
+            axios.post(_this.base_url + '/get_jan_info', {jan_code: _this.jan_code})
+                .then(function (response) {
+                    let api_response = response.data.api_data;
+                    let data_resource = response.data.data_resource;
+
+                    if (api_response == 'invalid_jan_code') {
+                        //$('.handy_error_msg').html(`JANコードりません`);
+                        //$('.handdy_error').removeClass('hide').addClass('show');
+                        _this.handi_navi = 'JAN コードを入力してください';
+                        $('#handy-navi').show();
+                    } else {
+                        if (response.data.vendor_item_data == 1) {
+                            console.log('this jan code is already registered');
+                            _this.getOrderDataByJan();
+                            _this.getProducts();
+                        } else {
+                            console.log('do insert ' + jan_code);
+                            let item_name = api_response.name;
+                            let case_qty = 0;
+                            let ball_qty = 0;
+                            let api_maker_name = '';
+                            if (data_resource == 'database') {
+                                case_qty = api_response.case_inputs;
+                                ball_qty = api_response.ball_inputs;
+                            } else if (data_resource == 'api') {
+                                api_maker_name = api_response.maker_name;
+                            }
+                            let vendor_id = response.data.vendor_id;
+                            let price = 100;
+                            /*insert auto vendor item*/
+                            let order_point_unit = 'ケース';
+                            let order_point_quantity = 1;
+                            let order_lot_unit = 'ケース';
+                            let order_lot_quantity = 1;
+                            let vendor_item_id = null;
+                            let sale_price = 0;
+                            let basic_start_date = '2020-01-01';
+                            let basic_end_date = '2021-12-31';
+                            let sale_start_date = '2020-01-01';
+                            let sale_end_date = '2021-12-31';
+                            let data = {
+                                maker_id: response.data.maker_id,
+                                vendor_id: vendor_id,
+                                jan_code: jan_code,
+                                item_name: item_name,
+                                case_qty: case_qty,
+                                ball_qty: ball_qty,
+                                price: price,
+                                vendor_item_id: vendor_item_id,
+                                order_point_unit: order_point_unit,
+                                order_point_quantity: order_point_quantity,
+                                order_lot_unit: order_lot_unit,
+                                order_lot_quantity: order_lot_quantity,
+                                sale_price: sale_price,
+                                basic_start_date: basic_start_date,
+                                basic_end_date: basic_end_date,
+                                sale_start_date: sale_start_date,
+                                sale_end_date: sale_end_date,
+                                api_maker_name: api_maker_name,
+                            }
+
+                            axios.post(_this.base_url + '/add_vendor_item', data)
+                                .then(function (response) {
+                                    // console.log(response.data)
+                                    _this.getProducts();
+                                    _this.getOrderDataByJan();
+                                })
+                                .catch(function (er) {
+
+                                })
+                                .finally(function () {
+                                    $('.loading_image_custom').hide()
+                                    _this.loader = 0
+                                })
+
+
+                        } //else
+
+                    } //else
+
+                })
+                .then(function (er) {
+
+                })
+                .finally(function () {
+                    // _this.jan_code = '';
+                    // $('.loading_image_custom').hide()
+                    // _this.loader = 0
+                })
+        },
 
 
     },
