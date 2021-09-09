@@ -546,7 +546,7 @@ total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selli
             let c_quantity = parseInt(_this.order_data.customer_shipment.confirm_unit_quantity) + parseInt(_this.order_data.customer_shipment.confirm_ball_quantity) * parseInt(_this.order_data.jan.ball_inputs) + parseInt(_this.order_data.customer_shipment.confirm_case_quantity) * parseInt(_this.order_data.jan.case_inputs);
                  
 let total_quantity_vls = c_quantity;
-let total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selling_price;
+let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
             let data = {
                 jan_code: _this.jan_code,
                 pname: order_itemData.jan.name,

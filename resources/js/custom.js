@@ -2782,7 +2782,8 @@ $(document).ready(function () {
                         html += '<td class="digits_td"  id="amount_b' + response[i].customer_invoice_id + '">' + response[i].invoice_amount + '</td>';
                         html += '<td><input data_customer_id = "' + response[i].customer_id + '" data_invoice_id="' + response[i].customer_invoice_id + '" type="tel" data_current_amount="' + total_amount + '" class="form-control digits insert_payment_to_customer customer_due_balance" value="' + total_amount + '"></td>';
                         html += '<td class="digits_td">' + amount_d + '</td>';
-                        html += '<td></td>';
+                       html += '<td>原価'+response[i].selling_price+'円ｘバラ数量'+response[i].quantity+'＝'+response[i].invoice_amount+'円 ('+response[i].item_name+')</td>';
+                       //html += '<td></td>';
                         html += '</tr>';
                         j++;
                         sumation_of_payment_amount_d += amount_d;

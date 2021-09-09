@@ -105,11 +105,11 @@ class ReceiveorderController extends Controller
         vi.created_at,
         vi.vendor_id,
         jans.name as item_name,
-        jans.case_inputs,
-        si.case_quantity,
-        jans.ball_inputs,
-        si.ball_quantity,
-        si.unit_quantity,
+        IFNULL(jans.case_inputs,0) as case_inputs,
+        IFNULL(si.case_quantity,0) as case_quantity,
+        IFNULL(jans.ball_inputs,0) as ball_inputs,
+        IFNULL(si.ball_quantity,0) as ball_quantity,
+        IFNULL(si.unit_quantity,0) as unit_quantity,
         si.rack_number,
         jans.jan,
         vendors.name AS vendor_name,
@@ -154,13 +154,21 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                 $arr[$row]->case_quantity = $vl->case_quantity + $arr[$row]->case_quantity;
                 $arr[$row]->ball_quantity = $vl->ball_quantity + $arr[$row]->ball_quantity;
                 $arr[$row]->unit_quantity = $vl->unit_quantity + $arr[$row]->unit_quantity;
+                $total_stock_quantity = (($arr[$row]->case_quantity*$vl->case_inputs)+($arr[$row]->ball_quantity*$vl->ball_inputs)+$arr[$row]->unit_quantity);
+                $arr[$row]->total_stock =$total_stock_quantity;
                 $duplicates[] = $vl->jan;
-
+               
             } else {
+                
+                $total_stock_quantity = (($vl->case_quantity*$vl->case_inputs)+($vl->ball_quantity*$vl->ball_inputs)+$vl->unit_quantity);
+                $vl->total_stock=$total_stock_quantity;
                 $arr[] = $vl;
+
             }
             $newarr[] = $vl->jan;
         }
+        $tStockTotal = array_column($arr, 'total_stock');
+array_multisort($tStockTotal, SORT_DESC, $arr);
         //print_r($arr);
         return $arr;
     }
