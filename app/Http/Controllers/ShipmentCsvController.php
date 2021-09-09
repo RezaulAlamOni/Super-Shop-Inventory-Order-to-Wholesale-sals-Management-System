@@ -740,8 +740,8 @@ class ShipmentCsvController extends Controller
             $customer_order_demo_detail['order_case_quantity']=$case_order_quantity;
             $customer_order_demo_detail['order_ball_quantity']=$ball_order_quantity;
             $customer_order_demo_detail['order_unit_quantity']=$unit_order_quantity;
-            $customer_order_demo_detail['cost_price']=$vendoritems_info->cost_price;
-            $customer_order_demo_detail['selling_price']=$vendoritems_info->selling_price;
+            $customer_order_demo_detail['cost_price']=$items_info->cost_price;
+            $customer_order_demo_detail['selling_price']=$items_info->selling_price;
             $customer_order_id = customer_order::insertGetId($customer_order_demo);
             $customer_order_demo_detail['customer_order_id']=$customer_order_id;
             $customer_order_detail_id = customer_order_detail::insertGetId($customer_order_demo_detail);
