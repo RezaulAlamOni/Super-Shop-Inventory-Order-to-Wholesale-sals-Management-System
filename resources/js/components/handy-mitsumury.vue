@@ -88,7 +88,7 @@
                             <!--                                 alt="Cinque Terre" @click="viewInfoForImage(1)"-->
                             <!--                                 style="cursor: pointer">-->
 
-                            <img v-for="(product,i) in products" :src="'public/backend/images/products/'+images[i+2]"
+                            <img v-for="(product,i) in products" :src="'public/backend/images/products/'+images[Math.floor(Math.random() * 7)]"
                                  class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(product,images[i+2])"
                                  style="cursor: pointer">
@@ -441,7 +441,7 @@ export default {
         checkAndGetData(e) {
             let _this = this;
 
-            if (this.loader === 1) {
+            if (this.loader === 1 || this.jan_code.length <= 0) {
                 return false;
             }
             let reg = /^\d+$/;
@@ -671,6 +671,7 @@ export default {
                             console.log('this jan code is already registered');
                             _this.getOrderDataByJan();
                             _this.getProducts();
+                            _this.jan_code = ''
                         } else {
                             console.log('do insert ' + jan_code);
                             let item_name = api_response.name;
@@ -729,6 +730,7 @@ export default {
                                 .finally(function () {
                                     $('.loading_image_custom').hide()
                                     _this.loader = 0
+                                    _this.jan_code = ''
                                 })
 
 
