@@ -869,6 +869,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
         vi.order_lot_unit_quantity,
         vi.order_lot_quantity,
         vi.maker_id,
+        vi.sale_selling_price,
         vi.gross_profit_margin as profit_margin
     FROM
     vendor_items AS vi
@@ -1392,11 +1393,11 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 $vl_c = $stock_info->case_quantity - $confirm_case_quantity;
                 $vl_c = ($vl_c < 0 ? 0 : $vl_c);
                 $stock_items['case_quantity'] = $vl_c;
-                
+
                 $vl_b = $stock_info->ball_quantity - $confirm_ball_quantity;
                 $vl_b = ($vl_b < 0 ? 0 : $vl_b);
                 $stock_items['ball_quantity'] = $vl_b;
-               
+
                 $vl_u = $stock_info->unit_quantity - $confirm_unit_quantity;
                 $vl_u = ($vl_u < 0 ? 0 : $vl_u);
                 $stock_items['unit_quantity'] = $vl_u;
