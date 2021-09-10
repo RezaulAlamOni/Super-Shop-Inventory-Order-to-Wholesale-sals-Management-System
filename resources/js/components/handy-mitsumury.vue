@@ -14,8 +14,8 @@
                            style="float:right">メニュー</a>
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 発注</a>
-<!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
-<!--                           style="float:right"> 採用</a>-->
+                        <!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
+                        <!--                           style="float:right"> 採用</a>-->
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 詳細</a>
 
@@ -189,8 +189,8 @@
                                         <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.profit" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
-<!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
-<!--                                               @keyup="calculatePrice('profit')"-->
+                                        <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
+                                        <!--                                               @keyup="calculatePrice('profit')"-->
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit_margin"
@@ -533,7 +533,7 @@ export default {
                     ball_qty: parseInt(_this.preview_product.ball_inputs),
                     price: parseFloat(_this.preview_product.cost),
                     gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
-                    gross_profit: parseFloat(_this.preview_product.sell - _this.preview_product.cost),
+                    gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
                     selling_price: parseFloat(_this.preview_product.sell),
                     sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
                 }
@@ -554,33 +554,34 @@ export default {
         blurAndSave() {
             let _this = this;
 
-                if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
-                    _this.handi_navi = 'XXXXX';
-                    $('#handy-navi').show()
-                    return false;
-                }
-                let data = {
-                    jan:_this.preview_product.jan,
-                    product_name: _this.preview_product.item_name,
-                    case_qty: parseInt(_this.preview_product.case_inputs),
-                    ball_qty: parseInt(_this.preview_product.ball_inputs),
-                    price: parseFloat(_this.preview_product.cost),
-                    gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
-                    gross_profit: parseFloat(_this.preview_product.sell - _this.preview_product.cost),
-                    selling_price: parseFloat(_this.preview_product.sell),
-                    sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
-                }
+            if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
+                _this.handi_navi = 'XXXXX';
+                $('#handy-navi').show()
+                return false;
+            }
+            let data = {
+                jan:_this.preview_product.jan,
+                product_name: _this.preview_product.item_name,
+                case_qty: parseInt(_this.preview_product.case_inputs),
+                ball_qty: parseInt(_this.preview_product.ball_inputs),
+                price: parseFloat(_this.preview_product.cost),
+                gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
+                gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
 
-                axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
-                    .then(function (response) {
-                        // _this.getOrderDataByJan();
-                        _this.getProducts();
-                        _this.handi_navi = '仕入・販売先マスターへ登録されました';
-                        $('#handy-navi').show()
-                    })
-                    .catch(function (e) {
-                        console.log(e)
-                    })
+                selling_price: parseFloat(_this.preview_product.sell),
+                sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
+            }
+
+            axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
+                .then(function (response) {
+                    // _this.getOrderDataByJan();
+                    _this.getProducts();
+                    _this.handi_navi = '仕入・販売先マスターへ登録されました';
+                    $('#handy-navi').show()
+                })
+                .catch(function (e) {
+                    console.log(e)
+                })
 
         },
         calculatePrice(type) {
@@ -692,7 +693,7 @@ export default {
                 ball_qty: parseInt(vendor.ball_inputs),
                 price: parseInt(vendor.cost_price),
                 gross_profit_margin: parseInt(vendor.profit_margin),
-                gross_profit: parseInt(vendor.selling_price - vendor.cost_price),
+                gross_profit: ((vendor.selling_price - vendor.cost_price)/vendor.selling_price*100).toFixed(2),
                 selling_price: parseInt(vendor.selling_price)
             }
 
