@@ -767,7 +767,7 @@ export default {
                 })
         },
         naviShow() {
-            this.handi_navi = '000000000    ';
+            this.handi_navi = '仕入・販売先マスターへ登録されました';
             $('#handy-navi').show();
         }
 
