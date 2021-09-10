@@ -14,8 +14,8 @@
                            style="float:right">メニュー</a>
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 発注</a>
-                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
-                           style="float:right"> 採用</a>
+<!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
+<!--                           style="float:right"> 採用</a>-->
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 詳細</a>
 
@@ -123,7 +123,7 @@
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
                     <div class="modal-header" style="padding: 5px;justify-content: right">
-                        <!--                        <a class="btn btn-success float-right mr-1">採用</a>-->
+                        <a class="btn btn-success float-right mr-1" @click="naviShow()"> 採用</a>
                         <a class="btn btn-success float-right mr-2">発注</a>
                         <a class="btn btn-info float-right" @click="confirmAndHide()">戻る</a>
 
@@ -202,7 +202,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none">
                             <select class="form-control" id="vendprs" v-model="maker_id"
                                     @change="updateVendorData()">
                                 <option value="0">問屋を選択</option>
@@ -276,7 +276,7 @@ export default {
         this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg',  '69813_11.png', '69813_11.png', 'Whocoded.jpg'];
         $('#jan_').focus()
         $('#jan_').select()
-        this.handi_navi = '送品押してください';
+        this.handi_navi = '商品を押してください';
         $('#handy-navi').show();
         this.getVendorList();
         this.getProducts();
@@ -389,7 +389,7 @@ export default {
             }
             $('.loading_image_custom').show()
             _this.loader = 1
-            axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code)
+            axios.get(this.base_url + '/handy_customer_master_item_get_by_jan_code/' + _this.jan_code)
                 .then(function (res) {
                     //_this.resetField();
                     if (res.data.status == 400) {
@@ -511,19 +511,31 @@ export default {
                     $('#handy-navi').show()
                     return false;
                 }
+                // let data = {
+                //     vendor_item_id: _this.preview_product.vendor_item_id,
+                //     product_name: _this.preview_product.item_name,
+                //     case_qty: parseInt(_this.preview_product.case_inputs),
+                //     ball_qty: parseInt(_this.preview_product.ball_inputs),
+                //     price: parseInt(_this.preview_product.cost),
+                //     gross_profit_margin: parseInt(_this.preview_product.profit_margin),
+                //     gross_profit: parseInt(_this.preview_product.sell - _this.preview_product.cost),
+                //     selling_price: parseInt(_this.preview_product.sell),
+                //     sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
+                // }
+
                 let data = {
-                    vendor_item_id: _this.preview_product.vendor_item_id,
+                    jan:_this.preview_product.jan,
                     product_name: _this.preview_product.item_name,
                     case_qty: parseInt(_this.preview_product.case_inputs),
                     ball_qty: parseInt(_this.preview_product.ball_inputs),
-                    price: parseInt(_this.preview_product.cost),
-                    gross_profit_margin: parseInt(_this.preview_product.profit_margin),
-                    gross_profit: parseInt(_this.preview_product.sell - _this.preview_product.cost),
-                    selling_price: parseInt(_this.preview_product.sell),
+                    price: parseFloat(_this.preview_product.cost),
+                    gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
+                    gross_profit: parseFloat(_this.preview_product.sell - _this.preview_product.cost),
+                    selling_price: parseFloat(_this.preview_product.sell),
                     sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
                 }
 
-                axios.post(_this.base_url + '/update_vendor_master_item_content', data)
+                axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
                     .then(function (response) {
                         // _this.getOrderDataByJan();
                         _this.getProducts();
@@ -754,6 +766,10 @@ export default {
                     // _this.loader = 0
                 })
         },
+        naviShow() {
+            this.handi_navi = '仕入・販売先マスターへ登録されました';
+            $('#handy-navi').show();
+        }
 
 
     },

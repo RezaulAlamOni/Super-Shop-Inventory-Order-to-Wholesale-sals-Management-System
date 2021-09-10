@@ -12,4 +12,7 @@ class customer_item extends Model
     {
         return $this->belongsTo(jan::class, 'jan','jan');
     }
+    public function janinfo(){
+        return $this->hasOne(jan::class,'jan','jan');
+    }
 }
