@@ -171,8 +171,9 @@ class CustomerController extends Controller
         $selling_price = $request->selling_price;
         $gross_profit = $request->gross_profit;
         $gross_profit_margin = $request->gross_profit_margin;
+        $sale_selling_price = isset($request->sale_selling_price) ? $request->sale_selling_price : 0;
         jan::where('jan',$jan)->update(['case_inputs'=>$request->case_qty,'ball_inputs'=>$request->ball_qty]);
-        customer_item::where('jan', '=', $jan)->update(['cost_price'=>$cost_price,'selling_price'=>$selling_price,'gross_profit'=>$gross_profit,'gross_profit_margin'=>$gross_profit_margin]);
+        customer_item::where('jan', '=', $jan)->update(['cost_price'=>$cost_price,'selling_price'=>$selling_price,'gross_profit'=>$gross_profit,'gross_profit_margin'=>$gross_profit_margin,'sale_selling_price'=>$sale_selling_price]);
         return $result = response()->json(['message' => 'update_success']);
     }
     public function get_customer_list_item_by_id(Request $request){
