@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "/js/build_component/handy-product-inventory-return.js": "/js/build_component/handy-product-inventory-return.js?id=b1a224000caa8095b542",
     "/js/build_component/handy-product-inventory-inquiry.js": "/js/build_component/handy-product-inventory-inquiry.js?id=d7a7aa92495317a4b7bd",
     "/js/build_component/handy-mitsumury.js": "/js/build_component/handy-mitsumury.js?id=fbbe8e3aa1f1b2bc93c0",
@@ -15,6 +16,24 @@
     "/js/build_component/handy-customer-master.js": "/js/build_component/handy-customer-master.js?id=881339d357d9e1eb04b9",
     "/js/build_component/example-component.js": "/js/build_component/example-component.js?id=3769b66c39d76a932fa2",
     "/js/app.js": "/js/app.js?id=18c202b0c92e1f4ef480",
+=======
+    "/js/build_component/handy-product-inventory-return.js": "/js/build_component/handy-product-inventory-return.js?id=7e1dd21638efbf7861d3",
+    "/js/build_component/handy-product-inventory-inquiry.js": "/js/build_component/handy-product-inventory-inquiry.js?id=52e64b72379b4c3bbdec",
+    "/js/build_component/handy-mitsumury.js": "/js/build_component/handy-mitsumury.js?id=bfefafad0b4691af3ed3",
+    "/js/build_component/barcode-scan.js": "/js/build_component/barcode-scan.js?id=b18d35bf6866881071aa",
+    "/js/build_component/handy-vandor-master.js": "/js/build_component/handy-vandor-master.js?id=03bfa8b5173b8e5b99b0",
+    "/js/build_component/handy-product-order-receive.js": "/js/build_component/handy-product-order-receive.js?id=063a98bb6fbd634790b1",
+    "/js/build_component/handy-product-order-place.js": "/js/build_component/handy-product-order-place.js?id=9b5f55a61509c3ad3da0",
+    "/js/build_component/handy-product-order-place-kouri.js": "/js/build_component/handy-product-order-place-kouri.js?id=aeee8f07d17599aadefd",
+    "/js/build_component/handy-product-order-mail.js": "/js/build_component/handy-product-order-mail.js?id=8b1c1067b67f3eb29d40",
+    "/js/build_component/handy-product-order-confirm-kouri.js": "/js/build_component/handy-product-order-confirm-kouri.js?id=5c65d381226f2ac48d67",
+    "/js/build_component/handy-product-online-order-kouri.js": "/js/build_component/handy-product-online-order-kouri.js?id=8918523cd8afdecb5d00",
+    "/js/build_component/handy-product-inventory-tmp-tana-update.js": "/js/build_component/handy-product-inventory-tmp-tana-update.js?id=c1d8163e621fa1ca18c5",
+    "/js/build_component/handy-order-shipment-list.js": "/js/build_component/handy-order-shipment-list.js?id=5cea8ef3427411f7b7f0",
+    "/js/build_component/handy-customer-master.js": "/js/build_component/handy-customer-master.js?id=f2e63db7de29148961c3",
+    "/js/build_component/example-component.js": "/js/build_component/example-component.js?id=3769b66c39d76a932fa2",
+    "/js/app.js": "/js/app.js?id=a8e792df5f8b76aaa393",
+>>>>>>> 028efecd9e8da39862d256669ee4e2121908dcb3
     "/css/app.css": "/css/app.css?id=a3cf0568e9097866f5c9",
     "/js/all_custom_js.js": "/js/all_custom_js.js?id=c6080252af5ebbf83815",
     "/js/all_online_js.js": "/js/all_online_js.js?id=60ffee0b30ba78cfa602",
