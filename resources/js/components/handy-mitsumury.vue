@@ -172,6 +172,7 @@
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="cost" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.cost"
+                                               @blur="blurAndSave()"
                                                @keypress="pressEnterAndSave($event,'sell')"
                                                @keyup="calculatePrice('cost')"
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
@@ -179,20 +180,22 @@
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.sell"
-                                               @keypress="pressEnterAndSave($event,'profit')"
+                                               @keypress="pressEnterAndSave($event,'profit_margin')"
+                                               @blur="blurAndSave()"
                                                @keyup="calculatePrice('sell')"
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
-                                               class="form-control  " v-model="preview_product.profit"
-                                               @keypress="pressEnterAndSave($event,'profit_margin')"
-                                               @keyup="calculatePrice('profit')"
+                                               class="form-control  " v-model="preview_product.profit" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+<!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
+<!--                                               @keyup="calculatePrice('profit')"-->
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit_margin"
                                                @click="selectItem($event)"
+                                               @blur="blurAndSave()"
                                                @keypress="pressEnterAndSave($event,'special-price')"
                                                class="form-control  " v-model="preview_product.profit_margin"
                                                @keyup="calculatePrice('profit_margin')"
@@ -539,7 +542,7 @@ export default {
                     .then(function (response) {
                         // _this.getOrderDataByJan();
                         _this.getProducts();
-                        _this.handi_navi = '000000';
+                        _this.handi_navi = '仕入・販売先マスターへ登録されました';
                         $('#handy-navi').show()
                     })
                     .catch(function (e) {
@@ -548,6 +551,38 @@ export default {
 
             }
         },
+        blurAndSave() {
+            let _this = this;
+
+                if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
+                    _this.handi_navi = 'XXXXX';
+                    $('#handy-navi').show()
+                    return false;
+                }
+                let data = {
+                    jan:_this.preview_product.jan,
+                    product_name: _this.preview_product.item_name,
+                    case_qty: parseInt(_this.preview_product.case_inputs),
+                    ball_qty: parseInt(_this.preview_product.ball_inputs),
+                    price: parseFloat(_this.preview_product.cost),
+                    gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
+                    gross_profit: parseFloat(_this.preview_product.sell - _this.preview_product.cost),
+                    selling_price: parseFloat(_this.preview_product.sell),
+                    sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
+                }
+
+                axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
+                    .then(function (response) {
+                        // _this.getOrderDataByJan();
+                        _this.getProducts();
+                        _this.handi_navi = '仕入・販売先マスターへ登録されました';
+                        $('#handy-navi').show()
+                    })
+                    .catch(function (e) {
+                        console.log(e)
+                    })
+
+        },
         calculatePrice(type) {
 
             let _this = this;
@@ -555,11 +590,14 @@ export default {
             if (type == 'profit_margin') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
-                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
             } else if (type == 'sell') {
                 _this.preview_product.profit_margin = ((parseFloat(_this.preview_product.sell) - parseFloat(_this.preview_product.cost)) * 100) / _this.preview_product.cost
                 _this.preview_product.profit_margin = _this.preview_product.profit_margin.toFixed(2);
-                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+
             } else if (type == 'profit') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat($('#profit').val())
                 _this.preview_product.profit_margin = ((parseFloat(_this.preview_product.sell) - parseFloat(_this.preview_product.cost)) * 100) / _this.preview_product.cost;
@@ -568,7 +606,9 @@ export default {
             } else if (type == 'cost') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
-                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+
             }
 
             // localStorage.setItem('preview_product', JSON.stringify(_this.preview_product));
@@ -611,6 +651,8 @@ export default {
             _this.preview_product.cost = product.cost_price;
             _this.preview_product.sell = product.selling_price;
             _this.preview_product.profit = product.selling_price - product.cost_price;
+            _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
             // $('#special-price').focus();
             // $('#special-price').select();
