@@ -179,16 +179,16 @@
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.sell"
-                                               @keypress="pressEnterAndSave($event,'profit')"
+                                               @keypress="pressEnterAndSave($event,'profit_margin')"
                                                @keyup="calculatePrice('sell')"
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
-                                               class="form-control  " v-model="preview_product.profit"
-                                               @keypress="pressEnterAndSave($event,'profit_margin')"
-                                               @keyup="calculatePrice('profit')"
+                                               class="form-control  " v-model="preview_product.profit" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+<!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
+<!--                                               @keyup="calculatePrice('profit')"-->
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit_margin"
@@ -555,11 +555,14 @@ export default {
             if (type == 'profit_margin') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
-                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
             } else if (type == 'sell') {
                 _this.preview_product.profit_margin = ((parseFloat(_this.preview_product.sell) - parseFloat(_this.preview_product.cost)) * 100) / _this.preview_product.cost
                 _this.preview_product.profit_margin = _this.preview_product.profit_margin.toFixed(2);
-                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+
             } else if (type == 'profit') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat($('#profit').val())
                 _this.preview_product.profit_margin = ((parseFloat(_this.preview_product.sell) - parseFloat(_this.preview_product.cost)) * 100) / _this.preview_product.cost;
@@ -568,7 +571,9 @@ export default {
             } else if (type == 'cost') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
-                _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+
             }
 
             // localStorage.setItem('preview_product', JSON.stringify(_this.preview_product));
@@ -611,6 +616,8 @@ export default {
             _this.preview_product.cost = product.cost_price;
             _this.preview_product.sell = product.selling_price;
             _this.preview_product.profit = product.selling_price - product.cost_price;
+            _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
             // $('#special-price').focus();
             // $('#special-price').select();
