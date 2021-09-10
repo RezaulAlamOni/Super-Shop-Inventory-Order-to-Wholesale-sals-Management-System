@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\customer_item;
 use App\vendor_item;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class MistumuryController extends Controller
      */
     public function index()
     {
-        $products = vendor_item::with('janinfo')->get();
+        $products = customer_item::with('janinfo')->groupBy('jan')->get();
         return  response()->json(['products'=> $products]);
     }
 
