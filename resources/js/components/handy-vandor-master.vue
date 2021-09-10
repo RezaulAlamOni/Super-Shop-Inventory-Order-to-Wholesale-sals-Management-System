@@ -120,7 +120,7 @@
                                                         <td>
                                                             <input type="tel"
                                                                    @click="selectItem($event,'')"
-                                                                   @keypress="pressEnterAndSave($event,'profit')"
+                                                                   @keypress="pressEnterAndSave($event,'profit_margin')"
                                                                    @blur="updateVendorItemProperty(order_data[0],'sell')"
                                                                    class="form-control  " :id="'sell'"
                                                                    v-model="order_data[0].selling_price"
@@ -128,13 +128,18 @@
                                                         </td>
                                                         <td>
                                                             <input type="tel"
-                                                                   @click="selectItem($event,'')"
-                                                                   @keypress="pressEnterAndSave($event,'profit_margin')"
-                                                                   @blur="updateVendorItemProperty(order_data[0],'profit')"
-                                                                   class="form-control  " :id="'profit'"
-                                                                   :value="order_data[0].selling_price - order_data[0].cost_price"
+                                                                   class="form-control  " :id="'profit'" readonly
+                                                                   :value="((order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100).toFixed(2)"
                                                                    style="border-radius: 0px; text-align: center;padding : 7px 0px">
+<!--                                                            <input type="tel"-->
+<!--                                                                   @click="selectItem($event,'')"-->
+<!--                                                                   @keypress="pressEnterAndSave($event,'profit_margin')"-->
+<!--                                                                   @blur="updateVendorItemProperty(order_data[0],'profit')"-->
+<!--                                                                   class="form-control  " :id="'profit'"-->
+<!--                                                                   :value="order_data[0].selling_price - order_data[0].cost_price"-->
+<!--                                                                   style="border-radius: 0px; text-align: center;padding : 7px 0px">-->
                                                         </td>
+
                                                         <td>
                                                             <input type="tel"
                                                                    @click="selectItem($event,'')"
@@ -672,11 +677,11 @@ export default {
              if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
                // this.insertToJanList()
                if (reg.test(this.jan_code)) {
-                  
+
                     _this.insertToJanList();
                 }
             }
-            
+
             if (e.keyCode === 13) {
                 if (reg.test(this.jan_code)) {
                     _this.insertToJanList();
