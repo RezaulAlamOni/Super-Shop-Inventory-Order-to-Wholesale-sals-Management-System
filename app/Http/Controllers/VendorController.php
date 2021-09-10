@@ -382,7 +382,10 @@ class VendorController extends Controller
         }
         $selling_price = $price + (($price * $profit_percent) / 100);
         $selling_price = round($selling_price, 2);
-        $profit = $selling_price - $price;
+        // $profit = $selling_price - $price;
+        $profit = ($profit_percent/$selling_price)*100;
+        $profit = round($profit, 2);
+
 
         //  jan insert
         $jan_ins_array = array(
@@ -546,8 +549,12 @@ class VendorController extends Controller
         $gross_profit_margin = ($data['cost_price'] > 0 ? 30 : 0);
         $selling_price = $data['cost_price'] + (($data['cost_price'] * $gross_profit_margin) / 100);
         $selling_price = round($selling_price, 2);
-        $gross_profit = $selling_price - $data['cost_price'];
+        // $gross_profit = $selling_price - $data['cost_price'];
+        $gross_profit = ($gross_profit_margin/$selling_price)*100;
+        $gross_profit = round($gross_profit, 2);
 
+        
+        
         $customer_data_ins_array = array(
             'customer_id' => $data['c_name'],
             'vendor_id' => $data['v_name'],
