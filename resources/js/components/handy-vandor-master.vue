@@ -754,7 +754,7 @@ if(parseFloat(vendor.cost_price)>parseFloat(vendor.selling_price)){
                 ball_qty: parseInt(vendor.ball_inputs),
                 price: parseInt(vendor.cost_price),
                 gross_profit_margin: parseInt(vendor.profit_margin),
-                gross_profit: parseInt(vendor.selling_price - vendor.cost_price),
+                gross_profit: ((vendor.selling_price - vendor.cost_price)/vendor.selling_price*100).toFixed(2),
                 selling_price: parseInt(vendor.selling_price)
             }
 

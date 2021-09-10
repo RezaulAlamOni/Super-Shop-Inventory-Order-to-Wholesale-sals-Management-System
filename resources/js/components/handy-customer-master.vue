@@ -746,7 +746,7 @@ export default {
                 ball_qty: parseInt(vendor.ball_inputs),
                 price: parseFloat(vendor.cost_price),
                 gross_profit_margin: parseFloat(vendor.profit_margin),
-                gross_profit: parseFloat(vendor.selling_price - vendor.cost_price),
+                gross_profit: ((vendor.selling_price - vendor.cost_price)/vendor.selling_price*100).toFixed(2),
                 selling_price: parseFloat(vendor.selling_price)
             }
 
