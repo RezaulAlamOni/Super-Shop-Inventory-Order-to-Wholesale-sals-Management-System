@@ -14,8 +14,8 @@
                            style="float:right">メニュー</a>
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 発注</a>
-                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
-                           style="float:right"> 採用</a>
+<!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
+<!--                           style="float:right"> 採用</a>-->
                         <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 詳細</a>
 
