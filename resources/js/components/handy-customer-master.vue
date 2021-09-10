@@ -120,7 +120,7 @@
                                                         <td>
                                                             <input type="tel"
                                                                    @click="selectItem($event,'')"
-                                                                   @keypress="pressEnterAndSave($event,'profit')"
+                                                                   @keypress="pressEnterAndSave($event,'profit_margin')"
                                                                    @blur="updateVendorItemProperty(order_data[0],'sell')"
                                                                    class="form-control  " :id="'sell'"
                                                                    v-model="order_data[0].selling_price"
@@ -128,12 +128,12 @@
                                                         </td>
                                                         <td>
                                                             <input type="tel"
-                                                                   @click="selectItem($event,'')"
-                                                                   @keypress="pressEnterAndSave($event,'profit_margin')"
-                                                                   @blur="updateVendorItemProperty(order_data[0],'profit')"
-                                                                   class="form-control  " :id="'profit'"
-                                                                   :value="order_data[0].selling_price-order_data[0].cost_price"
+                                                                   class="form-control  " :id="'profit'" readonly
+                                                                   :value="((order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100).toFixed(2)"
                                                                    style="border-radius: 0px; text-align: center;padding : 7px 0px">
+<!--                                                            @click="selectItem($event,'')"-->
+<!--                                                            @keypress="pressEnterAndSave($event,'profit_margin')"-->
+<!--                                                            @blur="updateVendorItemProperty(order_data[0],'profit')"-->
                                                         </td>
                                                         <td>
                                                             <input type="tel"
@@ -718,7 +718,7 @@ export default {
         },
         updateVendorItemProperty(vendor, type = null) {
             let _this = this;
-           
+
             if (type == 'profit_margin') {
                 vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat((vendor.cost_price * vendor.profit_margin) / 100);
                 vendor.selling_price = vendor.selling_price.toFixed(2)
@@ -749,7 +749,7 @@ export default {
                 gross_profit: parseFloat(vendor.selling_price - vendor.cost_price),
                 selling_price: parseFloat(vendor.selling_price)
             }
-            
+
             axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
                 .then(function (response) {
                     _this.getOrderDataByJan();
