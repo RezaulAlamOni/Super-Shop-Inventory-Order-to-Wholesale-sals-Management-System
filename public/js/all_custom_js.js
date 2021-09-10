@@ -4953,7 +4953,7 @@ function get_vendor_master_item_list() {
                     htmls += '<td>0</td>';
                     htmls += '<td><input type="tel" value="' + response[i].cost_price + '" data_field_type="cost_price"  class="form-control text-right digits v_cost_price edit_vendor_item"></td>';
                     htmls += '<td><input type="tel" value="' + response[i].selling_price + '" data_field_type="selling_price" class="form-control text-right digits v_selling_price edit_vendor_item"></td>';
-                    htmls += '<td><input type="tel" value="' + response[i].gross_profit + '" data_field_type="gross_profit" class="form-control text-right v_gross_profit edit_vendor_item"></td>';
+                    htmls += '<td><input type="tel" value="' + response[i].gross_profit + '" data_field_type="gross_profit" class="form-control text-right v_gross_profit edit_vendor_item" readonly></td>';
                     htmls += '<td><input type="tel" value="' + response[i].gross_profit_margin + '" data_field_type="gross_profit_margin" class="form-control text-right v_gross_profit_margin edit_vendor_item"></td>';
                     htmls += '<td><input type="number" data_current_vl="' + in_company_code + '"  data_field_type="company_code" value="' + in_company_code + '" class="form-control text-center v_in_company_code"></td>';
                     htmls += '<td style="padding:0px!important;"><span class="vendor_name vendor_name_control hide">' + vendor_name + '</span><span class="vendor_select vendor_name_control show"><select vendor_item_id="' + response[i].vendor_item_id + '" class="form-control vendor_select2"><option selected value="' + response[i].vendor_id + '">' + vendor_name + '</option></select></span></td>';
@@ -5278,7 +5278,7 @@ function view_customer_master_by_customer_id(c_id, c_name) {
                         // htmls += '<td class="digits_td">' + cost_price + '</td>';
                         htmls += '<td><input type="tel" value="' + cost_price + '" data_filed_type="cost_price" class="form-control digits text-right cmn_customer_pricing c_cost_price edit_customer_item"></td>';
                         htmls += '<td><input type="tel" value="' + selling_price + '" data_filed_type="selling_price" class="form-control digits text-right cmn_customer_pricing c_selling_price edit_customer_item"></td>';
-                        htmls += '<td><input type="tel" value="' + gross_profit + '" data_filed_type="gross_profit" class="form-control digits text-right cmn_customer_pricing c_gross_profit edit_customer_item"></td>';
+                        htmls += '<td><input type="tel" value="' + gross_profit + '" data_filed_type="gross_profit" class="form-control digits text-right cmn_customer_pricing c_gross_profit edit_customer_item" readonly></td>';
                         htmls += '<td><input type="tel" value="' + gross_profit_margin + '" data_filed_type="gross_profit_margin" class="form-control digits cmn_customer_pricing text-right c_gross_profit_margin edit_customer_item"></td>';
                         htmls += '<td>' + response[i].jan + '</td>';
                         htmls += '</tr>';
@@ -5657,22 +5657,15 @@ function get_manual_order_item(c_id = 0, c_name = '') {
 
                                 if (response.shop_list[n].customer_shop_id == online_order[i].customer_shop_id) {
 
-                                    if (online_order[i].inputs == 'ケース') {
-                                        case_qty = online_order[i].quantity;
-                                        case_total += case_qty;
-                                        ball_qty = '';
-                                        unit_qty = '';
-                                    } else if (online_order[i].inputs == 'ボール') {
-                                        case_qty = '';
-                                        ball_qty = online_order[i].quantity;
-                                        ball_total += ball_qty;
-                                        unit_qty = '';
-                                    } else {
-                                        case_qty = '';
-                                        ball_qty = '';
-                                        unit_qty = online_order[i].quantity;
-                                        unit_total += unit_qty;
-                                    }
+                                    case_qty = online_order[i].order_case_quantity;
+                                    case_total += case_qty;
+
+                                    ball_qty = online_order[i].order_ball_quantity;
+                                    ball_total += ball_qty;
+
+                                    unit_qty = online_order[i].order_unit_quantity;
+                                    unit_total += unit_qty;
+                                    
                                 }
                                 htmls += '<td style="border-right: 1px solid #ddd;" data_stock_total="" class="smOfordrqty"><input data_input_type="ケース" data_shop_id="' + response.shop_list[n].customer_shop_id + '" type="tel" class="form-control cmn_o_d_qty sum_of_o_d_qty" value="' + case_qty + '"></td>';
                                 htmls += '<td style="border-right: 1px solid #ddd;" data_stock_total="" class="smOfordrqty"><input data_input_type="ボール" data_shop_id="' + response.shop_list[n].customer_shop_id + '" type="tel" class="form-control cmn_o_d_qty sum_of_o_d_qty" value="' + ball_qty + '"></td>';
@@ -5701,6 +5694,22 @@ function get_manual_order_item(c_id = 0, c_name = '') {
                                 var class_unit_suffcient = '';
                                 if (response.shop_list[p].customer_shop_id == online_order[i].customer_shop_id) {
 
+                                    case_qty_confirm = online_order[i].confirm_case_quantity;
+                                    case_qty = online_order[i].order_case_quantity;
+                                    class_case_suffcient = (case_qty > case_qty_confirm ? 'insufcients_stocks' : 'sufcients_stocks');
+                                    case_confirm_total += case_qty_confirm;
+
+                                    ball_qty = online_order[i].order_ball_quantity;
+                                    ball_qty_confirm = online_order[i].confirm_ball_quantity;
+                                    class_ball_suffcient = (ball_qty > ball_qty_confirm ? 'insufcients_stocks' : 'sufcients_stocks');
+                                    ball_confirm_total += ball_qty_confirm;
+
+                                    unit_qty = online_order[i].order_unit_quantity;
+                                    unit_qty_confirm = online_order[i].confirm_unit_quantity;
+                                    class_unit_suffcient = (unit_qty > unit_qty_confirm ? 'insufcients_stocks' : 'sufcients_stocks');
+                                    unit_confirm_total += unit_qty_confirm;
+
+                                    /*
                                     if (online_order[i].inputs == 'ケース') {
                                         case_qty = online_order[i].quantity;
                                         if (online_order[i].confirm_quantity !== null) {
@@ -5722,7 +5731,7 @@ function get_manual_order_item(c_id = 0, c_name = '') {
                                             class_unit_suffcient = (unit_qty > unit_qty_confirm ? 'insufcients_stocks' : 'sufcients_stocks');
                                             unit_confirm_total += unit_qty_confirm;
                                         }
-                                    }
+                                    }*/
                                 }
 
                                 htmls += '<td style="border-right: 1px solid #ddd;" data_stock_total="" class="smOfordrqty ' + class_case_suffcient + '"><input type="tel" class="form-control cmn_o_d_qty sum_of_o_d_qty" value="' + case_qty_confirm + '"></td>';
@@ -8108,7 +8117,7 @@ $(document).ready(function () {
         }
     });
 
-    function calculation_profit_pricing(filde_type, this_ele) {
+    function calculation_profit_pricing_backup(filde_type, this_ele) {
         var cost_price = this_ele.closest('tr').children('td').find('.v_cost_price').val();
         var selling_price = this_ele.closest('tr').children('td').find('.v_selling_price').val();
         var gross_profit = this_ele.closest('tr').children('td').find('.v_gross_profit').val();
@@ -8214,6 +8223,133 @@ $(document).ready(function () {
                 selling_price = parseFloat(selling_price);
                 gross_profit = selling_price - cost_price;
 
+                gross_profit = parseFloat(gross_profit);
+                gross_profit = gross_profit.toFixed(2);
+                selling_price = selling_price.toFixed(2);
+                gross_profit_margin = gross_profit_margin.toFixed(2);
+                cost_price = cost_price.toFixed(2);
+            }
+        }
+        this_ele.closest('tr').children('td').find('.v_cost_price').val(cost_price);
+        this_ele.closest('tr').children('td').find('.v_selling_price').val(selling_price);
+        this_ele.closest('tr').children('td').find('.v_gross_profit').val(gross_profit);
+        this_ele.closest('tr').children('td').find('.v_gross_profit_margin').val(gross_profit_margin);
+    }
+
+    function calculation_profit_pricing(filde_type, this_ele) {
+        var cost_price = this_ele.closest('tr').children('td').find('.v_cost_price').val();
+        var selling_price = this_ele.closest('tr').children('td').find('.v_selling_price').val();
+        var gross_profit = this_ele.closest('tr').children('td').find('.v_gross_profit').val();
+        var gross_profit_margin = this_ele.closest('tr').children('td').find('.v_gross_profit_margin').val();
+        cost_price = cost_price.replace(',', "");
+        selling_price = selling_price.replace(',', "");
+        gross_profit = gross_profit.replace(',', "");
+        gross_profit_margin = gross_profit_margin.replace(',', "");
+
+        cost_price = parseFloat(cost_price);
+        selling_price = parseFloat(selling_price);
+        gross_profit = parseFloat(gross_profit);
+        gross_profit_margin = parseFloat(gross_profit_margin);
+
+        if (filde_type == 'cost_price') {
+            cost_price = this_ele.val();
+            cost_price = parseFloat(cost_price);
+            if (selling_price == '0.00') {
+                gross_profit_margin = 20;
+                selling_price = cost_price + ((cost_price * gross_profit_margin) / 100);
+                selling_price = parseFloat(selling_price);
+                // gross_profit = selling_price - cost_price;
+                gross_profit = (gross_profit_margin/selling_price)*100;
+                selling_price = selling_price.toFixed(2);
+                cost_price = cost_price.toFixed(2);
+                gross_profit = gross_profit.toFixed(2);
+
+            } else {
+                if (gross_profit_margin > 0) {
+                    selling_price = cost_price + ((cost_price * gross_profit_margin) / 100);
+                    selling_price = parseFloat(selling_price);
+                    // gross_profit = selling_price - cost_price;
+                    gross_profit = (gross_profit_margin/selling_price)*100;
+                    selling_price = selling_price.toFixed(2);
+                    gross_profit = gross_profit.toFixed(2);
+                    gross_profit_margin = gross_profit_margin.toFixed(2);
+                    cost_price = cost_price.toFixed(2);
+                } else {
+                    show_hide_nav_icn(0);
+                    nav_width = '400px';
+                    display_positionX = '15px';
+                    display_positionY = '15px';
+                    error_nav = view(temporary_message['invalid_gross_profit_margin'], def_center_mesg_template);
+                    this_ele.closest('tr').children('td').find('.v_selling_price').val('0.00');
+                    this_ele.closest('tr').children('td').find('.v_gross_profit').val('0.00');
+                    this_ele.closest('tr').children('td').find('.v_gross_profit_margin').val('0.00');
+                    return false;
+                }
+            }
+        } else if (filde_type == 'selling_price') {
+            selling_price = this_ele.val();
+            selling_price = parseFloat(selling_price);
+            if (selling_price >= cost_price) {
+                // gross_profit = selling_price - cost_price;
+                var proftAmount = selling_price - cost_price;
+                proftAmount = parseInt(proftAmount);
+                gross_profit_margin = ((proftAmount * cost_price) / 100);
+                gross_profit = (gross_profit_margin/selling_price)*100;
+               
+                
+                gross_profit_margin = gross_profit_margin.toFixed(2);
+                selling_price = selling_price.toFixed(2);
+                gross_profit = gross_profit.toFixed(2);
+                cost_price = cost_price.toFixed(2);
+            } else {
+                show_hide_nav_icn(0);
+                nav_width = '400px';
+                display_positionX = '15px';
+                display_positionY = '15px';
+                error_nav = view(temporary_message['invalid_selling_price'], def_center_mesg_template);
+                this_ele.closest('tr').children('td').find('.v_selling_price').val('0.00');
+                this_ele.closest('tr').children('td').find('.v_gross_profit').val('0.00');
+                this_ele.closest('tr').children('td').find('.v_gross_profit_margin').val('0.00');
+                return false;
+            }
+        } else if (filde_type == 'gross_profit') {
+            gross_profit = this_ele.val();
+            gross_profit = parseFloat(gross_profit);
+            if (cost_price == '0.00') {
+                show_hide_nav_icn(0);
+                nav_width = '400px';
+                display_positionX = '15px';
+                display_positionY = '15px';
+                error_nav = view(temporary_message['invalid_profit_amount'], def_center_mesg_template);
+                this_ele.closest('tr').children('td').find('.v_gross_profit').val('0.00');
+                return false;
+            } else {
+                selling_price = gross_profit + cost_price;
+                gross_profit_margin = (gross_profit * 100) / cost_price;
+
+                gross_profit_margin = parseFloat(gross_profit_margin);
+                gross_profit_margin = gross_profit_margin.toFixed(2);
+                selling_price = selling_price.toFixed(2);
+                gross_profit = gross_profit.toFixed(2);
+                cost_price = cost_price.toFixed(2);
+            }
+        } else if (filde_type == 'gross_profit_margin') {
+            gross_profit_margin = this_ele.val();
+            gross_profit_margin = parseFloat(gross_profit_margin);
+            if (cost_price == '0.00') {
+                show_hide_nav_icn(0);
+                nav_width = '400px';
+                display_positionX = '15px';
+                display_positionY = '15px';
+                error_nav = view(temporary_message['invalid_profit_amount'], def_center_mesg_template);
+                this_ele.closest('tr').children('td').find('.v_gross_profit_margin').val('0.00');
+                return false;
+            } else {
+                selling_price = cost_price + ((cost_price * gross_profit_margin) / 100);
+
+                selling_price = parseFloat(selling_price);
+                // gross_profit = selling_price - cost_price;
+                gross_profit = (gross_profit_margin/selling_price)*100;
                 gross_profit = parseFloat(gross_profit);
                 gross_profit = gross_profit.toFixed(2);
                 selling_price = selling_price.toFixed(2);
@@ -8369,8 +8505,13 @@ $(document).ready(function () {
             selling_price = this_ele.val();
             selling_price = parseFloat(selling_price);
             if (selling_price >= cost_price) {
-                gross_profit = selling_price - cost_price;
-                gross_profit_margin = (gross_profit * 100) / cost_price;
+                // gross_profit = selling_price - cost_price;
+                var proftAmount = selling_price - cost_price;
+                proftAmount = parseInt(proftAmount);
+                gross_profit_margin = ((proftAmount * cost_price) / 100);
+                // gross_profit_margin = (gross_profit * 100) / cost_price;
+                gross_profit = (gross_profit_margin/selling_price)*100;
+
                 gross_profit_margin = gross_profit_margin.toFixed(2);
                 selling_price = selling_price.toFixed(2);
                 gross_profit = gross_profit.toFixed(2);
@@ -8387,9 +8528,12 @@ $(document).ready(function () {
                 return false;
             }
         } else if (filde_type == 'cost_price') {
-            gross_profit = (cost_price * gross_profit_margin) / 100;
+            // gross_profit = (cost_price * gross_profit_margin) / 100;
+            selling_price = cost_price + ((cost_price * gross_profit_margin) / 100);
+
+            gross_profit = (gross_profit_margin/selling_price)*100;
+
             gross_profit = gross_profit.toFixed(2);
-            selling_price = parseFloat(gross_profit) + parseFloat(cost_price);
             selling_price = selling_price.toFixed(2);
 
         } else if (filde_type == 'gross_profit') {
@@ -8428,7 +8572,8 @@ $(document).ready(function () {
                 selling_price = cost_price + ((cost_price * gross_profit_margin) / 100);
 
                 selling_price = parseFloat(selling_price);
-                gross_profit = selling_price - cost_price;
+                // gross_profit = selling_price - cost_price;
+                gross_profit = (gross_profit_margin/selling_price)*100;
 
                 gross_profit = parseFloat(gross_profit);
                 gross_profit = gross_profit.toFixed(2);
