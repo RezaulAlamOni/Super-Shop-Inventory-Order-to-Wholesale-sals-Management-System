@@ -172,6 +172,7 @@
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="cost" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.cost"
+                                               @blur="blurAndSave()"
                                                @keypress="pressEnterAndSave($event,'sell')"
                                                @keyup="calculatePrice('cost')"
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
@@ -180,6 +181,7 @@
                                         <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.sell"
                                                @keypress="pressEnterAndSave($event,'profit_margin')"
+                                               @blur="blurAndSave()"
                                                @keyup="calculatePrice('sell')"
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
@@ -193,6 +195,7 @@
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit_margin"
                                                @click="selectItem($event)"
+                                               @blur="blurAndSave()"
                                                @keypress="pressEnterAndSave($event,'special-price')"
                                                class="form-control  " v-model="preview_product.profit_margin"
                                                @keyup="calculatePrice('profit_margin')"
@@ -539,7 +542,7 @@ export default {
                     .then(function (response) {
                         // _this.getOrderDataByJan();
                         _this.getProducts();
-                        _this.handi_navi = '000000';
+                        _this.handi_navi = '仕入・販売先マスターへ登録されました';
                         $('#handy-navi').show()
                     })
                     .catch(function (e) {
@@ -547,6 +550,38 @@ export default {
                     })
 
             }
+        },
+        blurAndSave() {
+            let _this = this;
+
+                if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
+                    _this.handi_navi = 'XXXXX';
+                    $('#handy-navi').show()
+                    return false;
+                }
+                let data = {
+                    jan:_this.preview_product.jan,
+                    product_name: _this.preview_product.item_name,
+                    case_qty: parseInt(_this.preview_product.case_inputs),
+                    ball_qty: parseInt(_this.preview_product.ball_inputs),
+                    price: parseFloat(_this.preview_product.cost),
+                    gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
+                    gross_profit: parseFloat(_this.preview_product.sell - _this.preview_product.cost),
+                    selling_price: parseFloat(_this.preview_product.sell),
+                    sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
+                }
+
+                axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
+                    .then(function (response) {
+                        // _this.getOrderDataByJan();
+                        _this.getProducts();
+                        _this.handi_navi = '仕入・販売先マスターへ登録されました';
+                        $('#handy-navi').show()
+                    })
+                    .catch(function (e) {
+                        console.log(e)
+                    })
+
         },
         calculatePrice(type) {
 
