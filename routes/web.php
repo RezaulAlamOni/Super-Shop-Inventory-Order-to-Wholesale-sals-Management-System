@@ -92,6 +92,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/insert_janinfo','VendorController@insert_janinfo');
 	Route::post('/add_vendor_item','VendorController@addVendorItem');
 	Route::post('/update_vendor_master_item_content','VendorController@update_vendor_master_item_content');
+	Route::post('/update_vendor_item_estimate_items','VendorController@update_vendor_item_estimate_items');
 	Route::post('/update_in_company_code','VendorController@update_in_company_code');
 	Route::post('/update_vendor_itms_by_vendor_id','VendorController@update_vendor_itms_by_vendor_id');
     Route::post('/update_vendor_item_by_vendor_item_id','VendorController@updateVendorItem');
