@@ -6,31 +6,21 @@
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
                         <span class="pull-left">
-                            小売 <br>
-                                見積り
+                            スーパー見積り
                         </span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right top-button"
                            style="float:right">メニュー</a>
-                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
-                           style="float:right"> 発注</a>
+                      <!--  <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
+                           style="float:right"> 発注</a>-->
                         <!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
                         <!--                           style="float:right"> 採用</a>-->
-                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
-                           style="float:right"> 詳細</a>
+                       <!-- <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
+                           style="float:right"> 詳細</a>-->
 
                     </div>
-                    <div style="font-size: 18px; padding: 5px 0px 2px 5px;position: relative" >
-                        <div class="form-check" >
-                            <input class="form-check-input check-all"  @click="selectAll()" v-model="allSelected" type="checkbox" value="" id="flexCheckChecked" >
-                            <label class="form-check-label ml-2" for="flexCheckChecked">
-                                全て
-                            </label>
-                        </div>
-                        <button v-if="productJans.length > 0" @click="selectSuper()" class="btn btn-success pull-right mr-1 " style=" position: absolute; top: 5px; right: 0px;"> 送信</button>
-                    </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
-                        <div class="input-group m-0 my-1">
+                        <!--<div class="input-group m-0 my-1">
                             <input type="tel" class="form-control" placeholder="JANコードスキャン（13桁）"
                                    style="border-radius: 0px;padding: 5px;font-size: 16px;" autofocus
                                    v-model="jan_code" id="jan_"
@@ -43,7 +33,7 @@
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">次へ</button>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group m-0">
 
                             <!--                            <input type="tel" id="jan_input" class="form-control custom-input"-->
@@ -81,13 +71,82 @@
 
                     </div>
 
-                    <div class=" col-centereds col-md-12 col-sm-12 col-sl-12 p-0 row ">
-                        <div class="col-sm-6 col-md-3 col-xl-3 image-div" v-for="(product,i) in products" :class="(productJans.indexOf(product)) > -1 ? 'active-img' : ''">
-                            <img  :src="'public/backend/images/products/'+product.img"
-                                  class="img-thumbnail custom-img"
-                                  alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
-                                  style="cursor: pointer">
-                            <input class="form-check-input form-check-input_" type="checkbox" v-model="productJans" :value="product" >
+                    <div class=" col-centereds">
+                        <div>
+                           
+
+                            
+                            <div class="productInfos">
+                                 <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
+                                <thead data-v-c9953dda="">
+                                <tr data-v-c9953dda="">
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        画像
+                                    </th>
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        原価
+                                    </th>
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        売価
+                                    </th>
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        粗利
+                                    </th>
+                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                        ％
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody data-v-c9953dda="" class="physicaltbody">
+                                <tr v-for="(product,i) in products">
+                                    <td data-v-c9953dda="">
+                                        <!--<input data-v-c9953dda="" type="tel" id="special-price"
+                                               v-model="product.sale_selling_price"
+                                               class="form-control  " @click="selectItem($event)"
+                                               @keypress="pressEnterAndSave($event,'cost')"
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
+                                               <img :src="'public/backend/images/products/'+product.img"
+                                 class="img-thumbnail custom-img"
+                                 alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
+                                 style="cursor: pointer" width="100px">
+                                    </td>
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="cost" @click="selectItem($event)"
+                                               class="form-control  " v-model="product.cost_price"
+                                               @blur="blurAndSave()"
+                                               @keypress="pressEnterAndSave($event,'sell')" readonly
+                                               @keyup="calculatePrice('cost')"
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                    </td>
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
+                                               class="form-control  " v-model="product.selling_price"
+                                               @keypress="pressEnterAndSave($event,'profit_margin')" readonly
+                                               @blur="blurAndSave()"
+                                               @keyup="calculatePrice('sell')"
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                    </td>
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
+                                               class="form-control  " v-model="product.gross_profit" readonly
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                        <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
+                                        <!--                                               @keyup="calculatePrice('profit')"-->
+                                    </td>
+                                    <td data-v-c9953dda="">
+                                        <input data-v-c9953dda="" type="tel" id="profit_margin"
+                                               @click="selectItem($event)"
+                                               @blur="blurAndSave()"
+                                               @keypress="pressEnterAndSave($event,'special-price')"
+                                               class="form-control  " v-model="product.gross_profit_margin"
+                                               @keyup="calculatePrice('profit_margin')" readonly
+                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+
                         </div>
 
                     </div>
@@ -199,54 +258,6 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-             aria-hidden="true" id="mistumury-select-super">
-            <div class="modal-dialog modal-lg mt-0">
-                <div class="modal-content">
-                    <div class="modal-header" style="padding: 5px;justify-content: right">
-                        <button class="btn btn-success mr-2" @click="sendtoSuper()" :disabled="(productJans.length > 0 && selectedSuper.length > 0 ) ? false : true">送信</button>
-                        <a class="btn btn-info float-right" @click="confirmAndHide()">戻る</a>
-                    </div>
-                    <div class="modal-body p-0" style="text-align: center">
-                        <div
-                            style="font-size: 18px;text-align: left;padding: 5px 10px;background: #c3ff8f80;font-weight: bold;">
-                            00000000
-                        </div>
-                        <div>
-                            <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
-                                <thead>
-                                <tr >
-                                    <th colspan="2 " style="text-align: left">
-                                        <input class="form-check-input check-all m-0"  @click="selectAllSuper()" v-model="allSelectedSuper" type="checkbox" value="" >
-                                        <label class="form-check-label " style="margin-left: 40px" for="flexCheckChecked">
-                                            全て
-                                        </label>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody data-v-c9953dda="" class="physicaltbody">
-
-                                <tr :class="(selectedSuper.indexOf(vendor.id) > -1) ? 'active-c' : ''" v-for="vendor in vendors" style="border-bottom: 1px solid gray">
-                                    <td style="width: 50px;padding: 10px;border: none !important;">
-                                        <input class="form-check-input m-0" type="checkbox" v-model="selectedSuper" :value="vendor.id" >
-                                    </td>
-                                    <td style="padding: 10px;;border: none !important;">{{ vendor.text }}</td>
-                                </tr>
-                                </tbody>
-
-                            </table>
-                        </div>
-                        <div class="p-2" style="text-align: right">
-                            <br>
-                        </div>
-
-
-                    </div>
-                    <!--                    <div class="modal-footer " style="padding: 6px">-->
-                    <!--                    </div>-->
-                </div>
-            </div>
-        </div>
 
 
         <div class="jn nav_disp-w" style="z-index: 9999;width: 270px; right: 15px; bottom: 15px;"
@@ -295,12 +306,7 @@ export default {
             preview_product: {},
             maker_id: 0,
             vendors: [],
-            images: [],
-            selected: [],
-            allSelected: false,
-            allSelectedSuper: false,
-            productJans: [],
-            selectedSuper: [],
+            images: []
 
         }
     },
@@ -325,6 +331,7 @@ export default {
                         product.img = product.jan == '4901005500341' ? 'chocolate.jpg' : _this.images[Math.floor(Math.random() * 7)];
                         return product;
                     })
+                    console.log(_this.products);
                     // _this.handi_navi = '........';
                     // $('#handy-navi').show();
                 })
@@ -409,7 +416,6 @@ export default {
         },
         confirmAndHide() {
             $('#mistumury-mage-preview').modal('hide')
-            $('#mistumury-select-super').modal('hide')
         },
         getOrderDataByJan() {
             let _this = this;
@@ -423,7 +429,7 @@ export default {
             }
             $('.loading_image_custom').show()
             _this.loader = 1
-            axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code)
+            axios.get(this.base_url + '/handy_customer_master_item_get_by_jan_code/' + _this.jan_code)
                 .then(function (res) {
                     //_this.resetField();
                     if (res.data.status == 400) {
@@ -540,7 +546,6 @@ export default {
             if (e.keyCode == 13) {
                 $('#' + type).focus()
                 $('#' + type).select()
-                return false;
                 if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
                     _this.handi_navi = 'XXXXX';
                     $('#handy-navi').show()
@@ -560,13 +565,17 @@ export default {
 
                 let data = {
                     jan:_this.preview_product.jan,
+                    product_name: _this.preview_product.item_name,
+                    case_qty: parseInt(_this.preview_product.case_inputs),
+                    ball_qty: parseInt(_this.preview_product.ball_inputs),
                     price: parseFloat(_this.preview_product.cost),
                     gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
                     gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
-                    selling_price: parseFloat(_this.preview_product.sell)
+                    selling_price: parseFloat(_this.preview_product.sell),
+                    sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
                 }
 
-                axios.post(_this.base_url + '/update_vendor_item_estimate_items', data)
+                axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
                     .then(function (response) {
                         // _this.getOrderDataByJan();
                         _this.getProducts();
@@ -581,7 +590,7 @@ export default {
         },
         blurAndSave() {
             let _this = this;
-            return false;
+
             if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
                 _this.handi_navi = 'XXXXX';
                 $('#handy-navi').show()
@@ -662,7 +671,7 @@ export default {
         },
         getVendorList() {
             let _this = this;
-            axios.get(_this.base_url + '/get_all_customer_list_for_select2')
+            axios.get(_this.base_url + '/get_all_vendor_list_for_select2')
                 .then(function (response) {
                     // console.log(response.data)
                     _this.vendors = response.data.results;
@@ -677,9 +686,9 @@ export default {
             _this.preview_product = product;
             _this.maker_id = product.vendor_id;
             _this.preview_product.title = product.item_name;
-            _this.preview_product.cost = product.e_cost_price != 0 ? product.e_cost_price : product.cost_price;
-            _this.preview_product.sell = product.e_selling_price != 0 ? product.e_selling_price : product.selling_price;
-            // _this.preview_product.profit = product.selling_price - product.cost_price;
+            _this.preview_product.cost = product.cost_price;
+            _this.preview_product.sell = product.selling_price;
+            _this.preview_product.profit = product.selling_price - product.cost_price;
             _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
 
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
@@ -787,7 +796,7 @@ export default {
                             let sale_start_date = '2020-01-01';
                             let sale_end_date = '2021-12-31';
                             let data = {
-                                maker_id:response.data.maker_id,
+                                maker_id: response.data.maker_id,
                                 vendor_id: vendor_id,
                                 jan_code: jan_code,
                                 item_name: item_name,
@@ -809,11 +818,17 @@ export default {
 
                             axios.post(_this.base_url + '/add_vendor_item', data)
                                 .then(function (response) {
+                                    // console.log(response.data)
                                     _this.getProducts();
                                     _this.getOrderDataByJan();
                                 })
                                 .catch(function (er) {
 
+                                })
+                                .finally(function () {
+                                    $('.loading_image_custom').hide()
+                                    _this.loader = 0
+                                    _this.jan_code = ''
                                 })
 
 
@@ -827,67 +842,22 @@ export default {
                 })
                 .finally(function () {
                     // _this.jan_code = '';
-                    $('.loading_image_custom').hide()
-                    _this.loader = 0
+                    // $('.loading_image_custom').hide()
+                    // _this.loader = 0
                 })
         },
         naviShow() {
             this.handi_navi = '仕入・販売先マスターへ登録されました';
             $('#handy-navi').show();
-        },
-        // select all
-        selectAll() {
-            this.productJans = [];
-            if (!this.allSelected) {
-                this.productJans = this.products
-            }
-
-
-        },
-        selectAllSuper() {
-            let _this = this;
-            this.selectedSuper = [];
-            if (!_this.allSelectedSuper) {
-                _this.vendors.map(function (ven) {
-                    _this.selectedSuper.push(ven.id)
-                })
-            }
-
-
-        },
-        // select super
-        selectSuper() {
-            $('#mistumury-select-super').modal({backdrop : 'static'})
-        },
-        //sendtoSuper
-        sendtoSuper() {
-            console.log(this.productJans)
-            console.log(this.selectedSuper)
-            this.allSelected = false
-            this.allSelectedSuper = false
-            this.selectedSuper= [];
-            this.productJans= [];
-
-            let data = [this.productJans,this.selectedSuper];
-
-
-            this.handi_navi = '00000000';
-            $('#handy-navi').show();
-            $('#mistumury-select-super').modal('hide');
         }
+
+
     },
     watch: {}
 }
 </script>
 
 <style scoped>
-
-.active-c {
-    background: #b5ffb1;
-}
-.active-img {
-    box-shadow: inset 0px 0px 5px #0079ff;
-}
 
 .well {
     padding: 0 !important;
@@ -914,8 +884,11 @@ td {
 
 table thead tr th, table tbody tr td {
     border: 1px solid #9f9f9f !important;
+    vertical-align:middle !important;
 }
-
+table tbody tr td input{
+    border:none !important;
+}
 @supports (-webkit-touch-callout: none) {
     /*/CSS specific to iOS devices */
     .search-button-ios {
@@ -927,21 +900,10 @@ table thead tr th, table tbody tr td {
     }
 
 }
-.image-div {
-    width: 24%;
-    position: relative;
-}
-
-.form-check-input_ {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
 
 .custom-img {
     width: 100%;
-    margin: 5px;
-    max-height: 310px !important;
+    max-height: 145px !important;
 }
 
 .custom-img-preview {
@@ -970,13 +932,8 @@ table thead tr th, table tbody tr td {
 }
 
 @media screen and (max-width: 351px) {
-    .image-div {
-        width: 50%;
-    }
-
     .custom-img {
         width: 100%;
-        margin: 3px 0px;
     }
 
     .top-button {
@@ -995,12 +952,5 @@ table thead tr th, table tbody tr td {
         max-height: 500px;
     }
 
-}
-
-input[type="radio"], input[type="checkbox"] {
-    width: 25px;
-    height: 25px;
-    margin: 0px 0px 0px -20px;
-    cursor: pointer;
 }
 </style>
