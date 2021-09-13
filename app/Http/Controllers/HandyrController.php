@@ -871,7 +871,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
         vi.maker_id,
         vi.sale_selling_price,
         vi.e_cost_price,
-        vi.e_selling_price, 
+        vi.e_selling_price,
         vi.gross_profit_margin as profit_margin
     FROM
     vendor_items AS vi

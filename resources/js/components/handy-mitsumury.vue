@@ -559,17 +559,13 @@ export default {
 
                 let data = {
                     jan:_this.preview_product.jan,
-                    product_name: _this.preview_product.item_name,
-                    case_qty: parseInt(_this.preview_product.case_inputs),
-                    ball_qty: parseInt(_this.preview_product.ball_inputs),
                     price: parseFloat(_this.preview_product.cost),
                     gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
                     gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
-                    selling_price: parseFloat(_this.preview_product.sell),
-                    sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
+                    selling_price: parseFloat(_this.preview_product.sell)
                 }
 
-                axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
+                axios.post(_this.base_url + '/update_vendor_item_estimate_items', data)
                     .then(function (response) {
                         // _this.getOrderDataByJan();
                         _this.getProducts();
