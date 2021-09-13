@@ -92,6 +92,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/insert_janinfo','VendorController@insert_janinfo');
 	Route::post('/add_vendor_item','VendorController@addVendorItem');
 	Route::post('/update_vendor_master_item_content','VendorController@update_vendor_master_item_content');
+	Route::post('/update_vendor_item_estimate_items','VendorController@update_vendor_item_estimate_items');
 	Route::post('/update_in_company_code','VendorController@update_in_company_code');
 	Route::post('/update_vendor_itms_by_vendor_id','VendorController@update_vendor_itms_by_vendor_id');
     Route::post('/update_vendor_item_by_vendor_item_id','VendorController@updateVendorItem');
@@ -317,6 +318,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::get('/online_csv_import', 'HandyrController@online_csv_import')->name('online.kouri.csvimport');
     Route::get('/handy_order_mail', 'HandyrController@handy_order_mail')->name('handy.order.mail');
     Route::get('/get_all_haccue_list/{vendor_id?}', 'ReceiveorderController@haccuListBytonyaHandy')->name('handy.order.mail');
+    Route::get('/handy_receive_mitshumori', 'HandyrController@handy_receive_mitshumori')->name('handy.receive.mitshumori');
 
 
 });

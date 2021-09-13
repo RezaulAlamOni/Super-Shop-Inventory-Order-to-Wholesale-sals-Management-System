@@ -553,8 +553,8 @@ class VendorController extends Controller
         $gross_profit = ($gross_profit_margin/$selling_price)*100;
         $gross_profit = round($gross_profit, 2);
 
-        
-        
+
+
         $customer_data_ins_array = array(
             'customer_id' => $data['c_name'],
             'vendor_id' => $data['v_name'],
@@ -581,6 +581,24 @@ class VendorController extends Controller
 
             return 'item registered success';
         }
+    }
+
+    public function update_vendor_item_estimate_items(Request $request) {
+        $jan = $request->jan;
+        $price = $request->price;
+        $selling_price = $request->selling_price;
+        $gross_profit_margin = $request->gross_profit_margin;
+        $gross_profit = $request->gross_profit;
+
+        /*update in_cmpany*/
+        vendor_item::where('jan', '=', $jan)
+            ->update([
+                'e_cost_price' => $price,
+                'e_selling_price' => $selling_price,
+                'e_gross_profit_margin' => $gross_profit_margin,
+                'e_gross_profit' => $gross_profit,
+            ]);
+        return  response()->json(['message' => 'update_success']);
     }
 
     public function update_vendor_master_item_content(Request $request)
