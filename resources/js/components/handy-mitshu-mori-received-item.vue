@@ -81,7 +81,7 @@
                                 <thead data-v-c9953dda="">
                                 <tr data-v-c9953dda="">
                                     <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
-                                        Img
+                                        画像
                                     </th>
                                     <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
                                         原価
