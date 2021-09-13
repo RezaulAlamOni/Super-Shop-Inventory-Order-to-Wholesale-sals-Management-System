@@ -15,7 +15,7 @@ class MistumuryController extends Controller
      */
     public function index()
     {
-        $products = customer_item::with('janinfo')->groupBy('jan')->get();
+        $products = vendor_item::with('janinfo')->groupBy('jan')->get();
         return  response()->json(['products'=> $products]);
     }
 

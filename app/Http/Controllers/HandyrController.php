@@ -870,6 +870,10 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
         vi.order_lot_quantity,
         vi.maker_id,
         vi.sale_selling_price,
+        vi.e_cost_price,
+        vi.e_selling_price,
+        vi.e_gross_profit_margin,
+        vi.e_gross_profit,
         vi.gross_profit_margin as profit_margin
     FROM
     vendor_items AS vi
@@ -962,6 +966,14 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $title = "Dashboard";
         $active = 'handy_order_mail';
         return view('backend.handy_pages.handy_order_mail', compact('title', 'active'));
+//        return view('backend.handy_pages.handy_store_order', compact('title', 'active'));
+    }
+
+    public function handy_receive_mitshumori()
+    {
+        $title = "Dashboard";
+        $active = 'handy_receive_mitshumori';
+        return view('backend.handy_pages.handy_receive_mitshumori', compact('title', 'active'));
 //        return view('backend.handy_pages.handy_store_order', compact('title', 'active'));
     }
 
