@@ -540,6 +540,7 @@ export default {
             if (e.keyCode == 13) {
                 $('#' + type).focus()
                 $('#' + type).select()
+                return false;
                 if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
                     _this.handi_navi = 'XXXXX';
                     $('#handy-navi').show()
@@ -580,7 +581,7 @@ export default {
         },
         blurAndSave() {
             let _this = this;
-
+            return false;
             if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
                 _this.handi_navi = 'XXXXX';
                 $('#handy-navi').show()
