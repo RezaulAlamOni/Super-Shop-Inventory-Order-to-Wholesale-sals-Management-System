@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-inventory-return","1":"handy-product-inventory-inquiry","2":"handy-mitsumury","3":"barcode-scan","4":"handy-vandor-master","5":"handy-product-order-receive","6":"handy-product-order-place","7":"handy-product-order-place-kouri","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"6cc01497e8419ae4f998","1":"3bd2e3b846ff71f57c1b","2":"e3a5df605b46997830bd","3":"d0d57bb1bbfee8a614dc","4":"d09cb1d459a8d2ccad6a","5":"575e3cf627011ee8dea0","6":"669fcd382166d607d7a3","7":"1bd945210b55266fa5fc","8":"b1ac5a546155534a3f7b","9":"47f54edc01db6491e023","10":"4da5888fb324e3751f67","11":"3acfbf5e8708fb685524","12":"d875f474c1c160b3400b","13":"e76b953fcd22492b5c4a","14":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-inventory-return","2":"handy-product-inventory-inquiry","3":"handy-mitsumury","4":"barcode-scan","5":"handy-vandor-master","6":"handy-product-order-receive","7":"handy-product-order-place","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"3238b6a3cc3ab4e5cbd8","1":"6cc01497e8419ae4f998","2":"3bd2e3b846ff71f57c1b","3":"7b86e1de42315efa86b0","4":"d0d57bb1bbfee8a614dc","5":"a3444e590811ba0c3259","6":"575e3cf627011ee8dea0","7":"669fcd382166d607d7a3","8":"b1ac5a546155534a3f7b","9":"47f54edc01db6491e023","10":"4da5888fb324e3751f67","11":"3acfbf5e8708fb685524","12":"d875f474c1c160b3400b","13":"ce1da91bdc442e013d71","14":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -49872,8 +49872,12 @@ import handyVendorMaster from './components/handy-vandor-master'
 import handyCustomerMaster from './components/handy-customer-master'
 import barCodeScan from './components/barcode-scan'*/
 
+var mitshumoriSuper = function mitshumoriSuper() {
+  return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitshu-mori-received-item.vue"));
+};
+
 var handyProductOrderPlaceKouri = function handyProductOrderPlaceKouri() {
-  return __webpack_require__.e/* import() */(7).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place-kouri.vue"));
+  return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place-kouri.vue"));
 };
 
 var handyProductOrderOnlineOrderKouri = function handyProductOrderOnlineOrderKouri() {
@@ -49889,11 +49893,11 @@ var handyProductOrderConfirmKouri = function handyProductOrderConfirmKouri() {
 };
 
 var handyProductOrderPlace = function handyProductOrderPlace() {
-  return __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place.vue"));
+  return __webpack_require__.e/* import() */(7).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place.vue"));
 };
 
 var handyProductOrderReceive = function handyProductOrderReceive() {
-  return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-receive.vue"));
+  return __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-receive.vue"));
 };
 
 var handyProductInventoryTempTanaUpdate = function handyProductInventoryTempTanaUpdate() {
@@ -49901,15 +49905,15 @@ var handyProductInventoryTempTanaUpdate = function handyProductInventoryTempTana
 };
 
 var handyProductInventoryInquiry = function handyProductInventoryInquiry() {
-  return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-inquiry.vue"));
+  return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-inquiry.vue"));
 };
 
 var handyProductInventoryMitsumry = function handyProductInventoryMitsumry() {
-  return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitsumury.vue"));
+  return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitsumury.vue"));
 };
 
 var handyProductInventoryReturn = function handyProductInventoryReturn() {
-  return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-return.vue"));
+  return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-return.vue"));
 };
 
 var handyOrderShipmentList = function handyOrderShipmentList() {
@@ -49917,7 +49921,7 @@ var handyOrderShipmentList = function handyOrderShipmentList() {
 };
 
 var handyVendorMaster = function handyVendorMaster() {
-  return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, "./resources/js/components/handy-vandor-master.vue"));
+  return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-vandor-master.vue"));
 };
 
 var handyCustomerMaster = function handyCustomerMaster() {
@@ -49925,7 +49929,7 @@ var handyCustomerMaster = function handyCustomerMaster() {
 };
 
 var barCodeScan = function barCodeScan() {
-  return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, "./resources/js/components/barcode-scan.vue"));
+  return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, "./resources/js/components/barcode-scan.vue"));
 };
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -49937,6 +49941,7 @@ var barCodeScan = function barCodeScan() {
 var app = new Vue({
   el: '#app',
   components: {
+    'handy-mitshu-mori-received-item': mitshumoriSuper,
     'handy-product-order-kouri': handyProductOrderPlaceKouri,
     'handy-product-online-order-kouri': handyProductOrderOnlineOrderKouri,
     'handy-product-order-mail': handyProductOrdermail,

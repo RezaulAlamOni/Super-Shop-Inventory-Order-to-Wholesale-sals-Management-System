@@ -17,4 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/haccuListsendtomailportal', 'API\SendMailPortalController@haccuListsendtomailportal');
+Route::post('/estimation_data', 'Eestimate_itemController@store');
 
