@@ -423,7 +423,7 @@ export default {
             }
             $('.loading_image_custom').show()
             _this.loader = 1
-            axios.get(this.base_url + '/handy_customer_master_item_get_by_jan_code/' + _this.jan_code)
+            axios.get(this.base_url + '/handy_stock_detail_get_by_jan_code/' + _this.jan_code)
                 .then(function (res) {
                     //_this.resetField();
                     if (res.data.status == 400) {
@@ -680,9 +680,9 @@ export default {
             _this.preview_product = product;
             _this.maker_id = product.vendor_id;
             _this.preview_product.title = product.item_name;
-            _this.preview_product.cost = product.cost_price;
-            _this.preview_product.sell = product.selling_price;
-            _this.preview_product.profit = product.selling_price - product.cost_price;
+            _this.preview_product.cost = product.e_cost_price != 0 ? product.e_cost_price : product.cost_price;
+            _this.preview_product.sell = product.e_selling_price != 0 ? product.e_selling_price : product.selling_price;
+            // _this.preview_product.profit = product.selling_price - product.cost_price;
             _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
 
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
@@ -790,7 +790,7 @@ export default {
                             let sale_start_date = '2020-01-01';
                             let sale_end_date = '2021-12-31';
                             let data = {
-                                maker_id: response.data.maker_id,
+                                maker_id:response.data.maker_id,
                                 vendor_id: vendor_id,
                                 jan_code: jan_code,
                                 item_name: item_name,
@@ -812,17 +812,11 @@ export default {
 
                             axios.post(_this.base_url + '/add_vendor_item', data)
                                 .then(function (response) {
-                                    // console.log(response.data)
                                     _this.getProducts();
                                     _this.getOrderDataByJan();
                                 })
                                 .catch(function (er) {
 
-                                })
-                                .finally(function () {
-                                    $('.loading_image_custom').hide()
-                                    _this.loader = 0
-                                    _this.jan_code = ''
                                 })
 
 
@@ -836,8 +830,8 @@ export default {
                 })
                 .finally(function () {
                     // _this.jan_code = '';
-                    // $('.loading_image_custom').hide()
-                    // _this.loader = 0
+                    $('.loading_image_custom').hide()
+                    _this.loader = 0
                 })
         },
         naviShow() {
@@ -877,8 +871,12 @@ export default {
             this.selectedSuper= [];
             this.productJans= [];
 
+            let data = [this.productJans,this.selectedSuper];
+
+
             this.handi_navi = '00000000';
             $('#handy-navi').show();
+            $('#mistumury-select-super').modal('hide');
         }
     },
     watch: {}
