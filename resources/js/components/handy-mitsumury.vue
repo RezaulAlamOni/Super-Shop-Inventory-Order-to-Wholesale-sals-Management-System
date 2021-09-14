@@ -866,11 +866,16 @@ export default {
 
 
 
-            let data = [this.productJans,this.selectedSuper];
+            let data = {'item_info':this.productJans,'super_info':this.selectedSuper};
             this.handi_navi = '00000000';
             $('#handy-navi').show();
             $('#mistumury-select-super').modal('hide');
-            axios.post('/rv3_superv1/api/estimation_data', data)
+            // console.log(base_url)
+            // console.log(base_url.includes('localhost'));
+            // console.log(base_url.indexOf('localhost') !== -1);
+            var setApiUrl = (base_url.indexOf('localhost') !== -1?'/rv3_tonyav1':'/rv3_superv1');
+
+            axios.post(setApiUrl+'/api/estimation_data', data)
                 .then(function (response) {
                     // _this.getOrderDataByJan();
                     _this.getProducts();
