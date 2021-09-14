@@ -143,6 +143,7 @@
                                         <input data-v-c9953dda="" type="tel" id="special-price"
                                                v-model="preview_product.sale_selling_price"
                                                class="form-control  " @click="selectItem($event)"
+                                               @blur="blurAndSave()"
                                                @keypress="pressEnterAndSave($event,'cost')"
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
@@ -558,12 +559,14 @@ export default {
                 //     sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
                 // }
 
+                return false;
                 let data = {
                     jan:_this.preview_product.jan,
                     price: parseFloat(_this.preview_product.cost),
                     gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
                     gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
-                    selling_price: parseFloat(_this.preview_product.sell)
+                    selling_price: parseFloat(_this.preview_product.sell),
+                    sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
                 }
 
                 axios.post(_this.base_url + '/update_vendor_item_estimate_items', data)
@@ -581,7 +584,7 @@ export default {
         },
         blurAndSave() {
             let _this = this;
-            return false;
+
             if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
                 _this.handi_navi = 'XXXXX';
                 $('#handy-navi').show()
@@ -589,18 +592,14 @@ export default {
             }
             let data = {
                 jan:_this.preview_product.jan,
-                product_name: _this.preview_product.item_name,
-                case_qty: parseInt(_this.preview_product.case_inputs),
-                ball_qty: parseInt(_this.preview_product.ball_inputs),
                 price: parseFloat(_this.preview_product.cost),
                 gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
                 gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
-
                 selling_price: parseFloat(_this.preview_product.sell),
                 sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
             }
 
-            axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
+            axios.post(_this.base_url + '/update_vendor_item_estimate_items', data)
                 .then(function (response) {
                     // _this.getOrderDataByJan();
                     _this.getProducts();
@@ -861,20 +860,31 @@ export default {
         },
         //sendtoSuper
         sendtoSuper() {
-            console.log(this.productJans)
-            console.log(this.selectedSuper)
+            let _this = this;
             this.allSelected = false
             this.allSelectedSuper = false
-            this.selectedSuper= [];
-            this.productJans= [];
+
+
 
             let data = [this.productJans,this.selectedSuper];
-
-
             this.handi_navi = '00000000';
             $('#handy-navi').show();
             $('#mistumury-select-super').modal('hide');
+            axios.post('/rv3_superv1/api/estimation_data', data)
+                .then(function (response) {
+                    // _this.getOrderDataByJan();
+                    _this.getProducts();
+                    _this.handi_navi = '仕入・販売先マスターへ登録されました';
+                    $('#handy-navi').show()
+                })
+                .catch(function (e) {
+                    console.log(e)
+                })
+            this.selectedSuper= [];
+            this.productJans= [];
         }
+
+
     },
     watch: {}
 }
