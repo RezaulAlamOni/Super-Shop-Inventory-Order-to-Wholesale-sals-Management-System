@@ -70,9 +70,10 @@ class Eestimate_itemController extends Controller
                     vendor_item::insert($item_insertedarr);
                 }
                 $janInfo = $item['janinfo'];
+                unset( $janInfo['jan_id']);
                 if($exitsJan){
                    
-                    unset( $janInfo['jan_id']);
+                   
                     jan::where('jan',$janInfo['jan'])->update($janInfo);
                 }else{
                     jan::insert($janInfo);
