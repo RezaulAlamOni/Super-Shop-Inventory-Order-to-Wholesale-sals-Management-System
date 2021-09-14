@@ -319,6 +319,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::get('/handy_order_mail', 'HandyrController@handy_order_mail')->name('handy.order.mail');
     Route::get('/get_all_haccue_list/{vendor_id?}', 'ReceiveorderController@haccuListBytonyaHandy')->name('handy.order.mail');
     Route::get('/handy_receive_mitshumori', 'HandyrController@handy_receive_mitshumori')->name('handy.receive.mitshumori');
+    Route::get('/get-all-products-from-estimation', 'HandyrController@index')->name('handy.receive.mitshumori.index');
 
 
 });

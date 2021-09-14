@@ -27,6 +27,8 @@ class Eestimate_itemController extends Controller
     public function index()
     {
         //
+        $products = estimate_item::with('janinfo')->groupBy('jan')->get();
+        return  response()->json(['products'=> $products]);
     }
 
     /**
@@ -38,7 +40,46 @@ class Eestimate_itemController extends Controller
     public function store(Request $request)
     {
         //
-        return $request->all();
+        //return $request->all();
+        $item_info = $request->item_info;
+        $super_info = $request->super_info;
+        if(empty($super_info)){
+            return response()->json(['status' => 401, 'message' => "Super not found"]);
+        }
+        if(empty($item_info)){
+            return response()->json(['status' => 401, 'message' => "Item not found"]);
+        }
+        foreach($super_info as $super){
+            foreach($item_info as $item){
+                $item_insertedarr = $item;
+                $item_insertedarr['customer_id']=$super;
+                unset( $item_insertedarr['janinfo'],$item_insertedarr['img'],$item_insertedarr['vendor_item_id'] );
+                
+                $exitsItme = estimate_item::where(['customer_id'=>$super,'jan'=>$item_insertedarr['jan']])->first();
+                $exitsVendor = vendor_item::where(['jan'=>$item_insertedarr['jan']])->first();
+                $exitsJan = jan::where('jan',$item_insertedarr['jan'])->first();
+                if($exitsItme){
+
+                    estimate_item::where(['customer_id'=>$super,'jan'=>$item_insertedarr['jan']])->update($item_insertedarr);
+                }else{
+
+                    estimate_item::insert($item_insertedarr);
+                }
+                if(!$exitsVendor){
+
+                    vendor_item::insert($item_insertedarr);
+                }
+                if($exitsJan){
+                    $janInfo = $item['janinfo'];
+                    unset( $janInfo['jan_id']);
+                    jan::where('jan',$janInfo['jan'])->update($janInfo);
+                }else{
+                    jan::insert($janInfo);
+                }
+            }
+        }
+
+        return response()->json(['status' => 200, 'message' => "successfully sent to super"]);
     }
 
     /**
