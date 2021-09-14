@@ -588,6 +588,7 @@ class VendorController extends Controller
         $price = $request->price;
         $selling_price = $request->selling_price;
         $gross_profit_margin = $request->gross_profit_margin;
+        $sale_selling_price = $request->sale_selling_price;
         $gross_profit = $request->gross_profit;
 
         /*update in_cmpany*/
@@ -597,6 +598,7 @@ class VendorController extends Controller
                 'e_selling_price' => $selling_price,
                 'e_gross_profit_margin' => $gross_profit_margin,
                 'e_gross_profit' => $gross_profit,
+                'sale_selling_price' => $sale_selling_price
             ]);
         return  response()->json(['message' => 'update_success']);
     }

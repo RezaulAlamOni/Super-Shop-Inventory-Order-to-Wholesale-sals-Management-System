@@ -323,7 +323,7 @@ export default {
     methods: {
         getProducts() {
             let _this = this;
-            axios.get(this.base_url + '/get-all-products')
+            axios.get(this.base_url + '/get-all-products-from-estimation')
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
