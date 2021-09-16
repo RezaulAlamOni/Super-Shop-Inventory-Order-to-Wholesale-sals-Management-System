@@ -15,17 +15,20 @@ class vendorSeeder extends Seeder
             [
                 'name' => 'A 問屋',
                 'partner_code' => '123456',
-                'phone' =>'123456789'
+                'phone' =>'123456789',
+                'user_id'=>3
             ],
             [
                 'name' => 'B 問屋',
                 'partner_code' => '654321',
-                'phone' =>'987654321'
+                'phone' =>'987654321',
+                'user_id'=>7
             ],
             [
                 'name' => 'C 問屋',
                 'partner_code' => '321654',
-                'phone' =>'123456798'
+                'phone' =>'123456798',
+                'user_id'=>8
             ]
         );
 
