@@ -17,10 +17,15 @@ class CreateVendorItemsTable extends Migration
             $table->increments('vendor_item_id')->comment('Vendor Item Id');
             $table->integer('vendor_id')->comment('Vendor Id');
             $table->integer('maker_id')->comment('maker Id');
+            $table->integer('customer_id')->nullable()->comment('customer Id');
             $table->string('jan',15)->comment('Vendor Jan');
             $table->enum('order_class', ['basic', 'sale','spot'])->default('basic')->comment('Vendor Class');
             $table->decimal('cost_price',9,2)->comment('Vendor Cost Price');
             $table->decimal('selling_price',9,2)->comment('selling Price');
+            $table->decimal('e_cost_price',9,2)->default('0.00')->comment('Estamate Cost Price');
+            $table->decimal('e_selling_price',9,2)->default('0.00')->comment('Estamate Price');
+            $table->decimal('e_gross_profit',9,2)->default('0.00')->comment('e gross profit');
+            $table->decimal('e_gross_profit_margin',9,2)->default('0.00')->comment('e gross profit margin');
             $table->decimal('sale_selling_price',9,2)->comment('sale selling Price');
             $table->decimal('gross_profit',9,2)->comment('profit');
             $table->decimal('gross_profit_margin',9,2)->comment('profit_percentange');

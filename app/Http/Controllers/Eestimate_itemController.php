@@ -17,6 +17,7 @@ use App\customer_item;
 use App\vendor_item;
 use App\estimate_item;
 use Session;
+use Auth;
 class Eestimate_itemController extends Controller
 {
     /**
@@ -27,7 +28,13 @@ class Eestimate_itemController extends Controller
     public function index()
     {
         //
-        $products = estimate_item::with('janinfo')->groupBy('jan')->get();
+        $user_id=Auth::user()->id;
+        $cus_info = customer::where('user_id',$user_id)->first();
+        if($cus_info){
+            $products = estimate_item::with('janinfo')->where('customer_id',$cus_info->customer_id)->groupBy('jan')->get();
+        }else{
+            $products =array();
+        }
         return  response()->json(['products'=> $products]);
     }
 
