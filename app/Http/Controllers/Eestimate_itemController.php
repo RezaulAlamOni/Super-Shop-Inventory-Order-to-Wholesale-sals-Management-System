@@ -156,6 +156,5 @@ class Eestimate_itemController extends Controller
         curl_setopt($ch,CURLOPT_TIMEOUT, 500);
         $response = curl_exec($ch);
         curl_close ($ch);
-        dd($response);
     }
 }
