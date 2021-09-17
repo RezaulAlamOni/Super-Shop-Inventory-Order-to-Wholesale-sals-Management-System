@@ -27,6 +27,7 @@
                                 全て
                             </label>
                         </div>
+                        <button v-if="productJans.length > 0" @click="selectSuper(' ')" class="btn btn-success pull-right mr-1 " style=" position: absolute; top: 5px; right: 62px;"> 送信 メイル</button>
                         <button v-if="productJans.length > 0" @click="selectSuper()" class="btn btn-success pull-right mr-1 " style=" position: absolute; top: 5px; right: 0px;"> 送信</button>
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
@@ -83,7 +84,7 @@
 
                     <div class=" col-centereds col-md-12 col-sm-12 col-sl-12 p-0 row ">
                         <div class="col-sm-6 col-md-3 col-xl-3 image-div" v-for="(product,i) in products" :class="(productJans.indexOf(product)) > -1 ? 'active-img' : ''">
-                            <img  :src="'public/backend/images/products/'+product.img"
+                            <img  :src="'public/backend/images/products/'+product.jan+'.png'"
                                   class="img-thumbnail custom-img"
                                   alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                   style="cursor: pointer">
@@ -112,7 +113,7 @@
                         </div>
                         <div>
                             <img
-                                :src="'public/backend/images/products/'+ ( preview_product.jan == '4901005500341' ? 'chocolate.jpg' : (preview_product.img ? preview_product.img : 'chocolate.jpg')) "
+                                :src="'public/backend/images/products/'+ preview_product.jan+'.png'"
                                 class="img-thumbnail custom-img-preview" alt="Cinque Terre"
                                 style="cursor: pointer">
                         </div>
@@ -237,8 +238,14 @@
 
                             </table>
                         </div>
-                        <div class="p-2" style="text-align: right">
-                            <br>
+
+                        <div class="form-group" v-if="message">
+                            <label for="exampleFormControlTextarea1"><h4>*********</h4></label>
+                            <textarea class="form-control" autofocus v-model="message"
+                                      style="border: 1px solid; background: beige;"
+                                      id="exampleFormControlTextarea1" rows="3">
+
+                            </textarea>
                         </div>
 
 
@@ -302,6 +309,7 @@ export default {
             allSelectedSuper: false,
             productJans: [],
             selectedSuper: [],
+            message : null
 
         }
     },
@@ -322,12 +330,13 @@ export default {
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
-                    _this.products = _this.products.map(function (product) {
-                        product.img = product.jan == '4901005500341' ? 'chocolate.jpg' : _this.images[Math.floor(Math.random() * 7)];
-                        return product;
-                    })
+                    // _this.products = _this.products.map(function (product) {
+                    //     product.img = product.jan == '4901005500341' ? 'chocolate.jpg' : _this.images[Math.floor(Math.random() * 7)];
+                    //     return product;
+                    // })
                     // _this.handi_navi = '........';
                     // $('#handy-navi').show();
+                    _this.productJans = [];
                 })
                 .catch(function () {
 
@@ -855,7 +864,8 @@ export default {
 
         },
         // select super
-        selectSuper() {
+        selectSuper(message = null) {
+            this.message = message
             $('#mistumury-select-super').modal({backdrop : 'static'})
         },
         //sendtoSuper
@@ -866,7 +876,7 @@ export default {
 
 
 
-            let data = {'item_info':this.productJans,'super_info':this.selectedSuper};
+            let data = {'item_info':this.productJans,'super_info':this.selectedSuper, 'message' : this.message};
             this.handi_navi = '00000000';
             $('#handy-navi').show();
             $('#mistumury-select-super').modal('hide');
