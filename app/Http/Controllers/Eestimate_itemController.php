@@ -25,13 +25,14 @@ class Eestimate_itemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $orderBy = $request->orderBy;
         $user_id=Auth::user()->id;
         $cus_info = customer::where('user_id',$user_id)->first();
         if($cus_info){
-            $products = estimate_item::with('janinfo')->where('customer_id',$cus_info->customer_id)->groupBy('jan')->get();
+            $products = estimate_item::with('janinfo')->where('customer_id',$cus_info->customer_id)->groupBy('jan')->orderBy('updated_at',$orderBy)->get();
         }else{
             $products =array();
         }
