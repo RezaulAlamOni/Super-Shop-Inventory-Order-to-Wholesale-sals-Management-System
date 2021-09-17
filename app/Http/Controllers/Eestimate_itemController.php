@@ -25,13 +25,14 @@ class Eestimate_itemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $orderBy = $request->orderBy;
         $user_id=Auth::user()->id;
         $cus_info = customer::where('user_id',$user_id)->first();
         if($cus_info){
-            $products = estimate_item::with('janinfo')->where('customer_id',$cus_info->customer_id)->groupBy('jan')->get();
+            $products = estimate_item::with('janinfo')->where('customer_id',$cus_info->customer_id)->groupBy('jan')->orderBy('updated_at',$orderBy)->get();
         }else{
             $products =array();
         }
@@ -144,8 +145,9 @@ class Eestimate_itemController extends Controller
             'sender_partner_code' => '909090',
         );
         $fields_string = http_build_query($post_array);
-        $url = "https://keipro.development.dhaka10.dev.jacos.jp/mail/index.php/api/File_send/mail_send";
-        $url = "http://localhost/mail/index.php/api/File_send/mail_send_to_super";
+//        $url = "https://keipro.development.dhaka10.dev.jacos.jp/mail/index.php/api/File_send/mail_send";
+        $url = "https://keipro.development.dhaka10.dev.jacos.jp/mail/index.php/api/File_send/mail_send_to_super";
+//        $url = "http://localhost/mail/index.php/api/File_send/mail_send_to_super";
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
         curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
