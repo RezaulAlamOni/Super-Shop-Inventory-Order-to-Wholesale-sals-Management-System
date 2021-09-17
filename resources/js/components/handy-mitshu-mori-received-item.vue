@@ -11,6 +11,8 @@
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right top-button"
                            style="float:right">メニュー</a>
+                             <a href="javascript:void(0)" @click="getProducts" class="btn btn-success pull-right mr-1 top-button"
+                           style="float:right"> 履歴</a>
                       <!--  <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 発注</a>-->
                         <!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
@@ -105,7 +107,7 @@
                                                class="form-control  " @click="selectItem($event)"
                                                @keypress="pressEnterAndSave($event,'cost')"
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
-                                               <img :src="'public/backend/images/products/'+product.img"
+                                               <img :src="'public/backend/images/products/'+product.jan+'.png'"
                                  class="img-thumbnail custom-img"
                                  alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                  style="cursor: pointer" width="100px">
@@ -171,7 +173,7 @@
                         </div>
                         <div>
                             <img
-                                :src="'public/backend/images/products/'+ ( preview_product.jan == '4901005500341' ? 'chocolate.jpg' : (preview_product.img ? preview_product.img : 'chocolate.jpg')) "
+                                :src="'public/backend/images/products/'+preview_product.jan+'.png'"
                                 class="img-thumbnail custom-img-preview" alt="Cinque Terre"
                                 style="cursor: pointer">
                         </div>
@@ -202,7 +204,7 @@
                                         <input data-v-c9953dda="" type="tel" id="special-price"
                                                v-model="preview_product.sale_selling_price"
                                                class="form-control  " @click="selectItem($event)"
-                                               @keypress="pressEnterAndSave($event,'cost')"
+                                               @keypress="pressEnterAndSave($event,'cost')" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
@@ -210,7 +212,7 @@
                                                class="form-control  " v-model="preview_product.cost"
                                                @blur="blurAndSave()"
                                                @keypress="pressEnterAndSave($event,'sell')"
-                                               @keyup="calculatePrice('cost')"
+                                               @keyup="calculatePrice('cost')" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
@@ -218,7 +220,7 @@
                                                class="form-control  " v-model="preview_product.sell"
                                                @keypress="pressEnterAndSave($event,'profit_margin')"
                                                @blur="blurAndSave()"
-                                               @keyup="calculatePrice('sell')"
+                                               @keyup="calculatePrice('sell')" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
@@ -234,9 +236,10 @@
                                                @blur="blurAndSave()"
                                                @keypress="pressEnterAndSave($event,'special-price')"
                                                class="form-control  " v-model="preview_product.profit_margin"
-                                               @keyup="calculatePrice('profit_margin')"
+                                               @keyup="calculatePrice('profit_margin')" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -304,6 +307,7 @@ export default {
             search_data: null,
             product_pics: [],
             preview_product: {},
+            orderBy:'DESC',
             maker_id: 0,
             vendors: [],
             images: []
@@ -323,12 +327,21 @@ export default {
     methods: {
         getProducts() {
             let _this = this;
-            axios.get(this.base_url + '/get-all-products-from-estimation')
+            if(_this.orderBy=='DESC'){
+                _this.orderBy = 'ASC';
+            }else if(_this.orderBy=='ASC'){
+                _this.orderBy='DESC';
+            }
+            
+            axios.post(this.base_url + '/get-all-products-from-estimation',{orderBy:_this.orderBy})
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
                     _this.products = _this.products.map(function (product) {
-                        product.img = product.jan == '4901005500341' ? 'chocolate.jpg' : _this.images[Math.floor(Math.random() * 7)];
+                        product.cost_price = (product.e_cost_price!='0.00'?product.e_cost_price:product.cost_price);
+                        product.selling_price = (product.e_selling_price!='0.00'?product.e_selling_price:product.selling_price);
+                        product.gross_profit = (product.e_gross_profit!='0.00'?product.e_gross_profit:product.gross_profit);
+                        product.gross_profit_margin = (product.e_gross_profit_margin!='0.00'?product.e_gross_profit_margin:product.gross_profit_margin);
                         return product;
                     })
                     console.log(_this.products);
@@ -686,10 +699,11 @@ export default {
             _this.preview_product = product;
             _this.maker_id = product.vendor_id;
             _this.preview_product.title = product.item_name;
-            _this.preview_product.cost = product.cost_price;
-            _this.preview_product.sell = product.selling_price;
-            _this.preview_product.profit = product.selling_price - product.cost_price;
-            _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+             _this.preview_product.cost = product.e_cost_price != '0.00' ? product.e_cost_price : product.cost_price;
+            _this.preview_product.sell = product.e_selling_price != '0.00' ? product.e_selling_price : product.selling_price;
+            _this.preview_product.profit = product.e_gross_profit != '0.00' ? product.e_gross_profit : product.gross_profit;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+            _this.preview_product.profit_margin = product.e_gross_profit_margin != '0.00' ? product.e_gross_profit_margin : product.gross_profit_margin;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+
 
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
             // $('#special-price').focus();
