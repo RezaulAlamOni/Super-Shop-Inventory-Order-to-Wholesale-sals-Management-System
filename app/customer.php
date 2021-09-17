@@ -8,6 +8,7 @@ use App\User;
 
 class customer extends Model
 {
+    protected $primaryKey = 'customer_id';
     //
     public function estimate_items(){
         return $this->hasMany(estimate_item::class,'customer_id','customer_id');
