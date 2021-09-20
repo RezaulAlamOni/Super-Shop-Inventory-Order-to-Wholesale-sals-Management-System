@@ -62,6 +62,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 		Route::post('user_create', 'UserManagement@userCreate');
         Route::get('user_delete/{user_id}', 'UserManagement@userDelete');
 		Route::get('user_list', 'UserManagement@userList');
+		Route::get('super_list', 'UserManagement@superList');
 		Route::get('user_update/{user_id}', 'UserManagement@userDetails');
 
 		Route::post('update_user', 'UserManagement@userUpdate');

@@ -53,6 +53,7 @@ const handyProductOrderReceive = ()=> import( /* webpackChunkName: "handy-produc
 const handyProductInventoryTempTanaUpdate = ()=> import( /* webpackChunkName: "handy-product-inventory-tmp-tana-update" */ './components/handy-product-inventory-tmp-tana-update');
 const handyProductInventoryInquiry = ()=> import( /* webpackChunkName: "handy-product-inventory-inquiry" */ './components/handy-product-inventory-inquiry');
 const handyProductInventoryMitsumry = ()=> import( /* webpackChunkName: "handy-mitsumury" */ './components/handy-mitsumury');
+const superAdminCustomerSuperManage = ()=> import( /* webpackChunkName: "admin-super-manage" */ './components/Admin/customers-list-manage');
 const handyProductInventoryReturn = ()=> import( /* webpackChunkName: "handy-product-inventory-return" */ './components/handy-product-inventory-return');
 const handyOrderShipmentList = ()=> import( /* webpackChunkName: "handy-order-shipment-list" */ './components/handy-order-shipment-list');
 const handyVendorMaster = ()=> import( /* webpackChunkName: "handy-vandor-master" */ './components/handy-vandor-master');
@@ -82,6 +83,8 @@ const app = new Vue({
         'handy-order-shipment-list' : handyOrderShipmentList,
         'bar-code-scan' : barCodeScan,
         'handy-vendor-master' : handyVendorMaster,
-        'handy-customer-master' : handyCustomerMaster
+        'handy-customer-master' : handyCustomerMaster,
+        'admin-customer-super-manage' : superAdminCustomerSuperManage,
+
     }
 });
