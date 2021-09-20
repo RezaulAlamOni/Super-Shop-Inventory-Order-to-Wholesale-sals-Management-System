@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\customer_shop;
 
@@ -80,10 +82,10 @@ class CustomerShopController extends Controller
             $old_customer_id=$old_shop_info['customer_id'];
             $old_shop_code=$old_shop_info['shop_no'];
             if($old_shop_code!= $shop_code){
-                
+
                 if(customer_shop::where('shop_no',$shop_code)->where('customer_id',$customer_id)->first()){
                     return response()->json(['message' => 'Customer shop code duplicated','class_name'=>'alert-danger']);
-                }  
+                }
             }
             customer_shop::where('customer_shop_id',$shop_id)->update($shop_array);
             return response()->json(['message' => 'success','class_name'=>'alert-success','mesg'=>'更新しました']);
@@ -96,8 +98,32 @@ class CustomerShopController extends Controller
             return response()->json(['message' => 'success','class_name'=>'alert-success','mesg'=>'店舗の登録が完了しました']);
         }
 
-       
-       
+
+
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function saveCustomerData(Request $request)
+    {
+        $shop_code=$request->customer_code;
+        $shop_name=$request->customer_name;
+        $email=$request->customer_email;
+        $shop_array=array(
+            'password'=>Hash::make($shop_code),
+            'name'=>$shop_name,
+            'email'=>$email,
+        );
+
+        $user = User::create($shop_array);
+
+        return response()->json(['message' => $user,'class_name'=>'alert-success','mesg'=>'店舗の登録が完了しました']);
+
+
+
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\customer;
 use App\User;
 use App\users_details;
 use Auth;
@@ -17,7 +18,7 @@ class UserManagement extends Controller
     /**
      * Show the page to manage User.
      *
-     * @param  Request $request
+     * @param Request $request
      * @return A success message as Json format
      */
     public function userCreate(Request $request)
@@ -57,31 +58,32 @@ class UserManagement extends Controller
         }
 
     }
+
     /**
      * Delete an User.
      *
-     * @param  int $user_id
+     * @param int $user_id
      * @return A success message as Json format if user deleted ownself then redirect login page
      */
 
-public function userDelete($user_id)
+    public function userDelete($user_id)
     {
         $user_info = User::where('id', $user_id)->first();
         $user_name = $user_info['name'];
         $detail_exist = users_details::where('users_id', $user_id)->first();
         User::where('id', $user_id)->delete();
         if ($detail_exist) {
-            $image_exists= $detail_exist['image'];
-            $filename = public_path().'/backend/images/users/'.$image_exists;
+            $image_exists = $detail_exist['image'];
+            $filename = public_path() . '/backend/images/users/' . $image_exists;
             if (file_exists($filename)) {
-                   @unlink($filename);
+                @unlink($filename);
             }
             users_details::where('users_id', $user_id)->delete();
-           
+
         }
-        \Log::info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA User Deleted '); 
-        return response()->json(['user_name'=>$user_name,'message' => __('messages.user_deleted'), 'class_name' => 'alert-success']);
-        
+        \Log::info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA User Deleted ');
+        return response()->json(['user_name' => $user_name, 'message' => __('messages.user_deleted'), 'class_name' => 'alert-success']);
+
     }
 
     /**
@@ -95,10 +97,23 @@ public function userDelete($user_id)
         $users = User::get();
         return view('backend.user.user_list', compact('users', 'active', 'title'));
     }
+
+    /**
+     * All user list.
+     * @return \Illuminate\Http\Response
+     */
+    public function superList()
+    {
+        $title = __('messages.super');
+        $active = 'super_list';
+        $users = customer::get();
+        return view('backend.user.super_list', compact('users', 'active', 'title'));
+    }
+
     /**
      * A single user details.
      *
-     * @param  Request $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function userDetails(Request $request)
@@ -115,10 +130,11 @@ public function userDelete($user_id)
         $users = DB::select("select * from users as u left join users_details as ud on u.id=ud.users_id where u.id='$user_id'");
         return view('backend.user.user_update', compact('users', 'user_false_id'));
     }
+
     /**
      * A single user update.
      *
-     * @param  Request $request
+     * @param Request $request
      * @return A success or fail message return as json formated
      */
     public function userUpdate(Request $request)
@@ -173,7 +189,7 @@ public function userDelete($user_id)
                 return $result = response()->json(['message' => 'exist']);
             }
         }
-        \Log::info('User Email='.$user_email_exist);
+        \Log::info('User Email=' . $user_email_exist);
         \Log::info('User checked');
         $name = $request->full_name;
         $user->id = $user_id;
@@ -183,33 +199,33 @@ public function userDelete($user_id)
         $user->save();
         \Log::info('User Saved');
         // $image_full_path = "";
-        $file_name='';
+        $file_name = '';
 
         $file_name_db = $user_details_data['image'];
 
-        \Log::info('file_name_db='.$file_name_db);
+        \Log::info('file_name_db=' . $file_name_db);
         if ($request->hasFile('image')) {
             if ($file_name_db != '') {
                 $image_exists = $file_name_db;
-                $filename = storage_path().'/app/'.config('const.USER_UPLOAD_IMAGES_PATH') . $image_exists;
-                \Log::info('file_name_new='.$filename);
+                $filename = storage_path() . '/app/' . config('const.USER_UPLOAD_IMAGES_PATH') . $image_exists;
+                \Log::info('file_name_new=' . $filename);
                 if (file_exists($filename)) {
                     @unlink($filename);
                 }
-                \Log::info('User Image path'.$filename);
-               
+                \Log::info('User Image path' . $filename);
+
             }
-             // save image file to storage
-             $file = $request->file('image');
-             $file_name = time() . $file->getClientOriginalName();
-             $file->storeAs(config('const.USER_UPLOAD_IMAGES_PATH'), $file_name);
-             \Log::info('New Image Name'.$file_name);
-            
-            
-        }else{
-            $file_name =$file_name_db;
+            // save image file to storage
+            $file = $request->file('image');
+            $file_name = time() . $file->getClientOriginalName();
+            $file->storeAs(config('const.USER_UPLOAD_IMAGES_PATH'), $file_name);
+            \Log::info('New Image Name' . $file_name);
+
+
+        } else {
+            $file_name = $file_name_db;
         }
-        \Log::info('New Image Name='.$file_name);
+        \Log::info('New Image Name=' . $file_name);
         $update_array = array(
             'first_name' => $request->f_name,
             'last_name' => $request->l_name,
@@ -224,18 +240,19 @@ public function userDelete($user_id)
 
         $update = users_details::where('users_id', $user_id)
             ->update($update_array);
-            \Log::info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA User Updated '); 
-            Session::flash('message', __('messages.user_update')); 
-            Session::flash('class_name', 'alert-success'); 
+        \Log::info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA User Updated ');
+        Session::flash('message', __('messages.user_update'));
+        Session::flash('class_name', 'alert-success');
         return $result = response()->json(['message' => 'success']);
 
     }
-/**
- * Change password for an user.
- *
- * @param  Request $request
- * @return A success or fail message return as json formated
- */
+
+    /**
+     * Change password for an user.
+     *
+     * @param Request $request
+     * @return A success or fail message return as json formated
+     */
     public function changePassword(Request $request)
     {
         $user_id = $request->user_id;
@@ -255,6 +272,6 @@ public function userDelete($user_id)
             return $result = response()->json(['message' => 'invalid']);
         }
     }
-    
+
 
 }

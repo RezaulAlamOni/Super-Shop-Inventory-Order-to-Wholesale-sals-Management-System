@@ -61,7 +61,7 @@
                         <button type="button" class="btn btn-warning" data-dismiss="modal">{{__('messages.close')}}</button>
                         <button class="btn btn-primary custom_close_supa pull-right">戻る</button>
                 </ul>
-               
+
             </div>
             <div class="panel-heading">
             <div class="navigation_message_for_brand"></div>
@@ -247,10 +247,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="customer_phone" class="col-sm-4 col-form-label">メイル</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control-plaintext" id="customer_email"
+                                    name="customer_email" value="" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="customer_phone" class="col-sm-4 col-form-label">電話番号</label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control-plaintext" id="customer_phone"
-                                    name="customer_phone" value="01936755674">
+                                    name="customer_phone" value="">
                             </div>
                         </div>
 
@@ -595,7 +602,7 @@
                 <h5 class="modal-title" id="maker_modal_heading">店一覧</h5>
                 <ul class="list-inline custom_header_button">
                         <button sup_buyer_type="1" class="btn btn-secondary pull-right customer_shop">店舗一覧</button>
-                       
+
                         <button type="button" class="btn btn-warning" data-dismiss="modal">{{__('messages.close')}}</button>
                         <button class="btn btn-primary pull-right custom_close_shopList">戻る</button>
                 </ul>
@@ -610,7 +617,7 @@
                         <thead>
                             <tr>
                                 <th class="change_table_th_title">店名</th>
-                               
+
                                 <th>コード</th>
                                 <th>電話</th>
                             </tr>
@@ -618,13 +625,13 @@
                         <tbody class="customer_shop_list_item">
                             <tr class="shopListitem">
                                 <td>店 A</td>
-                                
+
                                 <td>2343221</td>
                                 <td>0165685555</td>
                             </tr>
                             <tr class="shopListitem">
                                 <td>店 B</td>
-                               
+
                                 <td>2343221</td>
                                 <td>0165685555</td>
                             </tr>
