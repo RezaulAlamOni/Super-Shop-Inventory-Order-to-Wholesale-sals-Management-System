@@ -175,6 +175,8 @@ export default {
     },
     methods: {
         createModelShow() {
+            this.error_msg = '';
+            this.users = []
             $('#customers_reg_modal').modal()
         },
         saveCustomer() {
@@ -182,6 +184,7 @@ export default {
             var setApiUrl = (base_url.indexOf('localhost') !== -1?'/rv3_tonyav1':'/rv3_superv1');
 
             let data = {
+                _token :  $('meta[name="csrf-token"]').attr('content'),
                 customer_name: _this.customer.name,
                 customer_code:  _this.customer.code,
                 customer_phone:  _this.customer.phone,
