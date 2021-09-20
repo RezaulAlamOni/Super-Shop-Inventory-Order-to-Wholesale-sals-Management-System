@@ -182,6 +182,7 @@ export default {
             var setApiUrl = (base_url.indexOf('localhost') !== -1?'/rv3_tonyav1':'/rv3_superv1');
 
             let data = {
+                _token :  $('meta[name="csrf-token"]').attr('content'),
                 customer_name: _this.customer.name,
                 customer_code:  _this.customer.code,
                 customer_phone:  _this.customer.phone,
