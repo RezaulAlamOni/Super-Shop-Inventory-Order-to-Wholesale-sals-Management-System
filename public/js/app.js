@@ -86,7 +86,11 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
+<<<<<<< HEAD
 /******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-inventory-return","2":"handy-product-inventory-inquiry","3":"handy-mitsumury","4":"barcode-scan","5":"handy-vandor-master","6":"handy-product-order-receive","7":"handy-product-order-place","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"542c2d343f3398b6cba2","1":"54d2862fce92895131b1","2":"9d3bdcf08a3f41cf3e10","3":"911213442b43fd24b5eb","4":"f8e7b20d2132f8149bc1","5":"a3444e590811ba0c3259","6":"575e3cf627011ee8dea0","7":"669fcd382166d607d7a3","8":"b1ac5a546155534a3f7b","9":"47f54edc01db6491e023","10":"4da5888fb324e3751f67","11":"3acfbf5e8708fb685524","12":"d875f474c1c160b3400b","13":"ce1da91bdc442e013d71","14":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+=======
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-inventory-return","2":"handy-product-inventory-inquiry","3":"handy-mitsumury","4":"barcode-scan","5":"handy-vandor-master","6":"handy-product-order-receive","7":"handy-product-order-place","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"example-component","16":"admin-super-manage"}[chunkId]||chunkId) + ".js?id=" + {"0":"8e1cfc0f65687016576a","1":"361bc42ec2d56eb2615f","2":"0054080ce2cc82c6384f","3":"9261f1f5bc2893a689c0","4":"37660b3c0a5312846fef","5":"089a32d114312b17a509","6":"7241f05e1101803efec6","7":"3fdc65dae58039c6c647","8":"98f6cf402023348250af","9":"c53104d071a77d4fc941","10":"2c8368b3b0b9977286a3","11":"7f610ef38714a9337eba","12":"2a783306e6ced369d8c7","13":"30930777710b359f61bb","14":"bc0e4a76e132e1aaf7cf","16":"ebe17c8f3df8b0e8e492"}[chunkId] + "";
+>>>>>>> d8f1918c558d02e2ed8b9cd4b95bc3bfc8c3b30d
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -6088,89 +6092,6 @@ module.exports = {
 
 })));
 //# sourceMappingURL=bootstrap.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/lib/css-base.js":
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
 
 
 /***/ }),
@@ -49912,6 +49833,10 @@ var handyProductInventoryMitsumry = function handyProductInventoryMitsumry() {
   return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitsumury.vue"));
 };
 
+var superAdminCustomerSuperManage = function superAdminCustomerSuperManage() {
+  return __webpack_require__.e/* import() */(16).then(__webpack_require__.bind(null, "./resources/js/components/Admin/customers-list-manage.vue"));
+};
+
 var handyProductInventoryReturn = function handyProductInventoryReturn() {
   return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-return.vue"));
 };
@@ -49955,7 +49880,8 @@ var app = new Vue({
     'handy-order-shipment-list': handyOrderShipmentList,
     'bar-code-scan': barCodeScan,
     'handy-vendor-master': handyVendorMaster,
-    'handy-customer-master': handyCustomerMaster
+    'handy-customer-master': handyCustomerMaster,
+    'admin-customer-super-manage': superAdminCustomerSuperManage
   }
 });
 
