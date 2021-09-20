@@ -21,9 +21,10 @@
                             <table class="table mb-0">
                                 <thead class="bg-light">
                                 <tr>
-                                    <th>#</th>
-                                    <th>{{ table_headers.name }}</th>
-                                    <th>{{ table_headers.email }}</th>
+
+                                    <th>販売先名</th>
+                                    <th>コード</th>
+                                    <th>電話</th>
                                     <th>
                                         <!-- <a href="" class="btn btn-primary float-right"><i class="mdi mdi-all-inclusive"></i><span class="hide-menu"> Create New </span></a> -->
 
