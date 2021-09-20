@@ -230,7 +230,7 @@ class CustomerController extends Controller
                 ];
 
                 $ch = curl_init();
-                $url = "http://localhost/rv3_tonyav1/api/save-customer-data";
+                $url = "https://ryutu-van.dev.jacos.jp/rv3_superv1/api/save-customer-data";
                 curl_setopt($ch,CURLOPT_URL,$url);
                 curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
                 curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
