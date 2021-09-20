@@ -2,7 +2,7 @@
 
 return [
     //menu Name
-    
+
     'role_management'=> 'ロール管理',
     'permission_management' => '権限管理',
     'role_permission_menu' => 'ロール-権限',
@@ -43,7 +43,7 @@ return [
     'all_fields_required' => '全て必須項目です',
     'want_delete' => '削除したい',
     'role_delete'=>'ロール削除',
-    //Permission page 
+    //Permission page
     'permission_name' => '権限名',
     'please_permission_name' => '権限名を入力してください',
     'permission_desc' => '権限の説明',
@@ -66,7 +66,7 @@ return [
     'permission_name_duplicate' => '権限名が重複しています',
     'permission_already_exists' => '許可は既に存在します',
     'permission_not_deleted' => '許可は削除されません。 削除できないかもしれません',
-   //Assign role model 
+   //Assign role model
     'user_name' => 'ユーザー名',
     'select_user' => 'ユーザーを選択してください',
     'select_role' => 'ロールを選択してください',
@@ -135,7 +135,7 @@ return [
     'email_length' => 'Please correct your email format',
     'user_delete'=>'ユーザ削除',
     'permission_delete'=> '権限削除',
-    //Delete modal 
+    //Delete modal
     'role_delete_confirm' => 'ロールを削除しますか？',
     'permission_delete_confirm' => '権限を削除しますか？',
     'user_delete_confirm' => 'ユーザを削除しますか？',
@@ -160,6 +160,7 @@ return [
     'customer_update_success'=>'You have successfully update customer information',
     'customer_delete_success'=>'販売先を削除しました',
     'jan_code_exists'=>'既に登録されています',
+    'super'=>'スーパー',
 
 
 ];

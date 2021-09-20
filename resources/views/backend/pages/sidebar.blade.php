@@ -69,8 +69,15 @@
             <li class="nav-item">
                 <a href="{{Config::get('app.url').'/user_list'}}"
                     class="nav-link <?= (!empty($active) && $active=='user_list')? 'active':'' ?>">
-                    <i class="material-icons">person</i>
+                    <i class="material-icons">people</i>
                     <span>{{__('messages.manage_users')}}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{Config::get('app.url').'/super_list'}}"
+                    class="nav-link <?= (!empty($active) && $active=='super_list')? 'active':'' ?>">
+                    <i class="material-icons">person</i>
+                    <span>{{__('messages.super')}}</span>
                 </a>
             </li>
             {{-- <li class="nav-item">
