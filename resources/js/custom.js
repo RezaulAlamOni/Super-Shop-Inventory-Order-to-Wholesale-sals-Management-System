@@ -38,11 +38,11 @@ let num_order = 0;
 
 
 $(document).ready(function () {
-   
+
     // if (window.history && window.history.pushState) {
 
 	// 	$(window).on('popstate', function() {
-      
+
 	// 	  alert('Back button was pressed.');
 	// 	});
 	// }
@@ -140,7 +140,7 @@ $(document).ready(function () {
         var img = $(this).attr('src');
         var cost_price = $(this).attr('data_cost_price');
         var quantity = $(this).attr('data_quantity');
-        
+
         $('#productImgZoomerModal').modal('show');
         $('.productImgZoomer').attr('src',img);
         if(quantity!=''){
@@ -176,7 +176,7 @@ $(document).ready(function () {
                 },
                 dataType: "JSON",
                 success: function (response) {
-                    
+
                     // $('#amount_d'+invoice_id).text(d);
                     // rowT.attr('data_current_amount',amount);
                     var start_date = $('#vendor_start_date').val();
@@ -206,7 +206,7 @@ $(document).ready(function () {
         if (e.keyCode == 13) {
             var name = $(this).val();
             var page_url = url_search();
-            
+
             if(page_url=='brand-order' || page_url=='brand-order#'){
                 var cId_val = $('.c_ids_v').val();
                 var cus_name = $('.c_ids_name').val();
@@ -218,7 +218,7 @@ $(document).ready(function () {
             }else{
                 jan_list_search_by_name(name);
             }
-            
+
         }
     })
     $(document).delegate('.vendor_due_blance', 'blur', function () {
@@ -247,7 +247,7 @@ $(document).ready(function () {
                 },
                 dataType: "JSON",
                 success: function (response) {
-                  
+
                     // $('#amount_d'+invoice_id).text(d);
                     // rowT.attr('data_current_amount',amount);
                     var start_date = $('#vendor_start_date').val();
@@ -329,7 +329,7 @@ $(document).ready(function () {
         amount_a = amount_a.replace(',', '');
         amount_b = amount_b.replace(',', '');
 
-      
+
         if (amount > 0 && amount <= parseFloat(amount_a) + parseFloat(amount_b)) {
             $.ajax({
                 headers: {
@@ -344,7 +344,7 @@ $(document).ready(function () {
                 },
                 dataType: "JSON",
                 success: function (response) {
-                
+
                     // $('#amount_d'+invoice_id).text(d);
                     // rowT.attr('data_current_amount',amount);
                     var start_date = $('#vendor_start_date').val();
@@ -430,7 +430,7 @@ $(document).ready(function () {
             },
             dataType: "JSON",
             success: function (response) {
-               
+
                 if (response.message != 'success') {
                     error_message('invoice_message', response.class_name, response.message)
                     // $('#invoice_add_updated_message').html('<h3 class="' + response.class_name + '">' + response.message + '</h3>');
@@ -551,7 +551,7 @@ $(document).ready(function () {
                     $(".receive_order_list").html("");
                     var htmls = '';
                     $.each(response, function (idx, obj) {
-                      
+
                         var comapre_qty = 0;
                         if (obj.order_point_inputs == 'ケース') {
                             comapre_qty = obj.case_quantity;
@@ -631,7 +631,7 @@ $(document).ready(function () {
             dataType: "JSON",
             data: {data_array: data_array},
             success: function (response) {
-                
+
                 // $('#add_receive_order_modal').modal('hide');
                 location.reload(true);
             }
@@ -676,7 +676,7 @@ $(document).ready(function () {
                     status: 1
                 },
                 success: function (response) {
-                   
+
                     $('#jcode').focus();
                     $('#jcode').blur();
                 }
@@ -785,7 +785,7 @@ $(document).ready(function () {
                             dataType: "JSON",
                             data: {v_no: v_no, vendor_id: vendor_id},
                             success: function (response) {
-                                
+
                             }
                         });
                         /*create vendor invoice*/
@@ -950,7 +950,7 @@ $(document).ready(function () {
                 rack_number: rack_number
             },
             success: function (response) {
-                
+
                 if (response.message == 'stock_over_qty') {
                     $('.handy_error_msg').text('在庫量不足。');
                     $('.handdy_error').removeClass('hide').addClass('show');
@@ -1178,7 +1178,7 @@ $(document).ready(function () {
                 maker_id: maker_id
             },
             success: function (response) {
-                
+
                 if (vendor_id == null) {
                     if (response.message == "name_required" || response.message == "vendor_code_required" || response.message == "phone_required" || response.message == 'code_exists') {
                         //error_message('add_vendor_error', 'alert-danger', response.message);
@@ -1265,12 +1265,14 @@ $(document).ready(function () {
         var customer_name = $("#customer_name").val();
         var customer_code = $("#customer_code").val();
         var customer_phone = $("#customer_phone").val();
+        var customer_email = $("#customer_email").val();
         var customer_id = null;
         var user_type = 2;
         if (
             customer_name == "" ||
             customer_code == "" ||
-            customer_phone == ""
+            customer_phone == ""||
+            customer_email == ""
         ) {
             error_message('add_customer_message', 'alert-danger', Globals.customer_reg_error);
             return false;
@@ -1285,6 +1287,7 @@ $(document).ready(function () {
             customer_name,
             customer_code,
             customer_phone,
+            customer_email,
             user_type
         );
     });
@@ -1380,6 +1383,7 @@ $(document).ready(function () {
         vendor_name = null,
         vendor_code = null,
         vendor_phone = null,
+        customer_email = null,
         user_type = null
     ) {
         $.ajax({
@@ -1394,6 +1398,7 @@ $(document).ready(function () {
                 customer_name: vendor_name,
                 customer_code: vendor_code,
                 customer_phone: vendor_phone,
+                customer_email: customer_email,
                 user_type: user_type
             },
             success: function (response) {
@@ -1487,7 +1492,7 @@ $(document).ready(function () {
             dataType: "JSON",
             data: {invoice_id: invoice_id},
             success: function (response) {
-                
+
                 $('#invoice_id').val(response.invoice_id);
                 $('#invoice_postal_code').val(response.postal_code);
                 $('#tel').val(response.tel);
@@ -2149,7 +2154,7 @@ $(document).ready(function () {
             get_management_vendor_data_list(vendor_id, start_date, end_date, mesg_status = 0);
             return false;
         } else {
-        
+
             var is_new_item = $('.v_ids_v').attr('is_new_item');
 
             $('#vendor_show_modal').modal('hide');
@@ -2438,7 +2443,7 @@ $(document).ready(function () {
                             data: {shipment_number: shipment_number, customer_id: customer_id},
                             dataType: "JSON",
                             success: function (response) {
-                                
+
                             }
                         });
                         handy_page_popup('', "出荷作業が完了しました。");
@@ -2761,7 +2766,7 @@ $(document).ready(function () {
                         html += '<td>' + j + '</td>';
                         html += '<td><a href="' + Globals.base_url + '/shipment_order_detail/' + response[i].customer_id + '/' + response[i].invoice_date + '/' + response[i].customer_invoice_id + '">' + response[i].invoice_date + '</a></td>';
                         html += '<td>' + response[i].name + '</td>';
-                       
+
                         if (jQuery.inArray(response[i].customer_id, customer_list) != -1) {
                             // console.log("is in array");
 
@@ -3035,7 +3040,7 @@ $(document).ready(function () {
             data: {voucher_number: voucher_number},
             dataType: "JSON",
             success: function (response) {
-                
+
                 var html = '';
                 var sum_of_totals = 0;
                 for (var i = 0; i < response.length; i++) {
@@ -3089,7 +3094,7 @@ $(document).ready(function () {
             var delivery_able_quantity = $(this).find('.d_quantity').val();
             order_infos.push({'customer_order_id': customer_order_id, 'quantity': delivery_able_quantity});
         });
-       
+
         if (order_infos.length == 1 && typeof order_infos[0].customer_order_id == 'undefined') {
             alert('確定する商品がありません。');
             return false;
@@ -3126,7 +3131,7 @@ $(document).ready(function () {
             url: management_sheet_report_both,
             data: yourdata,
             success: function (response, status, xhr) {
-                
+
 
                 if (response.error_found == 1) {
                     success_message('managementshipment_message', 'alert-danger', 'pdf generate fail');
@@ -3213,7 +3218,7 @@ $(document).ready(function () {
             data: {customer_id: customer_id, shop_id: shop_id, voucher_number: voucher_number, curr_date: curr_date},
             dataType: "JSON",
             success: function (response) {
-             
+
                 var order_list = '';
                 if (response.customer_order_list.length > 0) {
                     for (var i = 0; i < response.customer_order_list.length; i++) {
@@ -3464,7 +3469,7 @@ $(document).ready(function () {
             data: data,
             dataType: "JSON",
             success: function (response) {
-                
+
                 if (response.message != 'success') {
                     error_message('add_shop_message', response.class_name, response.message)
                 } else {
@@ -3762,8 +3767,8 @@ var isUpdateValue = '';
             dataType: "JSON",
             data: {row_id:row_id,field_name:field_name,vl:vl},
             success: function (response) {
-                 
-                
+
+
 
             }
         });
@@ -3844,7 +3849,7 @@ function customer_list_dropdown(customer_id = null) {
         url: "get_customer_list",
         dataType: "JSON",
         success: function (response) {
-          
+
             var html = '';
             for (var i = 0; i < response.all_customer_list.length; i++) {
                 var selected = (response.all_customer_list[i].customer_id == customer_id ? 'selected' : '');
@@ -3960,7 +3965,7 @@ function get_vendor_list_item_by_vendor_id(v_id, v_name) {
         success: function (response) {
             if (url_last_element == 'receiveorder') {
                 $('.order_receive_body').html('');
-            
+
                 var j = 0;
                 var htmls = '';
                 if (response.length > 0) {
@@ -4037,13 +4042,13 @@ function get_vendor_list_item_by_vendor_id(v_id, v_name) {
                         var ordDte = response[i].order_date;
                         if(ordDte!=null){
                         var ordDate = ordDte.split(" ");
-                        
+
                         // console.log(response.order_date);
                         if((response[i].order_status == '未入荷' || response[i].order_status == '入荷済み') && (i==0)){
                             haccuColorRow = 'haccuColorRowForTodays';
                         }
                     }
-                    
+
                         /*color haccu list*/
 
                         /*rack code manage*/
@@ -4056,7 +4061,7 @@ function get_vendor_list_item_by_vendor_id(v_id, v_name) {
                         rack_number = rack_list.sort(function (a, b) {
                             return a - b
                         });
-                    
+
                         /*rack code manage*/
 
 
@@ -4229,7 +4234,7 @@ function get_vendor_master_item_list() {
                         };
                     },
                     processResults: function (response) {
-                        
+
                         return {
                             results: response.results
                         };
@@ -4308,7 +4313,7 @@ function get_vendor_master_item_list() {
 
                   },*/
             }).on("select2:select", function (e) {
-                
+
                 var vendor_item_id = $(this).closest('tr').attr('data-id');
                 var maker_id = $(this).closest('tr').attr('maker_id');
                 if (e.params.data.newTag) {
@@ -4321,7 +4326,7 @@ function get_vendor_master_item_list() {
                     // store the new tag:
                     var vendor_id = null;
                     var vendor_name = e.params.data.text;
-                
+
                     var vendor_code = Math.floor(100000 + Math.random() * 900000);
                     var vendor_phone = Math.floor(100000000 + Math.random() * 900000000);
                     $.ajax({
@@ -4343,7 +4348,7 @@ function get_vendor_master_item_list() {
                         }
                     });
                 } else if (e.params.data.selected) {
-                    
+
                     $.ajax({
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -4357,7 +4362,7 @@ function get_vendor_master_item_list() {
                             maker_id: maker_id
                         },
                         success: function (response) {
-                            
+
                             get_vendor_master_item_list();
                         }
                     });
@@ -4399,7 +4404,7 @@ function view_customer_master_by_customer_id(c_id, c_name) {
         success: function (response) {
             /* sukka list added */
             if (url_last_element == 'shipment') {
-            
+
                 //return false;
                 $('.order_shipment_body').html('');
                 var j = 0;
@@ -4600,7 +4605,7 @@ function get_vendor_master_data(v_id = 0, v_name = '') {
         url: 'vendor_master_item/' + v_id,
         type: "GET",
         success: function (response) {
-           
+
             $(".vendor_itemdata_table").html("");
             var j = 0;
             var htmls = '';
@@ -4675,7 +4680,7 @@ function get_manual_order_item(c_id = 0, c_name = '') {
         success: function (response) {
             $('.custom_tble_header_content').html('');
             $('.custom_col_group').html('');
-           
+
             $('.jan_inpts').val('');
             $('.customer_manual_order_status').val(response.manual_orderable);
             if (response.manual_orderable != '1') {
@@ -4782,9 +4787,9 @@ function get_manual_order_item(c_id = 0, c_name = '') {
                                     //if (online_order[idx].inputs == 'ケース') {
                                         case_qty = online_order[idx].order_case_quantity;
                                         case_total += case_qty;
-                                       
+
                                     //} else if (online_order[idx].inputs == 'ボール') {
-                                      
+
                                         ball_qty = online_order[idx].order_ball_quantity;
                                         ball_total += ball_qty;
                                     //} else {
@@ -4870,7 +4875,7 @@ function get_manual_order_item(c_id = 0, c_name = '') {
                 }
             } else {
                 /*manual order*/
-                
+
                 if (online_order[0].jan != null) {
                     for (var i = 0; i < online_order_count; i++) {
                         var case_total = 0;
@@ -4904,7 +4909,7 @@ function get_manual_order_item(c_id = 0, c_name = '') {
 
                                     unit_qty = online_order[i].order_unit_quantity;
                                     unit_total += unit_qty;
-                                    
+
                                 }
                                 htmls += '<td style="border-right: 1px solid #ddd;" data_stock_total="" class="smOfordrqty"><input data_input_type="ケース" data_shop_id="' + response.shop_list[n].customer_shop_id + '" type="tel" class="form-control cmn_o_d_qty sum_of_o_d_qty" value="' + case_qty + '"></td>';
                                 htmls += '<td style="border-right: 1px solid #ddd;" data_stock_total="" class="smOfordrqty"><input data_input_type="ボール" data_shop_id="' + response.shop_list[n].customer_shop_id + '" type="tel" class="form-control cmn_o_d_qty sum_of_o_d_qty" value="' + ball_qty + '"></td>';
@@ -5070,14 +5075,14 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text='',display_p
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
     if(voice_text!='' && voice_text=='サントリー'){
-        voice_text = voice_text.replace("ー", ""); 
+        voice_text = voice_text.replace("ー", "");
     }
     if(voice_text!='' && voice_text=='サントリ-'){
-        voice_text = voice_text.replace("-", ""); 
+        voice_text = voice_text.replace("-", "");
     }
     var shop_id = $('.s_ids_v').val();
     var pageTitleText = $('.jcs_main_hand_title').text();
-  
+
     /*
             console.log(localStorage.getItem('local_customer_id'));
             $('.s_ids_v').val(localStorage.getItem('local_shop_id'));
@@ -5101,7 +5106,7 @@ function get_brand_shop_brand_list(c_id = 0, c_name = '',voice_text='',display_p
             var numberOfOrder = 100;
 
             /*make array two arrays*/
-            var half_length = Math.ceil(response.shop_item_list.length / 2);    
+            var half_length = Math.ceil(response.shop_item_list.length / 2);
 //var leftSide = arrayName.splice(0,half_length);
 var arrays1 = [];
 var arrays2 = [];
@@ -5115,9 +5120,9 @@ var arrays2 = [];
 //                 }else{
 //                     arrays2.push(response.shop_item_list[k]);
 //                 }
-                
+
 //             }
-//         }  
+//         }
 for(var k=0;k<response.shop_item_list.length;k++){
     if ( k % 2 == 0) {
         arrays1.push(response.shop_item_list[k]);
@@ -5128,13 +5133,13 @@ for(var k=0;k<response.shop_item_list.length;k++){
 
                 var largeArray=arrays1;
                 var smallArray=arrays2;
-            
+
             var rightBarorderFrequency = 100-largeArray.length;
             for (var i = 0; i < (largeArray.length); i++) {
                 var searchTextFound1 = 'searchTextNotFound';
                 var searchTextFound2 = 'searchTextNotFound';
-                var updatedColorLg = (largeArray[i].update_status=="1"?'updated_yes_off':'updated_no'); 
-                
+                var updatedColorLg = (largeArray[i].update_status=="1"?'updated_yes_off':'updated_no');
+
                 if(voice_text!=''){
                     if(largeArray[i].name.indexOf(voice_text) != -1 || largeArray[i].maker_name.indexOf(voice_text) != -1){
                         searchTextFound1 = 'searchTextFound';
@@ -5148,14 +5153,14 @@ for(var k=0;k<response.shop_item_list.length;k++){
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+  largeArray[i].selling_price  +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+largeArray[i].customer_order_detail_id+'" field_name="cost_price" value="'+  largeArray[i].cost_price  +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].order_frequency_num +'</td>';
-                
+
                 if(i<smallArray.length){
                     if(voice_text!=''){
                         if(smallArray[i].name.indexOf(voice_text) != -1 || smallArray[i].maker_name.indexOf(voice_text) != -1){
                             searchTextFound2 = 'searchTextFound';
                         }
                     }
-                    var updatedColorSm = (smallArray[i].update_status=="1"?'updated_yes_off':'updated_no'); 
+                    var updatedColorSm = (smallArray[i].update_status=="1"?'updated_yes_off':'updated_no');
                     brand_name += '<td class="'+searchTextFound2+'" style="text-align: left; width:40%">' + smallArray[i].name + '</td>';
                     brand_name += '<td class="'+updatedColorSm+'" style="text-align: right;width:10%"><input type="tel" row_id="'+smallArray[i].customer_order_detail_id+'" field_name="last_qty" value="'+ smallArray[i].last_qty +'" class="form-control brndOrderInputQty"></td>';
                     brand_name += '<td style="text-align: right;width:10%"><input type="tel" row_id="'+smallArray[i].customer_order_detail_id+'" field_name="selling_price" value="'+ smallArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
@@ -5172,15 +5177,15 @@ for(var k=0;k<response.shop_item_list.length;k++){
             }
             $(".brand_order_tble").html(brand_name);
             if(display_popup=='popup1'){
-               
+
                 nav_list['jn_0'].show();
             }else{
                 nav_list['jn_0'].hide();
             }
-            
+
             $('#customer_shop_list_modal').modal('hide');
             show_hide_nav_icn(0);
-            
+
     }
 });
 
@@ -5195,7 +5200,7 @@ function get_brand_updated_item_list(c_id = 0, c_name = '',voice_text=''){
     var currnt_brand_list= 'コカ・コーラ(Coca-Cola),ポカリスエット,スターバックス,ネスカフェ,アサヒビール,BOSS(ボス),明治乳業,サントリー,カゴメ,ピカイチ野菜くん';
    // var currnt_brand_list= '店 A,店 B,店 C,店 D';
    if(voice_text!='' && voice_text=='サントリー'){
-    voice_text = voice_text.replace("ー", ""); 
+    voice_text = voice_text.replace("ー", "");
 }
 var shop_id = $('.s_ids_v').val();
    $.ajax({
@@ -5238,7 +5243,7 @@ var shop_id = $('.s_ids_v').val();
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ largeArray[i].selling_price +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%"><input type="tel" value="'+ largeArray[i].cost_price +'" class="form-control brndOrderInputQty"></td>';
                 brand_name += '<td style="text-align: right;width:10%">'+ largeArray[i].order_frequency_num +'</td>';
-               
+
                 if(i<smallArray.length){
                     if(voice_text!=''){
                         if(smallArray[i].name.indexOf(voice_text) != -1){
@@ -5355,7 +5360,7 @@ function check_is_reload_required() {
         },
         dataType: "JSON",
         success: function (response) {
-            
+
             if (response.refresh_status == '1') {
                 if (url_last_element == 'receiveorder') {
                     get_vendor_list_item_by_vendor_id(0, 0);
@@ -5380,7 +5385,7 @@ function jan_info_jaiko_detail() {
             jan: jan,
         },
         success: function (response) {
-        
+
             if (response.message != 'invalid_rack_code') {
                 window.location.href = 'handy_stock_detail_by_rack';
             } else {
@@ -5460,7 +5465,7 @@ function jan_list_search_by_name(name) {
             name: name,
         },
         success: function (response) {
-           
+
             var msgHtml = '';
             var btn = '';
             var mathod = "getProductFromJanMasterByName('" + name + "')";
@@ -5530,7 +5535,7 @@ function getProductFromJanMasterByName(name) {
         },
         success: function (response) {
             close_all_navi_msg();
-            
+
             var msgHtml = '';
             var btn = '';
             if (response.api_data.return==1 && response.api_data.data.product_list.length>0) {
@@ -5710,7 +5715,7 @@ function save_by_new_jan(jan_code) {
 
 
             }
-        
+
         }
     });
 }
@@ -5828,7 +5833,7 @@ function search_by_name_with_jancode(jan_code) {
                         };
                     },
                     processResults: function (response) {
-                        
+
                         return {
                             results: response.results
                         };
@@ -5907,7 +5912,7 @@ function search_by_name_with_jancode(jan_code) {
 
                   },*/
             }).on("select2:select", function (e) {
-               
+
                 var vendor_item_id = $(this).closest('tr').attr('data-id');
                 var maker_id = $(this).closest('tr').attr('maker_id');
                 if (e.params.data.newTag) {
@@ -5920,7 +5925,7 @@ function search_by_name_with_jancode(jan_code) {
                     // store the new tag:
                     var vendor_id = null;
                     var vendor_name = e.params.data.text;
-                
+
                     var vendor_code = Math.floor(100000 + Math.random() * 900000);
                     var vendor_phone = Math.floor(100000000 + Math.random() * 900000000);
                     $.ajax({
@@ -5942,7 +5947,7 @@ function search_by_name_with_jancode(jan_code) {
                         }
                     });
                 } else if (e.params.data.selected) {
-                    
+
                     $.ajax({
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -5956,7 +5961,7 @@ function search_by_name_with_jancode(jan_code) {
                             maker_id: maker_id
                         },
                         success: function (response) {
-                            
+
                             get_vendor_master_item_list();
                         }
                     });
@@ -6048,7 +6053,7 @@ function get_vendor_master_item_list_num_of_order() {
                     if (diffS <= 0.255) {
                         new_colors = 'new_color';
                     }
-                   
+
 
                     var in_company_code = (response[i].in_company_code == null ? '' : response[i].in_company_code);
                     htmls += '<tr data_action_status="0" data-id="' + response[i].vendor_item_id + '" vendor-id="' + response[i].vendor_id + '" maker_id="' + response[i].maker_id + '" class="vendor_item_edit_delete_inline color_row_' + row_colors + ' color_row_' + new_colors + '" >';
@@ -6098,7 +6103,7 @@ function get_vendor_master_item_list_num_of_order() {
                         };
                     },
                     processResults: function (response) {
-                       
+
                         return {
                             results: response.results
                         };
@@ -6177,7 +6182,7 @@ function get_vendor_master_item_list_num_of_order() {
 
                   },*/
             }).on("select2:select", function (e) {
-               
+
                 var vendor_item_id = $(this).closest('tr').attr('data-id');
                 var maker_id = $(this).closest('tr').attr('maker_id');
                 if (e.params.data.newTag) {
@@ -6190,7 +6195,7 @@ function get_vendor_master_item_list_num_of_order() {
                     // store the new tag:
                     var vendor_id = null;
                     var vendor_name = e.params.data.text;
-                   
+
                     var vendor_code = Math.floor(100000 + Math.random() * 900000);
                     var vendor_phone = Math.floor(100000000 + Math.random() * 900000000);
                     $.ajax({
@@ -6212,7 +6217,7 @@ function get_vendor_master_item_list_num_of_order() {
                         }
                     });
                 } else if (e.params.data.selected) {
-                    
+
                     $.ajax({
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -6226,7 +6231,7 @@ function get_vendor_master_item_list_num_of_order() {
                             maker_id: maker_id
                         },
                         success: function (response) {
-                            
+
                             get_vendor_master_item_list();
                         }
                     });
@@ -6359,7 +6364,7 @@ function managementsheetPopup(url='vendormangementsheet'){
         btn = [{button: '<center><a href="javascript:close_default_page_navi(9099090)" class="btn btn-primary rsalrtconfirms">確認</a></center>'}];
 
             msgHtml = 'パソコン画面から見てください';
-            
+
         const tempmsgss = {
             managmentsheethandypopup: {
                 message: [
@@ -6373,11 +6378,11 @@ function managementsheetPopup(url='vendormangementsheet'){
         display_positionY = '15px';
         error_nav = view(tempmsgss['managmentsheethandypopup'], def_center_mesg_html_template);
         show_hide_nav_icn(0);
-       
+
        }else{
         console.log('this is not handy or smart phone');
         window.location.href = Globals.base_url +'/'+url;
        }
-    
+
 
 }

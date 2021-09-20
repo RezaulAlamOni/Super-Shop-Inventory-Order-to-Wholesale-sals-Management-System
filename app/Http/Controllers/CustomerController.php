@@ -208,6 +208,7 @@ class CustomerController extends Controller
         $customer_name=$request->customer_name;
         $customer_code=$request->customer_code;
         $customer_phone=$request->customer_phone;
+        $customer_email=$request->customer_email;
         $customer_info=array(
             "name"=>$customer_name,
             "partner_code"=>$customer_code,
@@ -219,6 +220,26 @@ class CustomerController extends Controller
                 return $result = response()->json(['message' => 'code_exists']);
             }else{
                 customer::insert($customer_info);
+
+                array_push($customer_info,['email' => $customer_email]);
+                $data = [
+                    'customer_code' => $customer_code,
+                    'customer_name' => $customer_name,
+                    'customer_phone' => $customer_phone,
+                    'customer_email' => $customer_email
+                ];
+
+                $ch = curl_init();
+                $url = "http://localhost/rv3_tonyav1/api/save-customer-data";
+                curl_setopt($ch,CURLOPT_URL,$url);
+                curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
+                curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+                curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch,CURLOPT_CONNECTTIMEOUT ,3);
+                curl_setopt($ch,CURLOPT_TIMEOUT, 20);
+                $response = curl_exec($ch);
+                curl_close ($ch);
+
                 return $result = response()->json(['message' => 'insert_success']);
             }
 
@@ -261,7 +282,7 @@ class CustomerController extends Controller
         customer::where('customer_id',$customer_id)->update(['is_deleted'=>1]);
         return $result = response()->json(['message' => 'delete_success']);
     }
-  public function update_customer_item_by_customer_item_id(Request $request)
+    public function update_customer_item_by_customer_item_id(Request $request)
     {
         $customer_item_id=$request->item_id;
         $sale_selling_price=$request->sale_selling_price;
