@@ -6,7 +6,7 @@
 @section('content')
     @include('backend.flash_message.flash_message')
 
-    <admin-customer-super-manage supers="{{ $users }}" title="{{ $title }}"
+    <admin-customer-super-manage supers="{{ $users }}" title="{{ $title }}" base_url="{{ config('app.url') }}"
                                  table_headers_="{{ json_encode(['name' =>  __('messages.name') ,'email' => __('messages.email'),'create_new' =>  __('messages.create_new') ]) }}"
     ></admin-customer-super-manage>
 

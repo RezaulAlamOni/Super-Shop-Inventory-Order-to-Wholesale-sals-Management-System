@@ -231,6 +231,7 @@ class CustomerController extends Controller
 
                 $ch = curl_init();
                 $url = "https://ryutu-van.dev.jacos.jp/rv3_superv1/api/save-customer-data";
+//                $url = "http://localhost/rv3_tonyav1/api/save-customer-data";
                 curl_setopt($ch,CURLOPT_URL,$url);
                 curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
                 curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
@@ -240,7 +241,7 @@ class CustomerController extends Controller
                 $response = curl_exec($ch);
                 curl_close ($ch);
 
-                return $result = response()->json(['message' => 'insert_success']);
+                return  response()->json(['message' => 'success' , 'users' => customer::all()]);
             }
 
         }else{
