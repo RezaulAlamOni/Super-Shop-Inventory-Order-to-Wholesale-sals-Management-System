@@ -247,7 +247,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="customer_phone" class="col-sm-4 col-form-label">Email</label>
+                            <label for="customer_phone" class="col-sm-4 col-form-label">メイル</label>
                             <div class="col-sm-8">
                                 <input type="email" class="form-control-plaintext" id="customer_email"
                                     name="customer_email" value="" required>
