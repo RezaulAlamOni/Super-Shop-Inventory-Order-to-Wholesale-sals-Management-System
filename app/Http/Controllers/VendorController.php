@@ -594,10 +594,10 @@ class VendorController extends Controller
         /*update in_cmpany*/
         vendor_item::where('jan', '=', $jan)
             ->update([
-                'e_cost_price' => $price,
-                'e_selling_price' => $selling_price,
-                'e_gross_profit_margin' => $gross_profit_margin,
-                'e_gross_profit' => $gross_profit,
+                'cost_price' => $price,
+                'selling_price' => $selling_price,
+                'gross_profit_margin' => $gross_profit_margin,
+                'gross_profit' => $gross_profit,
                 'sale_selling_price' => $sale_selling_price
             ]);
         return  response()->json(['message' => 'update_success']);

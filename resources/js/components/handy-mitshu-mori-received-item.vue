@@ -75,9 +75,9 @@
 
                     <div class=" col-centereds">
                         <div>
-                           
 
-                            
+
+
                             <div class="productInfos">
                                  <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
                                 <thead data-v-c9953dda="">
@@ -332,16 +332,16 @@ export default {
             }else if(_this.orderBy=='ASC'){
                 _this.orderBy='DESC';
             }
-            
+
             axios.post(this.base_url + '/get-all-products-from-estimation',{orderBy:_this.orderBy})
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
                     _this.products = _this.products.map(function (product) {
-                        product.cost_price = (product.e_cost_price!='0.00'?product.e_cost_price:product.cost_price);
-                        product.selling_price = (product.e_selling_price!='0.00'?product.e_selling_price:product.selling_price);
-                        product.gross_profit = (product.e_gross_profit!='0.00'?product.e_gross_profit:product.gross_profit);
-                        product.gross_profit_margin = (product.e_gross_profit_margin!='0.00'?product.e_gross_profit_margin:product.gross_profit_margin);
+                        product.cost_price = product.cost_price;
+                        product.selling_price = product.selling_price;
+                        product.gross_profit = product.gross_profit;
+                        product.gross_profit_margin = product.gross_profit_margin;
                         return product;
                     })
                     console.log(_this.products);
@@ -699,10 +699,10 @@ export default {
             _this.preview_product = product;
             _this.maker_id = product.vendor_id;
             _this.preview_product.title = product.item_name;
-             _this.preview_product.cost = product.e_cost_price != '0.00' ? product.e_cost_price : product.cost_price;
-            _this.preview_product.sell = product.e_selling_price != '0.00' ? product.e_selling_price : product.selling_price;
-            _this.preview_product.profit = product.e_gross_profit != '0.00' ? product.e_gross_profit : product.gross_profit;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
-            _this.preview_product.profit_margin = product.e_gross_profit_margin != '0.00' ? product.e_gross_profit_margin : product.gross_profit_margin;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+             _this.preview_product.cost = product.cost_price;
+            _this.preview_product.sell =  product.selling_price;
+            _this.preview_product.profit =  product.gross_profit;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+            _this.preview_product.profit_margin = product.gross_profit_margin;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
 
 
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
