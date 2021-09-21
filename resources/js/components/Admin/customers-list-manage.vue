@@ -176,7 +176,7 @@ export default {
     methods: {
         createModelShow() {
             this.error_msg = '';
-            this.users = []
+            this.customer = {}
             $('#customers_reg_modal').modal()
         },
         saveCustomer() {
