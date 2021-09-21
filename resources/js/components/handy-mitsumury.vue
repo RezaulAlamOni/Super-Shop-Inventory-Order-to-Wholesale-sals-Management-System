@@ -685,8 +685,8 @@ export default {
             _this.preview_product = product;
             _this.maker_id = product.vendor_id;
             _this.preview_product.title = product.item_name;
-            _this.preview_product.cost = product.e_cost_price != 0 ? product.e_cost_price : product.cost_price;
-            _this.preview_product.sell = product.e_selling_price != 0 ? product.e_selling_price : product.selling_price;
+            _this.preview_product.cost = product.cost_price;
+            _this.preview_product.sell = product.selling_price;
             // _this.preview_product.profit = product.selling_price - product.cost_price;
             _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
 
