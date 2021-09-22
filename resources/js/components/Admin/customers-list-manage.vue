@@ -181,7 +181,7 @@ export default {
         },
         saveCustomer() {
             let _this = this;
-            var setApiUrl = (base_url.indexOf('localhost') !== -1?'/rv3_tonyav1':'/rv3_superv1');
+            var setApiUrl ='/rv3_tonyav1';
 
             let data = {
                 _token :  $('meta[name="csrf-token"]').attr('content'),
