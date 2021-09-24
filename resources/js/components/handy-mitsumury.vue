@@ -20,15 +20,22 @@
                            style="float:right"> 詳細</a>
 
                     </div>
-                    <div style="font-size: 18px; padding: 5px 0px 2px 5px;position: relative" >
-                        <div class="form-check" >
-                            <input class="form-check-input check-all"  @click="selectAll()" v-model="allSelected" type="checkbox" value="" id="flexCheckChecked" >
+                    <div style="font-size: 18px; padding: 5px 0px 2px 5px;position: relative">
+                        <div class="form-check">
+                            <input class="form-check-input check-all" @click="selectAll()" v-model="allSelected"
+                                   type="checkbox" value="" id="flexCheckChecked">
                             <label class="form-check-label ml-2" for="flexCheckChecked">
                                 全て
                             </label>
                         </div>
-                        <button v-if="productJans.length > 0" @click="selectSuper(' ')" class="btn btn-success pull-right mr-1 " style=" position: absolute; top: 5px; right: 62px;"> 送信 メイル</button>
-                        <button v-if="productJans.length > 0" @click="selectSuper()" class="btn btn-success pull-right mr-1 " style=" position: absolute; top: 5px; right: 0px;"> 送信</button>
+                        <button v-if="productJans.length > 0" @click="selectSuper(' ')"
+                                class="btn btn-success pull-right mr-1 "
+                                style=" position: absolute; top: 5px; right: 62px;"> 送信 メイル
+                        </button>
+                        <button v-if="productJans.length > 0" @click="selectSuper()"
+                                class="btn btn-success pull-right mr-1 "
+                                style=" position: absolute; top: 5px; right: 0px;"> 送信
+                        </button>
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
                         <div class="input-group m-0 my-1">
@@ -83,12 +90,14 @@
                     </div>
 
                     <div class=" col-centereds col-md-12 col-sm-12 col-sl-12 p-0 row ">
-                        <div class="col-sm-6 col-md-3 col-xl-3 image-div" v-for="(product,i) in products" :class="(productJans.indexOf(product)) > -1 ? 'active-img' : ''">
-                            <img  :src="'public/backend/images/products/'+product.jan+'.png'"
-                                  class="img-thumbnail custom-img"
-                                  alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
-                                  style="cursor: pointer">
-                            <input class="form-check-input form-check-input_" type="checkbox" v-model="productJans" :value="product" >
+                        <div class="col-sm-6 col-md-3 col-xl-3 image-div" v-for="(product,i) in products"
+                             :class="(productJans.indexOf(product)) > -1 ? 'active-img' : ''">
+                            <img :src="'public/backend/images/products/'+product.jan+'.png'"
+                                 class="img-thumbnail custom-img"
+                                 alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
+                                 style="cursor: pointer">
+                            <input class="form-check-input form-check-input_" type="checkbox" v-model="productJans"
+                                   :value="product">
                         </div>
 
                     </div>
@@ -206,7 +215,9 @@
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
                     <div class="modal-header" style="padding: 5px;justify-content: right">
-                        <button class="btn btn-success mr-2" @click="sendtoSuper()" :disabled="(productJans.length > 0 && selectedSuper.length > 0 ) ? false : true">送信</button>
+                        <button class="btn btn-success mr-2" @click="sendtoSuper()"
+                                :disabled="(productJans.length > 0 && selectedSuper.length > 0 ) ? false : true">送信
+                        </button>
                         <a class="btn btn-info float-right" @click="confirmAndHide()">戻る</a>
                     </div>
                     <div class="modal-body p-0" style="text-align: center">
@@ -217,10 +228,12 @@
                         <div>
                             <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
                                 <thead>
-                                <tr >
+                                <tr>
                                     <th colspan="2 " style="text-align: left">
-                                        <input class="form-check-input check-all m-0"  @click="selectAllSuper()" v-model="allSelectedSuper" type="checkbox" value="" >
-                                        <label class="form-check-label " style="margin-left: 40px" for="flexCheckChecked">
+                                        <input class="form-check-input check-all m-0" @click="selectAllSuper()"
+                                               v-model="allSelectedSuper" type="checkbox" value="">
+                                        <label class="form-check-label " style="margin-left: 40px"
+                                               for="flexCheckChecked">
                                             全て
                                         </label>
                                     </th>
@@ -228,9 +241,11 @@
                                 </thead>
                                 <tbody data-v-c9953dda="" class="physicaltbody">
 
-                                <tr :class="(selectedSuper.indexOf(vendor.id) > -1) ? 'active-c' : ''" v-for="vendor in vendors" style="border-bottom: 1px solid gray">
+                                <tr :class="(selectedSuper.indexOf(vendor.id) > -1) ? 'active-c' : ''"
+                                    v-for="vendor in vendors" style="border-bottom: 1px solid gray">
                                     <td style="width: 50px;padding: 10px;border: none !important;">
-                                        <input class="form-check-input m-0" type="checkbox" v-model="selectedSuper" :value="vendor.id" >
+                                        <input class="form-check-input m-0" type="checkbox" v-model="selectedSuper"
+                                               :value="vendor.id">
                                     </td>
                                     <td style="padding: 10px;;border: none !important;">{{ vendor.text }}</td>
                                 </tr>
@@ -309,13 +324,13 @@ export default {
             allSelectedSuper: false,
             productJans: [],
             selectedSuper: [],
-            message : null
+            message: null
 
         }
     },
     mounted() {
         // this.getProducts();
-        this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg',  '69813_11.png', '69813_11.png', 'Whocoded.jpg'];
+        this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg', '69813_11.png', '69813_11.png', 'Whocoded.jpg'];
         $('#jan_').focus()
         $('#jan_').select()
         this.handi_navi = '商品を押してください';
@@ -326,6 +341,74 @@ export default {
     methods: {
         getProducts() {
             let _this = this;
+            let temp_jan = [
+                {name : 'トマト', jan : '20000011'},
+                {name : '人参', jan : '20000028'},
+                {name : 'パプリカ', jan : '20000035'},
+                {name : 'トウモロコシ', jan : '20000042'},
+                {name : 'レタス', jan : '20000059'},
+                {name : 'きゅうり', jan : '20000066'},
+                {name : 'ナス', jan : '20000073'},
+                {name : 'ジャガイモ', jan : '20000080'}
+            ]
+            _this.products = [];
+            temp_jan.map(function (temp) {
+                let tep = {
+                    "vendor_item_id": 1,
+                    "vendor_id": 0,
+                    "maker_id": 1,
+                    "customer_id": null,
+                    "jan": temp.jan,
+                    "order_class": "basic",
+                    "cost_price": "120.00",
+                    "selling_price": "180.00",
+                    "e_cost_price": "100.00",
+                    "e_selling_price": "130.00",
+                    "e_gross_profit": "23.08",
+                    "e_gross_profit_margin": "30.00",
+                    "sale_selling_price": "180.00",
+                    "gross_profit": "33.33",
+                    "gross_profit_margin": "50.00",
+                    "sale_cost_price": "0.00",
+                    "start_date": "2020-01-01",
+                    "end_date": "2021-12-31",
+                    "sale_start_date": "2020-01-01",
+                    "sale_end_date": "2021-12-31",
+                    "order_point_inputs": "ケース",
+                    "order_point_case_quantity": 0,
+                    "order_point_ball_quantity": 0,
+                    "order_point_unit_quantity": 0,
+                    "order_point_quantity": 1,
+                    "order_lot_inputs": "ケース",
+                    "order_lot_case_quantity": 0,
+                    "order_lot_ball_quantity": 0,
+                    "order_lot_unit_quantity": 0,
+                    "order_lot_quantity": 1,
+                    "is_special": "0",
+                    "created_at": "2021-09-17T03:08:43.000000Z",
+                    "updated_at": "2021-09-21T10:31:51.000000Z",
+                    "janinfo": {
+                        "jan_id": 1,
+                        "maker_id": null,
+                        "jan": temp.jan,
+                        "name": temp.name,
+                        "major_category": null,
+                        "sub_major_category": null,
+                        "minor_category": null,
+                        "case_inputs": 0,
+                        "ball_inputs": 0,
+                        "jan_start_date": "2021-09-17 15:08:43",
+                        "jan_end_date": "2021-09-17 15:08:43",
+                        "created_at": "2021-09-16T09:08:43.000000Z",
+                        "updated_at": null
+                    }
+                }
+                _this.products.push(tep)
+            })
+
+            return 0;
+
+
             axios.get(this.base_url + '/get-all-products')
                 .then(function (res) {
                     let data = res.data;
@@ -570,10 +653,10 @@ export default {
 
                 return false;
                 let data = {
-                    jan:_this.preview_product.jan,
+                    jan: _this.preview_product.jan,
                     price: parseFloat(_this.preview_product.cost),
                     gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
-                    gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
+                    gross_profit: ((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell * 100).toFixed(2),
                     selling_price: parseFloat(_this.preview_product.sell),
                     sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
                 }
@@ -594,16 +677,19 @@ export default {
         blurAndSave() {
             let _this = this;
 
+            return false;
+
+
             if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
                 _this.handi_navi = 'XXXXX';
                 $('#handy-navi').show()
                 return false;
             }
             let data = {
-                jan:_this.preview_product.jan,
+                jan: _this.preview_product.jan,
                 price: parseFloat(_this.preview_product.cost),
                 gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
-                gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
+                gross_profit: ((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell * 100).toFixed(2),
                 selling_price: parseFloat(_this.preview_product.sell),
                 sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
             }
@@ -628,12 +714,12 @@ export default {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
                 // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
-                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell) * 100).toFixed(2);
             } else if (type == 'sell') {
                 _this.preview_product.profit_margin = ((parseFloat(_this.preview_product.sell) - parseFloat(_this.preview_product.cost)) * 100) / _this.preview_product.cost
                 _this.preview_product.profit_margin = _this.preview_product.profit_margin.toFixed(2);
                 // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
-                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell) * 100).toFixed(2);
 
             } else if (type == 'profit') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat($('#profit').val())
@@ -644,7 +730,7 @@ export default {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
                 // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
-                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell) * 100).toFixed(2);
 
             }
 
@@ -688,7 +774,7 @@ export default {
             _this.preview_product.cost = product.cost_price;
             _this.preview_product.sell = product.selling_price;
             // _this.preview_product.profit = product.selling_price - product.cost_price;
-            _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+            _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell) * 100).toFixed(2);
 
             $('#mistumury-mage-preview').modal({backdrop: 'static'})
             // $('#special-price').focus();
@@ -729,7 +815,7 @@ export default {
                 ball_qty: parseInt(vendor.ball_inputs),
                 price: parseInt(vendor.cost_price),
                 gross_profit_margin: parseInt(vendor.profit_margin),
-                gross_profit: ((vendor.selling_price - vendor.cost_price)/vendor.selling_price*100).toFixed(2),
+                gross_profit: ((vendor.selling_price - vendor.cost_price) / vendor.selling_price * 100).toFixed(2),
                 selling_price: parseInt(vendor.selling_price)
             }
 
@@ -795,7 +881,7 @@ export default {
                             let sale_start_date = '2020-01-01';
                             let sale_end_date = '2021-12-31';
                             let data = {
-                                maker_id:response.data.maker_id,
+                                maker_id: response.data.maker_id,
                                 vendor_id: vendor_id,
                                 jan_code: jan_code,
                                 item_name: item_name,
@@ -866,7 +952,7 @@ export default {
         // select super
         selectSuper(message = null) {
             this.message = message
-            $('#mistumury-select-super').modal({backdrop : 'static'})
+            $('#mistumury-select-super').modal({backdrop: 'static'})
         },
         //sendtoSuper
         sendtoSuper() {
@@ -875,17 +961,17 @@ export default {
             this.allSelectedSuper = false
 
 
-
-            let data = {'item_info':this.productJans,'super_info':this.selectedSuper, 'message' : this.message};
+            let data = {'item_info': this.productJans, 'super_info': this.selectedSuper, 'message': this.message};
             this.handi_navi = '00000000';
             $('#handy-navi').show();
             $('#mistumury-select-super').modal('hide');
             // console.log(base_url)
             // console.log(base_url.includes('localhost'));
             // console.log(base_url.indexOf('localhost') !== -1);
-            var setApiUrl = (base_url.indexOf('localhost') !== -1?'/rv3_tonyav1':'/rv3_superv1');
+            // var setApiUrl = (base_url.indexOf('localhost') !== -1 ? '/rv3_tonyav1' : '/rv3_superv1');
+            var setApiUrl = '/rv3_superv1';
 
-            axios.post(setApiUrl+'/api/estimation_data', data)
+            axios.post(setApiUrl + '/api/estimation_data', data)
                 .then(function (response) {
                     // _this.getOrderDataByJan();
                     _this.getProducts();
@@ -895,8 +981,8 @@ export default {
                 .catch(function (e) {
                     console.log(e)
                 })
-            this.selectedSuper= [];
-            this.productJans= [];
+            this.selectedSuper = [];
+            this.productJans = [];
         }
 
 
@@ -910,6 +996,7 @@ export default {
 .active-c {
     background: #b5ffb1;
 }
+
 .active-img {
     box-shadow: inset 0px 0px 5px #0079ff;
 }
@@ -952,6 +1039,7 @@ table thead tr th, table tbody tr td {
     }
 
 }
+
 .image-div {
     width: 24%;
     position: relative;
