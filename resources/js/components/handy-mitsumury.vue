@@ -968,7 +968,8 @@ export default {
             // console.log(base_url)
             // console.log(base_url.includes('localhost'));
             // console.log(base_url.indexOf('localhost') !== -1);
-            var setApiUrl = (base_url.indexOf('localhost') !== -1 ? '/rv3_tonyav1' : '/rv3_superv1');
+            // var setApiUrl = (base_url.indexOf('localhost') !== -1 ? '/rv3_tonyav1' : '/rv3_superv1');
+            var setApiUrl = '/rv3_superv1';
 
             axios.post(setApiUrl + '/api/estimation_data', data)
                 .then(function (response) {
