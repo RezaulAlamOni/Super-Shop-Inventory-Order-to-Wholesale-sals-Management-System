@@ -893,6 +893,7 @@ class VendorController extends Controller
         $newrrr = array();
         $vendor_data_update_array = array();
         $inserted_voucher_numbers = array();
+        $data = [];
         foreach ($data_array as $key => $val) {
             $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $val[4]])->first();
             $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_item_id', $val[4])->first();
@@ -915,7 +916,9 @@ class VendorController extends Controller
                     'unit_cost_price' => $item_info->cost_price,
                     'quantity' => $totalLotInventory,
                     'source' => 0]);
-            } else {
+                $order_ = vendor_order::where('vendor_order_id',$order_id)->first();
+            }
+            else {
                 $order_id = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)
                     ->update([
                         'order_case_quantity' => $case_order_qty,
@@ -931,14 +934,29 @@ class VendorController extends Controller
                         'source' => 0,
                         'order_date' => date('Y-m-d H:i:s')
                     ]);
+                $order_ = vendor_order::where('vendor_order_id',$check_order_exist->vendor_order_id)->first();
             }
 
+            $order_->item_ifo = $item_info;
+            array_push($data,$order_);
 
         }
+
+        $ch = curl_init();
+        $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/orders";
+//        $url = "http://localhost/rv3_tonyav1/api/orders";
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
+        curl_setopt($ch,CURLOPT_POSTFIELDS,['data' => json_encode($data)]);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT ,3);
+        curl_setopt($ch,CURLOPT_TIMEOUT, 20);
+        $response = curl_exec($ch);
+        curl_close ($ch);
         // Session::flash('message', '発注番号: ' . $voucher_string);
         // Session::flash('class_name', 'alert-success');
 
-        return $result = response()->json(['message' => 'insert_success']);
+        return response()->json(['message' => 'insert_success']);
     }
 
     public function singleVendorItem(Request $request)

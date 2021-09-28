@@ -4189,7 +4189,7 @@ function get_vendor_master_item_list() {
                     var in_company_code = (response[i].in_company_code == null ? '' : response[i].in_company_code);
                     htmls += '<tr data_action_status="0" data-id="' + response[i].vendor_item_id + '" vendor-id="' + response[i].vendor_id + '" maker_id="' + response[i].maker_id + '" class="vendor_item_edit_delete_inline color_row_' + row_colors + ' color_row_' + new_colors + '" >';
                     htmls += '<td>' + (j + 1) + '</td>';
-                    htmls += '<td><img data_cost_price="' + response[i].cost_price + '" data_quantity="" src="'+Globals.base_url+'/public/backend/images/products/cocacola.jpg" class="itemImagesContr"/></td>';
+                    htmls += '<td><img data_cost_price="' + response[i].cost_price + '" data_quantity="" src="'+Globals.base_url+'/public/backend/images/products/'+response[i].jan+'.png" class="itemImagesContr"/></td>';
                     htmls += '<td class="p_name" data_field_type="product_name" contenteditable="true">' + response[i].product_name + '</td>';
                     htmls += '<td>定</td>';
                     htmls += '<td><input type="tel" onfocus="this.select();" value="' + response[i].case_inputs + '" data_field_type="case_inputs" class="form-control text-right v_case_inputs edit_vendor_item"></td>';
