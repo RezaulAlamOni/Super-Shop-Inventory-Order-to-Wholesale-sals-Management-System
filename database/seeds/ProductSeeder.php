@@ -27,6 +27,7 @@ class ProductSeeder extends Seeder
                 $products = [
                     'jan' => $jan['jan'],
                     'cost_price' => 100,
+                    'vendor_id' => 1,
                     'selling_price' => 120,
                     'gross_profit' => 20,
                     'gross_profit_margin' => 20,
@@ -36,6 +37,8 @@ class ProductSeeder extends Seeder
                 jan::insert([
                     "jan" => $jan['jan'],
                     "name" => $jan['name'],
+                    "case_inputs" => 24,
+                    "ball_inputs" => 6,
                     "jan_start_date" => date('Y-m-d H:i:s'),
                     "jan_end_date" => date('Y-m-d H:i:s'),
                 ]);
