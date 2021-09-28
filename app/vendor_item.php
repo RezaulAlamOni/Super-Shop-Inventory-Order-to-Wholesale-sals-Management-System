@@ -13,5 +13,8 @@ class vendor_item extends Model
     public function janinfo(){
         return $this->hasOne(jan::class,'jan','jan');
     }
-
+    public function jan()
+    {
+        return $this->belongsTo(jan::class, 'jan','jan');
+    }
 }

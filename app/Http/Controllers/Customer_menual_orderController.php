@@ -470,7 +470,7 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
     public function getCustomerOrderInfoByJan(Request $request){
         $value = '確定済み';
         $jan_code = $request->jan_code;
-       $result = customer_order_detail::where('jan',$jan_code)->with(['customer_item','jan','customer_order','customer_shipment'])
+       $result = customer_order_detail::where('jan',$jan_code)->with(['vendor_item','jan','customer_order','customer_shipment'])
        ->whereHas('customer_order', function($q) use($value) {
         // Query the name field in status table
         $q->where('status', '=', $value); // '=' is optional
@@ -490,10 +490,10 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
     public function getCustomerOrderInfoByJanForHandy(Request $request){
         $value = '確定済み';
         $jan_code = $request->jan_code;
-        if (!customer_item::where('jan', $jan_code)->first()){
+        if (!vendor_item::where('jan', $jan_code)->first()){
             return response()->json(['status' => 401]);
         }
-       $result = customer_order_detail::where('jan',$jan_code)->with(['customer_item','jan','customer_order','customer_shipment'])
+       $result = customer_order_detail::where('jan',$jan_code)->with(['vendor_item','jan','customer_order','customer_shipment'])
        //->whereHas('customer_order', function($q) use($value) {
         // Query the name field in status table
       //  $q->where('status', '=', $value); // '=' is optional
@@ -506,7 +506,7 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
        if($result){
             return response()->json(['status' => 200,'data'=>$result]);
        }else{
-            $result = customer_item::where('jan', $jan_code)->with('jan')->first();
+            $result = vendor_item::where('jan', $jan_code)->with('jan')->first();
             return response()->json(['status' => 402,'data'=>$result]);
        }
     }
@@ -514,10 +514,10 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
     public function getCustomerOrderConfirmByJanForHandy(Request $request){
         $value = '確定済み';
         $jan_code = $request->jan_code;
-        if (!customer_item::where('jan', $jan_code)->first()){
+        if (!vendor_item::where('jan', $jan_code)->first()){
             return response()->json(['status' => 401]);
         }
-        $result = customer_order_detail::where('jan',$jan_code)->with(['customer_item','jan','customer_order','customer_shipment'])
+        $result = customer_order_detail::where('jan',$jan_code)->with(['vendor_item','jan','customer_order','customer_shipment'])
             ->whereHas('customer_order', function($q) use($value) {
             $q->where('status', '=', $value); // '=' is optional
         })
@@ -529,7 +529,7 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
        if($result){
             return response()->json(['status' => 200,'data'=>$result]);
        }else{
-            $result = customer_item::where('jan', $jan_code)->with('jan')->first();
+            $result = vendor_item::where('jan', $jan_code)->with('jan')->first();
             return response()->json(['status' => 402,'data'=>$result]);
        }
     }
@@ -558,8 +558,9 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
         $value = '';
  $customer_id = $request->customer_id;
 
-        $customerItemInfo = customer_item::where('jan', $request->jan_code)->where('customer_id',$request->customer_id)->with('jan')->first();
-        $result = customer_order_detail::where('jan',$request->jan_code)->with(['customer_item','jan','customer_order','customer_shipment'])
+       // $customerItemInfo = customer_item::where('jan', $request->jan_code)->where('customer_id',$request->customer_id)->with('jan')->first();
+        $vendoritems_info = vendor_item::where('jan', $request->jan_code)->with('jan')->first();
+        $result = customer_order_detail::where('jan',$request->jan_code)->with(['jan','customer_order','customer_shipment'])
        ->whereHas('customer_order', function($q) use($customer_id) {
        $q->where('customer_id', $customer_id); // '=' is optional
        $q->where('status', '確定済み'); // '=' is optional
@@ -567,8 +568,8 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
  })
  ->orderBy('customer_order_detail_id', 'DESC')->first();
         $jan_code = $request->jan_code;
-        $items_info = customer_item::join('customer_shops','customer_shops.customer_id','=','customer_items.customer_id')->where('customer_items.jan',$jan_code)->where('customer_items.customer_id',$customer_id)->first();
-        $vendoritems_info = vendor_item::where('jan',$jan_code)->first();
+        //$items_info = customer_item::join('customer_shops','customer_shops.customer_id','=','customer_items.customer_id')->where('customer_items.jan',$jan_code)->where('customer_items.customer_id',$customer_id)->first();
+       // $vendoritems_info = vendor_item::where('jan',$jan_code)->first();
         if($result){
             return response()->json(['status' => 402]);
             
@@ -576,7 +577,7 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
             $inputs_type = 'ケース';
             $c_quantity = $request->total_quantity;
             $customer_order_demo['customer_id']=$customer_id;
-            $customer_order_demo['customer_shop_id']=$items_info->customer_shop_id;
+            $customer_order_demo['customer_shop_id']=1;//$items_info->customer_shop_id;
             $customer_order_demo['shipment_number']=rand();
             $customer_order_demo['category']='manual';
             $customer_order_demo['voucher_number']=rand();
@@ -584,15 +585,15 @@ left join customer_shipments on customer_shipments.customer_order_detail_id = cu
             $customer_order_demo['shipment_date']= date('Y-m-d');
             $customer_order_demo['delivery_date']= date('Y-m-d H:i:s');
 
-            $customer_order_demo_detail['customer_item_id']=$items_info->customer_item_id;
+            $customer_order_demo_detail['customer_item_id']=$vendoritems_info->vendor_item_id;//vendor_item_id
             $customer_order_demo_detail['jan']=$jan_code;
             $customer_order_demo_detail['inputs']=$inputs_type;
             $customer_order_demo_detail['quantity']=$c_quantity;
             $customer_order_demo_detail['order_case_quantity']=$request->case_order_quantity;
             $customer_order_demo_detail['order_ball_quantity']=$request->ball_order_quantity;
             $customer_order_demo_detail['order_unit_quantity']=$request->unit_order_quantity;
-            $customer_order_demo_detail['cost_price']=$customerItemInfo->cost_price;
-            $customer_order_demo_detail['selling_price']=$customerItemInfo->selling_price;
+            $customer_order_demo_detail['cost_price']=$vendoritems_info->cost_price;
+            $customer_order_demo_detail['selling_price']=$vendoritems_info->selling_price;
             $customer_order_id = customer_order::insertGetId($customer_order_demo);
             $customer_order_demo_detail['customer_order_id']=$customer_order_id;
             $customer_order_detail_id = customer_order_detail::insertGetId($customer_order_demo_detail);
