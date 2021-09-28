@@ -4200,7 +4200,7 @@ function get_vendor_master_item_list() {
                     htmls += '<td><input type="tel" value="' + response[i].gross_profit + '" data_field_type="gross_profit" class="form-control text-right v_gross_profit edit_vendor_item" readonly></td>';
                     htmls += '<td><input type="tel" value="' + response[i].gross_profit_margin + '" data_field_type="gross_profit_margin" class="form-control text-right v_gross_profit_margin edit_vendor_item"></td>';
                     htmls += '<td><input type="number" data_current_vl="' + in_company_code + '"  data_field_type="company_code" value="' + in_company_code + '" class="form-control text-center v_in_company_code"></td>';
-                    htmls += '<td style="padding:0px!important;"><span class="vendor_name vendor_name_control hide">' + vendor_name + '</span><span class="vendor_select vendor_name_control show"><select vendor_item_id="' + response[i].vendor_item_id + '" class="form-control vendor_select2"><option selected value="' + response[i].vendor_id + '">' + vendor_name + '</option></select></span></td>';
+                    htmls += '<td style="padding:0px!important;"><span class="vendor_name vendor_name_control hide">' + vendor_name + '</span><span class="vendor_select vendor_name_control show"><select vendor_item_id="' + response[i].vendor_item_id + '" disabled="true" class="form-control vendor_select2_" style="border: none"><option selected value="' + response[i].vendor_id + '">' + vendor_name + '</option></select></span></td>';
                     htmls += '<td style="padding:0px;">' + response[i].maker_name + ' ' + response[i].jan + '</td>';
                     htmls += '</tr>';
                     j++;

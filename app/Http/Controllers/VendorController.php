@@ -431,7 +431,7 @@ class VendorController extends Controller
             }
         }
 
-
+        $vendor_id = auth()->user()->vendor->vendor_id;
         $vendor_data_ins_array = array(
             'maker_id' => $maker_id,
             'vendor_id' => $vendor_id,
@@ -942,17 +942,17 @@ class VendorController extends Controller
 
         }
 
-        $ch = curl_init();
-        $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/orders";
-//        $url = "http://localhost/rv3_tonyav1/api/orders";
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
-        curl_setopt($ch,CURLOPT_POSTFIELDS,['data' => json_encode($data)]);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT ,3);
-        curl_setopt($ch,CURLOPT_TIMEOUT, 20);
-        $response = curl_exec($ch);
-        curl_close ($ch);
+//        $ch = curl_init();
+//        $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/orders";
+////        $url = "http://localhost/rv3_tonyav1/api/orders";
+//        curl_setopt($ch,CURLOPT_URL,$url);
+//        curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
+//        curl_setopt($ch,CURLOPT_POSTFIELDS,['data' => json_encode($data)]);
+//        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT ,3);
+//        curl_setopt($ch,CURLOPT_TIMEOUT, 20);
+//        $response = curl_exec($ch);
+//        curl_close ($ch);
         // Session::flash('message', '発注番号: ' . $voucher_string);
         // Session::flash('class_name', 'alert-success');
 
