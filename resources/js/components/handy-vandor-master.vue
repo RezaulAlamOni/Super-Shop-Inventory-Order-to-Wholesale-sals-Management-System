@@ -168,15 +168,15 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <select class="form-control" id="vendprs" v-model="maker_id"
-                                                @change="updateVendorData()">
-                                            <option value="0">問屋を選択</option>
-                                            <option v-for="vendor in vendors" :value="vendor.id">
-                                                {{ vendor.text }}
-                                            </option>
-                                        </select>
-                                    </div>
+<!--                                    <div class="form-group">-->
+<!--                                        <select class="form-control" id="vendprs" v-model="maker_id"-->
+<!--                                                @change="updateVendorData()">-->
+<!--                                            <option value="0">問屋を選択</option>-->
+<!--                                            <option v-for="vendor in vendors" :value="vendor.id">-->
+<!--                                                {{ vendor.text }}-->
+<!--                                            </option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
 
 
                                 </div>
