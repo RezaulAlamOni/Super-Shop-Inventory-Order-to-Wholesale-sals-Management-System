@@ -341,72 +341,72 @@ export default {
     methods: {
         getProducts() {
             let _this = this;
-            let temp_jan = [
-                {name : 'トマト', jan : '20000011'},
-                {name : '人参', jan : '20000028'},
-                {name : 'パプリカ', jan : '20000035'},
-                {name : 'トウモロコシ', jan : '20000042'},
-                {name : 'レタス', jan : '20000059'},
-                {name : 'きゅうり', jan : '20000066'},
-                {name : 'ナス', jan : '20000073'},
-                {name : 'ジャガイモ', jan : '20000080'}
-            ]
-            _this.products = [];
-            temp_jan.map(function (temp) {
-                let tep = {
-                    "vendor_item_id": 1,
-                    "vendor_id": 0,
-                    "maker_id": 1,
-                    "customer_id": null,
-                    "jan": temp.jan,
-                    "order_class": "basic",
-                    "cost_price": "120.00",
-                    "selling_price": "180.00",
-                    "e_cost_price": "100.00",
-                    "e_selling_price": "130.00",
-                    "e_gross_profit": "23.08",
-                    "e_gross_profit_margin": "30.00",
-                    "sale_selling_price": "180.00",
-                    "gross_profit": "33.33",
-                    "gross_profit_margin": "50.00",
-                    "sale_cost_price": "0.00",
-                    "start_date": "2020-01-01",
-                    "end_date": "2021-12-31",
-                    "sale_start_date": "2020-01-01",
-                    "sale_end_date": "2021-12-31",
-                    "order_point_inputs": "ケース",
-                    "order_point_case_quantity": 0,
-                    "order_point_ball_quantity": 0,
-                    "order_point_unit_quantity": 0,
-                    "order_point_quantity": 1,
-                    "order_lot_inputs": "ケース",
-                    "order_lot_case_quantity": 0,
-                    "order_lot_ball_quantity": 0,
-                    "order_lot_unit_quantity": 0,
-                    "order_lot_quantity": 1,
-                    "is_special": "0",
-                    "created_at": "2021-09-17T03:08:43.000000Z",
-                    "updated_at": "2021-09-21T10:31:51.000000Z",
-                    "janinfo": {
-                        "jan_id": 1,
-                        "maker_id": null,
-                        "jan": temp.jan,
-                        "name": temp.name,
-                        "major_category": null,
-                        "sub_major_category": null,
-                        "minor_category": null,
-                        "case_inputs": 0,
-                        "ball_inputs": 0,
-                        "jan_start_date": "2021-09-17 15:08:43",
-                        "jan_end_date": "2021-09-17 15:08:43",
-                        "created_at": "2021-09-16T09:08:43.000000Z",
-                        "updated_at": null
-                    }
-                }
-                _this.products.push(tep)
-            })
-
-            return 0;
+            // let temp_jan = [
+            //     {name : 'トマト', jan : '20000011'},
+            //     {name : '人参', jan : '20000028'},
+            //     {name : 'パプリカ', jan : '20000035'},
+            //     {name : 'トウモロコシ', jan : '20000042'},
+            //     {name : 'レタス', jan : '20000059'},
+            //     {name : 'きゅうり', jan : '20000066'},
+            //     {name : 'ナス', jan : '20000073'},
+            //     {name : 'ジャガイモ', jan : '20000080'}
+            // ]
+            // _this.products = [];
+            // temp_jan.map(function (temp) {
+            //     let tep = {
+            //         "vendor_item_id": 1,
+            //         "vendor_id": 0,
+            //         "maker_id": 1,
+            //         "customer_id": null,
+            //         "jan": temp.jan,
+            //         "order_class": "basic",
+            //         "cost_price": "120.00",
+            //         "selling_price": "180.00",
+            //         "e_cost_price": "100.00",
+            //         "e_selling_price": "130.00",
+            //         "e_gross_profit": "23.08",
+            //         "e_gross_profit_margin": "30.00",
+            //         "sale_selling_price": "180.00",
+            //         "gross_profit": "33.33",
+            //         "gross_profit_margin": "50.00",
+            //         "sale_cost_price": "0.00",
+            //         "start_date": "2020-01-01",
+            //         "end_date": "2021-12-31",
+            //         "sale_start_date": "2020-01-01",
+            //         "sale_end_date": "2021-12-31",
+            //         "order_point_inputs": "ケース",
+            //         "order_point_case_quantity": 0,
+            //         "order_point_ball_quantity": 0,
+            //         "order_point_unit_quantity": 0,
+            //         "order_point_quantity": 1,
+            //         "order_lot_inputs": "ケース",
+            //         "order_lot_case_quantity": 0,
+            //         "order_lot_ball_quantity": 0,
+            //         "order_lot_unit_quantity": 0,
+            //         "order_lot_quantity": 1,
+            //         "is_special": "0",
+            //         "created_at": "2021-09-17T03:08:43.000000Z",
+            //         "updated_at": "2021-09-21T10:31:51.000000Z",
+            //         "janinfo": {
+            //             "jan_id": 1,
+            //             "maker_id": null,
+            //             "jan": temp.jan,
+            //             "name": temp.name,
+            //             "major_category": null,
+            //             "sub_major_category": null,
+            //             "minor_category": null,
+            //             "case_inputs": 0,
+            //             "ball_inputs": 0,
+            //             "jan_start_date": "2021-09-17 15:08:43",
+            //             "jan_end_date": "2021-09-17 15:08:43",
+            //             "created_at": "2021-09-16T09:08:43.000000Z",
+            //             "updated_at": null
+            //         }
+            //     }
+            //     _this.products.push(tep)
+            // })
+            //
+            // return 0;
 
 
             axios.get(this.base_url + '/get-all-products')
