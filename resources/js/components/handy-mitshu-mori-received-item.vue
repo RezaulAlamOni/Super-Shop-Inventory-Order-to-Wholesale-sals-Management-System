@@ -11,14 +11,15 @@
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right top-button"
                            style="float:right">メニュー</a>
-                             <a href="javascript:void(0)" @click="getProducts" class="btn btn-success pull-right mr-1 top-button"
+                        <a href="javascript:void(0)" @click="getProducts"
+                           class="btn btn-success pull-right mr-1 top-button"
                            style="float:right"> 履歴</a>
-                      <!--  <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
-                           style="float:right"> 発注</a>-->
+                        <!--  <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
+                             style="float:right"> 発注</a>-->
                         <!--                        <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"-->
                         <!--                           style="float:right"> 採用</a>-->
-                       <!-- <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
-                           style="float:right"> 詳細</a>-->
+                        <!-- <a href="javascript:void(0)" class="btn btn-success pull-right mr-1 top-button"
+                            style="float:right"> 詳細</a>-->
 
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
@@ -76,77 +77,111 @@
                     <div class=" col-centereds">
                         <div>
 
-
-
                             <div class="productInfos">
-                                 <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
-                                <thead data-v-c9953dda="">
-                                <tr data-v-c9953dda="">
-                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
-                                        画像
-                                    </th>
-                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
-                                        原価
-                                    </th>
-                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
-                                        売価
-                                    </th>
-                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
-                                        粗利
-                                    </th>
-                                    <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
-                                        ％
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody data-v-c9953dda="" class="physicaltbody">
-                                <tr v-for="(product,i) in products">
-                                    <td data-v-c9953dda="">
-                                        <!--<input data-v-c9953dda="" type="tel" id="special-price"
-                                               v-model="product.sale_selling_price"
-                                               class="form-control  " @click="selectItem($event)"
-                                               @keypress="pressEnterAndSave($event,'cost')"
-                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
-                                               <img :src="'public/backend/images/products/'+product.jan+'.png'"
-                                 class="img-thumbnail custom-img"
-                                 alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
-                                 style="cursor: pointer" width="100px">
-                                    </td>
-                                    <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="cost" @click="selectItem($event)"
-                                               class="form-control  " v-model="product.cost_price"
-                                               @blur="blurAndSave()"
-                                               @keypress="pressEnterAndSave($event,'sell')" readonly
-                                               @keyup="calculatePrice('cost')"
-                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
-                                    </td>
-                                    <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
-                                               class="form-control  " v-model="product.selling_price"
-                                               @keypress="pressEnterAndSave($event,'profit_margin')" readonly
-                                               @blur="blurAndSave()"
-                                               @keyup="calculatePrice('sell')"
-                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
-                                    </td>
-                                    <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
-                                               class="form-control  " v-model="product.gross_profit" readonly
-                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
-                                        <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
-                                        <!--                                               @keyup="calculatePrice('profit')"-->
-                                    </td>
-                                    <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="profit_margin"
-                                               @click="selectItem($event)"
-                                               @blur="blurAndSave()"
-                                               @keypress="pressEnterAndSave($event,'special-price')"
-                                               class="form-control  " v-model="product.gross_profit_margin"
-                                               @keyup="calculatePrice('profit_margin')" readonly
-                                               style="border-radius: 0px; text-align: center; padding: 7px 0px;">
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
+                                    <thead data-v-c9953dda="">
+                                    <tr data-v-c9953dda="">
+                                        <th colspan="5" style="width: 50px; text-align: left; padding: 5px;height: 40px !important;">
+                                            <input class="form-check-input check-all m-0" id="flexCheck"
+                                                   style="height: 20px;width: 20px"
+                                                   @click="selectAll()" v-model="allSelected" type="checkbox" value="" >
+                                            <label class="form-check-label " style="margin-left: 30px;font-weight: bold" for="flexCheck">
+                                                全て
+                                            </label>
+                                            <span class="badge badge-success float-right" v-if="productJans.length > 0"
+                                                  style="padding: 7px 15px;font-size: 15px"
+                                                  @click="orderToTonya()">発注</span>
+                                        </th>
+
+                                        <!--                                        <th colspan="2" style="width: 50px; text-align: center; padding: 5px;">-->
+                                        <!--                                            ％-->
+                                        <!--                                        </th>-->
+                                    </tr>
+                                    </thead>
+                                    <thead data-v-c9953dda="">
+                                    <tr data-v-c9953dda="">
+                                        <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                            画像
+                                        </th>
+                                        <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                            原価
+                                        </th>
+                                        <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                            売価
+                                        </th>
+                                        <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                            粗利
+                                        </th>
+                                        <th data-v-c9953dda="" style="width: 50px; text-align: center; padding: 5px;">
+                                            ％
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody data-v-c9953dda="" class="physicaltbody">
+                                    <template v-for="(product,i) in products">
+                                        <tr>
+                                            <td rowspan="2" data-v-c9953dda="" style="position:relative;">
+                                                <!--<input data-v-c9953dda="" type="tel" id="special-price"
+                                                       v-model="product.sale_selling_price"
+                                                       class="form-control  " @click="selectItem($event)"
+                                                       @keypress="pressEnterAndSave($event,'cost')"
+                                                       style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
+                                                <img :src="'public/backend/images/products/'+product.jan+'.png'"
+                                                     class="img-thumbnail custom-img"
+                                                     alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
+                                                     style="cursor: pointer" width="100px">
+                                                <input class="form-check-input form-check-input__" type="checkbox"
+                                                       v-model="productJans" :value="product">
+                                            </td>
+                                            <td data-v-c9953dda="">
+                                                <input data-v-c9953dda="" type="tel" id="cost"
+                                                       @click="selectItem($event)"
+                                                       class="form-control  " v-model="product.cost_price"
+                                                       @blur="blurAndSave()"
+                                                       @keypress="pressEnterAndSave($event,'sell')" readonly
+                                                       @keyup="calculatePrice('cost')"
+                                                       style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                            </td>
+                                            <td data-v-c9953dda="">
+                                                <input data-v-c9953dda="" type="tel" id="sell"
+                                                       @click="selectItem($event)"
+                                                       class="form-control  " v-model="product.selling_price"
+                                                       @keypress="pressEnterAndSave($event,'profit_margin')" readonly
+                                                       @blur="blurAndSave()"
+                                                       @keyup="calculatePrice('sell')"
+                                                       style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                            </td>
+                                            <td data-v-c9953dda="">
+                                                <input data-v-c9953dda="" type="tel" id="profit"
+                                                       @click="selectItem($event)"
+                                                       class="form-control  " v-model="product.gross_profit" readonly
+                                                       style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                                <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
+                                                <!--                                               @keyup="calculatePrice('profit')"-->
+                                            </td>
+                                            <td data-v-c9953dda="">
+                                                <input data-v-c9953dda="" type="tel" id="profit_margin"
+                                                       @click="selectItem($event)"
+                                                       @blur="blurAndSave()"
+                                                       @keypress="pressEnterAndSave($event,'special-price')"
+                                                       class="form-control  " v-model="product.gross_profit_margin"
+                                                       @keyup="calculatePrice('profit_margin')" readonly
+                                                       style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center" style="font-size: 13px">1<br>(ケース)</td>
+                                            <td class="text-center" style="font-size: 13px">1<br>(ボール)</td>
+                                            <td class="text-center" style="font-size: 13px">1<br>(バラ)</td>
+                                            <td class="text-center">
+                                                <span class="badge badge-success"
+                                                      @click="orderToTonya(product)">発注</span>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                    </tbody>
+                                </table>
                             </div>
 
                         </div>
@@ -307,16 +342,18 @@ export default {
             search_data: null,
             product_pics: [],
             preview_product: {},
-            orderBy:'DESC',
+            orderBy: 'DESC',
             maker_id: 0,
             vendors: [],
-            images: []
+            images: [],
+            productJans : [],
+            allSelected: false,
 
         }
     },
     mounted() {
         // this.getProducts();
-        this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg',  '69813_11.png', '69813_11.png', 'Whocoded.jpg'];
+        this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg', '69813_11.png', '69813_11.png', 'Whocoded.jpg'];
         $('#jan_').focus()
         $('#jan_').select()
         this.handi_navi = '商品を押してください';
@@ -327,13 +364,13 @@ export default {
     methods: {
         getProducts() {
             let _this = this;
-            if(_this.orderBy=='DESC'){
+            if (_this.orderBy == 'DESC') {
                 _this.orderBy = 'ASC';
-            }else if(_this.orderBy=='ASC'){
-                _this.orderBy='DESC';
+            } else if (_this.orderBy == 'ASC') {
+                _this.orderBy = 'DESC';
             }
 
-            axios.post(this.base_url + '/get-all-products-from-estimation',{orderBy:_this.orderBy})
+            axios.post(this.base_url + '/get-all-products-from-estimation', {orderBy: _this.orderBy})
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
@@ -577,13 +614,13 @@ export default {
                 // }
 
                 let data = {
-                    jan:_this.preview_product.jan,
+                    jan: _this.preview_product.jan,
                     product_name: _this.preview_product.item_name,
                     case_qty: parseInt(_this.preview_product.case_inputs),
                     ball_qty: parseInt(_this.preview_product.ball_inputs),
                     price: parseFloat(_this.preview_product.cost),
                     gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
-                    gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
+                    gross_profit: ((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell * 100).toFixed(2),
                     selling_price: parseFloat(_this.preview_product.sell),
                     sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
                 }
@@ -610,13 +647,13 @@ export default {
                 return false;
             }
             let data = {
-                jan:_this.preview_product.jan,
+                jan: _this.preview_product.jan,
                 product_name: _this.preview_product.item_name,
                 case_qty: parseInt(_this.preview_product.case_inputs),
                 ball_qty: parseInt(_this.preview_product.ball_inputs),
                 price: parseFloat(_this.preview_product.cost),
                 gross_profit_margin: parseFloat(_this.preview_product.profit_margin),
-                gross_profit: ((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell*100).toFixed(2),
+                gross_profit: ((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell * 100).toFixed(2),
 
                 selling_price: parseFloat(_this.preview_product.sell),
                 sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
@@ -642,12 +679,12 @@ export default {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
                 // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
-                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell) * 100).toFixed(2);
             } else if (type == 'sell') {
                 _this.preview_product.profit_margin = ((parseFloat(_this.preview_product.sell) - parseFloat(_this.preview_product.cost)) * 100) / _this.preview_product.cost
                 _this.preview_product.profit_margin = _this.preview_product.profit_margin.toFixed(2);
                 // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
-                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell) * 100).toFixed(2);
 
             } else if (type == 'profit') {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat($('#profit').val())
@@ -658,7 +695,7 @@ export default {
                 _this.preview_product.sell = parseFloat(_this.preview_product.cost) + parseFloat((_this.preview_product.cost * _this.preview_product.profit_margin) / 100);
                 _this.preview_product.sell = _this.preview_product.sell.toFixed(2)
                 // _this.preview_product.profit = (_this.preview_product.sell - _this.preview_product.cost).toFixed(2);
-                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+                _this.preview_product.profit = (((_this.preview_product.sell - _this.preview_product.cost) / _this.preview_product.sell) * 100).toFixed(2);
 
             }
 
@@ -699,9 +736,9 @@ export default {
             _this.preview_product = product;
             _this.maker_id = product.vendor_id;
             _this.preview_product.title = product.item_name;
-             _this.preview_product.cost = product.cost_price;
-            _this.preview_product.sell =  product.selling_price;
-            _this.preview_product.profit =  product.gross_profit;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
+            _this.preview_product.cost = product.cost_price;
+            _this.preview_product.sell = product.selling_price;
+            _this.preview_product.profit = product.gross_profit;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
             _this.preview_product.profit_margin = product.gross_profit_margin;//(((_this.preview_product.sell - _this.preview_product.cost)/_this.preview_product.sell)*100).toFixed(2);
 
 
@@ -744,7 +781,7 @@ export default {
                 ball_qty: parseInt(vendor.ball_inputs),
                 price: parseInt(vendor.cost_price),
                 gross_profit_margin: parseInt(vendor.profit_margin),
-                gross_profit: ((vendor.selling_price - vendor.cost_price)/vendor.selling_price*100).toFixed(2),
+                gross_profit: ((vendor.selling_price - vendor.cost_price) / vendor.selling_price * 100).toFixed(2),
                 selling_price: parseInt(vendor.selling_price)
             }
 
@@ -863,11 +900,76 @@ export default {
         naviShow() {
             this.handi_navi = '仕入・販売先マスターへ登録されました';
             $('#handy-navi').show();
-        }
+        },
+        orderToTonya(product = null) {
+            let _this = this;
+            _this.loader = 1;
+            setTimeout(function () {
+                var dtes = $.datepicker.formatDate('yy-mm-dd', new Date());
+                let data_array = [];
+                if (product == null) {
+                    _this.productJans.map(function (pro) {
+                        let data = [
+                            1,
+                            1,
+                            1,
+                            pro.customer_id,
+                            pro.vendor_item_id,
+                            dtes,
+                            Math.floor(100000 + Math.random() * 900000)
+                        ]
+                        data_array.push(data)
+                    })
+                } else {
+                    let data = [
+                        1,
+                        1,
+                        1,
+                        product.customer_id,
+                        product.vendor_item_id,
+                        dtes,
+                        Math.floor(100000 + Math.random() * 900000)
+                    ]
+                    data_array.push(data)
+                }
 
+
+                axios.post(this.base_url + '/vendor_order_insert_handy', {'data_array': data_array})
+                    .then(function (res) {
+
+                        $('#handy-navi').show()
+                        _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+
+                        // _this.hideModelAndClearInput()
+                    })
+                    .then(function (er) {
+
+                    })
+                    .finally(function () {
+                        $('.loading_image_custom').hide()
+                        _this.loader = 0
+                    })
+            }, 500)
+        },
+        selectAll() {
+            this.productJans = [];
+            if (!this.allSelected) {
+                this.productJans = this.products
+            }
+
+
+        },
 
     },
-    watch: {}
+    watch: {
+        productJans : function (val) {
+            if (this.productJans.length == this.products.length) {
+                this.allSelected = 1;
+            } else  {
+                this.allSelected = 0;
+            }
+        }
+    }
 }
 </script>
 
@@ -898,11 +1000,13 @@ td {
 
 table thead tr th, table tbody tr td {
     border: 1px solid #9f9f9f !important;
-    vertical-align:middle !important;
+    vertical-align: middle !important;
 }
-table tbody tr td input{
-    border:none !important;
+
+table tbody tr td input {
+    border: none !important;
 }
+
 @supports (-webkit-touch-callout: none) {
     /*/CSS specific to iOS devices */
     .search-button-ios {
@@ -967,4 +1071,15 @@ table tbody tr td input{
     }
 
 }
+
+
+.form-check-input__ {
+    position: absolute;
+    right: 0;
+    top: -5px;
+    height: 20px;
+    width: 20px;
+}
+
+
 </style>
