@@ -288,6 +288,70 @@ class ShipmentCsvController extends Controller
             return $customer_id;
         }
     }
+    public function vendor_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price){
+        $customer_item_info = vendor_item::where('jan',$jan_code)->first();
+        if($customer_item_info){
+            return $customer_item_info['customer_item_id'];
+        }else{
+            $janLenght = strlen($jan_code);
+            if($janLenght=='8'){
+                $maker_code = substr($jan_code, 0, 5);
+            }else{
+                $maker_code = substr($jan_code, 2, 5);
+            }
+            $vendor_id = 0;
+            if (maker::where('maker_code', $maker_code)->first()) {
+                $api_data = maker::where('maker_code', $maker_code)->first();
+                $vendor_id = $api_data->vendor_id;
+                $maker_id = $api_data->maker_id;
+            } else {
+                $maker_id = maker::insertGetId(['maker_code' => $maker_code, 'vendor_id' => $vendor_id, 'maker_name' => $maker_name]);
+            }
+            if (!jan::where('jan', $jan_code)->first()) {
+                jan::insert([
+                        "jan" => $jan_code,
+                        "name" => $jan_name,
+                        "jan_start_date" => date('Y-m-d H:i:s'),
+                        "jan_end_date" => date('Y-m-d H:i:s'),
+                        "case_inputs"=>"12",
+                        "ball_inputs"=>"6",
+                ]);
+            }
+            
+            $profit = $selling_price - $cost_price;
+            $profit_margin = (100*$profit)/$selling_price;
+            $profit_margin = round($profit_margin);
+            if (!vendor_item::where('jan', $jan_code)->first()) {
+            $vendor_item_id = vendor_item::insertGetId([
+                'vendor_id'=>$vendor_id,
+                'maker_id'=>$maker_id,
+                'jan'=>$jan_code,
+                'cost_price'=>$cost_price,
+                'selling_price'=>$selling_price,
+                'sale_selling_price'=>$selling_price,
+                'gross_profit'=>$profit,
+                'gross_profit_margin'=>$profit_margin,
+                'start_date'=>date('Y-m-d'),
+                'end_date'=>date('Y-m-d')
+            ]);
+            }
+            $csarray = array(
+            'c_name' => $customer_id,
+            'v_name' => $vendor_id,
+            'j_code' => $jan_code,
+            'cost_price' => $selling_price
+            );
+            return $insertTocus = $this->insertIntocustomeritem($csarray);
+
+            // $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
+            // if($customer_item_info){
+            //     return $customer_item_info['customer_item_id'];
+            // }else{
+            //     return 999999;
+            // }
+        }
+        
+    }
     public function customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price){
         $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
         if($customer_item_info){
@@ -433,7 +497,7 @@ class ShipmentCsvController extends Controller
                 continue;
                 // return response()->json(['message' => '未登録の販売先コードがあります：'.$value[3],'success'=>0]);
             }
-            $customer_shop_id=$this->customer_shop_search_byname($customer_id,$shp_name,$shp_code);
+            $customer_shop_id=1;//$this->customer_shop_search_byname($customer_id,$shp_name,$shp_code);
             if($customer_shop_id==null){
                 // @unlink($baseUrl);
                 // Session::flash('message', 'shop code do not match：[shop code]'); 
@@ -444,7 +508,8 @@ class ShipmentCsvController extends Controller
             }
             //$customer_item_id=$this->customer_item_search($jan_code,$customer_id);
             
-           $customer_item_id=$this->customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price);
+          //$customer_item_id=$this->customer_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price);
+           $customer_item_id=$this->vendor_item_findOrInsert($customer_id,$jan_code,$jan_name,$maker_name,$cost_price,$selling_price);
            
            if($customer_item_id==null){
                 // @unlink($baseUrl);

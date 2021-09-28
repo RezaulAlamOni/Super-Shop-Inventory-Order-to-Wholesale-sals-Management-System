@@ -45,6 +45,7 @@ class User extends Authenticatable
         }        
         return $image_name;
     }
+    
     public function customer(){
         return $this->hasOne(customer::class);
     }
