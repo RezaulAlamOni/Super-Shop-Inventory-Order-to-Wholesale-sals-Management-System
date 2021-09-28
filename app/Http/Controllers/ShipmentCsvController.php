@@ -16,7 +16,9 @@ use App\customer_shipment;
 
 use App\customer_item;
 use App\vendor_item;
+use App\User;
 use Session;
+use Auth;
 
 class ShipmentCsvController extends Controller
 {
@@ -299,7 +301,8 @@ class ShipmentCsvController extends Controller
             }else{
                 $maker_code = substr($jan_code, 2, 5);
             }
-            $vendor_id = 0;
+            
+            $vendor_id = User::find(Auth::user()->id)->vendor->vendor_id;
             if (maker::where('maker_code', $maker_code)->first()) {
                 $api_data = maker::where('maker_code', $maker_code)->first();
                 $vendor_id = $api_data->vendor_id;
@@ -334,6 +337,7 @@ class ShipmentCsvController extends Controller
                 'start_date'=>date('Y-m-d'),
                 'end_date'=>date('Y-m-d')
             ]);
+            return $vendor_item_id;
             }
             $csarray = array(
             'c_name' => $customer_id,
@@ -341,7 +345,7 @@ class ShipmentCsvController extends Controller
             'j_code' => $jan_code,
             'cost_price' => $selling_price
             );
-            return $insertTocus = $this->insertIntocustomeritem($csarray);
+           // return $insertTocus = $this->insertIntocustomeritem($csarray);
 
             // $customer_item_info = customer_item::where('customer_id',$customer_id)->where('jan',$jan_code)->first();
             // if($customer_item_info){
@@ -577,7 +581,7 @@ class ShipmentCsvController extends Controller
             $customer_order_demo['shipment_date']= date('Y-m-d');
             $customer_order_demo['delivery_date']= date('Y-m-d H:i:s',strtotime($order_date));
 
-            $customer_order_demo_detail['customer_item_id']=$customer_item_id;
+            $customer_order_demo_detail['customer_item_id']=$customer_item_id;//now updated as vendor_item
             $customer_order_demo_detail['jan']=$jan_code;
             $customer_order_demo_detail['inputs']=$inputs_type;
             $customer_order_demo_detail['quantity']=$quantity;
