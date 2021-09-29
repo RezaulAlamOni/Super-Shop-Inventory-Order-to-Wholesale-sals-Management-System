@@ -730,11 +730,11 @@ export default {
                 vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat((vendor.cost_price * vendor.profit_margin) / 100);
                 vendor.selling_price = vendor.selling_price.toFixed(2)
             } else if (type == 'sell') {
-                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.cost_price
+                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.selling_price
                 vendor.profit_margin = vendor.profit_margin.toFixed(2);
             } else if (type == 'profit') {
                 vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat($('#profit').val())
-                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.cost_price;
+                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.selling_price;
                 vendor.selling_price = vendor.selling_price.toFixed(2);
                 vendor.profit_margin = vendor.profit_margin.toFixed(2);
             } else if (type == 'cost') {

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\jan;
+use App\vendor_item;
 use App\customer_item;
 use App\customer_order;
 use App\customer_shipment;
@@ -13,9 +14,10 @@ class customer_order_detail extends Model
     {
         return $this->belongsTo(jan::class, 'jan','jan');
     }
-    public function customer_item()
+   
+    public function vendor_item()
     {
-        return $this->belongsTo(customer_item::class, 'customer_item_id','customer_item_id');
+        return $this->belongsTo(vendor_item::class, 'jan','jan');
     }
     public function customer_order()
     {
