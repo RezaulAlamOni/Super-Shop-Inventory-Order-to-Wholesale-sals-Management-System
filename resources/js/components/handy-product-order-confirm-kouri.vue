@@ -19,6 +19,9 @@
                             <br>
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
                                 <div class="form-group row">
+                                    <span class="text-warning" style="width: 100%; text-align: center;">
+                                        枠の中にクリックしてから <br> JANコードスキャンしてください
+                                    </span>
                                     <div class="col-md-12">
                                         <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code"
@@ -301,10 +304,10 @@ export default {
             axios.post(this.base_url + '/kouri-order-confirm-for-handy',{'jan_code': _this.jan_code})
                 .then(function (res) {
                     //_this.resetField();
-                    
+
                    // false;
                     if (res.data.status == 200) {
-                       
+
                         _this.order_data = res.data.data;
                          res = res.data.data;
                         //_this.input_type = _this.order_data.order_lot_inputs;
@@ -314,14 +317,14 @@ export default {
                         _this.case_order = (res.customer_shipment.confirm_case_quantity==null?0:res.customer_shipment.confirm_case_quantity);//_this.order_data.order_lot_case_quantity;
                         _this.boll_order = (res.customer_shipment.confirm_ball_quantity==null?0:res.customer_shipment.confirm_ball_quantity);//_this.order_data.order_lot_ball_quantity;
                         _this.bara_order = (res.customer_shipment.confirm_unit_quantity==null?0:res.customer_shipment.confirm_unit_quantity);//_this.order_data.order_lot_unit_quantity;
-                         
+
                         _this.customer_id = res.customer_order.customer_id;
-                       
+
                         _this.case_inputs=res.jan.case_inputs
                         _this.ball_inputs=res.jan.ball_inputs
                         _this.item_name=res.jan.name
                         //}
-                         
+
                         _this.calculateTotalQuantity();
                         setTimeout(function () {
                             $('.case_order').focus();
@@ -329,7 +332,7 @@ export default {
                         }, 1000)
 
                         if (_this.type == 0) {
-                          
+
                             // $('#stock-order-show-by-jan').modal()
                             $('#stock-order-show-by-jan').modal({backdrop: 'static', keyboard: false})
                             $('.loading_image_custom').hide()
@@ -337,7 +340,7 @@ export default {
                     } else if (res.data.status == 402) {
                        _this.handi_navi = '<li>0000000000</li>';
                         $('#handy-navi').show()
-                        $('.loading_image_custom').hide()  
+                        $('.loading_image_custom').hide()
                     } else if (res.data.status == 401) {
                         _this.handi_navi = '<li>【' + res.data.data.name + '】商品の問屋が見つかりません。仕入れ先 マスター画面から問屋を選択して発注してください。<a href="'+_this.base_url+'/handy_vendor_master" class="btn btn-primary">仕入れ先 マスター</a></li>';
                         $('#handy-navi').show()
@@ -456,7 +459,7 @@ export default {
             }
             _this.loader = 1;
             setTimeout(function () {
-                
+
                 // return false
                 axios.post(this.base_url + '/kouri_order_insert', data_post)
                     .then(function (res) {

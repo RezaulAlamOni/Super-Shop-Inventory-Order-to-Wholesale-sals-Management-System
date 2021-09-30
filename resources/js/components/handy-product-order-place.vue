@@ -19,6 +19,9 @@
                             <br>
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
                                 <div class="form-group row">
+                                    <span class="text-warning" style="width: 100%; text-align: center;">
+                                        枠の中にクリックしてから <br> JANコードスキャンしてください
+                                    </span>
                                     <div class="col-md-12">
                                         <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code"
@@ -286,7 +289,7 @@ export default {
                         res = res.data
                         _this.order_data = res.data[0]
                         _this.input_type = _this.order_data.order_lot_inputs;
-                        
+
                         if(Object.keys(res.get_last_order_info).length>0){
                         _this.case_order = res.get_last_order_info.order_case_quantity;//_this.order_data.order_lot_case_quantity;
                         _this.boll_order = res.get_last_order_info.order_ball_quantity;//_this.order_data.order_lot_ball_quantity;
