@@ -39,6 +39,9 @@
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
                         <div class="input-group m-0 my-1">
+                            <span class="text-warning" style="width: 100%; text-align: center;">
+                                枠の中にクリックしてから <br> JANコードスキャンしてください
+                            </span>
                             <input type="tel" class="form-control" placeholder="JANコードスキャン（13桁）"
                                    style="border-radius: 0px;padding: 5px;font-size: 16px;" autofocus
                                    v-model="jan_code" id="jan_"
