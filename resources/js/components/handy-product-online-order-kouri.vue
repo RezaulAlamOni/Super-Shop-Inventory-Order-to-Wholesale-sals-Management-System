@@ -283,7 +283,7 @@ export default {
     methods: {
         importcsvfile(e){
             let _this = this;
-            
+
             const name = event.target.files[0].name;
   const lastDot = name.lastIndexOf('.');
   const ext = name.substring(lastDot + 1);
@@ -301,7 +301,7 @@ export default {
                    }else{
                        _this.handi_navi = '<li>XXXXXX</li>';
                    }
-                    
+
                         $('#handy-navi').show()
                         $('.loading_image_custom').hide()
                 })
@@ -336,11 +336,11 @@ export default {
             axios.post(this.base_url + '/kouri-order-info-for-handy',{'jan_code': _this.jan_code})
                 .then(function (res) {
                     //_this.resetField();
-                    
+
                    // false;
                         _this.getCustomerList();
                     if (res.data.status == 200) {
-                       
+
                         _this.order_data = res.data.data;
                          res = res.data.data;
                         //_this.input_type = _this.order_data.order_lot_inputs;
@@ -349,14 +349,14 @@ export default {
                         _this.case_order = (res.order_case_quantity==null?0:res.order_case_quantity);//_this.order_data.order_lot_case_quantity;
                         _this.boll_order = (res.order_ball_quantity==null?0:res.order_ball_quantity);//_this.order_data.order_lot_ball_quantity;
                         _this.bara_order = (res.order_unit_quantity==null?0:res.order_unit_quantity);//_this.order_data.order_lot_unit_quantity;
-                         
+
                         _this.customer_id = res.customer_order.customer_id;
-                       
+
                         _this.case_inputs=res.jan.case_inputs
                         _this.ball_inputs=res.jan.ball_inputs
                         _this.item_name=res.jan.name
                         //}
-                         
+
                         _this.calculateTotalQuantity();
                         setTimeout(function () {
                             $('.case_order').focus();
@@ -364,7 +364,7 @@ export default {
                         }, 1000)
 
                         if (_this.type == 0) {
-                          
+
                             // $('#stock-order-show-by-jan').modal()
                             $('#stock-order-show-by-jan').modal({backdrop: 'static', keyboard: false})
                             $('.loading_image_custom').hide()
@@ -373,10 +373,10 @@ export default {
                         _this.case_order = 0;//(res.order_case_quantity==null?0:res.order_case_quantity);//_this.order_data.order_lot_case_quantity;
                         _this.boll_order = 0;//(res.order_ball_quantity==null?0:res.order_ball_quantity);//_this.order_data.order_lot_ball_quantity;
                         _this.bara_order = 0;//(res.order_unit_quantity==null?0:res.order_unit_quantity);//_this.order_data.order_lot_unit_quantity;
-                         
+
                         //_this.customer_id = res.customer_order.customer_id;
-                         res = res.data.data; 
-                                           
+                         res = res.data.data;
+
                         _this.case_inputs=res.jan.case_inputs;
                         _this.ball_inputs=res.jan.ball_inputs;
                         _this.item_name=res.jan.name;
@@ -386,12 +386,12 @@ export default {
                         }, 1000)
 
                         if (_this.type == 0) {
-                          
+
                             // $('#stock-order-show-by-jan').modal()
                             $('#stock-order-show-by-jan').modal({backdrop: 'static', keyboard: false})
                             $('.loading_image_custom').hide()
                         }
-                         console.log(res);   
+                         console.log(res);
                     } else if (res.data.status == 401) {
                         _this.handi_navi = '<li>0000000000000</li>';
                         $('#handy-navi').show()
@@ -505,7 +505,7 @@ export default {
             }
             _this.loader = 1;
             setTimeout(function () {
-                
+
                 // return false
                 axios.post(this.base_url + '/kouri_order_insert', data_post)
                     .then(function (res) {
@@ -577,7 +577,7 @@ export default {
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        _this.handi_navi = '<li>JANコードりません</li>';
+                        _this.handi_navi = '<li>商品がありません</li>';
                         $('#handy-navi').show()
                     } else {
                         _this.product_name = api_response.name;
