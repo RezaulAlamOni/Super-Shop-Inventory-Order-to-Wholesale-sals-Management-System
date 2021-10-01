@@ -286,7 +286,7 @@ export default {
                         res = res.data
                         _this.order_data = res.data[0]
                         _this.input_type = _this.order_data.order_lot_inputs;
-                        
+
                         if(Object.keys(res.get_last_order_info).length>0){
                         _this.case_order = res.get_last_order_info.order_case_quantity;//_this.order_data.order_lot_case_quantity;
                         _this.boll_order = res.get_last_order_info.order_ball_quantity;//_this.order_data.order_lot_ball_quantity;
@@ -482,7 +482,7 @@ export default {
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        _this.handi_navi = '<li>JANコードりません</li>';
+                        _this.handi_navi = '<li>商品がありません</li>';
                         $('#handy-navi').show()
                     } else {
                         _this.product_name = api_response.name;
