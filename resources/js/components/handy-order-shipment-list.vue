@@ -744,7 +744,7 @@ let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        $('.handy_error_msg').html(`JANコードりません`);
+                        $('.handy_error_msg').html(`商品がありません`);
                         $('.handdy_error').removeClass('hide').addClass('show');
                     } else {
                         _this.product_name = api_response.name;

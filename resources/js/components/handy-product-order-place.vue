@@ -485,7 +485,7 @@ export default {
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        _this.handi_navi = '<li>JANコードりません</li>';
+                        _this.handi_navi = '<li>商品がありません</li>';
                         $('#handy-navi').show()
                     } else {
                         _this.product_name = api_response.name;

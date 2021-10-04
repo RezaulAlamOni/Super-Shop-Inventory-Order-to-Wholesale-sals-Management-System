@@ -848,7 +848,7 @@ export default {
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        //$('.handy_error_msg').html(`JANコードりません`);
+                        //$('.handy_error_msg').html(`商品がありません`);
                         //$('.handdy_error').removeClass('hide').addClass('show');
                         _this.handi_navi = 'JAN コードを入力してください';
                         $('#handy-navi').show();
