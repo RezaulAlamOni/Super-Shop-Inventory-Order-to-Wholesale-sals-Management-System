@@ -157,9 +157,9 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                 $total_stock_quantity = (($arr[$row]->case_quantity*$vl->case_inputs)+($arr[$row]->ball_quantity*$vl->ball_inputs)+$arr[$row]->unit_quantity);
                 $arr[$row]->total_stock =$total_stock_quantity;
                 $duplicates[] = $vl->jan;
-               
+
             } else {
-                
+
                 $total_stock_quantity = (($vl->case_quantity*$vl->case_inputs)+($vl->ball_quantity*$vl->ball_inputs)+$vl->unit_quantity);
                 $vl->total_stock=$total_stock_quantity;
                 $arr[] = $vl;
@@ -258,7 +258,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             }
             $newarr[] = $vl->jan;
         }
-        $get_last_order_info=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->where('vendor_items.jan',$jan)->orderBy('vendor_orders.vendor_order_id','DESC')->first();  
+        $get_last_order_info=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->where('vendor_items.jan',$jan)->orderBy('vendor_orders.vendor_order_id','DESC')->first();
        if(!$get_last_order_info){
             $get_last_order_info = array();
         }
@@ -267,7 +267,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             return response()->json(['status' => 200, 'data' => $arr,'get_last_order_info'=>$get_last_order_info]);
         } else {
             $product = jan::where('jan', $jan)->first();
-            return response()->json(['status' => 402, 'data' => $product,'get_last_order_info'=>$get_last_order_info]);
+            return response()->json(['status' => 200, 'data' => $product,'get_last_order_info'=>$get_last_order_info]);
         }
     }
 
@@ -644,14 +644,14 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         $hacchu_file = public_path('backend/csv/').$fnameH;
         $handle = fopen($filename, 'w+');
         $handle2 = fopen($hacchu_file, 'w+');
-       
+
         $result = $this->get_tonya_order_list_by_id($vendor_id);
         $fileUrl =  url('/').'/backend/csv/file.csv';
         $haccufileUrl =  url('/').'/backend/csv/hacchu_file.csv';
         /*
             prepare csv
         */
-       
+
         $new_row = array();
         $new_row2 = array();
         $super_name = 'Super A';
@@ -663,8 +663,8 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         if ($result) {
             $s = 1;
             foreach ($result as $value) {
-                $csv .= $super_name.','.$shop_name.','.$shop_code.','.$partner_code.','.$value->voucher_number.','.$value->order_date.','.$value->shipment_date.','.$value->item_name.','.$value->jan.',ケース,'.$value->quantity.','.$value->cost_price.','.$value->cost_price."\n"; 
-                
+                $csv .= $super_name.','.$shop_name.','.$shop_code.','.$partner_code.','.$value->voucher_number.','.$value->order_date.','.$value->shipment_date.','.$value->item_name.','.$value->jan.',ケース,'.$value->quantity.','.$value->cost_price.','.$value->cost_price."\n";
+
                 $new_row[] = array(
                     "super_name" => 'Super A',
                     "shop_name" => 'Demo shop',
@@ -719,9 +719,9 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $hacchu_file
         ];
       /*  echo 'OKKKKKK<br>';
-       
+
         echo 'OK';
-       
+
         $handle = fopen(public_path('backend/csv/').$fname, 'w');
         $handle2 = fopen(public_path('backend/csv/').$fnameH, 'w');
         fwrite($handle, mb_convert_encoding($csv, 'sjis-win', 'utf-8'));
@@ -798,7 +798,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $response = curl_exec($ch);
             curl_close ($ch);
              $rep_data = json_decode($response);
-             
+
         return response()->json(['success' => 1,'message'=>'メールはtonyaに正常に送信されました']);
     }
 }
