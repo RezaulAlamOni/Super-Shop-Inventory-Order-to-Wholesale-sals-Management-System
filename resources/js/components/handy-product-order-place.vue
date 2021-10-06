@@ -491,8 +491,8 @@ export default {
                             _this.vendor_item_id = response.data.vendor_item_data
                             _this.maker_id = response.data.maker_id
 
-                            _this.handi_navi = '<li>【' + _this.product_name + '】商品の問屋が見つかりません。小売マスターメンテ画面から問屋を選択して発注してください。</li>';
-                            $('#handy-navi').show()
+                           //  _this.handi_navi = '<li>【' + _this.product_name + '】商品の問屋が見つかりません。小売マスターメンテ画面から問屋を選択して発注してください。</li>';
+                             //$('#handy-navi').show()
 
                             // _this.getVendorList();
                         } else {
