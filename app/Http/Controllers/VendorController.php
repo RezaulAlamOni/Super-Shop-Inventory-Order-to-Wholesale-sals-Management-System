@@ -470,6 +470,7 @@ class VendorController extends Controller
             'cost_price' => $selling_price
         );
         $add_to = $this->add_auto_customer_item($customer_item_array);
+        Log::info(['product-insert'=>'Product insert by '.auth()->id()]);
         /* add to customer item */
         if ($vendor_item_id == null) {
             if (vendor_item::where('jan', $jan_code)->first()) {

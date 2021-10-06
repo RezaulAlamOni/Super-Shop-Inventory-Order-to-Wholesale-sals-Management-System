@@ -1092,6 +1092,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                 $stock_item_id = stock_item::insertGetId($insarray);
             }
         }
+        Log::info(['order-receive'=>'temporary tana update by '.auth()->id()]);
         return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_item_id]);
 
     }
