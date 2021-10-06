@@ -6151,7 +6151,7 @@ function jan_info_jaiko_detail() {
                 window.location.href = 'handy_stock_detail_by_rack';
             } else {
                 $('#scan_bybin').val('');
-                $('.handy_error_msg').text('JANコードりません');
+                $('.handy_error_msg').text('商品がありません');
                 $('.handdy_error').removeClass('hide').addClass('show');
                 return false;
             }
@@ -12277,7 +12277,7 @@ window.onload = () => {
         });
     }
 
-  /*  
+  /*
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -12977,7 +12977,7 @@ $('document').ready(function () {
                 $('#scan_by_jan_for_stock_detail').addClass('active_input');
                 $("#scan_by_jan_for_stock_detail")[0].focus();
                 break;
-           
+
             case 'handy_order_receive_scan_jan':
                 $('#scan_by_jan_for_order_receive').addClass('active_input');
                 $("#scan_by_jan_for_order_receive")[0].focus();
@@ -13421,7 +13421,7 @@ function updateInventory(index, type = 0,case_ball_inputs_set = 0) {
                     var jan_code = $('#scan_by_jan_for_stock_detail_handy').val();
 
                     if (jan_code !== '' && rack_number != previous_rack_number) {
-            
+
                        inventory_stockDetailsByJanCode(jan_code);
                     }
                 }
@@ -13447,11 +13447,11 @@ function addIfProductNotFoundFrom(jan_code) {
             var api_response = response.api_data;
             var data_resource = response.data_resource;
             if (api_response == 'invalid_jan_code') {
-                //$('.handy_error_msg').html(`JANコードりません`);
+                //$('.handy_error_msg').html(`商品がありません`);
                 //$('#handy-navi').hide();
                 //$('.handdy_error').removeClass('hide').addClass('show');
                 $('#handy-navi').show()
-                $('#handy-navi-body').html('<li>JANコードりません。</li>')
+                $('#handy-navi-body').html('<li>商品がありません。</li>')
 
             } else {
                 if (response.vendor_item_data == 1) {
@@ -14628,7 +14628,7 @@ function inventory_stockDetailsByJanCode(jan_code){
                 addIfProductNotFoundFrom(jan_code);
                 // $('#scan_bybin').val('');
                 // $('#scan_by_jan_for_stock_detail_handy').val('');
-                // $('.handy_error_msg').html(`JANコードりません <br> この商品を追加しますか? <center><a href="javascript:javascript:void(0)" class="btn btn-primary" onclick="addIfProductNotFoundFrom('` + jan_code + `')">はい</a><a href="javascript:void(0)" onclick="$('.hide_enter_outside').removeClass('show').addClass('hide');$('#scan_by_jan_for_stock_detail_handy').val('');;" class="btn btn-primary rsalrtconfirms">いいえ</a></center>`);
+                // $('.handy_error_msg').html(`商品がありません <br> この商品を追加しますか? <center><a href="javascript:javascript:void(0)" class="btn btn-primary" onclick="addIfProductNotFoundFrom('` + jan_code + `')">はい</a><a href="javascript:void(0)" onclick="$('.hide_enter_outside').removeClass('show').addClass('hide');$('#scan_by_jan_for_stock_detail_handy').val('');;" class="btn btn-primary rsalrtconfirms">いいえ</a></center>`);
                 // $('.handdy_error').removeClass('hide').addClass('show');
 
                 setTimeout(function () {

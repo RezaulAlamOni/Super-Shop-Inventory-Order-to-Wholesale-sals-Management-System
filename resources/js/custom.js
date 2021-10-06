@@ -5390,7 +5390,7 @@ function jan_info_jaiko_detail() {
                 window.location.href = 'handy_stock_detail_by_rack';
             } else {
                 $('#scan_bybin').val('');
-                $('.handy_error_msg').text('JANコードりません');
+                $('.handy_error_msg').text('商品がありません');
                 $('.handdy_error').removeClass('hide').addClass('show');
                 return false;
             }

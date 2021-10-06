@@ -19,6 +19,9 @@
                             <br>
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
                                 <div class="form-group row">
+                                    <span class="text-warning" style="width: 100%; text-align: center;">
+                                        枠の中にクリックしてから <br> JANコードスキャンしてください
+                                    </span>
                                     <div class="col-md-12">
                                         <input type="tel" id="jan_input" class="form-control custom-input"
                                                v-model="jan_code"
@@ -436,8 +439,8 @@ export default {
         },
         updateTemporaryTana() {
             let _this = this;
-            let order_itemData =this.order_data[0]; 
-            
+            let order_itemData =this.order_data[0];
+
             let c_quantity = order_itemData.customer_shipment.inputs == 'ケース' ? order_itemData.case_quantity : (order_itemData.customer_shipment.inputs == 'ボール' ? order_itemData.ball_quantity : order_itemData.unit_quantity);
             //let c_quantity = 0;
             if(order_itemData.customer_shipment.inputs=='ケース'){
@@ -445,20 +448,20 @@ export default {
                         _this.handi_navi = '<li>在庫量不足。</li>';
                              $('#handy-navi').show()
                             return false;
-                    }  
+                    }
             }else if(order_itemData.customer_shipment.inputs=='ボール'){
                 if(c_quantity>order_itemData.customer_shipment.confirm_quantity){
                         _this.handi_navi = '<li>在庫量不足。</li>';
                              $('#handy-navi').show()
                             return false;
-                    }  
+                    }
             }else{
                 if(c_quantity>order_itemData.customer_shipment.confirm_quantity){
                         _this.handi_navi = '<li>在庫量不足。</li>';
                              $('#handy-navi').show()
                             return false;
-                    }  
-            }          
+                    }
+            }
 let total_quantity_vls = 0;
 let total_quantity_vls_price = 0;
         if(order_itemData.customer_shipment.inputs=='ケース'){
@@ -503,7 +506,7 @@ total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selli
                     data.push(_data)
                 }
             });*/
-            
+
             if (data.length <= 0) {
                 $('.loading_image_custom').hide()
                 $('#stock-order-show-by-jan').modal('hide')
@@ -525,7 +528,7 @@ total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selli
                             $('#jan_input').focus();
                         }
 
-                        
+
                     })
                     .then(function (er) {
 
@@ -538,13 +541,13 @@ total_quantity_vls_price = total_quantity_vls*order_itemData.customer_item.selli
 
 
         },
-        
+
         shipmentTosuper() {
             let _this = this;
-            let order_itemData =this.order_data; 
-            
+            let order_itemData =this.order_data;
+
             let c_quantity = parseInt(_this.order_data.customer_shipment.confirm_unit_quantity) + parseInt(_this.order_data.customer_shipment.confirm_ball_quantity) * parseInt(_this.order_data.jan.ball_inputs) + parseInt(_this.order_data.customer_shipment.confirm_case_quantity) * parseInt(_this.order_data.jan.case_inputs);
-                 
+
 let total_quantity_vls = c_quantity;
 let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
             let data = {
@@ -589,7 +592,7 @@ let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
                             $('#jan_input').focus();
                         }
 
-                        
+
                     })
                     .then(function (er) {
 
@@ -639,7 +642,7 @@ let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
                 }else if(order.customer_shipment.inputs=='ボール'){
                     if(order.ball_quantity>order.customer_shipment.confirm_quantity){
                         order.ball_quantity = order.customer_shipment.confirm_quantity;
-                        
+
                           statusE = 1;
                     }
                     order.case_quantity = 0;
@@ -673,7 +676,7 @@ let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
                 }else if(order.customer_shipment.inputs=='ボール'){
                     if(order.ball_quantity>order.customer_shipment.confirm_quantity){
                         order.ball_quantity = order.customer_shipment.confirm_quantity;
-                        
+
                           statusE = 1;
                     }
                     order.case_quantity = 0;
@@ -695,7 +698,7 @@ let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
                 */
             if (e.keyCode == 13) {
                 console.log(order);
-                
+
                 if (type == 'case') {
                     $('#ball'+i).focus()
                     $('#ball'+i).select()
@@ -741,7 +744,7 @@ let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        $('.handy_error_msg').html(`JANコードりません`);
+                        $('.handy_error_msg').html(`商品がありません`);
                         $('.handdy_error').removeClass('hide').addClass('show');
                     } else {
                         _this.product_name = api_response.name;
@@ -868,7 +871,7 @@ let total_quantity_vls_price = total_quantity_vls*order_itemData.selling_price;
                         order.unit_quantity = order.customer_shipment.confirm_quantity;
                     }
                    // _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
-                    
+
                     data.push(order)
             })
             */

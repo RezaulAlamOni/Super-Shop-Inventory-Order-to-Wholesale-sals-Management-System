@@ -33,6 +33,9 @@
                         <br>
                         <form class="p_scn_form text-right">
                             <div class="form-group row">
+                                <span class="text-warning" style="width: 100%; text-align: center;">
+                                        枠の中にクリックしてから <br> JANコードスキャンしてください
+                                    </span>
                                 <div class="col-md-12">
                                     <input type="tel" data_field_name="stock_update_reck_jan" class="form-control custom-input"
                                            name="scan_by_jan_for_stock_detail" id="scan_by_jan_for_stock_detail_handy"
