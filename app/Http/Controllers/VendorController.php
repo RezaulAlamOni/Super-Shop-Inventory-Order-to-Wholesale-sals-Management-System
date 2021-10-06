@@ -13,6 +13,7 @@ use App\customer_item;
 use App\vendor_order;
 use App\vendor_order_detail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use DB;
@@ -955,6 +956,8 @@ class VendorController extends Controller
 //        curl_close ($ch);
         // Session::flash('message', '発注番号: ' . $voucher_string);
         // Session::flash('class_name', 'alert-success');
+
+        Log::info(['order'=>'Order By user '.auth()->id(),'order_id' => $order_id]);
 
         return response()->json(['message' => 'insert_success']);
     }
