@@ -471,6 +471,7 @@ class VendorController extends Controller
         );
         $add_to = $this->add_auto_customer_item($customer_item_array);
         /* add to customer item */
+        Log::info(['product-insert'=>'Product insert by '.auth()->id()]);
         if ($vendor_item_id == null) {
             if (vendor_item::where('jan', $jan_code)->first()) {
                 return $result = response()->json(['message' => __('messages.jan_code_exists')]);
