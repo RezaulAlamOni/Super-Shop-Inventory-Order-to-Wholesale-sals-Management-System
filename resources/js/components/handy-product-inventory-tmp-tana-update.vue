@@ -289,6 +289,23 @@
 
             </div>
         </div>
+
+        <div class="jn nav_disp" style="z-index: 9999;width: 270px; right: 15px; bottom: 15px;display: none"
+             id="handy-navi-jan-list">
+            <div class="card card-warning jn_old_popup " style="padding: 6px;max-height: 70vh;overflow: auto">
+                <div class="card-body">
+                    <a class="btn btn-light float-right" href="javascript:void(0)"
+                       onclick="$('#handy-navi-jan-list').hide()">戻る</a>
+                    <ol id="handy-navi-body-for-jan-list">
+                        <li style='cursor: pointer' v-for="data in search_data"
+                            @click='GetDetailsFormSearchList(data.jan)'>{{ data.name }}
+                        </li>
+                    </ol>
+
+
+                </div>
+            </div>
+        </div>
         <!--        bar code scan modal end-->
     </section>
 
@@ -319,6 +336,7 @@ export default {
             total_quantity: 0,
             handi_navi: '',
             temp_rack_number: '',
+            search_data: [],
             barCodeScan: 0
         }
     },
