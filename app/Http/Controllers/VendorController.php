@@ -13,6 +13,7 @@ use App\customer_item;
 use App\vendor_order;
 use App\vendor_order_detail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use DB;
@@ -469,6 +470,7 @@ class VendorController extends Controller
             'cost_price' => $selling_price
         );
         $add_to = $this->add_auto_customer_item($customer_item_array);
+        Log::info(['product-insert'=>'Product insert by '.auth()->id()]);
         /* add to customer item */
         if ($vendor_item_id == null) {
             if (vendor_item::where('jan', $jan_code)->first()) {
@@ -955,6 +957,8 @@ class VendorController extends Controller
 //        curl_close ($ch);
         // Session::flash('message', '発注番号: ' . $voucher_string);
         // Session::flash('class_name', 'alert-success');
+
+        Log::info(['order'=>'Order By user '.auth()->id(),'order_id' => $order_id]);
 
         return response()->json(['message' => 'insert_success']);
     }

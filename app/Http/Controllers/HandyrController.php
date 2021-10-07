@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use App\customer;
 use App\vendor;
@@ -1091,6 +1092,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                 $stock_item_id = stock_item::insertGetId($insarray);
             }
         }
+        Log::info(['order-receive'=>'temporary tana update by '.auth()->id()]);
         return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_item_id]);
 
     }
@@ -2177,6 +2179,8 @@ WHERE DATE(co.shipment_date) = CURDATE()
             stock_item_detail::insert(['stock_item_id' => $stock_item_id, 'inc_dec_status' => $inc_dec, 'inc_dec_inputs' => 'ボール', 'inc_dec_quantity' => $inc_dec_qty, 'actual_quantity' => $stock_item_info->unit_quantity]);
             stock_item::where('stock_item_id', $stock_item_id)->update(['unit_quantity' => $unit_quantity]);
         }
+        Log::info(['inventory'=>'Update inventory By user '.auth()->id(),'jan' => $stock_item_info->jan]);
+
         return $result = response()->json(['message' => 'success']);
     }
 
