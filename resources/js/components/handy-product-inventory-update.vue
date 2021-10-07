@@ -33,10 +33,28 @@
                                                placeholder="JANコードスキャン（13桁）" autofocus>
                                     </div>
                                 </div>
-                                <button type="button" v-on:click="getOrderDataByJan()"
-                                        class="btn custom-btn btn-primary pull-right text-right show_inline">
-                                    次へ
-                                </button>
+
+                                <div>
+                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"
+                                            class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "
+                                            style="float: left;width: 100px">
+                                        音声
+                                    </button>
+                                    <text-recognition :base_url="base_url" class="hide"
+                                                      @getSearchData="getSearchData"
+                                                      @clearInput="clearInput"></text-recognition>
+
+                                    <button type="button" @click="getBarCodeScan()"
+                                            class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"
+                                            style="padding:0;float: left;width: 70px !important;">
+                                        <i class="fa fa-barcode" style="font-size: 40px"></i>
+                                    </button>
+                                    <button type="button" v-on:click="getOrderDataByJan()"
+                                            style="margin: 0px;width: 80px !important;"
+                                            class="btn custom-btn btn-primary pull-right text-right show_inline">
+                                        次へ
+                                    </button>
+                                </div>
 
                             </div>
 
@@ -70,13 +88,13 @@
                                                 <div class="col-md-12 col-xs-12 padding_0">
                                                     <table class="table table-bordered physical_handy_tabls">
                                                         <thead>
-                                                        <tr>
+                                                        <tr v-if="order_data.length > 0">
                                                             <th style="width: 50px; text-align: center;padding: 05px">
                                                                 ケース <br>
-                                                                (入数 {{ order_data.case_inputs }})
+                                                                (入数 {{ order_data[0].case_inputs }})
                                                             </th>
                                                             <th style="width: 50px; text-align: center;padding: 05px">
-                                                                ボール <br> (入数 {{ order_data.ball_inputs }})
+                                                                ボール <br> (入数 {{ order_data[0].ball_inputs }})
 
                                                             </th>
                                                             <th style="width: 50px; text-align: center;padding: 05px;">
@@ -243,14 +261,61 @@
                 </div>
             </div>
         </div>
+        <!--        bar code scan modal   -->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true" id="bar-code-scan-area">
+            <div class="modal-dialog modal-lg mt-0">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="main-content-container container-fluid pt-2">
+                            <StreamBarcodeReader v-if="barCodeScan" @decode="onDecode"
+                                                 @loaded="onLoad()"></StreamBarcodeReader>
+
+                            <button type="button" @click="getBarCodeScan()"
+                                    style="float: right;margin: 5px 0;width: 95px !important;"
+                                    class="btn custom-btn btn-primary pull-right text-right show_inline">
+                                次へ
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="jn nav_disp" style="z-index: 9999;width: 270px; right: 15px; bottom: 15px;display: none"
+             id="handy-navi-jan-list">
+            <div class="card card-warning jn_old_popup " style="padding: 6px;max-height: 70vh;overflow: auto">
+                <div class="card-body">
+                    <a class="btn btn-light float-right" href="javascript:void(0)"
+                       onclick="$('#handy-navi-jan-list').hide()">戻る</a>
+                    <ol id="handy-navi-body-for-jan-list">
+                        <li style='cursor: pointer' v-for="data in search_data"
+                            @click='GetDetailsFormSearchList(data.jan)'>{{ data.name }}
+                        </li>
+                    </ol>
+
+
+                </div>
+            </div>
+        </div>
+        <!--        bar code scan modal end-->
+
+
     </section>
 
 </template>
 
 <script>
+
+import TextRecognition from "./text-recognition";
+import {StreamBarcodeReader} from "vue-barcode-reader";
 export default {
+    components: {TextRecognition, StreamBarcodeReader},
     props: ['base_url','read_only'],
-    name: "handy-inventory-inquiry",
+    name: "handy-inventory-update",
     data() {
         return {
             jan_code: '',
@@ -268,7 +333,12 @@ export default {
             loader: 0,
             total_quantity: 0,
             handi_navi: '',
-            readonly: false
+            readonly: false,
+
+            barCodeScan: 0,
+            search_data: [],
+            previous_rack_numbers : [],
+            previous_rack_number : ''
         }
     },
     mounted() {
@@ -293,15 +363,19 @@ export default {
                 .then(function (res) {
                     //_this.resetField();
                      if(res.data.status==400){
-                            _this.handi_navi = '<li>0000000000</li>';
-                            $('#handy-navi').show();
-                            return false;
-                        }
+                         _this.insertToJanList();
+                        _this.handi_navi = '<li>0000000000</li>';
+                        $('#handy-navi').show();
+                        return false;
+                     }
                     if (res.data.result.length > 0) {
                         _this.jan_code = ''
                         _this.order_data = res.data.result;
                         _this.product_name = _this.order_data[0].item_name;
-
+                        res.data.result.map(function (g) {
+                            let rack_number = (g.rack_number == null) ? '0' : g.rack_number;
+                            _this.previous_rack_numbers.push(rack_number)
+                        })
                         _this.calculateTotalQuantity();
 
                         if (_this.type == 0) {
@@ -319,6 +393,7 @@ export default {
                                 }
                             }, 720)
                         }
+
                     } else {
 
                         _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
@@ -338,7 +413,7 @@ export default {
             let _this = this;
             let total = 0;
             this.order_data.map(function (order){
-                total += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
+                total += parseInt(order.unit_quantity ?? 0) + parseInt(order.ball_quantity ?? 0) * parseInt(order.ball_inputs ) + parseInt(order.case_quantity ?? 0) * parseInt(order.case_inputs)
             })
             _this.total_quantity = total;
 
@@ -464,13 +539,20 @@ export default {
         },
         pressEnterAndSave(e, i,type) {
             if (e.keyCode == 13) {
+                let j = i;
                 this.calculateTotalQuantity();
+                if (type=='case') {
+                    j = i-1;
+                }
+                this.previous_rack_number = this.previous_rack_numbers[j];
+                this.updateInventoryData(this.order_data[j]);
                 if ($('#'+type+i).length <= 0){
                     $('#order-place-button').focus()
                 } else {
                     $('#'+type+i).focus()
                     $('#'+type+i).select()
                 }
+
             }
         },
         insertToJanList() {
@@ -541,7 +623,8 @@ export default {
                             axios.post(_this.base_url + '/add_vendor_item', data)
                                 .then(function (response) {
                                     console.log(response.data)
-                                    _this.insertToJanList()
+                                    _this.jan_code = jan_code;
+                                    _this.getOrderDataByJan();
                                 })
                                 .catch(function (er) {
 
@@ -586,6 +669,98 @@ export default {
                 _this.getOrderDataByJan();
             })
         },
+        updateInventoryData(item) {
+            let _this = this;
+            console.log(item)
+            if (item.rack_number == null ||  _this.total_quantity <= 0 || item.ball_inputs == 0 || item.case_inputs == 0) {
+                _this.handi_navi = '********'
+                $('#handy-navi').show();
+                return false;
+            }
+            let url = (_this.previous_rack_number == item.rack_number) ? 'update_stock_by_rack_by_handy' : 'stock_inventory_rack_code_add';
+            let data = {
+                rack_number: parseInt(item.rack_number),
+                previous_rack_number : _this.previous_rack_number,
+                vendor_item_id: item.vendor_item_id,
+                vendor_id: item.vendor_id,
+                case_quantity: parseInt(item.case_quantity),
+                ball_quantity: parseInt(item.ball_quantity),
+                stock_item_id: item.stock_item_id,
+                unit_quantity: parseInt(item.unit_quantity)
+            }
+            axios.post(_this.base_url + '/'+url, data)
+                .then(function (response) {
+                    $('#select_tonya').modal('hide')
+                    // _this.getOrderDataByJan();
+                })
+        },
+        // new scanner & voice search added for this
+
+        getSearchData(text) {
+            let _this = this;
+            if (text.length <= 0) {
+                return false;
+            }
+            $('.loading_image_custom').show()
+            _this.jan_code = text;
+            axios.post(_this.base_url + '/item_search_by_name', {'name': text})
+                .then(function (res) {
+                    res = res.data
+                    _this.search_data = res.name_list;
+                    if (_this.search_data.length > 0) {
+                        $('#handy-navi').hide()
+                        $('#handy-navi-jan-list').show()
+                    } else {
+                        _this.handi_navi = '<li>XXXXXXX。</li>';
+                        $('#handy-navi').show()
+                    }
+
+                })
+                .catch(function () {
+
+                })
+                .finally(function () {
+                    $('.loading_image_custom').hide()
+                })
+
+
+        },
+        alertForIos() {
+            this.jan_code = ""
+            this.handi_navi = '<li>キーボードの 【<img src="' + this.base_url + '/public/backend/images/mic.png' + '" height="18px" alt=""> 】マイクロフォンを押して音声検索してください。</li>';
+            $('#handy-navi').show()
+            setTimeout(function () {
+                // $('#jan_input').focus()
+
+            }, 120)
+            this.jan_code = ""
+
+        },
+        getBarCodeScan() {
+            this.barCodeScan = this.barCodeScan ? 0 : 1;
+            this.barCodeScan ? $('#bar-code-scan-area').modal({backdrop: 'static', keyboard: false}) : $('#bar-code-scan-area').modal('hide');
+        },
+        onDecode(result) {
+            console.log(result)
+            this.getBarCodeScan();
+            this.jan_code=result;
+            $('#handy-navi').hide()
+            this.getOrderDataByJan()
+        },
+        onLoad(){
+            $('#handy-navi').show()
+            this.handi_navi = '<li>********。</li>';
+        },
+        clearInput() {
+            this.jan_code = ""
+        },
+        GetDetailsFormSearchList(jan) {
+            this.jan_code = jan;
+            $('#handy-navi-jan-list').hide()
+            this.getOrderDataByJan();
+        },
+
+        // text recognition and bar code scanner end
     },
     watch: {
         // jan_code: function (val) {
