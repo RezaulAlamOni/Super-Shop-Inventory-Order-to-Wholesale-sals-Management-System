@@ -381,12 +381,10 @@ export default {
             if (this.loader == 1) {
                 return false;
             }
-            if (this.jan_code.length >= 13 || this.jan_code.length==8) {
+            if (this.jan_code.length >= 13 || this.jan_code.length==8 || e.keyCode == 13) {
                 this.getOrderDataByJan()
             }
-            if (e.keyCode == 13) {
-                this.getOrderDataByJan()
-            }
+           
         },
         selectItem(e, type) {
             e.target.select()
@@ -493,6 +491,7 @@ export default {
                             // console.log('this jan code is already registered');
                             _this.vendor_item_id = response.data.vendor_item_data
                             _this.maker_id = response.data.maker_id
+                                    _this.getOrderDataByJan();
 
                            //  _this.handi_navi = '<li>【' + _this.product_name + '】商品の問屋が見つかりません。小売マスターメンテ画面から問屋を選択して発注してください。</li>';
                              //$('#handy-navi').show()
