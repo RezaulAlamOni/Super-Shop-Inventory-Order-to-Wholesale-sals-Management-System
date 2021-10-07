@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-inventory-return","2":"handy-product-inventory-inquiry","3":"handy-mitsumury","4":"barcode-scan","5":"handy-vandor-master","6":"handy-product-order-receive","7":"handy-product-order-place","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"admin-super-manage","15":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"90681021383443b421a9","1":"178fe7ecb250f6fa58e9","2":"5d5872cc370e54695798","3":"06f4989ddfd4462b9064","4":"8b63738db2396ecea4e1","5":"bfa0f0f1b852e579f014","6":"07ec390b62881c9957a0","7":"53ac563ce41473d2bd97","8":"cc4c25da127c26e1dbe4","9":"df621b96ecf08d0121fa","10":"4f49654bf1969cbc96e0","11":"e22d2afbe1a934054868","12":"3a9b263853fd8803fe01","13":"81f1d83d138c8966823e","14":"9501bc9846a22645412a","15":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-inventory-return","2":"handy-product-inventory-inquiry","3":"handy-mitsumury","4":"barcode-scan","5":"handy-vandor-master","6":"handy-product-order-receive","7":"handy-product-order-place","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"admin-super-manage","15":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"b85c18235a77dc6af06d","1":"53c1f862e9bec98a6e29","2":"65e4c46393266fa23e89","3":"94d268ae857600436543","4":"37660b3c0a5312846fef","5":"964f764f0ee0c3b26ca0","6":"c1cf902b0c585d1972b9","7":"b2764167f28dc96f0f49","8":"d1458027e97cecc32e81","9":"140be241cc3aed0fb746","10":"c19699cad86d99d882d8","11":"998d5fca5e3b3f5825ac","12":"fb4d0e403f2984db6f2b","13":"41cea07791431ca06f23","14":"96642b83ada284522f43","15":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -136,7 +136,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "undefined/public/";
+/******/ 	__webpack_require__.p = "http://localhost/rv3_tonyav1/public/";
 /******/
 /******/ 	// on error function for async loading
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
@@ -6088,89 +6088,6 @@ module.exports = {
 
 })));
 //# sourceMappingURL=bootstrap.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/lib/css-base.js":
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
 
 
 /***/ }),
