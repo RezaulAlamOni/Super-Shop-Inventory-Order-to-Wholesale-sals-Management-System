@@ -10,6 +10,6 @@
 
 @section('content')
 
-    <handy-product-inventory-update base_url="{{config('app.url')}}"></handy-product-inventory-update>
+    <handy-product-inventory-tana-update base_url="{{config('app.url')}}"></handy-product-inventory-tana-update>
 
 @endsection

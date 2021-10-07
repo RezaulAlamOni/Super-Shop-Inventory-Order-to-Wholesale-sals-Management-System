@@ -52,6 +52,7 @@ const handyProductOrderPlace = ()=> import( /* webpackChunkName: "handy-product-
 const handyProductOrderReceive = ()=> import( /* webpackChunkName: "handy-product-order-receive" */ './components/handy-product-order-receive');
 const handyProductInventoryTempTanaUpdate = ()=> import( /* webpackChunkName: "handy-product-inventory-tmp-tana-update" */ './components/handy-product-inventory-tmp-tana-update');
 const handyProductInventoryInquiry = ()=> import( /* webpackChunkName: "handy-product-inventory-inquiry" */ './components/handy-product-inventory-inquiry');
+const handyProductInventoryUpdate = ()=> import( /* webpackChunkName: "handy-product-inventory-inquiry" */ './components/handy-product-inventory-update');
 const handyProductInventoryMitsumry = ()=> import( /* webpackChunkName: "handy-mitsumury" */ './components/handy-mitsumury');
 const superAdminCustomerSuperManage = ()=> import( /* webpackChunkName: "admin-super-manage" */ './components/Admin/customers-list-manage');
 const handyProductInventoryReturn = ()=> import( /* webpackChunkName: "handy-product-inventory-return" */ './components/handy-product-inventory-return');
@@ -76,8 +77,9 @@ const app = new Vue({
         'handy-product-order-confirm-kouri' : handyProductOrderConfirmKouri,
         'handy-product-order' : handyProductOrderPlace,
         'handy-product-receive' : handyProductOrderReceive,
-        'handy-product-inventory-update' : handyProductInventoryTempTanaUpdate,
+        'handy-product-inventory-tana-update' : handyProductInventoryTempTanaUpdate,
         'handy-product-inventory-inquiry' : handyProductInventoryInquiry,
+        'handy-product-inventory-update' : handyProductInventoryUpdate,
         'handy-product-inventory-mistumury' : handyProductInventoryMitsumry,
         'handy-product-inventory-return' : handyProductInventoryReturn,
         'handy-order-shipment-list' : handyOrderShipmentList,

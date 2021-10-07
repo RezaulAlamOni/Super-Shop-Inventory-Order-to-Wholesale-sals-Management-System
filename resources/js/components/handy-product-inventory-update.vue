@@ -93,7 +93,7 @@
                                                             <tr v-for="(order,index) in order_data">
                                                                 <td>
                                                                     <input type="tel" :id="'case'+index" @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'case')"
+                                                                           @keypress="pressEnterAndSave($event,index,'ball')"
                                                                            v-model="order.case_quantity" :readonly="readonly"
                                                                            class="form-control inputs ">
                                                                     <!--                                                                @blur="updateOrderQnty('ケース')"-->
@@ -101,7 +101,7 @@
 
                                                                 <td>
                                                                     <input type="tel" :id="'ball'+index" @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'case')"
+                                                                           @keypress="pressEnterAndSave($event,index,'bara')"
                                                                            v-model="order.ball_quantity" :readonly="readonly"
                                                                            class="form-control boll_order inputs">
                                                                     <!--                                                                @blur="updateOrderQnty('ボール')"-->
@@ -109,13 +109,13 @@
 
                                                                 <td>
                                                                     <input type="tel" :id="'bara'+index" @click="selectItem($event,'ケース')"
-                                                                           @keypress="pressEnterAndSave($event,'case')"
+                                                                           @keypress="pressEnterAndSave($event,index,'rack')"
                                                                            v-model="order.unit_quantity" :readonly="readonly"
                                                                            class="form-control cmn_num_formt bara_order inputs" >
                                                                 </td>
 
                                                                 <td>
-                                                                    <input type="tel"  @keypress="pressEnterAndSave($event,index)"
+                                                                    <input type="tel"  @keypress="pressEnterAndSave($event,index+1,'case')"
                                                                            class="form-control  " :id="'rack'+index" v-model="order.rack_number"
                                                                            style="border-radius: 0px; text-align: center;"  :readonly="readonly">
                                                                 </td>
@@ -268,7 +268,7 @@ export default {
             loader: 0,
             total_quantity: 0,
             handi_navi: '',
-            readonly: this.read_only ? true : false
+            readonly: false
         }
     },
     mounted() {
@@ -298,6 +298,7 @@ export default {
                             return false;
                         }
                     if (res.data.result.length > 0) {
+                        _this.jan_code = ''
                         _this.order_data = res.data.result;
                         _this.product_name = _this.order_data[0].item_name;
 
@@ -306,12 +307,12 @@ export default {
                         if (_this.type == 0) {
                             $('#stock-order-show-by-jan').modal({backdrop: 'static', keyboard: false})
                             setTimeout(function () {
-                                if ($('#rack'+0).length <= 0){
+                                if ($('#case'+0).length <= 0){
                                     $('#order-place-button').focus()
                                 } else {
                                     if (!_this.readonly) {
-                                        $('#rack'+0).focus()
-                                        $('#rack'+0).select()
+                                        $('#case'+0).focus()
+                                        $('#case'+0).select()
                                     } else {
                                         $('#order-place-button').focus()
                                     }
@@ -329,16 +330,17 @@ export default {
 
                 })
                 .finally(function () {
-                    _this.jan_code = ''
                     $('.loading_image_custom').hide()
                     _this.loader = 0
                 })
         },
         calculateTotalQuantity() {
             let _this = this;
+            let total = 0;
             this.order_data.map(function (order){
-                _this.total_quantity += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
+                total += parseInt(order.unit_quantity) + parseInt(order.ball_quantity) * parseInt(order.ball_inputs) + parseInt(order.case_quantity) * parseInt(order.case_inputs)
             })
+            _this.total_quantity = total;
 
         },
 
@@ -394,11 +396,9 @@ export default {
                 return false;
             }
             if (this.jan_code.length >= 13 || this.jan_code.length==8) {
-                console.log('call one')
                 this.getOrderDataByJan()
             }
             if (e.keyCode == 13) {
-                console.log('call two')
                 this.getOrderDataByJan()
             }
         },
@@ -462,12 +462,14 @@ export default {
                 this.boll_order = 0;
             }
         },
-        pressEnterAndSave(e, i) {
+        pressEnterAndSave(e, i,type) {
             if (e.keyCode == 13) {
-                $('#rack'+(i+1)).focus()
-                $('#rack'+(i+1)).select()
-                if ($('#rack'+(i+1)).length <= 0){
+                this.calculateTotalQuantity();
+                if ($('#'+type+i).length <= 0){
                     $('#order-place-button').focus()
+                } else {
+                    $('#'+type+i).focus()
+                    $('#'+type+i).select()
                 }
             }
         },
