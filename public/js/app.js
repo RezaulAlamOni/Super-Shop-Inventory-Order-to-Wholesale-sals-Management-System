@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-inventory-return","2":"handy-product-inventory-inquiry","3":"handy-mitsumury","4":"barcode-scan","5":"handy-vandor-master","6":"handy-product-order-receive","7":"handy-product-order-place","8":"handy-product-order-mail","9":"handy-product-order-confirm-kouri","10":"handy-product-online-order-kouri","11":"handy-product-inventory-tmp-tana-update","12":"handy-order-shipment-list","13":"handy-customer-master","14":"admin-super-manage","15":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"8cbc7d27524d0fd03672","1":"0affd5fa002f93240913","2":"2e233674893c18e35ac7","3":"f9469a103c3c03d603b2","4":"f8e7b20d2132f8149bc1","5":"e9549115f808e00ca967","6":"6809570170af25c08b3d","7":"58d650729e61ac6dbbb0","8":"acb2634b7b65578f8fac","9":"562db45f5ca65ebc6f8a","10":"7d892b79094dc406b0d6","11":"262269d54622e57067e5","12":"8ad1bdb500f8eab34d87","13":"0df1ae46a46eb0f92a99","14":"0533808a1cf4a765ddf3","15":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-order-receive","2":"handy-product-order-place","3":"handy-product-inventory-tmp-tana-update","4":"handy-product-inventory-return","5":"handy-product-inventory-inquiry","6":"handy-mitsumury","7":"barcode-scan","8":"handy-vandor-master","9":"handy-product-order-mail","10":"handy-product-order-confirm-kouri","11":"handy-product-online-order-kouri","12":"handy-order-shipment-list","13":"handy-customer-master","14":"admin-super-manage","15":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"8cbc7d27524d0fd03672","1":"99dcd2ff955b6205ccc6","2":"fa55c729878ecc9fdedd","3":"5d18aa2bec5904eb24e5","4":"0affd5fa002f93240913","5":"2e233674893c18e35ac7","6":"f9469a103c3c03d603b2","7":"f8e7b20d2132f8149bc1","8":"e9549115f808e00ca967","9":"acb2634b7b65578f8fac","10":"562db45f5ca65ebc6f8a","11":"7d892b79094dc406b0d6","12":"8ad1bdb500f8eab34d87","13":"0df1ae46a46eb0f92a99","14":"0533808a1cf4a765ddf3","15":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -49881,35 +49881,35 @@ var handyProductOrderPlaceKouri = function handyProductOrderPlaceKouri() {
 };
 
 var handyProductOrderOnlineOrderKouri = function handyProductOrderOnlineOrderKouri() {
-  return __webpack_require__.e/* import() */(10).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-online-order-kouri.vue"));
+  return __webpack_require__.e/* import() */(11).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-online-order-kouri.vue"));
 };
 
 var handyProductOrdermail = function handyProductOrdermail() {
-  return __webpack_require__.e/* import() */(8).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-mail.vue"));
+  return __webpack_require__.e/* import() */(9).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-mail.vue"));
 };
 
 var handyProductOrderConfirmKouri = function handyProductOrderConfirmKouri() {
-  return __webpack_require__.e/* import() */(9).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-confirm-kouri.vue"));
+  return __webpack_require__.e/* import() */(10).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-confirm-kouri.vue"));
 };
 
 var handyProductOrderPlace = function handyProductOrderPlace() {
-  return __webpack_require__.e/* import() */(7).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place.vue"));
+  return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place.vue"));
 };
 
 var handyProductOrderReceive = function handyProductOrderReceive() {
-  return __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-receive.vue"));
+  return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-receive.vue"));
 };
 
 var handyProductInventoryTempTanaUpdate = function handyProductInventoryTempTanaUpdate() {
-  return __webpack_require__.e/* import() */(11).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-tmp-tana-update.vue"));
+  return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-tmp-tana-update.vue"));
 };
 
 var handyProductInventoryInquiry = function handyProductInventoryInquiry() {
-  return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-inquiry.vue"));
+  return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-inquiry.vue"));
 };
 
 var handyProductInventoryMitsumry = function handyProductInventoryMitsumry() {
-  return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitsumury.vue"));
+  return __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitsumury.vue"));
 };
 
 var superAdminCustomerSuperManage = function superAdminCustomerSuperManage() {
@@ -49917,7 +49917,7 @@ var superAdminCustomerSuperManage = function superAdminCustomerSuperManage() {
 };
 
 var handyProductInventoryReturn = function handyProductInventoryReturn() {
-  return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-return.vue"));
+  return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-return.vue"));
 };
 
 var handyOrderShipmentList = function handyOrderShipmentList() {
@@ -49925,7 +49925,7 @@ var handyOrderShipmentList = function handyOrderShipmentList() {
 };
 
 var handyVendorMaster = function handyVendorMaster() {
-  return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-vandor-master.vue"));
+  return __webpack_require__.e/* import() */(8).then(__webpack_require__.bind(null, "./resources/js/components/handy-vandor-master.vue"));
 };
 
 var handyCustomerMaster = function handyCustomerMaster() {
@@ -49933,7 +49933,7 @@ var handyCustomerMaster = function handyCustomerMaster() {
 };
 
 var barCodeScan = function barCodeScan() {
-  return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, "./resources/js/components/barcode-scan.vue"));
+  return __webpack_require__.e/* import() */(7).then(__webpack_require__.bind(null, "./resources/js/components/barcode-scan.vue"));
 };
 /**
  * Next, we will create a fresh Vue application instance and attach it to
