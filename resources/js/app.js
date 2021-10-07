@@ -76,7 +76,7 @@ const app = new Vue({
         'handy-product-order-confirm-kouri' : handyProductOrderConfirmKouri,
         'handy-product-order' : handyProductOrderPlace,
         'handy-product-receive' : handyProductOrderReceive,
-        'handy-product-inventory-update' : handyProductInventoryTempTanaUpdate,
+        'handy-product-inventory-tana-update' : handyProductInventoryTempTanaUpdate,
         'handy-product-inventory-inquiry' : handyProductInventoryInquiry,
         'handy-product-inventory-mistumury' : handyProductInventoryMitsumry,
         'handy-product-inventory-return' : handyProductInventoryReturn,
