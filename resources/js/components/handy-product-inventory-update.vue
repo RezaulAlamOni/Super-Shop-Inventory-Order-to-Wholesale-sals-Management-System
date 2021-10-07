@@ -680,7 +680,7 @@ export default {
             let url = (_this.previous_rack_number == item.rack_number) ? 'update_stock_by_rack_by_handy' : 'stock_inventory_rack_code_add';
             let data = {
                 rack_number: parseInt(item.rack_number),
-                previous_rack_number : _this.previous_rack_number,
+                previous_rack_number : parseInt(_this.previous_rack_number),
                 vendor_item_id: item.vendor_item_id,
                 vendor_id: item.vendor_id,
                 case_quantity: parseInt(item.case_quantity),
