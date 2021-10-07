@@ -266,7 +266,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         if (count($arr) > 0) {
             return response()->json(['status' => 200, 'data' => $arr,'get_last_order_info'=>$get_last_order_info]);
         } else {
-            $product = jan::where('jan', $jan)->first();
+            $product = jan::where('jan', $jan)->get();
             return response()->json(['status' => 200, 'data' => $product,'get_last_order_info'=>$get_last_order_info]);
         }
     }
