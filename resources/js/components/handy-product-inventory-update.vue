@@ -372,8 +372,9 @@ export default {
                         _this.jan_code = ''
                         _this.order_data = res.data.result;
                         _this.product_name = _this.order_data[0].item_name;
+                        _this.previous_rack_numbers = [];
                         res.data.result.map(function (g) {
-                            let rack_number = (g.rack_number == null) ? '0' : g.rack_number;
+                            let rack_number = (g.rack_number == null) ? '' : g.rack_number;
                             _this.previous_rack_numbers.push(rack_number)
                         })
                         _this.calculateTotalQuantity();
