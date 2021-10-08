@@ -34,6 +34,28 @@
                                     </div>
                                 </div>
 
+                                <div>
+                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"
+                                            class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "
+                                            style="float: left;width: 100px">
+                                        音声
+                                    </button>
+<!--                                    <text-recognition :base_url="base_url" class="hide"-->
+<!--                                                      @getSearchData="getSearchData"-->
+<!--                                                      @clearInput="clearInput"></text-recognition>-->
+
+                                    <button type="button" @click="getBarCodeScan()"
+                                            class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"
+                                            style="padding:0;float: left;width: 70px !important;">
+                                        <i class="fa fa-barcode" style="font-size: 40px"></i>
+                                    </button>
+                                    <button type="button" v-on:click="getOrderDataByJan()"
+                                            style="margin: 0px;width: 80px !important;"
+                                            class="btn custom-btn btn-primary pull-right text-right show_inline">
+                                        次へ
+                                    </button>
+                                </div>
+
 
                                 <div class="form-horizontal" id="handy_order_form" v-if="order_data.length > 0">
                                     <div class="form-group"
@@ -440,8 +462,10 @@
 
 <script>
 
+import TextRecognition from "./text-recognition";
+import {StreamBarcodeReader} from "vue-barcode-reader";
 export default {
-
+    components: {TextRecognition, StreamBarcodeReader},
     props: ['base_url', 'read_only'],
     name: "handy-customer-master",
     data() {
