@@ -39,9 +39,9 @@
                                             style="float: left;width: 100px">
                                         音声
                                     </button>
-                                    <text-recognition :base_url="base_url" class="hide"
-                                                      @getSearchData="getSearchData"
-                                                      @clearInput="clearInput"></text-recognition>
+<!--                                    <text-recognition :base_url="base_url" class="hide"-->
+<!--                                                      @getSearchData="getSearchData"-->
+<!--                                                      @clearInput="clearInput"></text-recognition>-->
 
                                     <button type="button" @click="getBarCodeScan()"
                                             class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"
