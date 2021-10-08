@@ -1082,6 +1082,35 @@ table thead tr th, table tbody tr td {
     border: none !important;
 }
 
+@media screen and (max-width: 420px) {
+    .image-div {
+        width: 33%;
+        max-height: 130px;
+    }
+
+    .custom-img {
+        width: 100%;
+        margin: 3px 0px;
+        height: auto;
+    }
+
+    .top-button {
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+
+    .header span {
+        font-size: 18px;
+    }
+
+    .custom-img-preview {
+        min-width: 58%;
+        max-width: 98%;
+        margin: 5px;
+        max-height: 500px;
+    }
+
+}
 @media screen and (max-width: 351px) {
     .image-div {
         width: 50%;

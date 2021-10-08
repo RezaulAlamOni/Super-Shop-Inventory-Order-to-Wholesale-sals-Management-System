@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-order-receive","2":"handy-product-order-place","3":"handy-product-inventory-tmp-tana-update","4":"handy-product-inventory-return","5":"handy-product-inventory-inquiry","6":"handy-mitsumury","7":"barcode-scan","8":"handy-vandor-master","9":"handy-product-order-mail","10":"handy-product-order-confirm-kouri","11":"handy-product-online-order-kouri","12":"handy-order-shipment-list","13":"handy-customer-master","14":"admin-super-manage","15":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"1c0bebe933b44641567b","1":"0a7ba6ba5c3b4bfb8ae8","2":"44087f47517e7d67bfaa","3":"ab04432fe99046482d49","4":"53c1f862e9bec98a6e29","5":"e5b37572909da3403434","6":"7e5c5251a22493f5508e","7":"37660b3c0a5312846fef","8":"964f764f0ee0c3b26ca0","9":"d1458027e97cecc32e81","10":"140be241cc3aed0fb746","11":"c19699cad86d99d882d8","12":"fb4d0e403f2984db6f2b","13":"41cea07791431ca06f23","14":"96642b83ada284522f43","15":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-inventory-inquiry","1":"handy-product-order-place-kouri","2":"handy-product-order-receive","3":"handy-product-order-place","4":"handy-product-inventory-tmp-tana-update","5":"handy-product-inventory-return","6":"handy-mitsumury","7":"barcode-scan","8":"handy-vandor-master","9":"handy-product-order-mail","10":"handy-product-order-confirm-kouri","11":"handy-product-online-order-kouri","12":"handy-order-shipment-list","13":"handy-customer-master","14":"admin-super-manage","15":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"e5b37572909da3403434","1":"1c0bebe933b44641567b","2":"0a7ba6ba5c3b4bfb8ae8","3":"44087f47517e7d67bfaa","4":"ab04432fe99046482d49","5":"53c1f862e9bec98a6e29","6":"3c20a1ea0e13f8ed01f4","7":"37660b3c0a5312846fef","8":"964f764f0ee0c3b26ca0","9":"d1458027e97cecc32e81","10":"140be241cc3aed0fb746","11":"c19699cad86d99d882d8","12":"fb4d0e403f2984db6f2b","13":"41cea07791431ca06f23","14":"96642b83ada284522f43","15":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -49790,11 +49790,11 @@ import handyCustomerMaster from './components/handy-customer-master'
 import barCodeScan from './components/barcode-scan'*/
 
 var mitshumoriSuper = function mitshumoriSuper() {
-  return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitshu-mori-received-item.vue"));
+  return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitshu-mori-received-item.vue"));
 };
 
 var handyProductOrderPlaceKouri = function handyProductOrderPlaceKouri() {
-  return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place-kouri.vue"));
+  return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place-kouri.vue"));
 };
 
 var handyProductOrderOnlineOrderKouri = function handyProductOrderOnlineOrderKouri() {
@@ -49810,23 +49810,23 @@ var handyProductOrderConfirmKouri = function handyProductOrderConfirmKouri() {
 };
 
 var handyProductOrderPlace = function handyProductOrderPlace() {
-  return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place.vue"));
+  return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-place.vue"));
 };
 
 var handyProductOrderReceive = function handyProductOrderReceive() {
-  return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-receive.vue"));
+  return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-order-receive.vue"));
 };
 
 var handyProductInventoryTempTanaUpdate = function handyProductInventoryTempTanaUpdate() {
-  return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-tmp-tana-update.vue"));
+  return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-tmp-tana-update.vue"));
 };
 
 var handyProductInventoryInquiry = function handyProductInventoryInquiry() {
-  return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-inquiry.vue"));
+  return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-inquiry.vue"));
 };
 
 var handyProductInventoryUpdate = function handyProductInventoryUpdate() {
-  return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-update.vue"));
+  return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-update.vue"));
 };
 
 var handyProductInventoryMitsumry = function handyProductInventoryMitsumry() {
@@ -49838,7 +49838,7 @@ var superAdminCustomerSuperManage = function superAdminCustomerSuperManage() {
 };
 
 var handyProductInventoryReturn = function handyProductInventoryReturn() {
-  return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-return.vue"));
+  return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-return.vue"));
 };
 
 var handyOrderShipmentList = function handyOrderShipmentList() {
