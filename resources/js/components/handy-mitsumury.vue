@@ -5,10 +5,7 @@
             <div class="row">
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
-                        <span class="pull-left">
-                            小売 <br>
-                                見積り
-                        </span>
+                        <span class="pull-left">見積り</span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right top-button"
                            style="float:right">メニュー</a>
@@ -30,7 +27,7 @@
                         </div>
                         <button v-if="productJans.length > 0" @click="selectSuper(' ')"
                                 class="btn btn-success pull-right mr-1 "
-                                style=" position: absolute; top: 5px; right: 62px;"> 送信 メイル
+                                style=" position: absolute; top: 5px; right: 62px;"> 送信 メール
                         </button>
                         <button v-if="productJans.length > 0" @click="selectSuper()"
                                 class="btn btn-success pull-right mr-1 "
