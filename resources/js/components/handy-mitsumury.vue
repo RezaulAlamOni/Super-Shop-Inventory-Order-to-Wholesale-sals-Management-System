@@ -27,7 +27,7 @@
                         </div>
                         <button v-if="productJans.length > 0" @click="selectSuper(' ')"
                                 class="btn btn-success pull-right mr-1 "
-                                style=" position: absolute; top: 5px; right: 62px;"> 送信 メール
+                                style=" position: absolute; top: 5px; right: 62px;"> メール
                         </button>
                         <button v-if="productJans.length > 0" @click="selectSuper()"
                                 class="btn btn-success pull-right mr-1 "
@@ -175,8 +175,9 @@
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
-                                               class="form-control  " v-model="preview_product.profit" readonly
+                                               class="form-control  " :value="preview_product.sell - preview_product.cost" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+<!--                                        v-model="preview_product.profit"-->
                                         <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
                                         <!--                                               @keyup="calculatePrice('profit')"-->
                                     </td>
@@ -633,7 +634,7 @@ export default {
             if (e.keyCode == 13) {
                 $('#' + type).focus()
                 $('#' + type).select()
-                return false;
+                // return false;
                 if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
                     _this.handi_navi = 'XXXXX';
                     $('#handy-navi').show()
@@ -651,7 +652,7 @@ export default {
                 //     sale_selling_price: parseInt(_this.preview_product.sale_selling_price)
                 // }
 
-                return false;
+                // return false;
                 let data = {
                     jan: _this.preview_product.jan,
                     price: parseFloat(_this.preview_product.cost),
@@ -677,7 +678,7 @@ export default {
         blurAndSave() {
             let _this = this;
 
-            return false;
+            // return false;
 
 
             if (parseFloat(_this.preview_product.cost) > parseFloat(_this.preview_product.sell)) {
