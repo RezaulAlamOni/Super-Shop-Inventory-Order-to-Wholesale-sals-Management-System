@@ -18,7 +18,7 @@
                             <br>
                             <br>
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
-                                <div class="form-group row">
+                                <div class="form-group row mb-0">
                                     <span class="text-warning" style="width: 100%; text-align: center;">
                                         枠の中にクリックしてから <br> JANコードスキャンしてください
                                     </span>
@@ -33,7 +33,27 @@
                                                placeholder="JANコードスキャン（13桁）" :autofocus="true">
                                     </div>
                                 </div>
+                                <div>
+                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"
+                                            class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "
+                                            style="float: left;width: 100px">
+                                        音声
+                                    </button>
+                                    <text-recognition :base_url="base_url" class="hide"
+                                                      @getSearchData="getSearchData"
+                                                      @clearInput="clearInput"></text-recognition>
 
+                                    <button type="button" @click="getBarCodeScan()"
+                                            class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"
+                                            style="padding:0;float: left;width: 70px !important;">
+                                        <i class="fa fa-barcode" style="font-size: 40px"></i>
+                                    </button>
+                                    <button type="button" v-on:click="getOrderDataByJan()"
+                                            style="margin: 0px;width: 80px !important;"
+                                            class="btn custom-btn btn-primary pull-right text-right show_inline">
+                                        次へ
+                                    </button>
+                                </div>
 
                                 <div class="form-horizontal" id="handy_order_form" v-if="order_data.length > 0">
                                     <div class="form-group"
@@ -62,7 +82,7 @@
                                                     <!--                                                        バラ-->
                                                     <!--                                                    </th>-->
                                                     <th style="width: 50px; text-align: center; padding: 5px;">
-                                                       原価
+                                                        原価
                                                     </th>
                                                     <th style="width: 50px; text-align: center; padding: 5px;">
                                                         売価
@@ -134,9 +154,9 @@
                                                                    class="form-control  " :id="'profit'" readonly
                                                                    :value="((order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100).toFixed(2)"
                                                                    style="border-radius: 0px; text-align: center;padding : 7px 0px">
-<!--                                                            @click="selectItem($event,'')"-->
-<!--                                                            @keypress="pressEnterAndSave($event,'profit_margin')"-->
-<!--                                                            @blur="updateVendorItemProperty(order_data[0],'profit')"-->
+                                                            <!--                                                            @click="selectItem($event,'')"-->
+                                                            <!--                                                            @keypress="pressEnterAndSave($event,'profit_margin')"-->
+                                                            <!--                                                            @blur="updateVendorItemProperty(order_data[0],'profit')"-->
                                                         </td>
                                                         <td>
                                                             <input type="tel"
@@ -434,14 +454,17 @@
             </div>
         </div>
 
+
     </section>
 
 </template>
 
 <script>
+import TextRecognition from "./text-recognition";
+import {StreamBarcodeReader} from "vue-barcode-reader";
 
 export default {
-
+    components: {TextRecognition, StreamBarcodeReader},
     props: ['base_url', 'read_only'],
     name: "handy-customer-master",
     data() {
@@ -450,7 +473,6 @@ export default {
             order_data: [],
             search_data: [],
             barCodeScan: 0,
-
             case_order: 0,
             boll_order: 0,
             bara_order: 0,
@@ -500,7 +522,7 @@ export default {
                         $('#handy-navi').hide()
                         setTimeout(function () {
                             $('#case').select()
-                        },200)
+                        }, 200)
                     } else {
 
                         _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
@@ -658,8 +680,8 @@ export default {
             console.log('--paste end');
             console.log(this.jan_code.length);
             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
-               // this.insertToJanList()
-               if (reg.test(this.jan_code)) {
+                // this.insertToJanList()
+                if (reg.test(this.jan_code)) {
                     _this.insertToJanList();
                 }
             }
@@ -673,8 +695,8 @@ export default {
             let reg = /^\d+$/;
             console.log(this.jan_code.length);
             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
-               // this.insertToJanList()
-               if (reg.test(this.jan_code)) {
+                // this.insertToJanList()
+                if (reg.test(this.jan_code)) {
                     _this.insertToJanList();
                 }
             }
@@ -715,8 +737,8 @@ export default {
         },
         pressEnterAndSave(e, type) {
             if (e.keyCode == 13) {
-                $('#'+type).focus()
-                $('#'+type).select()
+                $('#' + type).focus()
+                $('#' + type).select()
             }
         },
         updateVendorItemProperty(vendor, type = null) {
@@ -737,19 +759,19 @@ export default {
                 vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat((vendor.cost_price * vendor.profit_margin) / 100);
                 vendor.selling_price = vendor.selling_price.toFixed(2)
             }
-            if(parseFloat(vendor.cost_price)>parseFloat(vendor.selling_price)){
-                 _this.handi_navi = 'XXXXX';
-                    $('#handy-navi').show()
-                    return false;
+            if (parseFloat(vendor.cost_price) > parseFloat(vendor.selling_price)) {
+                _this.handi_navi = 'XXXXX';
+                $('#handy-navi').show()
+                return false;
             }
             let data = {
-                jan:vendor.jan,
+                jan: vendor.jan,
                 product_name: vendor.item_name,
                 case_qty: parseInt(vendor.case_inputs),
                 ball_qty: parseInt(vendor.ball_inputs),
                 price: parseFloat(vendor.cost_price),
                 gross_profit_margin: parseFloat(vendor.profit_margin),
-                gross_profit: ((vendor.selling_price - vendor.cost_price)/vendor.selling_price*100).toFixed(2),
+                gross_profit: ((vendor.selling_price - vendor.cost_price) / vendor.selling_price * 100).toFixed(2),
                 selling_price: parseFloat(vendor.selling_price)
             }
 
@@ -781,7 +803,7 @@ export default {
                     if (api_response == 'invalid_jan_code') {
                         //$('.handy_error_msg').html(`商品がありません`);
                         //$('.handdy_error').removeClass('hide').addClass('show');
-                         _this.handi_navi = 'JAN コードを入力してください';
+                        _this.handi_navi = 'JAN コードを入力してください';
                         $('#handy-navi').show();
                     } else {
                         if (response.data.vendor_item_data == 1) {
@@ -815,7 +837,7 @@ export default {
                             let sale_start_date = '2020-01-01';
                             let sale_end_date = '2021-12-31';
                             let data = {
-                                maker_id:response.data.maker_id,
+                                maker_id: response.data.maker_id,
                                 vendor_id: vendor_id,
                                 jan_code: jan_code,
                                 item_name: item_name,
@@ -888,7 +910,9 @@ export default {
                 $('#handy-navi').show()
             })
         },
+        // new scanner & voice search added for this
 
+        // text recognition and bar code scanner end
     },
     watch: {
         // jan_code: function (val) {
