@@ -30,7 +30,7 @@
                         </div>
                         <button v-if="productJans.length > 0" @click="selectSuper(' ')"
                                 class="btn btn-success pull-right mr-1 "
-                                style=" position: absolute; top: 5px; right: 62px;"> 送信 メイル
+                                style=" position: absolute; top: 5px; right: 62px;"> 送信 メール
                         </button>
                         <button v-if="productJans.length > 0" @click="selectSuper()"
                                 class="btn btn-success pull-right mr-1 "
