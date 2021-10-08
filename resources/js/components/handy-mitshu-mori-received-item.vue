@@ -153,9 +153,10 @@
                                             </td>
                                             <td data-v-c9953dda="">
                                                 <input data-v-c9953dda="" type="tel" id="profit"
-                                                       @click="selectItem($event)"
-                                                       class="form-control  " v-model="product.gross_profit" readonly
+                                                       @click="selectItem($event)" :value="product.selling_price - product.cost_price"
+                                                       class="form-control  "  readonly
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+<!--                                                v-model="product.gross_profit"-->
                                                 <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
                                                 <!--                                               @keyup="calculatePrice('profit')"-->
                                             </td>
@@ -174,7 +175,7 @@
                                             <td class="text-center" style="font-size: 13px">1<br>(ボール)</td>
                                             <td class="text-center" style="font-size: 13px">1<br>(バラ)</td>
                                             <td class="text-center">
-                                                <span class="badge badge-success"
+                                                <span class="badge badge-success" style="cursor: pointer"
                                                       @click="orderToTonya(product)">発注</span>
                                             </td>
                                         </tr>
