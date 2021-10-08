@@ -2123,7 +2123,7 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 'ball_quantity' => $ball_quantity,
                 'unit_quantity' => $unit_quantity
             );
-            if($stock_item_id!='0'){
+            if($stock_item_id != '0' && $stock_item_id != null){
                 stock_item::where('stock_item_id',$stock_item_id)->update($insarray);
             }else{
                 $stock_item_id = stock_item::insertGetId($insarray);

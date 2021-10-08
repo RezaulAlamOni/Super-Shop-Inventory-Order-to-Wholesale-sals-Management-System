@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-order-receive","2":"handy-product-order-place","3":"handy-product-inventory-tmp-tana-update","4":"handy-product-inventory-return","5":"handy-product-inventory-inquiry","6":"handy-mitsumury","7":"barcode-scan","8":"handy-vandor-master","9":"handy-product-order-mail","10":"handy-product-order-confirm-kouri","11":"handy-product-online-order-kouri","12":"handy-order-shipment-list","13":"handy-customer-master","14":"admin-super-manage","15":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"90681021383443b421a9","1":"4d68263bbbcba8a2ef98","2":"e0740a2d5a85f28d487a","3":"ef4705482b79011dfeaa","4":"178fe7ecb250f6fa58e9","5":"5d5872cc370e54695798","6":"630c046cca5683c1fc1b","7":"8b63738db2396ecea4e1","8":"bfa0f0f1b852e579f014","9":"cc4c25da127c26e1dbe4","10":"df621b96ecf08d0121fa","11":"4f49654bf1969cbc96e0","12":"3a9b263853fd8803fe01","13":"81f1d83d138c8966823e","14":"9501bc9846a22645412a","15":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-order-place-kouri","1":"handy-product-order-receive","2":"handy-product-order-place","3":"handy-product-inventory-tmp-tana-update","4":"handy-product-inventory-return","5":"handy-product-inventory-inquiry","6":"handy-mitsumury","7":"barcode-scan","8":"handy-vandor-master","9":"handy-product-order-mail","10":"handy-product-order-confirm-kouri","11":"handy-product-online-order-kouri","12":"handy-order-shipment-list","13":"handy-customer-master","14":"admin-super-manage","15":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"1c0bebe933b44641567b","1":"0a7ba6ba5c3b4bfb8ae8","2":"44087f47517e7d67bfaa","3":"ab04432fe99046482d49","4":"53c1f862e9bec98a6e29","5":"e5b37572909da3403434","6":"7e5c5251a22493f5508e","7":"37660b3c0a5312846fef","8":"964f764f0ee0c3b26ca0","9":"d1458027e97cecc32e81","10":"140be241cc3aed0fb746","11":"c19699cad86d99d882d8","12":"fb4d0e403f2984db6f2b","13":"41cea07791431ca06f23","14":"96642b83ada284522f43","15":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -6088,89 +6088,6 @@ module.exports = {
 
 })));
 //# sourceMappingURL=bootstrap.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/lib/css-base.js":
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
 
 
 /***/ }),
@@ -49908,6 +49825,10 @@ var handyProductInventoryInquiry = function handyProductInventoryInquiry() {
   return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-inquiry.vue"));
 };
 
+var handyProductInventoryUpdate = function handyProductInventoryUpdate() {
+  return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "./resources/js/components/handy-product-inventory-update.vue"));
+};
+
 var handyProductInventoryMitsumry = function handyProductInventoryMitsumry() {
   return __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, "./resources/js/components/handy-mitsumury.vue"));
 };
@@ -49954,6 +49875,7 @@ var app = new Vue({
     'handy-product-receive': handyProductOrderReceive,
     'handy-product-inventory-tana-update': handyProductInventoryTempTanaUpdate,
     'handy-product-inventory-inquiry': handyProductInventoryInquiry,
+    'handy-product-inventory-update': handyProductInventoryUpdate,
     'handy-product-inventory-mistumury': handyProductInventoryMitsumry,
     'handy-product-inventory-return': handyProductInventoryReturn,
     'handy-order-shipment-list': handyOrderShipmentList,
