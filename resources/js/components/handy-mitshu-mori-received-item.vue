@@ -175,8 +175,10 @@
                                             <td class="text-center" style="font-size: 13px">1<br>(ボール)</td>
                                             <td class="text-center" style="font-size: 13px">1<br>(バラ)</td>
                                             <td class="text-center">
-                                                <span class="badge badge-success" style="cursor: pointer"
+                                                <span class="badge badge-success" style="cursor: pointer;margin:2px"
                                                       @click="orderToTonya(product)">発注</span>
+                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"
+                                                      @click="storeToMaster(product)">採用</span>
                                             </td>
                                         </tr>
                                     </template>
@@ -952,6 +954,15 @@ export default {
                     })
             }, 500)
         },
+        storeToMaster(product = null) {
+            let _this = this;
+            _this.loader = 1;
+            setTimeout(function () {
+                _this.loader = 0
+                $('#handy-navi').show()
+                _this.handi_navi = '<li>マスターに登録されました。</li>';
+            }, 500)
+        },
         selectAll() {
             this.productJans = [];
             if (!this.allSelected) {
@@ -1048,6 +1059,36 @@ table tbody tr td input {
 
 .table-borderless tbody tr td {
     border: none !important;
+}
+
+@media screen and (max-width: 430px) {
+    .image-div {
+        width: 33%;
+        max-height: 130px;
+    }
+
+    .custom-img {
+        width: 100%;
+        margin: 3px 0px;
+        height: auto;
+    }
+
+    .top-button {
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+
+    .header span {
+        font-size: 18px;
+    }
+
+    .custom-img-preview {
+        min-width: 58%;
+        max-width: 98%;
+        margin: 5px;
+        max-height: 500px;
+    }
+
 }
 
 @media screen and (max-width: 351px) {
