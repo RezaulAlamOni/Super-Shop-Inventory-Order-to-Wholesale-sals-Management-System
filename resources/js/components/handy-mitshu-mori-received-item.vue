@@ -119,7 +119,7 @@
                                     </thead>
                                     <tbody data-v-c9953dda="" class="physicaltbody">
                                     <template v-for="(product,i) in products">
-                                        <tr>
+                                        <tr >
                                             <td rowspan="2" data-v-c9953dda="" style="position:relative;">
                                                 <!--<input data-v-c9953dda="" type="tel" id="special-price"
                                                        v-model="product.sale_selling_price"
@@ -133,7 +133,7 @@
                                                 <input class="form-check-input form-check-input__" type="checkbox"
                                                        v-model="productJans" :value="product">
                                             </td>
-                                            <td data-v-c9953dda="">
+                                            <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                                 <input data-v-c9953dda="" type="tel" id="cost"
                                                        @click="selectItem($event)"
                                                        class="form-control  " v-model="product.cost_price"
@@ -142,7 +142,7 @@
                                                        @keyup="calculatePrice('cost')"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                             </td>
-                                            <td data-v-c9953dda="">
+                                            <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                                 <input data-v-c9953dda="" type="tel" id="sell"
                                                        @click="selectItem($event)"
                                                        class="form-control  " v-model="product.selling_price"
@@ -151,7 +151,7 @@
                                                        @keyup="calculatePrice('sell')"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                             </td>
-                                            <td data-v-c9953dda="">
+                                            <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''" >
                                                 <input data-v-c9953dda="" type="tel" id="profit"
                                                        @click="selectItem($event)" :value="product.selling_price - product.cost_price"
                                                        class="form-control  "  readonly
@@ -160,7 +160,7 @@
                                                 <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
                                                 <!--                                               @keyup="calculatePrice('profit')"-->
                                             </td>
-                                            <td data-v-c9953dda="">
+                                            <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                                 <input data-v-c9953dda="" type="tel" id="profit_margin"
                                                        @click="selectItem($event)"
                                                        @blur="blurAndSave()"
@@ -170,7 +170,7 @@
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                             <td class="text-center" style="font-size: 13px">1<br>(ケース)</td>
                                             <td class="text-center" style="font-size: 13px">1<br>(ボール)</td>
                                             <td class="text-center" style="font-size: 13px">1<br>(バラ)</td>
@@ -955,6 +955,7 @@ export default {
             }, 500)
         },
         storeToMaster(product = null) {
+
             let _this = this;
             _this.loader = 1;
             setTimeout(function () {
@@ -971,6 +972,14 @@ export default {
 
 
         },
+        //
+        checkDateOlderHour(date){
+            let hour = 60 * 60 * 24 * 1000;
+            let now = +new Date();
+            date = +new Date(date);
+            var compareDatesBoolean = (now - date) < hour;
+            return compareDatesBoolean;
+        }
 
     },
     watch: {
@@ -1123,5 +1132,8 @@ table tbody tr td input {
     width: 20px;
 }
 
+.back-ground {
+    background: #e6f8bd;
+}
 
 </style>
