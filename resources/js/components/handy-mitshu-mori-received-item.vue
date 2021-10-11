@@ -367,11 +367,11 @@ export default {
     methods: {
         getProducts() {
             let _this = this;
-            if (_this.orderBy == 'DESC') {
-                _this.orderBy = 'ASC';
-            } else if (_this.orderBy == 'ASC') {
-                _this.orderBy = 'DESC';
-            }
+            // if (_this.orderBy == 'DESC') {
+            //     _this.orderBy = 'ASC';
+            // } else if (_this.orderBy == 'ASC') {
+            //     _this.orderBy = 'DESC';
+            // }
 
             axios.post(this.base_url + '/get-all-products-from-estimation', {orderBy: _this.orderBy})
                 .then(function (res) {
