@@ -1133,7 +1133,7 @@ table tbody tr td input {
 }
 
 .back-ground {
-    background: #e6f8bd;
+    background: rgb(248, 228, 248);
 }
 
 </style>
