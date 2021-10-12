@@ -154,8 +154,9 @@
                                                         <td>
                                                             <input type="tel"
                                                                    class="form-control  " :id="'profit'" readonly
-                                                                   :value="((order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100).toFixed(2)"
+                                                                   :value="((order_data[0].selling_price-order_data[0].cost_price)).toFixed(2)"
                                                                    style="border-radius: 0px; text-align: center;padding : 7px 0px">
+<!--                                                            (order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100-->
                                                             <!--                                                            @click="selectItem($event,'')"-->
                                                             <!--                                                            @keypress="pressEnterAndSave($event,'profit_margin')"-->
                                                             <!--                                                            @blur="updateVendorItemProperty(order_data[0],'profit')"-->
