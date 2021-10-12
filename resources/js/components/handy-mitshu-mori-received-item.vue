@@ -596,6 +596,7 @@ export default {
         },
         pressEnterAndSave(e, type) {
             let _this = this;
+            return false;
             if (e.keyCode == 13) {
                 $('#' + type).focus()
                 $('#' + type).select()
@@ -959,10 +960,24 @@ export default {
             let _this = this;
             _this.loader = 1;
             setTimeout(function () {
-                _this.loader = 0
-                $('#handy-navi').show()
-                _this.handi_navi = '<li>マスターに登録されました。</li>';
-            }, 500)
+                let data = {
+                    jan: product.jan
+                }
+
+                axios.post(_this.base_url + '/handy_vendor_master_update_from_mistumury', data)
+                    .then(function (response) {
+                        // _this.getOrderDataByJan();
+                        _this.loader = 0
+                        _this.getProducts();
+                        _this.handi_navi = '<li>マスターに登録されました。</li>';
+                        $('#handy-navi').show()
+                    })
+                    .catch(function (e) {
+                        console.log(e)
+                    })
+
+
+            }, 100)
         },
         selectAll() {
             this.productJans = [];

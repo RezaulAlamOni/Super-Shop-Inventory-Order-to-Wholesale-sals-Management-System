@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\estimate_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -183,6 +184,23 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
 
         return view('backend.handy_pages.handy_receive_order_master_new', compact('result', 'car_racks', 'a_quantity', 'temp_rack'));
 
+    }
+
+    public function handy_vendor_master_update_from_mistumury(Request $request)
+    {
+        $jan = $request->jan;
+        $vendor_items = vendor_item::where('jan', $jan)->first();
+        $items = estimate_item::where('jan', $jan)->first();
+        if (!empty($vendor_items) && !empty($items)) {
+            vendor_item::where('jan', $jan)->update([
+                'cost_price' => $items->selling_price,
+                'selling_price' => $items->selling_price+(($items->selling_price*$vendor_items->gross_profit_margin)/100),
+                'gross_profit' => (($items->selling_price*$vendor_items->gross_profit_margin)/100)
+            ]);
+            return response()->json(['status' => 200]);
+        }
+
+        return response()->json(['status' => 405]);
     }
 
     public function handy_received_product_detail_by_jan_code_for_order_list(Request $request){
