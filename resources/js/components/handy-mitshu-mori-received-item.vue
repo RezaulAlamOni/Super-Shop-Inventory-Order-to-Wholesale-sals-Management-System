@@ -263,7 +263,7 @@
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
-                                               class="form-control  " v-model="preview_product.profit" readonly
+                                               class="form-control  " :value="preview_product.sell-preview_product.cost" readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                         <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
                                         <!--                                               @keyup="calculatePrice('profit')"-->
