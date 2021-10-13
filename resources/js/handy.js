@@ -20,10 +20,31 @@ window.onload = () => {
             cacheNames.forEach(function(cacheName) {
                 console.log(cacheName)
                 caches.delete(cacheName);
-                location.reload()
             });
         });
     }
+
+    // if ('serviceWorker' in navigator) {
+    //     navigator.serviceWorker
+    //         .register('firebase-messaging-sw.js')
+    //         .then(function (registration) {
+    //             console.log('Fi successful, scope is:', registration.scope);
+    //             registration.update();
+    //             console.log('Registration Update FI')
+    //
+    //         })
+    //         .catch(function (error) {
+    //             console.log('Firbase registration failed, error:', error);
+    //         });
+    //     caches.keys().then(function(cacheNames) {
+    //         cacheNames.forEach(function(cacheName) {
+    //             console.log(cacheName)
+    //             caches.delete(cacheName);
+    //         });
+    //     });
+    // }
+
+
 
   /*
 let deferredPrompt;

@@ -14,6 +14,7 @@
                     <div class="row">
                         <div class="col-5 pull-left" style="padding: 0;font-size: 22px;">
                             <p class="handy_top_bar1">小売用メニュー</p>
+{{--                            <span class="btn btn-success" onclick="initFirebaseMessagingRegistration()">22222</span>--}}
                         </div>
 
                         <div class="col-7 pull-right" style="text-align: right; padding: 0; font-size: 24px;">
@@ -73,8 +74,8 @@
                             出荷
                             </div>
                         </a>-->
-                       
-                       
+
+
                         <a  href="{{Config::get('app.url').'/stock_details_by_handy'}}" style="padding: 15px 5px;background:#F0FFFF;" class="btn btn-default">
                             <div class="numbering_col" style="padding: 0; margin: 0;">9</div>
                             <div class="col-md-11 text-center btnText oneLine" style="padding: 0; margin: 0;line-height:35px;">
@@ -90,7 +91,7 @@
                         </a>
 -->
 
-                        
+
                     </div>
 
                     <div class="col-6 handy_btn_aria handy_btn_right">
@@ -136,7 +137,7 @@
                             売掛
                             </div>
                         </a>
-                        
+
                         <a id="" style="width: 100%;background:#F0FFFF;" class="btn btn-default" href="{{ route('inventory.return') }}">
                             <div class="numbering_col" style="padding: 0; margin: 0;">14</div>
                             <div class="col-md-11 text-center btnText twoLine" style="padding: 0; margin: 0;line-height:35px;">
@@ -157,10 +158,10 @@
                         </a>
 
 
-                       
 
 
-                        
+
+
 
                     </div>
                 </div>

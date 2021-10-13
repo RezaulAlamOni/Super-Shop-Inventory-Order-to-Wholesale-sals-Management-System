@@ -28,7 +28,7 @@
                           <!-- Icon -->
     <div class="fadeIn first">
       <img style="height: 35px; width: 100px;" src="https://dhakajacos.com.bd/wp-content/uploads/2019/01/cropped-Jacos-main.png" id="icon" alt="User Icon" />
-      
+
     </div>
 
                 </a>
@@ -51,7 +51,7 @@
                             </li>
                             @if (Route::has('register'))
                                 <!-- <li class="nav-item">
-                                    
+
                                 </li> -->
                             @endif
                         @else
@@ -82,5 +82,6 @@
             @yield('content')
         </main>
     </div>
+
 </body>
 </html>

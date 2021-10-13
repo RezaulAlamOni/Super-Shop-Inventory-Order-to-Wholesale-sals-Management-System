@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','device_token',
     ];
 
     /**
@@ -33,8 +33,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    // public function getFirstNameAttribute() 
-    public function getImageAttribute() 
+    // public function getFirstNameAttribute()
+    public function getImageAttribute()
     {
         $user_id= Auth::user()->id;
         $user_details = users_details::where('users_id', $user_id)->first();
@@ -42,7 +42,7 @@ class User extends Authenticatable
             $image_name = $user_details->image;
         } else {
             $image_name = null;
-        }        
+        }
         return $image_name;
     }
     public function customer(){

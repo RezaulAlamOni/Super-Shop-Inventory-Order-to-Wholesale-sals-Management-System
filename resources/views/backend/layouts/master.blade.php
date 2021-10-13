@@ -69,12 +69,122 @@
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="{{Config::get('app.url').'/public'.mix('js/all_custom_js.js')}}"></script>
     <script src="{{Config::get('app.url').'/public/js/ui.datepicker-ja.js'}}"></script>
-{{--    <script src="{{Config::get('app.url').'/pwa/app.js'}}"></script>--}}
+
 {{--    <script src="{{Config::get('app.url').'/closePWA.js'}}"></script>--}}
     <script>
         window.base_url = '{{ config('app.url') }}'
 
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
+    <script src="{{Config::get('app.url').'/public/js/test.js'}}"></script>
+{{--    <script src="https://https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>--}}
+{{--    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-messaging.js"></script>--}}
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-messaging.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyBa4XqmW2OnhFz5zpAu5t0s_AI5Ov6xLAg",
+            authDomain: "push-notification1-f9cda.firebaseapp.com",
+            projectId: "push-notification1-f9cda",
+            storageBucket: "push-notification1-f9cda.appspot.com",
+            messagingSenderId: "620182214147",
+            appId: "1:620182214147:web:d09b59f1dc46e4e4122036"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig)
+
+
+        const messaging = firebase.messaging();
+
+
+        function initFirebaseMessagingRegistration(token) {
+
+            $.ajax({
+                url: '{{ route("save-token") }}',
+                type: 'POST',
+                data: {
+                    token: token,
+                    _token : "{{ csrf_token() }}"
+                },
+                dataType: 'JSON',
+                success: function (response) {
+                    // alert('Token saved successfully.');
+                },
+                error: function (err) {
+                    console.log('User Chat Token Error' + err);
+                },
+            });
+        }
+
+
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+                .register("/rv3_superv1/firebase-messaging-sw.js")
+                .then(function(registration) {
+                    console.log("FCM SW Registration successful, scope is:", registration.scope);
+                    messaging.useServiceWorker(registration);
+
+                    messaging.getToken({vapidKey: 'AIzaSyBa4XqmW2OnhFz5zpAu5t0s_AI5Ov6xLAg', serviceWorkerRegistration : registration })
+                        .then((currentToken) => {
+                            if (currentToken) {
+                                console.log('current token for client: ', currentToken);
+                                initFirebaseMessagingRegistration(currentToken)
+                                // Track the token -> client mapping, by sending to backend server
+                                // show on the UI that permission is secured
+                            } else {
+                                console.log('No registration token available. Request permission to generate one.');
+
+                                // shows on the UI that permission is required
+                            }
+                        }).catch((err) => {
+                        console.log('An error occurred while retrieving token. ', err);
+                        // catch error while creating client token
+                    });
+
+
+                })
+                .catch(function(err) {
+                    console.log("Service worker registration failed, error:"  , err );
+                });
+        }
+
+
+        messaging.onMessage(function (payload) {
+            console.log(payload);
+            const notificationOption={
+                body:payload.notification.body,
+                icon:payload.notification.icon
+            };
+
+            if(Notification.permission==="granted"){
+                var notification=new Notification(payload.notification.title,notificationOption);
+
+                notification.onclick=function (ev) {
+                    ev.preventDefault();
+                    window.open(payload.notification.click_action,'_blank');
+                    notification.close();
+                }
+            }
+
+        });
+        messaging.requestPermission()
+            .then(function(){
+                console.log("have permission");
+                // return messaging.getToken();
+            })
+        messaging.onTokenRefresh(function ()    {
+            messaging.getToken()
+                .then(function (newtoken) {
+                    console.log("New Token : "+ newtoken);
+                })
+                .catch(function (reason) {
+                    console.log(reason);
+                })
+        })
+    </script>
+
+
 
 </body>
 
