@@ -104,7 +104,7 @@
                 url: '{{ route("save-token") }}',
                 type: 'POST',
                 data: {
-                    token: token,
+                    fcm: token,
                     _token : "{{ csrf_token() }}"
                 },
                 dataType: 'JSON',

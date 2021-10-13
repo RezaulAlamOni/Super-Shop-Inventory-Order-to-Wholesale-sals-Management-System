@@ -69,7 +69,7 @@ class HomeController extends Controller
 
     public function saveToken(Request $request)
     {
-        auth()->user()->update(['device_token'=>$request->token]);
+        auth()->user()->update(['device_token'=>$request->fcm]);
         $firebaseToken = User::whereNotNull('device_token')
             ->where('id',auth()->id())->pluck('device_token');
 //        $this->sendNotification_($firebaseToken,'asdfasdfas');
