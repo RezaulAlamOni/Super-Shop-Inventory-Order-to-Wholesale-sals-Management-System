@@ -186,8 +186,7 @@ class HomeController extends Controller
     }
 
     public function sendNoti() {
-        $firebaseToken = User::whereNotNull('device_token')
-            ->where('id',auth()->id())->pluck('device_token');
+        $firebaseToken = User::whereNotNull('device_token')->pluck('device_token');
 //        $firebaseToken = ['ed0nslJT9VQXJU73Ad65YI:APA91bFaTw5alOIdIblYMX0X8j9K7RoLD5KUop_H4f2nioSf6PE30tvHISEWoAvjXR4j-JcLHewhNWZOdNimq3KYTK6ozpbk22GpgdwafDyktl2QsNK_itUssn_4rJfryNs21CewF4Dt'];
         FCM::sendNotification($firebaseToken,'New message ', 'Oni Test');
     }

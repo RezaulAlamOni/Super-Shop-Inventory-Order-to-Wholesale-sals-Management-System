@@ -15,46 +15,46 @@ const app = firebase.initializeApp(firebaseConfig)
 
 const messaging = firebase.messaging();
 let token = '';
-messaging.getToken(true).then(data =>{
-    console.log(data)
-    token = data;
-} )
+// messaging.getToken(true).then(data =>{
+//     console.log(data)
+//     token = data;
+// } )
 
-function initFirebaseMessagingRegistration() {
-    messaging
-        .requestPermission()
-        .then(function () {
-            return messaging.getToken()
-        })
-        .then(function(token) {
-            console.log(token);
-            console.log('ddd');
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                url: '/save-token',
-                type: 'POST',
-                data: {
-                    token: token
-                },
-                dataType: 'JSON',
-                success: function (response) {
-                    alert('Token saved successfully.');
-                },
-                error: function (err) {
-                    console.log('User Chat Token Error'+ err);
-                },
-            });
-
-        }).catch(function (err) {
-        console.log('User Chat Token Error'+ err);
-    });
-}
+// function initFirebaseMessagingRegistration() {
+//     messaging
+//         .requestPermission()
+//         .then(function () {
+//             return messaging.getToken()
+//         })
+//         .then(function(token) {
+//             console.log(token);
+//             console.log('ddd');
+//
+//             $.ajaxSetup({
+//                 headers: {
+//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                 }
+//             });
+//
+//             $.ajax({
+//                 url: '/save-token',
+//                 type: 'POST',
+//                 data: {
+//                     token: token
+//                 },
+//                 dataType: 'JSON',
+//                 success: function (response) {
+//                     alert('Token saved successfully.');
+//                 },
+//                 error: function (err) {
+//                     console.log('User Chat Token Error'+ err);
+//                 },
+//             });
+//
+//         }).catch(function (err) {
+//         console.log('User Chat Token Error'+ err);
+//     });
+// }
 
 
 messaging.setBackgroundMessageHandler(function(payload) {
