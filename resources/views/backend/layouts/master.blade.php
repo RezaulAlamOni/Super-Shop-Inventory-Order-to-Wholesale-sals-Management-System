@@ -101,7 +101,7 @@
         function initFirebaseMessagingRegistration(token) {
 
             $.ajax({
-                url: '{{ route("save-token") }}',
+                url: '/rv3_superv1/save-token',
                 type: 'POST',
                 data: {
                     fcm: token,
