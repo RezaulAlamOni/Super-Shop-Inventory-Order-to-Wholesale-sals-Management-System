@@ -45,7 +45,7 @@
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
             let response = JSON.stringify(data);
-
+            alert("You have an Estimation !")
             const notificationOption = {
                     body: data.message,
                     icon: "https://keipro.development.dhaka10.dev.jacos.jp/mail/resource/img/notification_icon.png"

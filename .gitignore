@@ -30,7 +30,7 @@ npm-debug.log
 yarn-error.log
 composer.lock
 package-lock.json
-#.env
+.env
 .htaccess
 testcafe/screenshots/*
 
