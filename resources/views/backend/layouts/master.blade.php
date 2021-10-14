@@ -94,7 +94,7 @@
             <div class="modal-dialog">
 
                 <!-- Modal content-->
-                <div class="modal-content" style="    background: rgb(255, 235, 255);">
+                <div class="modal-content" style="    background: rgb(220 240 250);">
 {{--                    <div class="modal-header">--}}
 {{--                        <button type="button" class="close" data-dismiss="modal">&times;</button>--}}
 {{--                    </div>--}}

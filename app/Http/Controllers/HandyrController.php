@@ -193,10 +193,25 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
         $items = estimate_item::where('jan', $jan)->first();
         if (!empty($vendor_items) && !empty($items)) {
             vendor_item::where('jan', $jan)->update([
-                'cost_price' => $items->selling_price,
-                'selling_price' => $items->selling_price+(($items->selling_price*$vendor_items->gross_profit_margin)/100),
-                'gross_profit' => (($items->selling_price*$vendor_items->gross_profit_margin)/100)
+                'cost_price' => $items->cost_price,
+                'selling_price' => $items->selling_price,
+                'gross_profit' => (($items->cost_price*$vendor_items->gross_profit_margin)/100)
             ]);
+
+            $customer_data_ins_array = array(
+                'customer_id'=>$items->customer_id,
+                'vendor_id'=>$items->vendor_id,
+                'jan'=>$jan,
+                'cost_price' => $items->cost_price,
+                'selling_price' => $items->selling_price,
+                'gross_profit' => (($items->cost_price*$vendor_items->gross_profit_margin)/100)
+            );
+            customer_item::updateOrInsert(
+                [
+                    'jan' => $jan
+                    ],
+                $customer_data_ins_array);
+
             return response()->json(['status' => 200]);
         }
 

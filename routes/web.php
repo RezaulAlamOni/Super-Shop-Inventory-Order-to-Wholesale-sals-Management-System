@@ -22,15 +22,15 @@ Route::get('/', function () {
 	return redirect('login');
 });
 
-Route::get('/test-pusher',function (){
-//    event(new \App\Events\MyEvent('New Event'));
-    event(new MyEvent('hello world'));
-    return 'success';
-});
+//Route::get('/test-pusher',function (){
+////    event(new \App\Events\MyEvent('New Event'));
+//    event(new MyEvent('hello world'));
+//    return 'success';
+//});
 
 Auth::routes();
-Route::post('/save-token', [App\Http\Controllers\HomeController::class, 'saveToken'])->name('save-token');
-Route::get('/send-notification', [App\Http\Controllers\HomeController::class, 'sendNoti'])->name('send-noti');
+//Route::post('/save-token', [App\Http\Controllers\HomeController::class, 'saveToken'])->name('save-token');
+//Route::get('/send-notification', [App\Http\Controllers\HomeController::class, 'sendNoti'])->name('send-noti');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/android_home', 'HomeController@android_home')->name('android_home');
 Route::get('/vendor_master/{id?}', 'VendorMasterController@index');
