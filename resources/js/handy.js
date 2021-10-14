@@ -20,7 +20,7 @@ window.onload = () => {
             cacheNames.forEach(function(cacheName) {
                 console.log(cacheName)
                 caches.delete(cacheName);
-                location.reload()
+                // location.reload()
             });
         });
     }
