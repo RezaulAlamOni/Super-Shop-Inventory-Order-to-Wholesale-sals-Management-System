@@ -16,12 +16,13 @@ trait FCM
                     "sound" => "default",
                     "priority" => 10,
                     "title"=>$title,
+                    "receiver"=>'erw',
                     "icon" => "https://keipro.development.dhaka10.dev.jacos.jp/mail/resource/img/notification_icon.png",
-                    "click_action" => "https://keipro.development.dhaka10.dev.jacos.jp/mail"
+//                    "click_action" => "https://keipro.development.dhaka10.dev.jacos.jp/mail"
                 )
             );
             $headers = array(
-                "Authorization: key=AAAAkGW9lgM:APA91bFzlYfMdvaCfSuJV3VoxCTlY6Jjd0AQrLdRuwRNj2l508PJg94mHbhmxfsNsKy5kyw5N9mvJSMUPCQBURGWrqVmRBVbwToz0-aSi9nO_K8_hDj6b1fzWFYSczi4u29rLkBCSF7b",
+                "Authorization: key=AAAAE4L-CiY:APA91bGH4w7KWRvShjnBoL2AUOML-2_yoXhfNwdvfpOasYisCMIB2ne4RQc7wCo_kC9Jb8QkALA0u9S0iUmRo7WoZd-T-gs2IT7gL_8HVTrNxR22b2qT80gbjOliWJw0Jh2FF6Wuxkbw",
                 "Content-Type:application/json"
             );
             $ch = curl_init();

@@ -67,6 +67,7 @@ class Eestimate_itemController extends Controller
             // send fcm notification to super
             $firebaseToken = User::whereNotNull('device_token')->where('id',$customer->user_id)->pluck('device_token');
             FCM::sendNotification($firebaseToken,'New message ', 'Oni Test');
+
             foreach($item_info as $item){
                 $item_insertedarr = $item;
                 $item_insertedarr['customer_id']=$super;

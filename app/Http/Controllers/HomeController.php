@@ -70,11 +70,6 @@ class HomeController extends Controller
     public function saveToken(Request $request)
     {
         auth()->user()->update(['device_token'=>$request->fcm]);
-        $firebaseToken = User::whereNotNull('device_token')
-            ->where('id',auth()->id())->pluck('device_token');
-//        $this->sendNotification_($firebaseToken,'asdfasdfas');
-//        $this->sendNotification();
-
         return response()->json(['token saved successfully.']);
     }
 
@@ -187,8 +182,8 @@ class HomeController extends Controller
 
     public function sendNoti() {
         $firebaseToken = User::whereNotNull('device_token')->pluck('device_token');
-//        $firebaseToken = ['ed0nslJT9VQXJU73Ad65YI:APA91bFaTw5alOIdIblYMX0X8j9K7RoLD5KUop_H4f2nioSf6PE30tvHISEWoAvjXR4j-JcLHewhNWZOdNimq3KYTK6ozpbk22GpgdwafDyktl2QsNK_itUssn_4rJfryNs21CewF4Dt'];
-        FCM::sendNotification($firebaseToken,'New message ', 'Oni Test');
+//        $firebaseToken = ['cVtJ6FFHLq6psRIcvzUYP0:APA91bFHDkH2TYMLyatxnGHGy4C1bdYx47RQdpBL7sjaZaFLtnZYOEmDuhURZL4EcLV5nGkLrG81rxEqCGdtJdZ2gGoKZgBA5Bz4h-mZsxnVrUyABuH9tCNfTuBK6d1T_axTpgxMh57y'];
+        FCM::sendNotification($firebaseToken,'New message', 'Oni Test');
     }
 }
 
