@@ -1,4 +1,6 @@
 <?php
+
+use App\Events\MyEvent;
 use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,12 @@ Route::get('language/{locale}', function ($locale) {
 Route::get('/', function () {
 	// return view('frontend.welcome');
 	return redirect('login');
+});
+
+Route::get('/test-pusher',function (){
+//    event(new \App\Events\MyEvent('New Event'));
+    event(new MyEvent('hello world'));
+    return 'success';
 });
 
 Auth::routes();

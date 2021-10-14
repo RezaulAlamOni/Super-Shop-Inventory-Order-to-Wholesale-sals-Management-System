@@ -31,6 +31,31 @@
 
     {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
     @include('backend.layouts.js_variable')
+
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('668cc0c510bc9039b290', {
+            cluster: 'ap2'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            let response = JSON.stringify(data);
+
+            const notificationOption = {
+                    body: data.message,
+                    icon: "https://keipro.development.dhaka10.dev.jacos.jp/mail/resource/img/notification_icon.png"
+                };
+                if (Notification.permission === "granted") {
+                    new Notification('RV3', notificationOption);
+                }
+        });
+    </script>
+
 </head>
 
 <body>
@@ -190,83 +215,83 @@
 {{--        })--}}
 {{--    </script>--}}
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-    // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
+{{--<script type="module">--}}
+{{--    // Import the functions you need from the SDKs you need--}}
+{{--    // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";--}}
+{{--    // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-analytics.js";--}}
+{{--    // TODO: Add SDKs for Firebase products that you want to use--}}
+{{--    // https://firebase.google.com/docs/web/setup#available-libraries--}}
 
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyB4AoxsI3VgNg1G4rncXMsLxEdxYKET0oI",
-        authDomain: "rv3-fcm.firebaseapp.com",
-        projectId: "rv3-fcm",
-        storageBucket: "rv3-fcm.appspot.com",
-        messagingSenderId: "83802065446",
-        appId: "1:83802065446:web:8bc4d220637470ef3534e7",
-        measurementId: "G-6HS1RD0YCD"
-    };
+{{--    // Your web app's Firebase configuration--}}
+{{--    // For Firebase JS SDK v7.20.0 and later, measurementId is optional--}}
+{{--    const firebaseConfig = {--}}
+{{--        apiKey: "AIzaSyB4AoxsI3VgNg1G4rncXMsLxEdxYKET0oI",--}}
+{{--        authDomain: "rv3-fcm.firebaseapp.com",--}}
+{{--        projectId: "rv3-fcm",--}}
+{{--        storageBucket: "rv3-fcm.appspot.com",--}}
+{{--        messagingSenderId: "83802065446",--}}
+{{--        appId: "1:83802065446:web:8bc4d220637470ef3534e7",--}}
+{{--        measurementId: "G-6HS1RD0YCD"--}}
+{{--    };--}}
 
-    // Initialize Firebase
-    // const app = initializeApp(firebaseConfig);
-    // const analytics = getAnalytics(app);
+{{--    // Initialize Firebase--}}
+{{--    // const app = initializeApp(firebaseConfig);--}}
+{{--    // const analytics = getAnalytics(app);--}}
 
-    const app = firebase.initializeApp(firebaseConfig)
+{{--    const app = firebase.initializeApp(firebaseConfig)--}}
 
-    const messaging = firebase.messaging();
-    messaging.requestPermission()
-        .then(function () {
-            console.log('Notification permission granted')
-            return messaging.getToken()
-        }).then(function (token) {
-        console.log(token)
-        initFirebaseMessagingRegistration(token)
-    }).catch(function (err) {
-        console.log(err)
-    })
+{{--    const messaging = firebase.messaging();--}}
+{{--    messaging.requestPermission()--}}
+{{--        .then(function () {--}}
+{{--            console.log('Notification permission granted')--}}
+{{--            return messaging.getToken()--}}
+{{--        }).then(function (token) {--}}
+{{--        console.log(token)--}}
+{{--        initFirebaseMessagingRegistration(token)--}}
+{{--    }).catch(function (err) {--}}
+{{--        console.log(err)--}}
+{{--    })--}}
 
-    messaging.onMessage(function (payload) {
-        console.log(payload);
-        const notificationOption = {
-            body: payload.notification.body,
-            icon: payload.notification.icon
-        };
+{{--    messaging.onMessage(function (payload) {--}}
+{{--        console.log(payload);--}}
+{{--        const notificationOption = {--}}
+{{--            body: payload.notification.body,--}}
+{{--            icon: payload.notification.icon--}}
+{{--        };--}}
 
-        if (Notification.permission === "granted") {
-            var notification = new Notification(payload.notification.title, notificationOption);
+{{--        if (Notification.permission === "granted") {--}}
+{{--            var notification = new Notification(payload.notification.title, notificationOption);--}}
 
-            notification.onclick = function (ev) {
-                ev.preventDefault();
-                window.open(payload.notification.click_action, '_blank');
-                notification.close();
-            }
-        }
+{{--            notification.onclick = function (ev) {--}}
+{{--                ev.preventDefault();--}}
+{{--                window.open(payload.notification.click_action, '_blank');--}}
+{{--                notification.close();--}}
+{{--            }--}}
+{{--        }--}}
 
-    });
+{{--    });--}}
 
-    function initFirebaseMessagingRegistration(token) {
-        $.ajax({
-            url: '/rv3_superv1/save-token',
-            type: 'POST',
-            data: {
-                fcm: token,
-                _token: "{{ csrf_token() }}"
-            },
-            dataType: 'JSON',
-            success: function (response) {
-                // alert('Token saved successfully.');
-            },
-            error: function (err) {
-                console.log('User Chat Token Error' + err);
-            },
-        });
-    }
+{{--    function initFirebaseMessagingRegistration(token) {--}}
+{{--        $.ajax({--}}
+{{--            url: '/rv3_superv1/save-token',--}}
+{{--            type: 'POST',--}}
+{{--            data: {--}}
+{{--                fcm: token,--}}
+{{--                _token: "{{ csrf_token() }}"--}}
+{{--            },--}}
+{{--            dataType: 'JSON',--}}
+{{--            success: function (response) {--}}
+{{--                // alert('Token saved successfully.');--}}
+{{--            },--}}
+{{--            error: function (err) {--}}
+{{--                console.log('User Chat Token Error' + err);--}}
+{{--            },--}}
+{{--        });--}}
+{{--    }--}}
 
-    // AAAAE4L-CiY:APA91bGH4w7KWRvShjnBoL2AUOML-2_yoXhfNwdvfpOasYisCMIB2ne4RQc7wCo_kC9Jb8QkALA0u9S0iUmRo7WoZd-T-gs2IT7gL_8HVTrNxR22b2qT80gbjOliWJw0Jh2FF6Wuxkbw
-    // 83802065446
-</script>
+{{--    // AAAAE4L-CiY:APA91bGH4w7KWRvShjnBoL2AUOML-2_yoXhfNwdvfpOasYisCMIB2ne4RQc7wCo_kC9Jb8QkALA0u9S0iUmRo7WoZd-T-gs2IT7gL_8HVTrNxR22b2qT80gbjOliWJw0Jh2FF6Wuxkbw--}}
+{{--    // 83802065446--}}
+{{--</script>--}}
 
 
 </body>

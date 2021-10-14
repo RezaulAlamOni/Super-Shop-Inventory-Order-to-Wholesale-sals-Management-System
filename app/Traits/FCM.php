@@ -2,10 +2,12 @@
 
 namespace App\Traits;
 
+
 trait FCM
 {
     // send firebase notification to user
-    static function sendNotification($message_to, $message , $title){
+    static function sendNotification($message_to, $message, $title)
+    {
         $url = "https://fcm.googleapis.com/fcm/send";
         foreach ($message_to as $item) {
 //            return response()->json(['status' => $item, 'message' => "successfully sent to super"]);
@@ -15,8 +17,8 @@ trait FCM
                     "body" => $message,
                     "sound" => "default",
                     "priority" => 10,
-                    "title"=>$title,
-                    "receiver"=>'erw',
+                    "title" => $title,
+                    "receiver" => 'erw',
                     "icon" => "https://keipro.development.dhaka10.dev.jacos.jp/mail/resource/img/notification_icon.png",
 //                    "click_action" => "https://keipro.development.dhaka10.dev.jacos.jp/mail"
                 )
@@ -39,4 +41,8 @@ trait FCM
 
     }
 
+    static function sendPusher()
+    {
+        event(new \App\Events\MyEvent('New Event'));
+    }
 }

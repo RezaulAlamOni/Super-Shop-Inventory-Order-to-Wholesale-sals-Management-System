@@ -8,6 +8,8 @@ use App\customer_shipment;
 use App\vendor_arrival;
 use DB;
 use Session;
+use function Symfony\Component\Translation\t;
+
 class HomeController extends Controller
 {
     /**
@@ -181,6 +183,8 @@ class HomeController extends Controller
     }
 
     public function sendNoti() {
+        FCM::sendPusher();
+        return true;
         $firebaseToken = User::whereNotNull('device_token')->pluck('device_token');
 //        $firebaseToken = ['cVtJ6FFHLq6psRIcvzUYP0:APA91bFHDkH2TYMLyatxnGHGy4C1bdYx47RQdpBL7sjaZaFLtnZYOEmDuhURZL4EcLV5nGkLrG81rxEqCGdtJdZ2gGoKZgBA5Bz4h-mZsxnVrUyABuH9tCNfTuBK6d1T_axTpgxMh57y'];
         FCM::sendNotification($firebaseToken,'New message', 'Oni Test');
