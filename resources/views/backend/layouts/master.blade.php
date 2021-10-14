@@ -105,7 +105,7 @@
                         </a>
                     </div>
                     <div class="modal-footer  p-0">
-                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">戻る</button>
                     </div>
                 </div>
 
