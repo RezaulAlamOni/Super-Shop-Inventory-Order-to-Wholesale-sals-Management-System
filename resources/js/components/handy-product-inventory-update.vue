@@ -186,8 +186,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-             aria-hidden="true" id="select_tonya">
+
+        <div class="modal fade bd-example-modal-lg__ " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true" id="select_tonya_">
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
                     <div class="modal-body p-0">
@@ -351,6 +352,7 @@ export default {
             }, 120)
         });
         _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
+        $('#handy-navi').show();
     },
     methods: {
         getOrderDataByJan() {
@@ -668,6 +670,8 @@ export default {
                 maker_id: _this.maker_id
             }).then(function (response) {
                 $('#select_tonya').modal('hide')
+                _this.handi_navi = '棚卸が終わりました。次のJANコードスキャン[次へ]押してください';
+                $('#handy-navi').show()
                 _this.getOrderDataByJan();
             })
         },
@@ -693,6 +697,8 @@ export default {
             axios.post(_this.base_url + '/'+url, data)
                 .then(function (response) {
                     $('#select_tonya').modal('hide')
+                    _this.handi_navi = '棚卸が終わりました。次のJANコードスキャン[次へ]押してください';
+                    $('#handy-navi').show()
                     // _this.getOrderDataByJan();
                 })
         },
