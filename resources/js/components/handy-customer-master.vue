@@ -779,7 +779,7 @@ export default {
             axios.post(_this.base_url + '/handy_update_customer_master_item_content', data)
                 .then(function (response) {
                     _this.getOrderDataByJan();
-                    _this.handi_navi = '000000';
+                    _this.handi_navi = 'マスターに登録されました';
                     $('#handy-navi').show()
                 })
                 .catch(function (e) {
@@ -907,7 +907,7 @@ export default {
                 maker_id: _this.order_data[0].maker_id
             }).then(function (response) {
                 _this.getOrderDataByJan();
-                _this.handi_navi = '000000';
+                _this.handi_navi = 'マスターに登録されました';
                 $('#handy-navi').show()
             })
         },

@@ -789,7 +789,7 @@ if(parseFloat(vendor.cost_price)>parseFloat(vendor.selling_price)){
             axios.post(_this.base_url + '/update_vendor_master_item_content', data)
                 .then(function (response) {
                     _this.getOrderDataByJan();
-                    _this.handi_navi = '000000';
+                    _this.handi_navi = 'マスターに登録されました';
                     $('#handy-navi').show()
                 })
                 .catch(function (e) {
@@ -917,7 +917,7 @@ if(parseFloat(vendor.cost_price)>parseFloat(vendor.selling_price)){
                 maker_id: _this.order_data[0].maker_id
             }).then(function (response) {
                 _this.getOrderDataByJan();
-                _this.handi_navi = '000000';
+                _this.handi_navi = 'マスターに登録されました';
                 $('#handy-navi').show()
             })
         },
