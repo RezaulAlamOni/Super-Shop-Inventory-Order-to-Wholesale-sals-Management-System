@@ -383,8 +383,9 @@ export default {
                 })
                 .catch(function () {
                     console.log('eror found');
-                     _this.handi_navi = '<li>00000000</li>';
-                        $('#handy-navi').show()
+                    _this.handi_navi = '<li>棚入れ・入庫をしたい商品をスキャンして\n' +
+                        '棚番を入力してください。（前回同様の場合はそのまま完了してください）\n</li>';
+                    $('#handy-navi').show()
                 })
                 .finally(function () {
                     //_this.jan_code = ''
