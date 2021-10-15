@@ -186,8 +186,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-             aria-hidden="true" id="select_tonya">
+        <div class="modal fade bd-example-modal-lg_" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true" id="select_tonya__">
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
                     <div class="modal-body p-0">
@@ -351,6 +351,7 @@ export default {
             }, 120)
         });
         _this.handi_navi = 'JANコードスキャンして<br>【次へ】押してください。';
+        $('#handy-navi').show()
     },
     methods: {
         getOrderDataByJan() {
@@ -365,7 +366,7 @@ export default {
                     //_this.resetField();
                      if(res.data.status==400){
                          _this.insertToJanList();
-                        _this.handi_navi = '<li>0000000000</li>';
+                        _this.handi_navi = '<li>JANコードが見つかり/</li>';
                         $('#handy-navi').show();
                         return false;
                      }
@@ -648,7 +649,7 @@ export default {
                 .then(function (response) {
                     console.log(response.data)
                     _this.vendors = response.data.results;
-                    $('#select_tonya').modal({backdrop: 'static', keyboard: false})
+                    // $('#select_tonya').modal({backdrop: 'static', keyboard: false})
                 })
                 .catch(function (e) {
 
@@ -667,6 +668,8 @@ export default {
                 vendor_id: _this.vendor_id,
                 maker_id: _this.maker_id
             }).then(function (response) {
+                _this.handi_navi = '棚卸が終わりました。次のJANコードスキャン[次へ]押してください';
+                $('#handy-navi').show()
                 $('#select_tonya').modal('hide')
                 _this.getOrderDataByJan();
             })
@@ -675,7 +678,7 @@ export default {
             let _this = this;
             console.log(item)
             if (item.rack_number == null ||  _this.total_quantity <= 0 || item.ball_inputs == 0 || item.case_inputs == 0) {
-                _this.handi_navi = '********'
+                _this.handi_navi = '棚卸が終わりました。次のJANコードスキャン[次へ]押してください'
                 $('#handy-navi').show();
                 return false;
             }
@@ -693,6 +696,8 @@ export default {
             axios.post(_this.base_url + '/'+url, data)
                 .then(function (response) {
                     $('#select_tonya').modal('hide')
+                    _this.handi_navi = '棚卸が終わりました。次のJANコードスキャン[次へ]押してください';
+                    $('#handy-navi').show()
                     // _this.getOrderDataByJan();
                 })
         },
