@@ -18,7 +18,7 @@
                             <br>
                             <br>
                             <div id="stock_detail_by_jan_form" class="p_scn_form text-right">
-                                <div class="form-group row">
+                                <div class="form-group row mb-0">
                                     <span class="text-warning" style="width: 100%; text-align: center;">
                                         枠の中にクリックしてから <br> JANコードスキャンしてください
                                     </span>
@@ -32,15 +32,16 @@
                                                @input="checkInputEventAndGetData($event)"
                                                placeholder="JANコードスキャン（13桁）" :autofocus="true">
                                     </div>
-                                </div><div>
+                                </div>
+                                <div>
                                     <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"
                                             class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "
                                             style="float: left;width: 100px">
                                         音声
                                     </button>
-<!--                                    <text-recognition :base_url="base_url" class="hide"-->
-<!--                                                      @getSearchData="getSearchData"-->
-<!--                                                      @clearInput="clearInput"></text-recognition>-->
+                                    <!--                                    <text-recognition :base_url="base_url" class="hide"-->
+                                    <!--                                                      @getSearchData="getSearchData"-->
+                                    <!--                                                      @clearInput="clearInput"></text-recognition>-->
 
                                     <button type="button" @click="getBarCodeScan()"
                                             class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"
@@ -82,7 +83,7 @@
                                                     <!--                                                        バラ-->
                                                     <!--                                                    </th>-->
                                                     <th style="width: 50px; text-align: center; padding: 5px;">
-                                                       原価
+                                                        原価
                                                     </th>
                                                     <th style="width: 50px; text-align: center; padding: 5px;">
                                                         売価
@@ -154,26 +155,25 @@
                                                                    class="form-control  " :id="'profit'" readonly
                                                                    :value="((order_data[0].selling_price-order_data[0].cost_price)).toFixed(2)"
                                                                    style="border-radius: 0px; text-align: center;padding : 7px 0px">
-<!--                                                            (order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100-->
-<!--                                                            <input type="tel"-->
-<!--                                                                   @click="selectItem($event,'')"-->
-<!--                                                                   @keypress="pressEnterAndSave($event,'profit_margin')"-->
-<!--                                                                   @blur="updateVendorItemProperty(order_data[0],'profit')"-->
-<!--                                                                   class="form-control  " :id="'profit'"-->
-<!--                                                                   :value="order_data[0].selling_price - order_data[0].cost_price"-->
-<!--                                                                   style="border-radius: 0px; text-align: center;padding : 7px 0px">-->
+                                                            <!--                                                            ((order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100)-->
+                                                            <!--                                                            <input type="tel"-->
+                                                            <!--                                                                   @click="selectItem($event,'')"-->
+                                                            <!--                                                                   @keypress="pressEnterAndSave($event,'profit_margin')"-->
+                                                            <!--                                                                   @blur="updateVendorItemProperty(order_data[0],'profit')"-->
+                                                            <!--                                                                   class="form-control  " :id="'profit'"-->
+                                                            <!--                                                                   :value="order_data[0].selling_price - order_data[0].cost_price"-->
+                                                            <!--                                                                   style="border-radius: 0px; text-align: center;padding : 7px 0px">-->
                                                         </td>
 
                                                         <td>
                                                             <input type="tel"
                                                                    @click="selectItem($event,'')"
-                                                                   class="form-control  " :id="'profit_margin'"
 
+                                                                   class="form-control  " :id="'profit_margin'"
                                                                    :value="((order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100).toFixed(2)"
                                                                    style="border-radius: 0px; text-align: center;padding : 7px 0px" readonly>
-
-<!--                                                            @keypress="pressEnterAndSave($event,'case')"-->
-<!--                                                            @blur="updateVendorItemProperty(order_data[0],'profit_margin')"-->
+                                                            <!--                                                            @keypress="pressEnterAndSave($event,'case')"-->
+                                                            <!--                                                            @blur="updateVendorItemProperty(order_data[0],'profit_margin')"-->
                                                             <!--                                                                   v-model="order_data[0].profit_margin"-->
                                                         </td>
 
@@ -195,15 +195,15 @@
 
                                         </div>
                                     </div>
-<!--                                    <div class="form-group">-->
-<!--                                        <select class="form-control" id="vendprs" v-model="maker_id"-->
-<!--                                                @change="updateVendorData()">-->
-<!--                                            <option value="0">問屋を選択</option>-->
-<!--                                            <option v-for="vendor in vendors" :value="vendor.id">-->
-<!--                                                {{ vendor.text }}-->
-<!--                                            </option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
+                                    <div class="form-group">
+                                        <select class="form-control" id="vendprs" v-model="maker_id"
+                                                @change="updateVendorData()">
+                                            <option value="0">問屋を選択</option>
+                                            <option v-for="vendor in vendors" :value="vendor.id">
+                                                {{ vendor.text }}
+                                            </option>
+                                        </select>
+                                    </div>
 
 
                                 </div>
@@ -468,9 +468,9 @@
 
 <script>
 
-
 import TextRecognition from "./text-recognition";
 import {StreamBarcodeReader} from "vue-barcode-reader";
+
 export default {
     components: {TextRecognition, StreamBarcodeReader},
     props: ['base_url', 'read_only'],
@@ -689,8 +689,8 @@ export default {
             console.log('--paste end');
             console.log(this.jan_code.length);
             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
-               // this.insertToJanList()
-               if (reg.test(this.jan_code)) {
+                // this.insertToJanList()
+                if (reg.test(this.jan_code)) {
                     _this.insertToJanList();
                 }
             }
@@ -704,9 +704,9 @@ export default {
 
             let reg = /^\d+$/;
             console.log(this.jan_code.length);
-             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
-               // this.insertToJanList()
-               if (reg.test(this.jan_code)) {
+            if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
+                // this.insertToJanList()
+                if (reg.test(this.jan_code)) {
 
                     _this.insertToJanList();
                 }
@@ -760,11 +760,11 @@ export default {
                 vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat((vendor.cost_price * vendor.profit_margin) / 100);
                 vendor.selling_price = vendor.selling_price.toFixed(2)
             } else if (type == 'sell') {
-                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.selling_price
+                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.cost_price
                 vendor.profit_margin = vendor.profit_margin.toFixed(2);
             } else if (type == 'profit') {
                 vendor.selling_price = parseFloat(vendor.cost_price) + parseFloat($('#profit').val())
-                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.selling_price;
+                vendor.profit_margin = ((parseFloat(vendor.selling_price) - parseFloat(vendor.cost_price)) * 100) / vendor.cost_price;
                 vendor.selling_price = vendor.selling_price.toFixed(2);
                 vendor.profit_margin = vendor.profit_margin.toFixed(2);
             } else if (type == 'cost') {
@@ -772,10 +772,10 @@ export default {
                 vendor.selling_price = vendor.selling_price.toFixed(2)
             }
 
-if(parseFloat(vendor.cost_price)>parseFloat(vendor.selling_price)){
-                 _this.handi_navi = 'XXXXX';
-                    $('#handy-navi').show()
-                    return false;
+            if(parseFloat(vendor.cost_price)>parseFloat(vendor.selling_price)){
+                _this.handi_navi = 'XXXXX';
+                $('#handy-navi').show()
+                return false;
             }
             let data = {
                 vendor_item_id: vendor.vendor_item_id,
