@@ -162,11 +162,11 @@
                                                         <td>
                                                             <input type="tel"
                                                                    @click="selectItem($event,'')"
-                                                                   @keypress="pressEnterAndSave($event,'case')"
-                                                                   @blur="updateVendorItemProperty(order_data[0],'profit_margin')"
                                                                    class="form-control  " :id="'profit_margin'"
-                                                                   :value="(order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100"
-                                                                   style="border-radius: 0px; text-align: center;padding : 7px 0px">
+                                                                   :value="((order_data[0].selling_price-order_data[0].cost_price)/order_data[0].selling_price*100).toFixed(2)"
+                                                                   style="border-radius: 0px; text-align: center;padding : 7px 0px" readonly>
+<!--                                                            @keypress="pressEnterAndSave($event,'case')"-->
+<!--                                                            @blur="updateVendorItemProperty(order_data[0],'profit_margin')"-->
                                                             <!--                                                                   v-model="order_data[0].profit_margin"-->
                                                         </td>
 
