@@ -366,7 +366,7 @@ export default {
                     //_this.resetField();
                      if(res.data.status==400){
                          _this.insertToJanList();
-                        _this.handi_navi = '<li>JANコードが見つかり/</li>';
+                        _this.handi_navi = '<li>商品がありません</li>';
                         $('#handy-navi').show();
                         return false;
                      }
@@ -567,8 +567,8 @@ export default {
                     let data_resource = response.data.data_resource;
 
                     if (api_response == 'invalid_jan_code') {
-                        $('.handy_error_msg').html(`商品がありません`);
-                        $('.handdy_error').removeClass('hide').addClass('show');
+                        // $('.handy_error_msg').html(`商品がありません`);
+                        // $('.handdy_error').removeClass('hide').addClass('show');
                     } else {
                         _this.product_name = api_response.name;
                         if (response.data.vendor_item_data == 1) {
