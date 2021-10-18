@@ -448,7 +448,7 @@ export default {
                     if (res.data.status == 505) {
                        // _this.jan_code = '';
                        //_this.handi_navi = '<li>0000000000</li>';
-                        $('#handy-navi-body').html('<li>この商品は登録されていません。</li><li> 【棚卸(在庫)】押して登録してください。</li>')
+                        $('#handy-navi-body').html('<li>検品をしたい商品をスキャンして</li><li>数量を入力してください。</li>')
                         $('#handy-navi').show()
                         return false;
                     }
