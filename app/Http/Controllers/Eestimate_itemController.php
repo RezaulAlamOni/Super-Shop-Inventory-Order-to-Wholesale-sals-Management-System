@@ -62,12 +62,11 @@ class Eestimate_itemController extends Controller
         }
         foreach($super_info as $super){
             $customer =  customer::find($super);
-            //send main to super
-            $this->sendMailToSuper($customer,$message);
+
             // send pusher notification to super
 
            event(new \App\Events\MyEvent(['message'=>'','user_id' => $customer->user_id]));
-
+           $msg = '';
             foreach($item_info as $item){
                 $item_insertedarr = $item;
                 $item_insertedarr['customer_id']=$super;
@@ -79,7 +78,6 @@ class Eestimate_itemController extends Controller
                 if($exitsItme){
                     estimate_item::where(['customer_id'=>$super,'jan'=>$item_insertedarr['jan']])->update($item_insertedarr);
                 }else{
-
                     estimate_item::insert($item_insertedarr);
                 }
                 if(!$exitsVendor){
@@ -88,13 +86,18 @@ class Eestimate_itemController extends Controller
                 $janInfo = $item['janinfo'];
                 unset( $janInfo['jan_id']);
                 if($exitsJan){
-
-
                     jan::where('jan',$janInfo['jan'])->update($janInfo);
                 }else{
                     jan::insert($janInfo);
                 }
+
+                $jan = jan::where('jan',$janInfo['jan'])->pluck('name');
+                $msg .= $jan[0].', ';
             }
+            //send main to super
+
+            $message = $message . " " . '問屋から「 '. $msg .' 」の見積受け取りました。';
+            $this->sendMailToSuper($customer,$message);
         }
 
         return response()->json(['status' => 200, 'message' => "successfully sent to super"]);
