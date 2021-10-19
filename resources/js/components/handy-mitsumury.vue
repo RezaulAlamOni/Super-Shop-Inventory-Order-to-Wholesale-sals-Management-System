@@ -27,15 +27,15 @@
                         </div>
                         <button v-if="productJans.length > 0" @click="selectSuper(' ')"
                                 class="btn btn-success pull-right mr-1 "
-                                style=" position: absolute; top: 5px; right: 62px;"> メール
+                                style=" position: absolute; top: 5px; right: 0px;"> メール
                         </button>
-                        <button v-if="productJans.length > 0" @click="selectSuper()"
-                                class="btn btn-success pull-right mr-1 "
-                                style=" position: absolute; top: 5px; right: 0px;"> 送信
-                        </button>
+<!--                        <button v-if="productJans.length > 0" @click="selectSuper()"-->
+<!--                                class="btn btn-success pull-right mr-1 "-->
+<!--                                style=" position: absolute; top: 5px; right: 0px;"> 送信-->
+<!--                        </button>-->
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
-                        <div class="input-group m-0 my-1">
+                        <div class="input-group m-0 my-1"   >
                             <span class="text-warning" style="width: 100%; text-align: center;">
                                 枠の中にクリックしてから <br> JANコードスキャンしてください
                             </span>
@@ -223,8 +223,8 @@
                     </div>
                     <div class="modal-body p-0" style="text-align: center">
                         <div
-                            style="font-size: 18px;text-align: left;padding: 5px 10px;background: #c3ff8f80;font-weight: bold;">
-                            00000000
+                            style="font-size: 16px;text-align: left;padding: 5px 10px;background: #c3ff8f80;font-weight: bold;">
+                            スーパーを選択して送信してください
                         </div>
                         <div>
                             <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
@@ -256,7 +256,7 @@
                         </div>
 
                         <div class="form-group" v-if="message">
-                            <label for="exampleFormControlTextarea1"><h4>*********</h4></label>
+                            <label><h5 class="text-warning">ここにメッセージを書くことができます </h5></label>
                             <textarea class="form-control" autofocus v-model="message"
                                       style="border: 1px solid; background: beige;"
                                       id="exampleFormControlTextarea1" rows="3">
