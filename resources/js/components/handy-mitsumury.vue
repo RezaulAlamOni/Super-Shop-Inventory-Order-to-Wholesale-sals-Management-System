@@ -27,12 +27,12 @@
                         </div>
                         <button v-if="productJans.length > 0" @click="selectSuper(' ')"
                                 class="btn btn-success pull-right mr-1 "
-                                style=" position: absolute; top: 5px; right: 0px;"> メール
+                                style=" position: absolute; top: 5px; right: 70px;"> メール
                         </button>
-<!--                        <button v-if="productJans.length > 0" @click="selectSuper()"-->
-<!--                                class="btn btn-success pull-right mr-1 "-->
-<!--                                style=" position: absolute; top: 5px; right: 0px;"> 送信-->
-<!--                        </button>-->
+                        <a href="custom-mitsumury"
+                                class="btn btn-info pull-right mr-1 "
+                                style=" position: absolute; top: 5px; right: 0px;"> 00000
+                        </a>
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
                         <div class="input-group m-0 my-1"   >
