@@ -15,13 +15,13 @@ class customerSeeder extends Seeder
             [
                 'name' => 'A スーパー',
                 'partner_code' => '123456',
-                'phone' =>'01936755674',
+                'phone' =>'09042471470',
                 'user_id'=>4,
             ],
             [
                 'name' => 'B スーパー',
                 'partner_code' => '65321',
-                'phone' =>'01936755674',
+                'phone' =>'8888',
                 'user_id'=>5,
             ],
             [
