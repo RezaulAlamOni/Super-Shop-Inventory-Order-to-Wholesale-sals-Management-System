@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CustomMisthsumuryProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CustomMisthsumuryProductController extends Controller
 {
@@ -44,16 +45,13 @@ class CustomMisthsumuryProductController extends Controller
      */
     public function store(Request $request)
     {
-        $files = $request->image;
-        dd($files);
-        $extension = $file->extension();
-        $name = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME).time().mt_rand();
-        if (!file_exists('/public/images/'.$type)) {
-            mkdir('/public/images/'.$type, 0777, true);
+        $image = $request->image;
+        $extension = $image->extension();
+        $name = pathinfo($image->getClientOriginalName(),PATHINFO_FILENAME).time().mt_rand();
+        if (!file_exists('/public/backend/images/mistumury')) {
+            mkdir('/public/backend/images/mistumury', 0777, true);
         }
-        $file->storeAs('/public/images/'.$type, $name .".".$extension);
-        $file_ = Storage::url($name .".".$extension);
-
+        $image->storeAs('/public/backend/images/mistumury', $name .".".$extension);
 
         CustomMisthsumuryProduct::create([
             'name' => $request->title,
@@ -62,7 +60,8 @@ class CustomMisthsumuryProductController extends Controller
             'gross_profit' => $request->sell - $request->cost,
             'gross_profit_margin' => $request->profit_margin,
             'case_unit' => 24,
-            'ball_unit' => 6
+            'ball_unit' => 6,
+            'image' => $name .".".$extension
         ] );
 
         return response()->json(['status' => 200]);
