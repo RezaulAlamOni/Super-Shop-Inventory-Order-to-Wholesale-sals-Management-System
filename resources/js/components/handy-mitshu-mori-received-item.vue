@@ -88,6 +88,10 @@
                                             <label class="form-check-label " style="margin-left: 30px;font-weight: bold" for="flexCheck">
                                                 全て
                                             </label>
+                                            <span class="badge badge-success float-right ml-2"
+                                                  style="font-size: 15px" >
+                                                <a href="handy-receive-custom-mitshumori" class="text-white"> 000 </a>
+                                            </span>
                                             <span class="badge badge-success float-right" v-if="productJans.length > 0"
                                                   style="padding: 7px 15px;font-size: 15px"
                                                   @click="orderToTonya()">発注</span>

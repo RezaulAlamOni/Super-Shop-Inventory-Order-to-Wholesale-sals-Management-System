@@ -88,9 +88,17 @@
                                             <label class="form-check-label " style="margin-left: 30px;font-weight: bold" for="flexCheck">
                                                 全て
                                             </label>
+
+
+
+                                            <span class="badge badge-success float-right ml-2"
+                                                  style="font-size: 15px" >
+                                                <a href="handy_receive_mitshumori" class="text-white"> 000 </a>
+                                            </span>
+
                                             <span class="badge badge-success float-right" v-if="productJans.length > 0"
-                                                  style="padding: 7px 15px;font-size: 15px"
-                                                  @click="orderToTonya()">発注</span>
+                                                      style="padding: 7px 15px;font-size: 15px"
+                                                      @click="orderToTonya()">発注</span>
                                         </th>
 
                                         <!--                                        <th colspan="2" style="width: 50px; text-align: center; padding: 5px;">-->
@@ -175,10 +183,10 @@
                                             <td class="text-center" style="font-size: 13px">1<br>(ボール)</td>
                                             <td class="text-center" style="font-size: 13px">1<br>(バラ)</td>
                                             <td class="text-center">
-                                                <span class="badge badge-success" style="cursor: pointer;margin:2px"
-                                                      @click="orderToTonya(product)">発注</span>
-                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"
-                                                      @click="storeToMaster(product)">採用</span>
+<!--                                                <span class="badge badge-success" style="cursor: pointer;margin:2px"-->
+<!--                                                      @click="orderToTonya(product)">発注</span>-->
+<!--                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"-->
+<!--                                                      @click="storeToMaster(product)">採用</span>-->
                                             </td>
                                         </tr>
                                     </template>

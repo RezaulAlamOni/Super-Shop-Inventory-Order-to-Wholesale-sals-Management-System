@@ -1015,7 +1015,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
     {
         $title = "Dashboard";
         $active = 'handy_receive_custom_mitshumori';
-        return view('backend.handy_pages.handy_receive_mitshumori', compact('title', 'active'));
+        return view('backend.handy_pages.handy_receive_custom_mitshumori', compact('title', 'active'));
 //        return view('backend.handy_pages.handy_store_order', compact('title', 'active'));
     }
 
