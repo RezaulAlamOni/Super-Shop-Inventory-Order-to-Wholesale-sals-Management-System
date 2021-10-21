@@ -334,6 +334,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::get('/handy-receive-custom-mitshumori', 'HandyrController@custom_mitsumury_receive')->name('custom.mitsumury.receive'); // Oni for new design handy
 
     Route::post('/get-all-products-from-estimation', 'Eestimate_itemController@index')->name('handy.receive.mitshumori.index');
+    Route::post('/get-all-custom-mistumory-products', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'index'])->name('custom.mitsumury.get.products'); // Oni for new design handy
 
 
 });

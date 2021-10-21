@@ -381,7 +381,7 @@ export default {
             //     _this.orderBy = 'DESC';
             // }
 
-            axios.post(this.base_url + '/get-all-products-from-estimation', {orderBy: _this.orderBy})
+            axios.post(this.base_url + '/get-all-custom-mistumory-products', {orderBy: _this.orderBy})
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
