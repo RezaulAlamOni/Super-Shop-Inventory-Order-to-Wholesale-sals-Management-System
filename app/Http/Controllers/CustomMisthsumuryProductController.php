@@ -98,7 +98,14 @@ class CustomMisthsumuryProductController extends Controller
      */
     public function update(Request $request, CustomMisthsumuryProduct $customMisthsumuryProduct)
     {
-        //
+        $custom_estimate_item = $customMisthsumuryProduct->find($request->id);
+        $custom_estimate_item->cost_price = $request->cost;
+        $custom_estimate_item->selling_price = $request->cost;
+        $custom_estimate_item->gross_profit = $request->sell - $request->cost;
+        $custom_estimate_item->gross_profit_margin = $request->gross_profit_margin;
+        $custom_estimate_item->save();
+
+        return response()->json(['status' => 200]);
     }
 
     /**
