@@ -242,7 +242,7 @@
 <script>
 export default {
     props: ['base_url'],
-    name: "handy-product-order-place",
+    name: "handy-product-order-place-kouri",
     data() {
         return {
             jan_code: '',
@@ -484,8 +484,9 @@ export default {
                         _this.hideModelAndClearInput()
                         }else{
                              $('#handy-navi').show()
-                        _this.handi_navi = '<li>Kouri order exists please confirmed</li>';
-                        return false;
+                            _this.handi_navi = '<li>コウリ注文あり確認してください</li>';
+                            $('.loading_image_custom').hide()
+                            return false;
                         }
                     })
                     .then(function (er) {
@@ -493,6 +494,7 @@ export default {
                     })
                     .finally(function () {
                         $('.loading_image_custom').hide()
+                        $('#stock-order-show-by-jan').modal('hide')
                         _this.loader = 0
                     })
             }, 1000)

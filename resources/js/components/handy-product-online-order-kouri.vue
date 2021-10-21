@@ -516,7 +516,7 @@ export default {
                         _this.hideModelAndClearInput()
                         }else{
                              $('#handy-navi').show()
-                        _this.handi_navi = '<li>Kouri order exists please confirmed</li>';
+                        _this.handi_navi = 'コウリ注文あり確認してください';
                         return false;
                         }
                     })
