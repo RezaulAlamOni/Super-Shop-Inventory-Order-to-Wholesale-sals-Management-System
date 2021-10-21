@@ -13,7 +13,7 @@ class CustomMisthsumuryProduct extends Model
 
     protected function getImageAttribute($val)
     {
-        return 'public/storage/backend/images/mistumury/'.$val;
+        return 'public/storage/'.$val;
     }
     protected function getImageUrlAttribute()
     {

@@ -48,10 +48,10 @@ class CustomMisthsumuryProductController extends Controller
         $image = $request->image;
         $extension = $image->extension();
         $name = pathinfo($image->getClientOriginalName(),PATHINFO_FILENAME).time().mt_rand();
-        if (!file_exists('/public/backend/images/mistumury')) {
-            mkdir('/public/backend/images/mistumury', 0777, true);
-        }
-        $image->storeAs('/public/backend/images/mistumury', $name .".".$extension);
+//        if (!file_exists('/public')) {
+//            mkdir('/public', 0777, true);
+//        }
+        $image->storeAs('/public', $name .".".$extension);
 
         CustomMisthsumuryProduct::create([
             'name' => $request->title,
