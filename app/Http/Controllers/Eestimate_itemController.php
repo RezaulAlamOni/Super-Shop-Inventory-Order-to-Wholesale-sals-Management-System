@@ -130,7 +130,7 @@ class Eestimate_itemController extends Controller
            event(new \App\Events\MyEvent(['message'=>'','user_id' => $customer->user_id]));
            $msg = '';
             foreach($item_info as $item){
-                CustomMisthsumuryProduct::create([
+                CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'],],[
                     'name' => $item['name'],
                     'cost_price' => $item['cost_price'],
                     'selling_price' => $item['selling_price'],

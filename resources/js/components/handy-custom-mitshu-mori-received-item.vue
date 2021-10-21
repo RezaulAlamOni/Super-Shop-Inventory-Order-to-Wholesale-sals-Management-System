@@ -94,8 +94,8 @@
                                                      class="img-thumbnail custom-img"
                                                      alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                                      style="cursor: pointer" width="100px">
-                                                <input class="form-check-input form-check-input__" type="checkbox"
-                                                       v-model="productJans" :value="product">
+<!--                                                <input class="form-check-input form-check-input__" type="checkbox"-->
+<!--                                                       v-model="productJans" :value="product">-->
                                             </td>
                                             <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                                 <input data-v-c9953dda="" type="tel" id="cost"
@@ -297,7 +297,7 @@ import {StreamBarcodeReader} from "vue-barcode-reader";
 
 export default {
     props: ['base_url'],
-    name: "handy-mistumury",
+    name: "handy-custom-mistumury",
     data() {
         return {
             jan_code: '',
