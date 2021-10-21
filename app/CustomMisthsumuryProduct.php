@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class CustomMisthsumuryProduct extends Model
 {
     //
+    protected $guarded = [];
 }

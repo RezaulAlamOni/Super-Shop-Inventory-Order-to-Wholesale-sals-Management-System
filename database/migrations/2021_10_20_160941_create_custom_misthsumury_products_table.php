@@ -21,6 +21,8 @@ class CreateCustomMisthsumuryProductsTable extends Migration
             $table->string('image')->nullable();
             $table->integer('case_unit')->nullable();
             $table->integer('ball_unit')->nullable();
+            $table->decimal('gross_profit',9,2)->nullable();
+            $table->decimal('gross_profit_margin',9,2)->default(20);
             $table->timestamps();
         });
     }
