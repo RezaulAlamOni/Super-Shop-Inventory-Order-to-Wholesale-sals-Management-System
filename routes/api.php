@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('/haccuListsendtomailportal', 'API\SendMailPortalController@haccuListsendtomailportal');
 Route::post('/estimation_data', 'Eestimate_itemController@store');
+Route::post('/custom-estimation-data', 'Eestimate_itemController@customEstimate');
 Route::post('/save-customer-data', 'CustomerShopController@saveCustomerData');
 Route::post('/orders', 'API\OrderController@insertOrderFromSuper');
 

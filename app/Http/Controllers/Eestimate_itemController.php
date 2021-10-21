@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CustomMisthsumuryProduct;
 use App\Traits\FCM;
 use App\User;
 use Illuminate\Http\Request;
@@ -98,6 +99,54 @@ class Eestimate_itemController extends Controller
 
             $message = $message . " " . '問屋から「 '. $msg .' 」の見積受け取りました。';
             $this->sendMailToSuper($customer,$message);
+        }
+
+        return response()->json(['status' => 200, 'message' => "successfully sent to super"]);
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function customEstimate(Request $request)
+    {
+        //
+        $item_info = $request->item_info;
+        $super_info = $request->super_info;
+        $message = $request->message;
+
+        if(empty($super_info)){
+            return response()->json(['status' => 401, 'message' => "Super not found"]);
+        }
+        if(empty($item_info)){
+            return response()->json(['status' => 401, 'message' => "Item not found"]);
+        }
+        foreach($super_info as $super){
+            $customer =  customer::find($super);
+
+            // send pusher notification to super
+
+           event(new \App\Events\MyEvent(['message'=>'','user_id' => $customer->user_id]));
+           $msg = '';
+            foreach($item_info as $item){
+                CustomMisthsumuryProduct::create([
+                    'name' => $item['name'],
+                    'cost_price' => $item['cost_price'],
+                    'selling_price' => $item['selling_price'],
+                    'gross_profit' => $item['selling_price'] - $item['cost_price'],
+                    'gross_profit_margin' => $item['gross_profit_margin'],
+                    'case_unit' => $item['case_unit'],
+                    'ball_unit' => $item['ball_unit'],
+                    'image' => $item['image_url'],
+                    'customer_id' => $customer->user_id,
+                ]);
+                $msg = $item['name'].', ';
+            }
+            //send main to super
+
+            $message_ = $message . " " . '問屋から「 '. $msg .' 」の見積受け取りました。';
+            $this->sendMailToSuper($customer,$message_);
         }
 
         return response()->json(['status' => 200, 'message' => "successfully sent to super"]);

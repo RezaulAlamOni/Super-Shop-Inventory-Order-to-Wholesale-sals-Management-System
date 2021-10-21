@@ -23,54 +23,10 @@
 
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
-                        <!--<div class="input-group m-0 my-1">
-                            <input type="tel" class="form-control" placeholder="JANコードスキャン（13桁）"
-                                   style="border-radius: 0px;padding: 5px;font-size: 16px;" autofocus
-                                   v-model="jan_code" id="jan_"
-                                   name="scan_by_jan_for_stock_detail"
-                                   v-on:keyup="checkAndGetData($event)"
-                                   @blur="checkAndGetData($event)"
-                                   @paste="checkAndGetData($event)"
-                                   @input="checkAndGetData($event)"
-                                   aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">次へ</button>
-                            </div>
-                        </div>-->
+
                         <div class="form-group m-0">
 
-                            <!--                            <input type="tel" id="jan_input" class="form-control custom-input"-->
-                            <!--                                   v-model="jan_code"-->
-                            <!--                                   style="padding: 5px 10px !important;height: 45px !important; margin: 5px 0 !important;"-->
-                            <!--                                   name="scan_by_jan_for_stock_detail"-->
-                            <!--                                   v-on:keyup="checkAndGetData($event)"-->
-                            <!--                                   @blur="checkAndGetData($event)"-->
-                            <!--                                   @paste="checkAndGetData($event)"-->
-                            <!--                                   @input="checkAndGetData($event)"-->
-                            <!--                                   placeholder="JANコードスキャン（13桁）" autofocus>-->
-
-
-                            <!--                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"-->
-                            <!--                                            class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "-->
-                            <!--                                            style="float: left;width: 100px">-->
-                            <!--                                        音声-->
-                            <!--                                    </button>-->
-                            <!--                                    <text-recognition :base_url="base_url"-->
-                            <!--                                                      @getSearchData="getSearchData"-->
-                            <!--                                                      @clearInput="clearInput"></text-recognition>-->
-
-                            <!--                                    <button type="button" @click="getBarCodeScan()"-->
-                            <!--                                            class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"-->
-                            <!--                                            style="padding:0;float: left;width: 70px !important;">-->
-                            <!--                                        <i class="fa fa-barcode" style="font-size: 40px"></i>-->
-                            <!--                                    </button>-->
-                            <!--                            <button type="button" v-on:click="getOrderDataByJan()"-->
-                            <!--                                    style="margin: 0px;width: 80px !important; height: 40px;height: 30px !important;line-height: 18px !important;font-size: 18px !important;"-->
-                            <!--                                    class="btn custom-btn btn-primary pull-right text-right show_inline">-->
-                            <!--                                次へ-->
-                            <!--                            </button>-->
                         </div>
-
 
                     </div>
 
@@ -96,7 +52,7 @@
                                                 <a href="handy_receive_mitshumori" class="text-white"> 000 </a>
                                             </span>
 
-                                            <span class="badge badge-success float-right" v-if="productJans.length > 0"
+                                            <span class="badge badge-success float-right hide" v-if="productJans.length > 0"
                                                       style="padding: 7px 15px;font-size: 15px"
                                                       @click="orderToTonya()">発注</span>
                                         </th>
@@ -134,7 +90,7 @@
                                                        class="form-control  " @click="selectItem($event)"
                                                        @keypress="pressEnterAndSave($event,'cost')"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
-                                                <img :src="'public/backend/images/products/'+product.jan+'.png'"
+                                                <img :src="product.image"
                                                      class="img-thumbnail custom-img"
                                                      alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                                      style="cursor: pointer" width="100px">

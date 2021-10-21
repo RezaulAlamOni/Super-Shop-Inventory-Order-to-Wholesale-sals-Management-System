@@ -19,8 +19,9 @@ class CustomMisthsumuryProductController extends Controller
         $orderBy = $request->orderBy;
         $user_id = Auth::user()->id;
         $cus_info = customer::where('user_id',$user_id)->first();
+
         if($cus_info){
-            $products = CustomMisthsumuryProduct::where('customer_id',$cus_info->customer_id)   ->orderBy('updated_at',$orderBy)->get();
+            $products = CustomMisthsumuryProduct::where('customer_id',$user_id)->orderBy('updated_at',$orderBy)->get();
         }else{
             $products =array();
         }
