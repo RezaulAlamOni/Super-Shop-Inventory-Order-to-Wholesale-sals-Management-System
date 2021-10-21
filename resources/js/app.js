@@ -44,6 +44,7 @@ import handyCustomerMaster from './components/handy-customer-master'
 import barCodeScan from './components/barcode-scan'*/
 
 const mitshumoriSuper = ()=> import( /* webpackChunkName: "handy-product-order-place-kouri" */ './components/handy-mitshu-mori-received-item');
+const customMitshumoriSuper = ()=> import( /* webpackChunkName: "handy-product-custom-mistumory" */ './components/handy-custom-mitshu-mori-received-item');
 const handyProductOrderPlaceKouri = ()=> import( /* webpackChunkName: "handy-product-order-place-kouri" */ './components/handy-product-order-place-kouri');
 const handyProductOrderOnlineOrderKouri = ()=> import( /* webpackChunkName: "handy-product-online-order-kouri" */ './components/handy-product-online-order-kouri');
 const handyProductOrdermail = ()=> import( /* webpackChunkName: "handy-product-order-mail" */ './components/handy-product-order-mail');
@@ -71,6 +72,7 @@ const app = new Vue({
     el: '#app',
     components : {
         'handy-mitshu-mori-received-item' : mitshumoriSuper,
+        'handy-custom-mitshu-mori-received-item' : customMitshumoriSuper,
         'handy-product-order-kouri' : handyProductOrderPlaceKouri,
         'handy-product-online-order-kouri' : handyProductOrderOnlineOrderKouri,
         'handy-product-order-mail' : handyProductOrdermail,
