@@ -100,7 +100,7 @@ class CustomMisthsumuryProductController extends Controller
     {
         $custom_estimate_item = $customMisthsumuryProduct->find($request->id);
         $custom_estimate_item->cost_price = $request->cost;
-        $custom_estimate_item->selling_price = $request->cost;
+        $custom_estimate_item->selling_price = $request->sell;
         $custom_estimate_item->gross_profit = $request->sell - $request->cost;
         $custom_estimate_item->gross_profit_margin = $request->gross_profit_margin;
         $custom_estimate_item->save();

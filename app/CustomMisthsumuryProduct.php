@@ -9,9 +9,15 @@ class CustomMisthsumuryProduct extends Model
     //
     protected $guarded = [];
 
+    protected $appends = ['image_url'];
+
     protected function getImageAttribute($val)
     {
         return 'public/storage/backend/images/mistumury/'.$val;
+    }
+    protected function getImageUrlAttribute()
+    {
+        return '/rv3_tonyav1/'.$this->image;
     }
 
 }

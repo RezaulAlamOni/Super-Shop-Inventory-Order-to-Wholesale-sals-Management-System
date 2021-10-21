@@ -1035,7 +1035,6 @@ export default {
             this.allSelected = false
             this.allSelectedSuper = false
 
-
             let data = {'item_info': this.productJans, 'super_info': this.selectedSuper, 'message': this.message};
             this.handi_navi = '少しお待ちどして下さい';
             $('#handy-navi').show();
@@ -1046,7 +1045,7 @@ export default {
             // var setApiUrl = (base_url.indexOf('localhost') !== -1 ? '/rv3_tonyav1' : '/rv3_superv1');
             var setApiUrl = '/rv3_superv1';
 
-            axios.post(setApiUrl + '/api/estimation_data', data)
+            axios.post(setApiUrl + '/api/custom-estimation-data', data)
                 .then(function (response) {
                     // _this.getOrderDataByJan();
                     _this.getProducts();
