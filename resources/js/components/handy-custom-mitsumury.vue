@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
-                        <span class="pull-left">見積り</span>
+                        <span class="pull-left">見積追加ページ</span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right top-button"
                            style="float:right">メニュー</a>
@@ -27,7 +27,7 @@
                         </div>
                         <button @click="addProductModal()"
                                 class="btn btn-success pull-right mr-1 "
-                                style=" position: absolute; top: 5px; right: 65px;padding: 6px 5px;"> 00000
+                                style=" position: absolute; top: 5px; right: 65px;padding: 6px 5px;"> 追加
                         </button>
                         <button v-if="productJans.length > 0" @click="selectSuper(' ')"
                                 class="btn btn-success pull-right mr-1 "
@@ -35,7 +35,7 @@
                         </button>
                         <a href="mitsumury"
                            class="btn btn-info pull-right mr-1 "
-                           style=" position: absolute; top: 5px; right: 0px;"> *****
+                           style=" position: absolute; top: 5px; right: 0px;"> 戻る
                         </a>
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
@@ -114,8 +114,8 @@
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
                     <div class="modal-header" style="padding: 5px;justify-content: right">
-                        <a class="btn btn-success float-right mr-1" @click="naviShow()"> 採用</a>
-                        <a class="btn btn-success float-right mr-2">発注</a>
+                        <a class="btn btn-success float-right mr-1" @click="naviShow()"> 保存</a>
+<!--                        <a class="btn btn-success float-right mr-2">発注</a>-->
                         <a class="btn btn-info float-right" @click="confirmAndHide('mistumury-mage-preview')">戻る</a>
 
                     </div>

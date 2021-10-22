@@ -31,7 +31,7 @@
                         </button>
                         <a href="custom-mitsumury"
                                 class="btn btn-info pull-right mr-1 "
-                                style=" position: absolute; top: 5px; right: 0px;"> 00000
+                                style=" position: absolute; top: 5px; right: 0px;"> 見積追加ページ
                         </a>
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
