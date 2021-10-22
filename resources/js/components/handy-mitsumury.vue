@@ -110,8 +110,8 @@
             <div class="modal-dialog modal-lg mt-0">
                 <div class="modal-content">
                     <div class="modal-header" style="padding: 5px;justify-content: right">
-                        <a class="btn btn-success float-right mr-1" @click="naviShow()"> 採用</a>
-                        <a class="btn btn-success float-right mr-2">発注</a>
+                        <a class="btn btn-success float-right mr-1" @click="naviShow()"> 保存</a>
+<!--                        <a class="btn btn-success float-right mr-2">発注</a>-->
                         <a class="btn btn-info float-right" @click="confirmAndHide()">戻る</a>
 
                     </div>
