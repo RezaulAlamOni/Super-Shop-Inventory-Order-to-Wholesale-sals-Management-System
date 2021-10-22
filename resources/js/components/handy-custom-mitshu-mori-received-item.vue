@@ -175,7 +175,7 @@
                         </div>
                         <div>
                             <img
-                                :src="'public/backend/images/products/'+preview_product.jan+'.png'"
+                                :src="preview_product.image"
                                 class="img-thumbnail custom-img-preview" alt="Cinque Terre"
                                 style="cursor: pointer">
                         </div>
@@ -206,24 +206,27 @@
                                         <input data-v-c9953dda="" type="tel" id="special-price"
                                                v-model="preview_product.sale_selling_price"
                                                class="form-control  " @click="selectItem($event)"
-                                               @keypress="pressEnterAndSave($event,'cost')" readonly
+                                                readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+<!--                                        @keypress="pressEnterAndSave($event,'cost')"-->
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="cost" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.cost"
-                                               @blur="blurAndSave()"
-                                               @keypress="pressEnterAndSave($event,'sell')"
-                                               @keyup="calculatePrice('cost')" readonly
+                                                readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+<!--                                        @blur="blurAndSave()"-->
+<!--                                        @keypress="pressEnterAndSave($event,'sell')"-->
+<!--                                        @keyup="calculatePrice('cost')"-->
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.sell"
-                                               @keypress="pressEnterAndSave($event,'profit_margin')"
-                                               @blur="blurAndSave()"
-                                               @keyup="calculatePrice('sell')" readonly
+                                               readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+<!--                                        @keypress="pressEnterAndSave($event,'profit_margin')"-->
+<!--                                        @blur="blurAndSave()"-->
+<!--                                        @keyup="calculatePrice('sell')"-->
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
@@ -235,11 +238,12 @@
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit_margin"
                                                @click="selectItem($event)"
-                                               @blur="blurAndSave()"
-                                               @keypress="pressEnterAndSave($event,'special-price')"
                                                class="form-control  " v-model="preview_product.profit_margin"
-                                               @keyup="calculatePrice('profit_margin')" readonly
+                                                readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+<!--                                        @blur="blurAndSave()"-->
+<!--                                        @keypress="pressEnterAndSave($event,'special-price')"-->
+<!--                                        @keyup="calculatePrice('profit_margin')"-->
                                     </td>
 
                                 </tr>
@@ -393,7 +397,7 @@ export default {
             // $('#handy-navi').show();
         },
         viewInfoForImage(product, img) {
-            product.item_name = product.janinfo.name;
+            product.item_name = product.name;
             // product.img = img;
             product.profit_margin = product.gross_profit_margin;
             this.previewProductInfoWithImage(product);
