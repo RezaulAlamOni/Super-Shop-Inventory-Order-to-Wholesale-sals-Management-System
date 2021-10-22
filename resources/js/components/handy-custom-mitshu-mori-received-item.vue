@@ -49,7 +49,7 @@
 
                                             <span class="badge badge-success float-right ml-2"
                                                   style="font-size: 15px" >
-                                                <a href="handy_receive_mitshumori" class="text-white"> 000 </a>
+                                                <a href="handy_receive_mitshumori" class="text-white"> 戻る </a>
                                             </span>
 
                                             <span class="badge badge-success float-right hide" v-if="productJans.length > 0"
