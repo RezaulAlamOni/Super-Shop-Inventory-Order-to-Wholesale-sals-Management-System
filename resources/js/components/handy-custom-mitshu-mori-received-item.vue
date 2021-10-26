@@ -251,7 +251,10 @@
                             </table>
                         </div>
                         <div class="detail-pro">
-                            {{ preview_product.created_at }}
+                            {{ preview_product.jan }}
+                        </div>
+                        <div class="detail-pro">
+                            {{ preview_product.vendor_name }}
                         </div>
                         <div class="detail-pro">
                             {{ preview_product.created_at }}

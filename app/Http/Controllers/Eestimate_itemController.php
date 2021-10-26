@@ -132,6 +132,9 @@ class Eestimate_itemController extends Controller
             foreach($item_info as $item){
                 CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'],'customer_id' => $customer->user_id],[
                     'name' => $item['name'],
+                    'jan' => $item['jan'],
+                    'vendor_id' => $item['vendor_id'],
+                    'vendor_name' => $item['vendor_name'],
                     'cost_price' => $item['cost_price'],
                     'selling_price' => $item['selling_price'],
                     'gross_profit' => $item['selling_price'] - $item['cost_price'],
