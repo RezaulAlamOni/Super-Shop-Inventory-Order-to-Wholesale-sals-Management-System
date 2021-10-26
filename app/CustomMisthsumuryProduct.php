@@ -8,4 +8,12 @@ class CustomMisthsumuryProduct extends Model
 {
     //
     protected $guarded = [];
+
+
+    protected function getCreatedAtAttribute($value)
+    {
+        return date('d-M-Y', strtotime($value));
+    }
+
+
 }

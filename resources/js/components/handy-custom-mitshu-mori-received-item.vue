@@ -250,6 +250,12 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="detail-pro">
+                            {{ preview_product.created_at }}
+                        </div>
+                        <div class="detail-pro">
+                            {{ preview_product.created_at }}
+                        </div>
                         <div class="form-group" style="display: none">
                             <select class="form-control" id="vendprs" v-model="maker_id"
                                     @change="updateVendorData()">
@@ -961,7 +967,6 @@ export default {
             let now = +new Date();
             date = +new Date(date);
             var compareDatesBoolean = (now - date) < hour;
-            console.log(compareDatesBoolean)
             return compareDatesBoolean;
         }
 
@@ -979,6 +984,14 @@ export default {
 </script>
 
 <style scoped>
+
+.detail-pro {
+    font-size: 16px;
+    text-align: left;
+    padding: 5px 10px;
+    background: rgba(255, 229, 250, 0.5);
+    border: 1px solid #d6d6d6;
+}
 
 .well {
     padding: 0 !important;
