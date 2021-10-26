@@ -83,7 +83,7 @@
                                     </thead>
                                     <tbody data-v-c9953dda="" class="physicaltbody">
                                     <template v-for="(product,i) in products">
-                                        <tr >
+                                        <tr :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                             <td rowspan="2" data-v-c9953dda="" style="position:relative;">
                                                 <!--<input data-v-c9953dda="" type="tel" id="special-price"
                                                        v-model="product.sale_selling_price"
@@ -961,6 +961,7 @@ export default {
             let now = +new Date();
             date = +new Date(date);
             var compareDatesBoolean = (now - date) < hour;
+            console.log(compareDatesBoolean)
             return compareDatesBoolean;
         }
 

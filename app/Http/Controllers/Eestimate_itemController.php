@@ -140,6 +140,8 @@ class Eestimate_itemController extends Controller
                     'ball_unit' => $item['ball_unit'],
                     'image' => $item['image_url'],
                     'customer_id' => $customer->user_id,
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
                 $msg = $item['name'].', ';
             }
