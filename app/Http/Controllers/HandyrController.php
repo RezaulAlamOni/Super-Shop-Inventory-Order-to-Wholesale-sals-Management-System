@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CustomMisthsumuryProduct;
 use App\estimate_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -164,10 +165,10 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
             ->orderBy('stock_items.stock_item_id', 'desc')
             ->first();
 
-        $get_last_order_info=vendor_order::join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->first();
-        $skip=0;
-        $get_last_order_list=vendor_order::select('vendor_orders.*','jans.name','vendor_arrivals.car_rack_number','vendor_arrivals.quantity as arrival_qty')->join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->join('vendor_arrivals','vendor_arrivals.vendor_order_id','vendor_orders.vendor_order_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();
-        if(!$get_last_order_info){
+        $get_last_order_info = vendor_order::join('vendor_items', 'vendor_orders.vendor_item_id', 'vendor_items.vendor_item_id')->leftJoin('makers', 'makers.maker_id', 'vendor_items.maker_id')->where('vendor_items.jan', $jan)->where('vendor_orders.status', '入荷済み')->orderBy('vendor_orders.vendor_order_id', 'DESC')->first();
+        $skip = 0;
+        $get_last_order_list = vendor_order::select('vendor_orders.*', 'jans.name', 'vendor_arrivals.car_rack_number', 'vendor_arrivals.quantity as arrival_qty')->join('vendor_items', 'vendor_orders.vendor_item_id', 'vendor_items.vendor_item_id')->leftJoin('makers', 'makers.maker_id', 'vendor_items.maker_id')->join('jans', 'jans.jan', 'vendor_items.jan')->join('vendor_arrivals', 'vendor_arrivals.vendor_order_id', 'vendor_orders.vendor_order_id')->where('vendor_items.jan', $jan)->where('vendor_orders.status', '入荷済み')->orderBy('vendor_orders.vendor_order_id', 'DESC')->skip($skip)->take(10)->get();
+        if (!$get_last_order_info) {
             $get_last_order_info = array();
         }
         if ($last_temp_rack) {
@@ -177,7 +178,7 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
             $temp_rack = '';
         }
 
-        $data = ['status' => 200,'result' =>$result, 'temp_rack' => $temp_rack,'last_order_info'=>$get_last_order_info,'get_last_order_list'=>$get_last_order_list];
+        $data = ['status' => 200, 'result' => $result, 'temp_rack' => $temp_rack, 'last_order_info' => $get_last_order_info, 'get_last_order_list' => $get_last_order_list];
 
         return response()->json($data);
 
@@ -195,21 +196,21 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
             vendor_item::where('jan', $jan)->update([
                 'cost_price' => $items->cost_price,
                 'selling_price' => $items->selling_price,
-                'gross_profit' => (($items->cost_price*$vendor_items->gross_profit_margin)/100)
+                'gross_profit' => (($items->cost_price * $vendor_items->gross_profit_margin) / 100)
             ]);
 
             $customer_data_ins_array = array(
-                'customer_id'=>$items->customer_id,
-                'vendor_id'=>$items->vendor_id,
-                'jan'=>$jan,
+                'customer_id' => $items->customer_id,
+                'vendor_id' => $items->vendor_id,
+                'jan' => $jan,
                 'cost_price' => $items->cost_price,
                 'selling_price' => $items->selling_price,
-                'gross_profit' => (($items->cost_price*$vendor_items->gross_profit_margin)/100)
+                'gross_profit' => (($items->cost_price * $vendor_items->gross_profit_margin) / 100)
             );
             customer_item::updateOrInsert(
                 [
                     'jan' => $jan
-                    ],
+                ],
                 $customer_data_ins_array);
 
             return response()->json(['status' => 200]);
@@ -218,11 +219,57 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
         return response()->json(['status' => 405]);
     }
 
-    public function handy_received_product_detail_by_jan_code_for_order_list(Request $request){
-        $skip=$request->skip_val;
+    public function handy_vendor_master_update_from_custom_mistumury(Request $request)
+    {
+        $jan = $request->jan;
+        $vendor_items = vendor_item::where('jan', $jan)->first();
+        $item = CustomMisthsumuryProduct::where('jan', $jan)->first();
+//        dd($item);
+        if (!empty($item)) {
+            $vendor_data_ins_array = array(
+                'maker_id' => 0,
+                'vendor_id' => $item->vendor_id,
+                'jan' => $jan,
+                'cost_price' => $item->cost_price,
+                'sale_cost_price' => $item->selling_price,
+                'selling_price' => $item->selling_price,
+                'gross_profit' => $item->gross_profit,
+                'gross_profit_margin' => $item->gross_profit_margin,
+                "start_date" => now(),
+            );
+
+            vendor_item::updateOrInsert(['jan' => $jan], $vendor_data_ins_array);
+
+            jan::updateOrinsert(["jan" => $jan],[
+                "jan" => $jan,
+                "name" => $item->name,
+                "case_inputs" => $item->case_unit,
+                "ball_inputs" => $item->ball_unit,
+                "jan_start_date" => date('Y-m-d H:i:s'),
+                "jan_end_date" => date('Y-m-d H:i:s'),
+            ]);
+            $customer_data_ins_array = array(
+                'customer_id' => 0,
+                'vendor_id' => $item->vendor_id,
+                'jan' => $jan,
+                'cost_price' => $item->cost_price,
+                'selling_price' => $item->selling_price,
+                'gross_profit' => (($item->cost_price * $item->gross_profit_margin) / 100)
+            );
+            customer_item::updateOrInsert(['jan' => $jan], $customer_data_ins_array);
+
+            return response()->json(['status' => 200]);
+        }
+
+        return response()->json(['status' => 405]);
+    }
+
+    public function handy_received_product_detail_by_jan_code_for_order_list(Request $request)
+    {
+        $skip = $request->skip_val;
         $jan = $request->jan_code;
-        $get_last_order_list=vendor_order::select('vendor_orders.*','jans.name','vendor_arrivals.car_rack_number','vendor_arrivals.quantity as arrival_qty')->join('vendor_items','vendor_orders.vendor_item_id','vendor_items.vendor_item_id')->leftJoin('makers','makers.maker_id','vendor_items.maker_id')->join('jans','jans.jan','vendor_items.jan')->join('vendor_arrivals','vendor_arrivals.vendor_order_id','vendor_orders.vendor_order_id')->where('vendor_items.jan',$jan)->where('vendor_orders.status','入荷済み')->orderBy('vendor_orders.vendor_order_id','DESC')->skip($skip)->take(10)->get();
-        return response()->json(['get_last_order_list'=>$get_last_order_list]);
+        $get_last_order_list = vendor_order::select('vendor_orders.*', 'jans.name', 'vendor_arrivals.car_rack_number', 'vendor_arrivals.quantity as arrival_qty')->join('vendor_items', 'vendor_orders.vendor_item_id', 'vendor_items.vendor_item_id')->leftJoin('makers', 'makers.maker_id', 'vendor_items.maker_id')->join('jans', 'jans.jan', 'vendor_items.jan')->join('vendor_arrivals', 'vendor_arrivals.vendor_order_id', 'vendor_orders.vendor_order_id')->where('vendor_items.jan', $jan)->where('vendor_orders.status', '入荷済み')->orderBy('vendor_orders.vendor_order_id', 'DESC')->skip($skip)->take(10)->get();
+        return response()->json(['get_last_order_list' => $get_last_order_list]);
     }
 
     public function handy_order_shipment()
@@ -752,13 +799,13 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
             $last_rack = null;
         }
         return response()->json([
-            'title'=> $title,
-            'active'=> $active,
-            'result'=> $result,
-            'total_jaikos_stock'=> $total_jaikos_stock,
-            'all_rack'=> $all_rack,
-            'jan'=> $jan,
-            'last_rack'=> $last_rack
+            'title' => $title,
+            'active' => $active,
+            'result' => $result,
+            'total_jaikos_stock' => $total_jaikos_stock,
+            'all_rack' => $all_rack,
+            'jan' => $jan,
+            'last_rack' => $last_rack
         ]);
 
         if (count($result) <= 0) {
@@ -858,7 +905,7 @@ SELECT SUM(quantity) as quantity,vendor_orders.status as vendor_order_status,ven
     {
         $active = 'handy_stock';
         if (!vendor_item::where('jan', $jan)->first()) {
-            return response()->json(['status' => 400, 'status_code' => 400,'message' => "ベンダーマスターからjanを挿入してください"]);
+            return response()->json(['status' => 400, 'status_code' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $where = '';
         if ($jan != '') {
@@ -934,34 +981,35 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
             $total_jaikos_stock = $total_jaiko->t_qty;
         }
         if ($result == null) {
-            return response()->json(['status' => 400,'status_code' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
+            return response()->json(['status' => 400, 'status_code' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
         $title = "";
         $view = view('backend.handy_pages.handy_stock_inventory_get_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'))->render();
-        return response()->json(['status' => 200, 'status_code' => 200, 'view' => $view,'result'=>$result]);
+        return response()->json(['status' => 200, 'status_code' => 200, 'view' => $view, 'result' => $result]);
 
 
         return view('backend.handy_pages.handy_stock_inventory_by_jan_code', compact('title', 'active', 'result', 'total_jaikos_stock'));
     }
 
-    public function handy_get_last_order_by_jan_code($jan){
+    public function handy_get_last_order_by_jan_code($jan)
+    {
         if (!vendor_item::where('jan', $jan)->first()) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
-        $result = vendor_arrival::select('jans.name as item_name','jans.case_inputs','jans.ball_inputs','vendor_orders.status','vendor_orders.unit_cost_price','vendor_orders.vendor_item_id','vendor_arrivals.*','stock_items.rack_number','stock_items.temp_rack_number')
-        ->join('vendor_orders','vendor_orders.vendor_order_id','=','vendor_arrivals.vendor_order_id')
-        ->join('vendor_items','vendor_items.vendor_item_id','=','vendor_orders.vendor_item_id')
-        ->join('jans','jans.jan','=','vendor_items.jan')
-        ->join('stock_items','stock_items.vendor_item_id','=','vendor_orders.vendor_item_id')
-        ->where(['vendor_orders.status'=>'入荷済み','vendor_items.jan'=>$jan])
-        ->orderBy('vendor_arrivals.vendor_order_id','desc')
-        ->skip(0)
-        ->take('1')
-        ->get();
+        $result = vendor_arrival::select('jans.name as item_name', 'jans.case_inputs', 'jans.ball_inputs', 'vendor_orders.status', 'vendor_orders.unit_cost_price', 'vendor_orders.vendor_item_id', 'vendor_arrivals.*', 'stock_items.rack_number', 'stock_items.temp_rack_number')
+            ->join('vendor_orders', 'vendor_orders.vendor_order_id', '=', 'vendor_arrivals.vendor_order_id')
+            ->join('vendor_items', 'vendor_items.vendor_item_id', '=', 'vendor_orders.vendor_item_id')
+            ->join('jans', 'jans.jan', '=', 'vendor_items.jan')
+            ->join('stock_items', 'stock_items.vendor_item_id', '=', 'vendor_orders.vendor_item_id')
+            ->where(['vendor_orders.status' => '入荷済み', 'vendor_items.jan' => $jan])
+            ->orderBy('vendor_arrivals.vendor_order_id', 'desc')
+            ->skip(0)
+            ->take('1')
+            ->get();
         if ($result == null) {
             return response()->json(['status' => 400, 'message' => "ベンダーマスターからjanを挿入してください"]);
         }
-        return response()->json(['status' => 200, 'result'=>$result]);
+        return response()->json(['status' => 200, 'result' => $result]);
     }
 
     public function handy_quotation()
@@ -1133,7 +1181,7 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
                 $stock_item_id = stock_item::insertGetId($insarray);
             }
         }
-        Log::info(['order-receive'=>'temporary tana update by '.auth()->id()]);
+        Log::info(['order-receive' => 'temporary tana update by ' . auth()->id()]);
         return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_item_id]);
 
     }
@@ -1436,26 +1484,26 @@ WHERE DATE(co.shipment_date) = CURDATE()
         $stock_info = collect(\DB::select("select * from stock_items inner join vendor_items on stock_items.vendor_item_id=vendor_items.vendor_item_id inner join jans on jans.jan = vendor_items.jan where vendor_items.jan = '" . $jan_code . "' and stock_items.rack_number='" . $rack_number . "'"))->first();
         if ($stock_info) {
             $stock_items = array();
-                if ($confirm_case_quantity > $stock_info->case_quantity) {
-                    return $result = response()->json(['message' => 'stock_over_qty']);
-                }
-                if ($confirm_ball_quantity > $stock_info->ball_quantity) {
-                    return $result = response()->json(['message' => 'stock_over_qty']);
-                }
-                if ($confirm_unit_quantity > $stock_info->unit_quantity) {
-                    return $result = response()->json(['message' => 'stock_over_qty']);
-                }
-                $vl_c = $stock_info->case_quantity - $confirm_case_quantity;
-                $vl_c = ($vl_c < 0 ? 0 : $vl_c);
-                $stock_items['case_quantity'] = $vl_c;
+            if ($confirm_case_quantity > $stock_info->case_quantity) {
+                return $result = response()->json(['message' => 'stock_over_qty']);
+            }
+            if ($confirm_ball_quantity > $stock_info->ball_quantity) {
+                return $result = response()->json(['message' => 'stock_over_qty']);
+            }
+            if ($confirm_unit_quantity > $stock_info->unit_quantity) {
+                return $result = response()->json(['message' => 'stock_over_qty']);
+            }
+            $vl_c = $stock_info->case_quantity - $confirm_case_quantity;
+            $vl_c = ($vl_c < 0 ? 0 : $vl_c);
+            $stock_items['case_quantity'] = $vl_c;
 
-                $vl_b = $stock_info->ball_quantity - $confirm_ball_quantity;
-                $vl_b = ($vl_b < 0 ? 0 : $vl_b);
-                $stock_items['ball_quantity'] = $vl_b;
+            $vl_b = $stock_info->ball_quantity - $confirm_ball_quantity;
+            $vl_b = ($vl_b < 0 ? 0 : $vl_b);
+            $stock_items['ball_quantity'] = $vl_b;
 
-                $vl_u = $stock_info->unit_quantity - $confirm_unit_quantity;
-                $vl_u = ($vl_u < 0 ? 0 : $vl_u);
-                $stock_items['unit_quantity'] = $vl_u;
+            $vl_u = $stock_info->unit_quantity - $confirm_unit_quantity;
+            $vl_u = ($vl_u < 0 ? 0 : $vl_u);
+            $stock_items['unit_quantity'] = $vl_u;
             stock_item::where(['vendor_item_id' => $stock_info->vendor_item_id, 'rack_number' => $rack_number])->update($stock_items);
             customer_shipment::where('customer_shipment_id', $request->customer_shipment_id)->update(['quantity' => $request->c_quantity, 'reload_status' => '1']);
             customer_order::where('customer_order_id', $request->customer_order_id)->update(['status' => '出荷済み']);
@@ -1622,64 +1670,64 @@ WHERE DATE(co.shipment_date) = CURDATE()
         $vendor_id = $request->vendor_id;
         $vendor_item_id = $request->vendor_item_id;
         $vendor_order_id = $request->vendor_order_id;
-        $case_quantaty=$request->case_quantaty;
-        $ball_quantaty=$request->ball_quantaty;
-        $unit_quantaty=$request->unit_quantaty;
+        $case_quantaty = $request->case_quantaty;
+        $ball_quantaty = $request->ball_quantaty;
+        $unit_quantaty = $request->unit_quantaty;
         $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_item_id', $vendor_item_id)->first();
-        $totalLotInventory = (($case_quantaty*$item_info->case_inputs)+($ball_quantaty*$item_info->ball_inputs)+$unit_quantaty);
+        $totalLotInventory = (($case_quantaty * $item_info->case_inputs) + ($ball_quantaty * $item_info->ball_inputs) + $unit_quantaty);
         $totalInvoiceAmmount = 0;
-        $totalInvoiceAmmount = $totalLotInventory*$item_info->cost_price;
-                /*stock update*/
-                $stock_items = array(
-                    'vendor_id' => $vendor_id,
-                    'vendor_item_id' => $vendor_item_id,
-                    'rack_number' => $rack_number,
-                    'temp_rack_number' => $rack_number,
-                    'expiration_date' => date('Y-m-d H:i:s')
-                );
-                if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
-                    $row = stock_item::where('vendor_item_id',$vendor_item_id)->where('rack_number', $rack_number)->first();
+        $totalInvoiceAmmount = $totalLotInventory * $item_info->cost_price;
+        /*stock update*/
+        $stock_items = array(
+            'vendor_id' => $vendor_id,
+            'vendor_item_id' => $vendor_item_id,
+            'rack_number' => $rack_number,
+            'temp_rack_number' => $rack_number,
+            'expiration_date' => date('Y-m-d H:i:s')
+        );
+        if (stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first()) {
+            $row = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
 
-                        $stock_items['case_quantity'] = $row->case_quantity + $case_quantaty;
+            $stock_items['case_quantity'] = $row->case_quantity + $case_quantaty;
 
-                        $stock_items['ball_quantity'] = $row->ball_quantity + $ball_quantaty;
+            $stock_items['ball_quantity'] = $row->ball_quantity + $ball_quantaty;
 
-                        $stock_items['unit_quantity'] = $row->unit_quantity + $unit_quantaty;
-
-
-                    stock_item::where(['vendor_item_id' => $vendor_item_id, 'vendor_id' => $vendor_id, 'rack_number' => $rack_number])->update($stock_items);
+            $stock_items['unit_quantity'] = $row->unit_quantity + $unit_quantaty;
 
 
-                } else {
+            stock_item::where(['vendor_item_id' => $vendor_item_id, 'vendor_id' => $vendor_id, 'rack_number' => $rack_number])->update($stock_items);
 
-                    $stock_items['case_quantity'] = $case_quantaty;
-                    $stock_items['ball_quantity'] = $ball_quantaty;
-                    $stock_items['unit_quantity'] = $unit_quantaty;
-                    stock_item::insert($stock_items);
-                }
-                /*stock update*/
-                /*execute vendor arrival insert*/
-                $vndor_arival = array(
-                    'vendor_id' => $vendor_id,
-                    'vendor_order_id' => $vendor_order_id,
-                    'vendor_order_detail_id' => $vendor_order_id,
-                    'arrival_case_quantity'=>$case_quantaty,
-                    'arrival_ball_quantity'=>$ball_quantaty,
-                    'arrival_unit_quantity'=>$unit_quantaty,
-                    'quantity' => $totalLotInventory,
-                    'car_rack_number' => $bin,
-                    'reload_status' => '1'
-                );
-                vendor_arrival::insert($vndor_arival);
-                vendor_order::where(['vendor_id' => $vendor_id, 'vendor_order_id' => $vendor_order_id])->update(['status' => '入荷済み']);
-                $data_arr = array(
-                    'vendor_id' => $vendor_id,
-                    'voucher_number' => $vendor_order_id,
-                    'invoice_amount' => $totalInvoiceAmmount,
-                    'invoice_date' => date('Y-m-d'),
-                    'payment_due_date' => date("Y-m-t", strtotime("+1 month")),
-                );
-                vendor_invoice::insert($data_arr);
+
+        } else {
+
+            $stock_items['case_quantity'] = $case_quantaty;
+            $stock_items['ball_quantity'] = $ball_quantaty;
+            $stock_items['unit_quantity'] = $unit_quantaty;
+            stock_item::insert($stock_items);
+        }
+        /*stock update*/
+        /*execute vendor arrival insert*/
+        $vndor_arival = array(
+            'vendor_id' => $vendor_id,
+            'vendor_order_id' => $vendor_order_id,
+            'vendor_order_detail_id' => $vendor_order_id,
+            'arrival_case_quantity' => $case_quantaty,
+            'arrival_ball_quantity' => $ball_quantaty,
+            'arrival_unit_quantity' => $unit_quantaty,
+            'quantity' => $totalLotInventory,
+            'car_rack_number' => $bin,
+            'reload_status' => '1'
+        );
+        vendor_arrival::insert($vndor_arival);
+        vendor_order::where(['vendor_id' => $vendor_id, 'vendor_order_id' => $vendor_order_id])->update(['status' => '入荷済み']);
+        $data_arr = array(
+            'vendor_id' => $vendor_id,
+            'voucher_number' => $vendor_order_id,
+            'invoice_amount' => $totalInvoiceAmmount,
+            'invoice_date' => date('Y-m-d'),
+            'payment_due_date' => date("Y-m-t", strtotime("+1 month")),
+        );
+        vendor_invoice::insert($data_arr);
         return $result = response()->json(['message' => 'success']);
     }
 
@@ -2118,9 +2166,9 @@ WHERE DATE(co.shipment_date) = CURDATE()
         $previous_rack_number = $request->previous_rack_number;
         $vendor_item_id = $request->vendor_item_id;
         $vendor_id = $request->vendor_id;
-        $previous_stock_item_info=stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $previous_rack_number)->first();
+        $previous_stock_item_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $previous_rack_number)->first();
         $temp_rack_number = '';
-        if($previous_stock_item_info){
+        if ($previous_stock_item_info) {
             $temp_rack_number = $previous_stock_item_info->temp_rack_number;
         }
 
@@ -2128,26 +2176,26 @@ WHERE DATE(co.shipment_date) = CURDATE()
             stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $previous_rack_number)->delete();
             $stock_item_info = stock_item::where('vendor_item_id', $vendor_item_id)->where('rack_number', $rack_number)->first();
 
-            if ($stock_item_info->case_quantity!=null) {
-                $case_quantity = $case_quantity+$stock_item_info->case_quantity;
+            if ($stock_item_info->case_quantity != null) {
+                $case_quantity = $case_quantity + $stock_item_info->case_quantity;
             }
 
-            if ($stock_item_info->ball_quantity!=null) {
-                $ball_quantity = $ball_quantity+$stock_item_info->ball_quantity;
+            if ($stock_item_info->ball_quantity != null) {
+                $ball_quantity = $ball_quantity + $stock_item_info->ball_quantity;
             }
 
-            if ($stock_item_info->unit_quantity!=null) {
-                $unit_quantity = $unit_quantity+$stock_item_info->unit_quantity;
+            if ($stock_item_info->unit_quantity != null) {
+                $unit_quantity = $unit_quantity + $stock_item_info->unit_quantity;
             }
 
-            $updatearr=array(
+            $updatearr = array(
                 'case_quantity' => $case_quantity,
                 'ball_quantity' => $ball_quantity,
                 'unit_quantity' => $unit_quantity
             );
 
-            if($stock_item_info->temp_rack_number==null){
-                $updatearr['temp_rack_number']=$temp_rack_number;
+            if ($stock_item_info->temp_rack_number == null) {
+                $updatearr['temp_rack_number'] = $temp_rack_number;
             }
             stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update($updatearr);
             return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_item_info->stock_item_id]);
@@ -2164,9 +2212,9 @@ WHERE DATE(co.shipment_date) = CURDATE()
                 'ball_quantity' => $ball_quantity,
                 'unit_quantity' => $unit_quantity
             );
-            if($stock_item_id != null && $stock_item_id != '0'){
-                stock_item::where('stock_item_id',$stock_item_id)->update($insarray);
-            }else{
+            if ($stock_item_id != null && $stock_item_id != '0') {
+                stock_item::where('stock_item_id', $stock_item_id)->update($insarray);
+            } else {
                 $stock_item_id = stock_item::insertGetId($insarray);
             }
             return $result = response()->json(['message' => 'success', 'stock_item_id' => $stock_item_id]);
@@ -2219,52 +2267,53 @@ WHERE DATE(co.shipment_date) = CURDATE()
             stock_item_detail::insert(['stock_item_id' => $stock_item_id, 'inc_dec_status' => $inc_dec, 'inc_dec_inputs' => 'ボール', 'inc_dec_quantity' => $inc_dec_qty, 'actual_quantity' => $stock_item_info->unit_quantity]);
             stock_item::where('stock_item_id', $stock_item_id)->update(['unit_quantity' => $unit_quantity]);
         }
-        Log::info(['inventory'=>'Update inventory By user '.auth()->id(),'jan' => $stock_item_info->jan]);
+        Log::info(['inventory' => 'Update inventory By user ' . auth()->id(), 'jan' => $stock_item_info->jan]);
 
         return $result = response()->json(['message' => 'success']);
     }
 
-    public function item_return_to_tonya(Request $request){
+    public function item_return_to_tonya(Request $request)
+    {
         $requestAll = $request->order_data;
         $return_data = $request->return_data;
         $damage_quantity = $return_data['returnTotalQty'];
         $damage_case_quantity = $return_data['retrunCaseQty'];
         $damage_ball_quantity = $return_data['retrunBallQty'];
         $damage_unit_quantity = $return_data['retrunUnitQty'];
-        foreach($requestAll as $req){
-            $stock_item_info = stock_item::where('rack_number', $req['rack_number'])->where('vendor_item_id',$req['vendor_item_id'])->first();
-            if($stock_item_info){
-            if($stock_item_info->unit_quantity>=$damage_quantity){
-                $unit_quantity = $stock_item_info->unit_quantity-$damage_quantity;
-                stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity]);
-            }else{
+        foreach ($requestAll as $req) {
+            $stock_item_info = stock_item::where('rack_number', $req['rack_number'])->where('vendor_item_id', $req['vendor_item_id'])->first();
+            if ($stock_item_info) {
+                if ($stock_item_info->unit_quantity >= $damage_quantity) {
+                    $unit_quantity = $stock_item_info->unit_quantity - $damage_quantity;
+                    stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity]);
+                } else {
 
-                $total_stock = (($stock_item_info->case_quantity*$req['case_inputs'])+($stock_item_info->ball_quantity*$req['ball_inputs'])+$stock_item_info->unit_quantity);
-                $total_stock = $total_stock-$damage_quantity;
-                if($req['case_inputs']!=0){
-                    $case_quantity = floor($total_stock/$req['case_inputs']);
-                }else{
-                    $case_quantity = 0;
+                    $total_stock = (($stock_item_info->case_quantity * $req['case_inputs']) + ($stock_item_info->ball_quantity * $req['ball_inputs']) + $stock_item_info->unit_quantity);
+                    $total_stock = $total_stock - $damage_quantity;
+                    if ($req['case_inputs'] != 0) {
+                        $case_quantity = floor($total_stock / $req['case_inputs']);
+                    } else {
+                        $case_quantity = 0;
+                    }
+                    if ($req['ball_inputs'] != 0) {
+                        $ball_quantity = floor(($total_stock - ($case_quantity * $req['case_inputs'])) / $req['ball_inputs']);
+                    } else {
+                        $ball_quantity = 0;
+                    }
+                    $unit_quantity = ($total_stock - (($case_quantity * $req['case_inputs']) + ($ball_quantity * $req['ball_inputs'])));
+                    stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity, 'case_quantity' => $case_quantity, 'ball_quantity' => $ball_quantity]);
                 }
-                if($req['ball_inputs']!=0){
-                    $ball_quantity = floor(($total_stock-($case_quantity*$req['case_inputs']))/$req['ball_inputs']);
-                }else{
-                    $ball_quantity = 0;
-                }
-                $unit_quantity = ($total_stock-(($case_quantity*$req['case_inputs'])+($ball_quantity*$req['ball_inputs'])));
-                stock_item::where('stock_item_id', $stock_item_info->stock_item_id)->update(['unit_quantity' => $unit_quantity,'case_quantity'=>$case_quantity,'ball_quantity'=>$ball_quantity]);
             }
-        }
 
-            $existingArivalInfo = vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->first();
-            if($existingArivalInfo){
+            $existingArivalInfo = vendor_arrival::where('vendor_order_id', $req['vendor_order_id'])->first();
+            if ($existingArivalInfo) {
                 $existDamageQty = $existingArivalInfo->damage_quantity;
-                $returnQty=$existDamageQty+$damage_quantity;
+                $returnQty = $existDamageQty + $damage_quantity;
 
-                $newQty = $req['quantity']-$returnQty;
-                $invoice_amount = $req['unit_cost_price']*$newQty;
-                vendor_invoice::where('voucher_number',$req['vendor_order_id'])->update(['invoice_amount'=>$invoice_amount]);
-                vendor_arrival::where('vendor_order_id',$req['vendor_order_id'])->update(['damage_quantity'=>$returnQty,'damage_case_quantity'=>$damage_case_quantity+$existingArivalInfo->damage_case_quantity,'damage_ball_quantity'=>$existingArivalInfo->damage_ball_quantity+$damage_ball_quantity,'damage_unit_quantity'=>$damage_unit_quantity+$existingArivalInfo->damage_unit_quantity]);
+                $newQty = $req['quantity'] - $returnQty;
+                $invoice_amount = $req['unit_cost_price'] * $newQty;
+                vendor_invoice::where('voucher_number', $req['vendor_order_id'])->update(['invoice_amount' => $invoice_amount]);
+                vendor_arrival::where('vendor_order_id', $req['vendor_order_id'])->update(['damage_quantity' => $returnQty, 'damage_case_quantity' => $damage_case_quantity + $existingArivalInfo->damage_case_quantity, 'damage_ball_quantity' => $existingArivalInfo->damage_ball_quantity + $damage_ball_quantity, 'damage_unit_quantity' => $damage_unit_quantity + $existingArivalInfo->damage_unit_quantity]);
             }
         }
 
@@ -2323,10 +2372,11 @@ WHERE DATE(co.shipment_date) = CURDATE()
     }
 
     /* cache clear and reload */
-    public function cacheClearAndReload($rdn_code){
+    public function cacheClearAndReload($rdn_code)
+    {
         \Artisan::call('config:cache');
         \Artisan::call('view:clear');
         \Artisan::call('cache:clear');
-        return response()->json(['true',$rdn_code]);
+        return response()->json(['true', $rdn_code]);
     }
 }

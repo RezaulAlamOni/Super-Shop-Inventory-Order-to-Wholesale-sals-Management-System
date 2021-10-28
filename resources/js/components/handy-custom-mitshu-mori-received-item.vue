@@ -141,8 +141,8 @@
                                             <td class="text-center">
 <!--                                                <span class="badge badge-success" style="cursor: pointer;margin:2px"-->
 <!--                                                      @click="orderToTonya(product)">発注</span>-->
-<!--                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"-->
-<!--                                                      @click="storeToMaster(product)">採用</span>-->
+                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"
+                                                      @click="storeToMaster(product)">採用</span>
                                             </td>
                                         </tr>
                                     </template>
@@ -941,7 +941,7 @@ export default {
                     jan: product.jan
                 }
 
-                axios.post(_this.base_url + '/handy_vendor_master_update_from_mistumury', data)
+                axios.post(_this.base_url + '/handy_vendor_master_update_from_custom_mistumury', data)
                     .then(function (response) {
                         // _this.getOrderDataByJan();
                         _this.loader = 0
@@ -952,7 +952,6 @@ export default {
                     .catch(function (e) {
                         console.log(e)
                     })
-
 
             }, 100)
         },
