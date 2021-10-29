@@ -248,13 +248,16 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
                 "jan_start_date" => date('Y-m-d H:i:s'),
                 "jan_end_date" => date('Y-m-d H:i:s'),
             ]);
+            $item->cost_price  = $item->cost_price+  30;
+            $item->selling_price = $item->cost_price + (($item->cost_price * 30) / 100);
             $customer_data_ins_array = array(
                 'customer_id' => 0,
                 'vendor_id' => $item->vendor_id,
                 'jan' => $jan,
                 'cost_price' => $item->cost_price,
                 'selling_price' => $item->selling_price,
-                'gross_profit' => (($item->cost_price * $item->gross_profit_margin) / 100)
+                'gross_profit' => (($item->cost_price * 30) / 100)
+//                'gross_profit' => $item->selling_price - $item->cost_price
             );
             customer_item::updateOrInsert(['jan' => $jan], $customer_data_ins_array);
 

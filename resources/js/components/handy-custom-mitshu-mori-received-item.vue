@@ -52,7 +52,7 @@
                                                 <a href="handy_receive_mitshumori" class="text-white"> 戻る </a>
                                             </span>
 
-                                            <span class="badge badge-success float-right hide" v-if="productJans.length > 0"
+                                            <span class="badge badge-success float-right" v-if="productJans.length > 0"
                                                       style="padding: 7px 15px;font-size: 15px"
                                                       @click="orderToTonya()">発注</span>
                                         </th>
@@ -94,8 +94,8 @@
                                                      class="img-thumbnail custom-img"
                                                      alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                                      style="cursor: pointer" width="100px">
-<!--                                                <input class="form-check-input form-check-input__" type="checkbox"-->
-<!--                                                       v-model="productJans" :value="product">-->
+                                                <input class="form-check-input form-check-input__" type="checkbox"
+                                                       v-model="productJans" :value="product">
                                             </td>
                                             <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                                 <input data-v-c9953dda="" type="tel" id="cost"
@@ -139,8 +139,8 @@
                                             <td class="text-center" style="font-size: 13px">1<br>(ボール)</td>
                                             <td class="text-center" style="font-size: 13px">1<br>(バラ)</td>
                                             <td class="text-center">
-<!--                                                <span class="badge badge-success" style="cursor: pointer;margin:2px"-->
-<!--                                                      @click="orderToTonya(product)">発注</span>-->
+                                                <span class="badge badge-success" style="cursor: pointer;margin:2px"
+                                                      @click="orderToTonya(product)">発注</span>
                                                 <span class="badge badge-primary" style="cursor: pointer;margin:2px"
                                                       @click="storeToMaster(product)">採用</span>
                                             </td>
@@ -890,12 +890,13 @@ export default {
                 let data_array = [];
                 if (product == null) {
                     _this.productJans.map(function (pro) {
-                        let data = [
+                        console.log(pro)
+                        let data =  [
                             1,
                             1,
                             1,
                             pro.customer_id,
-                            pro.vendor_item_id,
+                            pro.jan,
                             dtes,
                             Math.floor(100000 + Math.random() * 900000)
                         ]
@@ -907,7 +908,7 @@ export default {
                         1,
                         1,
                         product.customer_id,
-                        product.vendor_item_id,
+                        product.jan,
                         dtes,
                         Math.floor(100000 + Math.random() * 900000)
                     ]
@@ -915,11 +916,16 @@ export default {
                 }
 
 
-                axios.post(this.base_url + '/vendor_order_insert_handy', {'data_array': data_array})
+                axios.post(this.base_url + '/vendor_order_insert_from_custom_mistumury_handy', {'data_array': data_array})
                     .then(function (res) {
+                        if (res.data.message == '502') {
+                            $('#handy-navi').show()
+                            _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。。</li>';
+                        } else {
+                            $('#handy-navi').show()
+                            _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+                        }
 
-                        $('#handy-navi').show()
-                        _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
 
                         // _this.hideModelAndClearInput()
                     })
