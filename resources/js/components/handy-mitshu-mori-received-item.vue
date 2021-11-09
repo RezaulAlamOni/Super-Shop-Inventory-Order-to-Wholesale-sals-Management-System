@@ -175,9 +175,15 @@
                                             </td>
                                         </tr>
                                         <tr :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
-                                            <td class="text-center" style="font-size: 13px">1<br>(ケース)</td>
-                                            <td class="text-center" style="font-size: 13px">1<br>(ボール)</td>
-                                            <td class="text-center" style="font-size: 13px">1<br>(バラ)</td>
+                                            <td class="text-center" style="font-size: 13px">
+                                                <input  class="form-control " @click="selectItem($event)" @blur="updateOrderQuantity(products.vendor_item_id,i,'ball')" :id="'case'+i" v-model="product.order_point_case_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" type="number" value="1" >
+                                                <br>(ケース)</td>
+                                            <td class="text-center" style="font-size: 13px">
+                                                <input type="number"  class="form-control" @click="selectItem($event)" @blur="updateOrderQuantity(products.vendor_item_id,i,'bara')" :id="'ball'+i" v-model="product.order_point_ball_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" value="1" >
+                                                <br>(ボール)</td>
+                                            <td class="text-center" style="font-size: 13px">
+                                                <input type="number" class="form-control" @click="selectItem($event)" @blur="updateOrderQuantity(products.vendor_item_id,i,'case')" :id="'bara'+i" v-model="product.order_point_unit_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" value="1" >
+                                                <br>(バラ)</td>
                                             <td class="text-center">
                                                 <span class="badge badge-success" style="cursor: pointer;margin:2px"
                                                       @click="orderToTonya(product)">発注</span>
@@ -998,8 +1004,12 @@ export default {
             date = +new Date(date);
             var compareDatesBoolean = (now - date) < hour;
             return compareDatesBoolean;
+        },
+        // save order quantity
+        updateOrderQuantity(product_id,index,type) {
+            $('#'+type+index).focus()
+            $('#'+type+index).select()
         }
-
     },
     watch: {
         productJans : function (val) {
