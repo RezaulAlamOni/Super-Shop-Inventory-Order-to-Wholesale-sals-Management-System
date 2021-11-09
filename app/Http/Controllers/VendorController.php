@@ -900,7 +900,6 @@ class VendorController extends Controller
         foreach ($data_array as $key => $val) {
             $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $val[4]])->first();
             $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_item_id', $val[4])->first();
-            dd($item_info);
 
             $case_order_qty = ($val[0] == '' ? 0 : $val[0]);
             $ball_order_qty = ($val[1] == '' ? 0 : $val[1]);

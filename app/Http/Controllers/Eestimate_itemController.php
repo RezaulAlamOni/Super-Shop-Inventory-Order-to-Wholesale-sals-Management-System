@@ -229,11 +229,14 @@ class Eestimate_itemController extends Controller
         $order_ball = $request->order_ball;
         $order_bara = $request->order_bara;
 
+        $item = estimate_item::query()->where('vendor_item_id',$mistumury_id)->first();
+
         estimate_item::query()->where('vendor_item_id',$mistumury_id)
             ->update([
                 'order_point_case_quantity' => $order_case,
                 'order_point_ball_quantity' => $order_ball,
-                'order_point_unit_quantity' => $order_bara
+                'order_point_unit_quantity' => $order_bara,
+                'updated_at' => $item->updated_at
             ]);
 
         return response()->json(['status'=>200]);

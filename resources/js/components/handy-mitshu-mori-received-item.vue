@@ -175,14 +175,23 @@
                                             </td>
                                         </tr>
                                         <tr :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
-                                            <td class="text-center" style="font-size: 13px">
-                                                <input  class="form-control " @click="selectItem($event)" @blur="updateOrderQuantity(product,i,'ball')" :id="'case'+i" v-model="product.order_point_case_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" type="number" value="1" >
+                                            <td class="text-center" style="font-size: 13px" >
+                                                <input  class="form-control "
+                                                        @keypress="pressAndSave($event,i,'ball')"
+                                                        @click="selectItem($event)"
+                                                        @blur="updateOrderQuantity(product,i,'ball')" :id="'case'+i" v-model="product.order_point_case_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" type="number" value="1" >
                                                 <br>(ケース)</td>
-                                            <td class="text-center" style="font-size: 13px">
-                                                <input type="number"  class="form-control" @click="selectItem($event)" @blur="updateOrderQuantity(product,i,'bara')" :id="'ball'+i" v-model="product.order_point_ball_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" value="1" >
+                                            <td class="text-center" style="font-size: 13px" >
+                                                <input type="number"  class="form-control"
+                                                       @keypress="pressAndSave($event,i,'bara')"
+                                                       @click="selectItem($event)"
+                                                       @blur="updateOrderQuantity(product,i,'bara')" :id="'ball'+i" v-model="product.order_point_ball_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" value="1" >
                                                 <br>(ボール)</td>
-                                            <td class="text-center" style="font-size: 13px">
-                                                <input type="number" class="form-control" @click="selectItem($event)" @blur="updateOrderQuantity(product,i,'case')" :id="'bara'+i" v-model="product.order_point_unit_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" value="1" >
+                                            <td class="text-center" style="font-size: 13px" >
+                                                <input type="number" class="form-control"
+                                                       @keypress="pressAndSave($event,i,'case')"
+                                                       @click="selectItem($event)"
+                                                       @blur="updateOrderQuantity(product,i,'case')" :id="'bara'+i" v-model="product.order_point_unit_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" value="1" >
                                                 <br>(バラ)</td>
                                             <td class="text-center">
                                                 <span class="badge badge-success" style="cursor: pointer;margin:2px"
@@ -924,9 +933,9 @@ export default {
                 if (product == null) {
                     _this.productJans.map(function (pro) {
                         let data = [
-                            1,
-                            1,
-                            1,
+                            product.order_point_case_quantity,
+                            product.order_point_ball_quantity,
+                            product.order_point_unit_quantity,
                             pro.customer_id,
                             pro.vendor_item_id,
                             dtes,
@@ -936,9 +945,9 @@ export default {
                     })
                 } else {
                     let data = [
-                        1,
-                        1,
-                        1,
+                        product.order_point_case_quantity,
+                        product.order_point_ball_quantity,
+                        product.order_point_unit_quantity,
                         product.customer_id,
                         product.vendor_item_id,
                         dtes,
@@ -1008,8 +1017,7 @@ export default {
         // save order quantity
         updateOrderQuantity(product,index,type) {
             let _this = this;
-            $('#'+type+index).focus()
-            $('#'+type+index).select()
+
 
             axios.post(_this.base_url + '/save-mistumury-order-quantity',
                 {
@@ -1021,7 +1029,7 @@ export default {
                     type : ''
                 })
                 .then(function (response) {
-                    _this.getProducts()
+                    // _this.getProducts()
 
                 })
                 .then(function (er) {
@@ -1033,6 +1041,13 @@ export default {
                     // _this.loader = 0
                 })
 
+        },
+        //
+        pressAndSave(e,index,type){
+            if(e.keyCode == 13) {
+                $('#'+type+index).focus()
+                $('#'+type+index).select()
+            }
         }
     },
     watch: {
