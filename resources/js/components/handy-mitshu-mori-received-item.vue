@@ -176,13 +176,13 @@
                                         </tr>
                                         <tr :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                             <td class="text-center" style="font-size: 13px">
-                                                <input  class="form-control " @click="selectItem($event)" @blur="updateOrderQuantity(products.vendor_item_id,i,'ball')" :id="'case'+i" v-model="product.order_point_case_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" type="number" value="1" >
+                                                <input  class="form-control " @click="selectItem($event)" @blur="updateOrderQuantity(product,i,'ball')" :id="'case'+i" v-model="product.order_point_case_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" type="number" value="1" >
                                                 <br>(ケース)</td>
                                             <td class="text-center" style="font-size: 13px">
-                                                <input type="number"  class="form-control" @click="selectItem($event)" @blur="updateOrderQuantity(products.vendor_item_id,i,'bara')" :id="'ball'+i" v-model="product.order_point_ball_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" value="1" >
+                                                <input type="number"  class="form-control" @click="selectItem($event)" @blur="updateOrderQuantity(product,i,'bara')" :id="'ball'+i" v-model="product.order_point_ball_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" value="1" >
                                                 <br>(ボール)</td>
                                             <td class="text-center" style="font-size: 13px">
-                                                <input type="number" class="form-control" @click="selectItem($event)" @blur="updateOrderQuantity(products.vendor_item_id,i,'case')" :id="'bara'+i" v-model="product.order_point_unit_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" value="1" >
+                                                <input type="number" class="form-control" @click="selectItem($event)" @blur="updateOrderQuantity(product,i,'case')" :id="'bara'+i" v-model="product.order_point_unit_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;" value="1" >
                                                 <br>(バラ)</td>
                                             <td class="text-center">
                                                 <span class="badge badge-success" style="cursor: pointer;margin:2px"
@@ -1006,9 +1006,33 @@ export default {
             return compareDatesBoolean;
         },
         // save order quantity
-        updateOrderQuantity(product_id,index,type) {
+        updateOrderQuantity(product,index,type) {
+            let _this = this;
             $('#'+type+index).focus()
             $('#'+type+index).select()
+
+            axios.post(_this.base_url + '/save-mistumury-order-quantity',
+                {
+                    jan_code : product.jan,
+                    id : product.vendor_item_id,
+                    order_case : product.order_point_case_quantity,
+                    order_ball : product.order_point_ball_quantity,
+                    order_bara : product.order_point_unit_quantity,
+                    type : ''
+                })
+                .then(function (response) {
+                    _this.getProducts()
+
+                })
+                .then(function (er) {
+
+                })
+                .finally(function () {
+                    // _this.jan_code = '';
+                    // $('.loading_image_custom').hide()
+                    // _this.loader = 0
+                })
+
         }
     },
     watch: {
