@@ -142,7 +142,7 @@ class Eestimate_itemController extends Controller
                     'case_unit' => $item['case_unit'],
                     'ball_unit' => $item['ball_unit'],
                     'image' => $item['image_url'],
-                    'customer_id' => $customer->user_id,
+                    'customer_id' => $customer->customer_id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
@@ -238,14 +238,15 @@ class Eestimate_itemController extends Controller
                     'order_point_ball_quantity' => $order_ball,
                     'order_point_unit_quantity' => $order_bara,
                 ]);
+                return response()->json(['status'=>200 ,'type'=>'Custom']);
             }
 
-            return response()->json(['status'=>200 ,'type'=>'Custom']);
+            return response()->json(['status'=>201 ,'type'=>'Custom']);
         }
 
         $item = estimate_item::query()->where('vendor_item_id',$mistumury_id)->first();
         if (!$item) {
-            return response()->json(['status'=>403]);
+            return response()->json(['status'=>201]);
         }
         estimate_item::query()->where('vendor_item_id',$mistumury_id)
             ->update([

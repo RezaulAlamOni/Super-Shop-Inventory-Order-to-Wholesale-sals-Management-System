@@ -1024,6 +1024,7 @@ class VendorController extends Controller
             }
 
         }
+
         if (count($data)) {
 
             $ch = curl_init();

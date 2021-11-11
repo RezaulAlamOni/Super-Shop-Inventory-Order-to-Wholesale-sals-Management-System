@@ -912,9 +912,9 @@ export default {
                     _this.productJans.map(function (pro) {
                         console.log(pro)
                         let data =  [
-                            1,
-                            1,
-                            1,
+                            product.order_point_case_quantity,
+                            product.order_point_ball_quantity,
+                            product.order_point_unit_quantity,
                             pro.customer_id,
                             pro.jan,
                             dtes,
@@ -924,9 +924,9 @@ export default {
                     })
                 } else {
                     let data = [
-                        1,
-                        1,
-                        1,
+                        product.order_point_case_quantity,
+                        product.order_point_ball_quantity,
+                        product.order_point_unit_quantity,
                         product.customer_id,
                         product.jan,
                         dtes,

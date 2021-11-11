@@ -21,7 +21,7 @@ class CustomMisthsumuryProductController extends Controller
         $cus_info = customer::where('user_id',$user_id)->first();
 
         if($cus_info){
-            $products = CustomMisthsumuryProduct::where('customer_id',$user_id)->with('vendor_item')
+            $products = CustomMisthsumuryProduct::where('customer_id',$cus_info->customer_id)->with('vendor_item')
                 ->orderBy('updated_at',$orderBy)->get();
         }else{
             $products =array();
