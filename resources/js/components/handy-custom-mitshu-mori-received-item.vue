@@ -135,9 +135,25 @@
                                             </td>
                                         </tr>
                                         <tr :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
-                                            <td class="text-center" style="font-size: 13px">1<br>(ケース)</td>
-                                            <td class="text-center" style="font-size: 13px">1<br>(ボール)</td>
-                                            <td class="text-center" style="font-size: 13px">1<br>(バラ)</td>
+                                            <td class="text-center" style="font-size: 13px" >
+                                                <input  class="form-control "
+                                                        @keypress="pressAndSave($event,i,'ball')"
+                                                        @click="selectItem($event)"
+                                                        @blur="updateOrderQuantity(product,i,'ball')" :id="'case'+i"
+                                                        v-model="product.order_point_case_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" type="number" value="1" >
+                                                (ケース)</td>
+                                            <td class="text-center" style="font-size: 13px" >
+                                                <input type="number"  class="form-control"
+                                                       @keypress="pressAndSave($event,i,'bara')"
+                                                       @click="selectItem($event)"
+                                                       @blur="updateOrderQuantity(product,i,'bara')" :id="'ball'+i" v-model="product.order_point_ball_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" value="1" >
+                                                (ボール)</td>
+                                            <td class="text-center" style="font-size: 13px" >
+                                                <input type="number" class="form-control"
+                                                       @keypress="pressAndSave($event,i,'case')"
+                                                       @click="selectItem($event)"
+                                                       @blur="updateOrderQuantity(product,i,'case')" :id="'bara'+i" v-model="product.order_point_unit_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" value="1" >
+                                                (バラ)</td>
                                             <td class="text-center">
                                                 <span class="badge badge-success" style="cursor: pointer;margin:2px"
                                                       @click="orderToTonya(product)">発注</span>
@@ -359,6 +375,10 @@ export default {
                         product.selling_price = product.selling_price;
                         product.gross_profit = product.gross_profit;
                         product.gross_profit_margin = product.gross_profit_margin;
+                        product.order_point_case_quantity = product.vendor_item ? product.vendor_item.order_point_case_quantity : 0;
+                        product.order_point_ball_quantity = product.vendor_item ? product.vendor_item.order_point_ball_quantity : 0;
+                        product.order_point_unit_quantity = product.vendor_item ? product.vendor_item.order_point_unit_quantity : 0;
+
                         return product;
                     })
                     console.log(_this.products);
@@ -976,8 +996,41 @@ export default {
             date = +new Date(date);
             var compareDatesBoolean = (now - date) < hour;
             return compareDatesBoolean;
-        }
+        },
+        //
+        pressAndSave(e,index,type){
+            if(e.keyCode == 13) {
+                $('#'+type+index).focus()
+                $('#'+type+index).select()
+            }
+        },
+        // save order quantity
+        updateOrderQuantity(product,index,type) {
+            let _this = this;
+            axios.post(_this.base_url + '/save-mistumury-order-quantity',
+                {
+                    jan_code : product.jan,
+                    id : product.vendor_item_id,
+                    order_case : product.order_point_case_quantity,
+                    order_ball : product.order_point_ball_quantity,
+                    order_bara : product.order_point_unit_quantity,
+                    type : 'custom'
+                })
+                .then(function (response) {
+                    // _this.getProducts()
 
+                })
+                .then(function (er) {
+
+                })
+                .finally(function () {
+                    // _this.jan_code = '';
+                    // $('.loading_image_custom').hide()
+                    // _this.loader = 0
+                })
+
+        },
+        //
     },
     watch: {
         productJans : function (val) {

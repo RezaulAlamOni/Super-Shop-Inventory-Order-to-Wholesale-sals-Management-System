@@ -228,9 +228,25 @@ class Eestimate_itemController extends Controller
         $order_case = $request->order_case;
         $order_ball = $request->order_ball;
         $order_bara = $request->order_bara;
+        $type = $request->type;
+
+        if ($type == 'custom') {
+            $item = vendor_item::query()->where('jan',$request->jan_code);;
+            if ($item->first()) {
+                $item->update([
+                    'order_point_case_quantity' => $order_case,
+                    'order_point_ball_quantity' => $order_ball,
+                    'order_point_unit_quantity' => $order_bara,
+                ]);
+            }
+
+            return response()->json(['status'=>200 ,'type'=>'Custom']);
+        }
 
         $item = estimate_item::query()->where('vendor_item_id',$mistumury_id)->first();
-
+        if (!$item) {
+            return response()->json(['status'=>403]);
+        }
         estimate_item::query()->where('vendor_item_id',$mistumury_id)
             ->update([
                 'order_point_case_quantity' => $order_case,

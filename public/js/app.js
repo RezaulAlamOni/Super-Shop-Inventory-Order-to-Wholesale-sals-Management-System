@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-inventory-inquiry","1":"handy-product-order-place-kouri","2":"handy-vandor-master","3":"handy-product-order-receive","4":"handy-product-order-place","5":"handy-product-inventory-tmp-tana-update","6":"handy-product-inventory-return","7":"handy-mitsumury","8":"handy-customer-master","9":"handy-product-custom-mistumory","10":"barcode-scan","11":"handy-product-order-mail","12":"handy-product-order-confirm-kouri","13":"handy-product-online-order-kouri","14":"handy-order-shipment-list","15":"admin-super-manage","16":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"645eaa86f998c31160ba","1":"1456e5e7fbf289dc6591","2":"fc1fcbf5cc5e3ff74107","3":"5a5bb3f55a607713caf3","4":"fba325fa0f8467108dd2","5":"7b00347a91c79b3d65d8","6":"178fe7ecb250f6fa58e9","7":"cd77a1b4ade8c0a6efa9","8":"b8284a19ba1c01d42e63","9":"a5b1ec793384a06a2fe0","10":"8b63738db2396ecea4e1","11":"cc4c25da127c26e1dbe4","12":"a4620cf2eea58a3b7b3a","13":"4f49654bf1969cbc96e0","14":"bd82fe5af251aeb7c570","15":"9501bc9846a22645412a","16":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-inventory-inquiry","1":"handy-product-order-place-kouri","2":"handy-vandor-master","3":"handy-product-order-receive","4":"handy-product-order-place","5":"handy-product-inventory-tmp-tana-update","6":"handy-product-inventory-return","7":"handy-mitsumury","8":"handy-customer-master","9":"handy-product-custom-mistumory","10":"barcode-scan","11":"handy-product-order-mail","12":"handy-product-order-confirm-kouri","13":"handy-product-online-order-kouri","14":"handy-order-shipment-list","15":"admin-super-manage","16":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"8903a7078dbddba91d0b","1":"a936035c0e8fbafd01fa","2":"f12d919befddc03e1733","3":"d6547c9b82bbcd574f9a","4":"fdf87640e71e0de43a24","5":"ab2fa96e1169259cd257","6":"53c1f862e9bec98a6e29","7":"78066e81a38f04244899","8":"7a4eed1973a7a6b74568","9":"4f1edcd578adf96a8e21","10":"37660b3c0a5312846fef","11":"d1458027e97cecc32e81","12":"6c60f34fd3571c095bb4","13":"c19699cad86d99d882d8","14":"4e7b122945c651032dff","15":"96642b83ada284522f43","16":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -6088,89 +6088,6 @@ module.exports = {
 
 })));
 //# sourceMappingURL=bootstrap.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/lib/css-base.js":
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
 
 
 /***/ }),
