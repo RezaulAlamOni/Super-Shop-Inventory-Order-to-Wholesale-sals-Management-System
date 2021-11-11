@@ -1017,7 +1017,12 @@ export default {
                     type : 'custom'
                 })
                 .then(function (response) {
-                    // _this.getProducts()
+
+                    if (response.data.status == 201){
+                        _this.getProducts()
+                        $('#handy-navi').show()
+                        _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。。</li>';
+                    }
 
                 })
                 .then(function (er) {
