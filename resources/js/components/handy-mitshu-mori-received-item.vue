@@ -81,15 +81,27 @@
                                 <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
                                     <thead data-v-c9953dda="">
                                     <tr data-v-c9953dda="">
-                                        <th colspan="5" style="width: 50px; text-align: left; padding: 5px;height: 40px !important;">
+                                        <th class="p-0" style="border: none !important;">
                                             <input class="form-check-input check-all m-0" id="flexCheck"
                                                    style="height: 20px;width: 20px"
-                                                   @click="selectAll()" v-model="allSelected" type="checkbox" value="" >
-                                            <label class="form-check-label " style="margin-left: 30px;font-weight: bold" for="flexCheck">
+                                                   @click="selectAll()" v-model="allSelected" type="checkbox" value="">
+                                            <label class="form-check-label " style="margin-left: 30px;font-weight: bold"
+                                                   for="flexCheck">
                                                 全て
                                             </label>
+                                        </th>
+                                        <th class="p-0" style="border: none !important;">
+                                            <select class="form-control" aria-label="Default select example" v-model="shop_id"
+                                                    style="width: 100px;">
+                                                <option v-for="shop in shops" :value="shop.customer_shop_id">{{ shop.shop_name }}</option>
+                                            </select>
+
+                                        </th>
+                                        <th colspan="3"
+                                            style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
+
                                             <span class="badge badge-success float-right ml-2"
-                                                  style="font-size: 15px" >
+                                                  style="font-size: 15px">
                                                 <a href="handy-receive-custom-mitshumori" class="text-white"> 新見積 </a>
                                             </span>
                                             <span class="badge badge-success float-right" v-if="productJans.length > 0"
@@ -123,7 +135,7 @@
                                     </thead>
                                     <tbody data-v-c9953dda="" class="physicaltbody">
                                     <template v-for="(product,i) in products">
-                                        <tr >
+                                        <tr>
                                             <td rowspan="2" data-v-c9953dda="" style="position:relative;">
                                                 <!--<input data-v-c9953dda="" type="tel" id="special-price"
                                                        v-model="product.sale_selling_price"
@@ -155,12 +167,13 @@
                                                        @keyup="calculatePrice('sell')"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                             </td>
-                                            <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''" >
+                                            <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                                 <input data-v-c9953dda="" type="tel" id="profit"
-                                                       @click="selectItem($event)" :value="product.selling_price - product.cost_price"
-                                                       class="form-control  "  readonly
+                                                       @click="selectItem($event)"
+                                                       :value="product.selling_price - product.cost_price"
+                                                       class="form-control  " readonly
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">
-<!--                                                v-model="product.gross_profit"-->
+                                                <!--                                                v-model="product.gross_profit"-->
                                                 <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
                                                 <!--                                               @keyup="calculatePrice('profit')"-->
                                             </td>
@@ -175,24 +188,36 @@
                                             </td>
                                         </tr>
                                         <tr :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
-                                            <td class="text-center" style="font-size: 13px" >
-                                                <input  class="form-control "
-                                                        @keypress="pressAndSave($event,i,'ball')"
-                                                        @click="selectItem($event)"
-                                                        @blur="updateOrderQuantity(product,i,'ball')" :id="'case'+i" v-model="product.order_point_case_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" type="number" value="1" >
-                                                <br>(ケース)</td>
-                                            <td class="text-center" style="font-size: 13px" >
-                                                <input type="number"  class="form-control"
+                                            <td class="text-center" style="font-size: 13px">
+                                                <input class="form-control "
+                                                       @keypress="pressAndSave($event,i,'ball')"
+                                                       @click="selectItem($event)"
+                                                       @blur="updateOrderQuantity(product,i,'ball')" :id="'case'+i"
+                                                       v-model="product.order_point_case_quantity"
+                                                       style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
+                                                       type="number" value="1">
+                                                <br>(ケース)
+                                            </td>
+                                            <td class="text-center" style="font-size: 13px">
+                                                <input type="number" class="form-control"
                                                        @keypress="pressAndSave($event,i,'bara')"
                                                        @click="selectItem($event)"
-                                                       @blur="updateOrderQuantity(product,i,'bara')" :id="'ball'+i" v-model="product.order_point_ball_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" value="1" >
-                                                <br>(ボール)</td>
-                                            <td class="text-center" style="font-size: 13px" >
+                                                       @blur="updateOrderQuantity(product,i,'bara')" :id="'ball'+i"
+                                                       v-model="product.order_point_ball_quantity"
+                                                       style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
+                                                       value="1">
+                                                <br>(ボール)
+                                            </td>
+                                            <td class="text-center" style="font-size: 13px">
                                                 <input type="number" class="form-control"
                                                        @keypress="pressAndSave($event,i,'case')"
                                                        @click="selectItem($event)"
-                                                       @blur="updateOrderQuantity(product,i,'case')" :id="'bara'+i" v-model="product.order_point_unit_quantity" style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;" value="1" >
-                                                <br>(バラ)</td>
+                                                       @blur="updateOrderQuantity(product,i,'case')" :id="'bara'+i"
+                                                       v-model="product.order_point_unit_quantity"
+                                                       style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
+                                                       value="1">
+                                                <br>(バラ)
+                                            </td>
                                             <td class="text-center">
                                                 <span class="badge badge-success" style="cursor: pointer;margin:2px"
                                                       @click="orderToTonya(product)">発注</span>
@@ -282,7 +307,8 @@
                                     </td>
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
-                                               class="form-control  " :value="preview_product.sell-preview_product.cost" readonly
+                                               class="form-control  " :value="preview_product.sell-preview_product.cost"
+                                               readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                         <!--                                               @keypress="pressEnterAndSave($event,'profit_margin')"-->
                                         <!--                                               @keyup="calculatePrice('profit')"-->
@@ -368,8 +394,10 @@ export default {
             maker_id: 0,
             vendors: [],
             images: [],
-            productJans : [],
+            productJans: [],
             allSelected: false,
+            shops: [],
+            shop_id : null
 
         }
     },
@@ -396,6 +424,8 @@ export default {
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
+                    _this.shops = data.shops;
+                    _this.shop_id = _this.shops[0].customer_shop_id;
                     _this.products = _this.products.map(function (product) {
                         product.cost_price = product.cost_price;
                         product.selling_price = product.selling_price;
@@ -1007,7 +1037,7 @@ export default {
 
         },
         //
-        checkDateOlderHour(date){
+        checkDateOlderHour(date) {
             let hour = 60 * 60 * 24 * 1000;
             let now = +new Date();
             date = +new Date(date);
@@ -1015,18 +1045,18 @@ export default {
             return compareDatesBoolean;
         },
         // save order quantity
-        updateOrderQuantity(product,index,type) {
+        updateOrderQuantity(product, index, type) {
             let _this = this;
 
 
             axios.post(_this.base_url + '/save-mistumury-order-quantity',
                 {
-                    jan_code : product.jan,
-                    id : product.vendor_item_id,
-                    order_case : product.order_point_case_quantity,
-                    order_ball : product.order_point_ball_quantity,
-                    order_bara : product.order_point_unit_quantity,
-                    type : ''
+                    jan_code: product.jan,
+                    id: product.vendor_item_id,
+                    order_case: product.order_point_case_quantity,
+                    order_ball: product.order_point_ball_quantity,
+                    order_bara: product.order_point_unit_quantity,
+                    type: ''
                 })
                 .then(function (response) {
                     // _this.getProducts()
@@ -1043,18 +1073,18 @@ export default {
 
         },
         //
-        pressAndSave(e,index,type){
-            if(e.keyCode == 13) {
-                $('#'+type+index).focus()
-                $('#'+type+index).select()
+        pressAndSave(e, index, type) {
+            if (e.keyCode == 13) {
+                $('#' + type + index).focus()
+                $('#' + type + index).select()
             }
         }
     },
     watch: {
-        productJans : function (val) {
+        productJans: function (val) {
             if (this.productJans.length == this.products.length) {
                 this.allSelected = 1;
-            } else  {
+            } else {
                 this.allSelected = 0;
             }
         }
