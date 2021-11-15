@@ -941,6 +941,7 @@ class VendorController extends Controller
             }
 
             $order_->item_ifo = $item_info;
+            $order_->shop_id = $val[7];
             array_push($data, $order_);
 
         }
@@ -1017,6 +1018,7 @@ class VendorController extends Controller
                 }
 
                 $order_->item_ifo = $item_info;
+                $order_->shop_id = $val[7];
                 array_push($data, $order_);
 
             } else {
@@ -1024,7 +1026,6 @@ class VendorController extends Controller
             }
 
         }
-
         if (count($data)) {
 
             $ch = curl_init();

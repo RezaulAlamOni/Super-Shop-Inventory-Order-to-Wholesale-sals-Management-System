@@ -47,7 +47,7 @@
                                             </label>
                                         </th>
                                         <th colspan="2" class="p-0" style="border: none !important;">
-                                            <select class="form-control" aria-label="Default select example"  v-if="productJans.length > 0"
+                                            <select class="form-control" aria-label="Default select example"
                                                     v-model="shop_id"
                                                     style="width: 100px;">
                                                 <option v-for="shop in shops" :value="shop.customer_shop_id">
@@ -946,7 +946,8 @@ export default {
                             pro.customer_id,
                             pro.jan,
                             dtes,
-                            Math.floor(100000 + Math.random() * 900000)
+                            Math.floor(100000 + Math.random() * 900000),
+                            _this.shop_id
                         ]
                         data_array.push(data)
                     })
@@ -958,7 +959,8 @@ export default {
                         product.customer_id,
                         product.jan,
                         dtes,
-                        Math.floor(100000 + Math.random() * 900000)
+                        Math.floor(100000 + Math.random() * 900000),
+                        _this.shop_id
                     ]
                     data_array.push(data)
                 }
