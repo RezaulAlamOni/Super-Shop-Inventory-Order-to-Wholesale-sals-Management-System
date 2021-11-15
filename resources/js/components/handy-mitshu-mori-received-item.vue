@@ -933,9 +933,9 @@ export default {
                 if (product == null) {
                     _this.productJans.map(function (pro) {
                         let data = [
-                            product.order_point_case_quantity,
-                            product.order_point_ball_quantity,
-                            product.order_point_unit_quantity,
+                            pro.order_point_case_quantity,
+                            pro.order_point_ball_quantity,
+                            pro.order_point_unit_quantity,
                             pro.customer_id,
                             pro.vendor_item_id,
                             dtes,

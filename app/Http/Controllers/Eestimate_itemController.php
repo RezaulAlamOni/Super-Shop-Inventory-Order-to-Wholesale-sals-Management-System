@@ -7,6 +7,7 @@ use App\Traits\FCM;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\QRGenController;
+use Illuminate\Support\Facades\Http;
 use Rap2hpoutre\FastExcel\FastExcel;
 use App\customer;
 use App\jan;
@@ -38,6 +39,15 @@ class Eestimate_itemController extends Controller
             $products = estimate_item::with('janinfo')->where('customer_id',$cus_info->customer_id)->groupBy('jan')->orderBy('updated_at',$orderBy)->get();
         }else{
             $products =array();
+        }
+
+        try {
+
+            $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/customer-shops/".$cus_info->customer_id;
+            $shops = Http::get($url);
+            return  response()->json(['products'=> $products,'shops' => $shops['shops']]);
+        } catch (\Exception $exception) {
+
         }
         return  response()->json(['products'=> $products]);
     }
