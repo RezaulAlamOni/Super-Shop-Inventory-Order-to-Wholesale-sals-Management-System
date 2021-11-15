@@ -6,6 +6,7 @@ use App\customer;
 use App\CustomMisthsumuryProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class CustomMisthsumuryProductController extends Controller
 {
@@ -25,6 +26,14 @@ class CustomMisthsumuryProductController extends Controller
                 ->orderBy('updated_at',$orderBy)->get();
         }else{
             $products =array();
+        }
+        try {
+
+            $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/customer-shops/".$cus_info->customer_id;
+            $shops = Http::get($url);
+            return  response()->json(['products'=> $products,'shops' => $shops['shops']]);
+        } catch (\Exception $exception) {
+
         }
         return  response()->json(['products'=> $products]);
     }

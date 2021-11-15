@@ -81,6 +81,7 @@
                                 <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
                                     <thead data-v-c9953dda="">
                                     <tr data-v-c9953dda="">
+
                                         <th class="p-0" style="border: none !important;">
                                             <input class="form-check-input check-all m-0" id="flexCheck"
                                                    style="height: 20px;width: 20px"
@@ -90,14 +91,14 @@
                                                 全て
                                             </label>
                                         </th>
-                                        <th class="p-0" style="border: none !important;">
-                                            <select class="form-control" aria-label="Default select example" v-model="shop_id"
+                                        <th colspan="2" class="p-0" style="border: none !important;">
+                                            <select class="form-control" aria-label="Default select example" v-model="shop_id" v-if="productJans.length > 0"
                                                     style="width: 100px;">
                                                 <option v-for="shop in shops" :value="shop.customer_shop_id">{{ shop.shop_name }}</option>
                                             </select>
 
                                         </th>
-                                        <th colspan="3"
+                                        <th colspan="2"
                                             style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
 
                                             <span class="badge badge-success float-right ml-2"
@@ -108,7 +109,6 @@
                                                   style="padding: 7px 15px;font-size: 15px"
                                                   @click="orderToTonya()">発注</span>
                                         </th>
-
                                         <!--                                        <th colspan="2" style="width: 50px; text-align: center; padding: 5px;">-->
                                         <!--                                            ％-->
                                         <!--                                        </th>-->
@@ -178,7 +178,7 @@
                                                 <!--                                               @keyup="calculatePrice('profit')"-->
                                             </td>
                                             <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
-                                                <input data-v-c9953dda="" type="tel" id="profit_margin"
+                                                <input data-v-c9953dda="" type="tel" id="profit_margin_"
                                                        @click="selectItem($event)"
                                                        @blur="blurAndSave()"
                                                        @keypress="pressEnterAndSave($event,'special-price')"
@@ -290,7 +290,7 @@
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="cost" @click="selectItem($event)"
+                                        <input data-v-c9953dda="" type="tel" id="cost_" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.cost"
                                                @blur="blurAndSave()"
                                                @keypress="pressEnterAndSave($event,'sell')"
@@ -298,7 +298,7 @@
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
+                                        <input data-v-c9953dda="" type="tel" id="sell_" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.sell"
                                                @keypress="pressEnterAndSave($event,'profit_margin')"
                                                @blur="blurAndSave()"
@@ -306,7 +306,7 @@
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                     </td>
                                     <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
+                                        <input data-v-c9953dda="" type="tel" id="profit_" @click="selectItem($event)"
                                                class="form-control  " :value="preview_product.sell-preview_product.cost"
                                                readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
