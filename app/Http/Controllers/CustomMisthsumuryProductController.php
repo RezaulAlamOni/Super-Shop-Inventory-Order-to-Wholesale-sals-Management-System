@@ -38,6 +38,15 @@ class CustomMisthsumuryProductController extends Controller
         return  response()->json(['products'=> $products]);
     }
 
+    public function custom_products_master()
+    {
+        $title = "Dashboard";
+        $active = 'handy_receive_custom_mitshumori';
+        return view('backend.handy_pages.custom_master_product', compact('title', 'active'));
+//
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

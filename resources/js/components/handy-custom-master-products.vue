@@ -368,7 +368,7 @@ import {StreamBarcodeReader} from "vue-barcode-reader";
 
 export default {
     props: ['base_url'],
-    name: "handy-custom-mistumury",
+    name: "handy-custom-master-products",
     data() {
         return {
             jan_code: '',
