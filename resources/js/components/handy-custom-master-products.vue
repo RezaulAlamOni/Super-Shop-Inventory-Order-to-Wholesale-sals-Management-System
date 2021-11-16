@@ -198,8 +198,8 @@
                                             <td class="text-center">
                                                 <span class="badge badge-success" style="cursor: pointer;margin:2px"
                                                       @click="orderToTonya(product)">発注</span>
-                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"
-                                                      @click="storeToMaster(product)">採用</span>
+<!--                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"-->
+<!--                                                      @click="storeToMaster(product)">採用</span>-->
                                             </td>
                                         </tr>
                                     </template>
@@ -396,7 +396,7 @@ export default {
         this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg', '69813_11.png', '69813_11.png', 'Whocoded.jpg'];
         $('#jan_').focus()
         $('#jan_').select()
-        this.handi_navi = '商品を押してください';
+        this.handi_navi = '採用リスト確認お願いします';
         $('#handy-navi').show();
         this.getVendorList();
         this.getProducts();
