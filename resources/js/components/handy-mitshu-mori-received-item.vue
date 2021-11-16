@@ -81,6 +81,24 @@
                                 <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
                                     <thead data-v-c9953dda="">
                                     <tr data-v-c9953dda="">
+                                        <th colspan="5"
+                                            style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
+                                            <span class="badge badge-primary float-right ml-2"
+                                                  style="font-size: 15px">
+                                                <a href="handy-custom-products" class="text-white"> 採用リスト </a>
+                                            </span>
+
+                                            <span class="badge badge-primary float-right"
+                                                  style="padding: 5px 10px;font-size: 15px">
+                                                <a href="#" class="text-white"> 発注リスト </a>
+                                            </span>
+                                        </th>
+
+                                        <!--                                        <th colspan="2" style="width: 50px; text-align: center; padding: 5px;">-->
+                                        <!--                                            ％-->
+                                        <!--                                        </th>-->
+                                    </tr>
+                                    <tr data-v-c9953dda="">
 
                                         <th class="p-0" style="border: none !important;">
                                             <input class="form-check-input check-all m-0" id="flexCheck"
