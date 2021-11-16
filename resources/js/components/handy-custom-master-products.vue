@@ -6,7 +6,7 @@
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
                         <span class="pull-left">
-                            スーパー見積り
+                            採用リスト
                         </span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right top-button"
@@ -41,12 +41,12 @@
                                             style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
                                             <span class="badge badge-primary float-right ml-2"
                                                   style="font-size: 15px">
-                                                <a href="handy-custom-products" class="text-white"> 採用 </a>
+                                                <a href="handy-custom-products" class="text-white"> 採用リスト </a>
                                             </span>
 
                                             <span class="badge badge-primary float-right"
                                                   style="padding: 5px 10px;font-size: 15px">
-                                                <a href="#" class="text-white"> 採用 </a>
+                                                <a href="#" class="text-white"> 発注リスト </a>
                                             </span>
                                         </th>
 
@@ -410,7 +410,7 @@ export default {
             //     _this.orderBy = 'DESC';
             // }
 
-            axios.post(this.base_url + '/get-all-custom-mistumory-products', {orderBy: _this.orderBy})
+            axios.post(this.base_url + '/get-all-custom-master-products', {orderBy: _this.orderBy})
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;

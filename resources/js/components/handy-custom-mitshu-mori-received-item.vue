@@ -41,12 +41,12 @@
                                             style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
                                             <span class="badge badge-primary float-right ml-2"
                                                   style="font-size: 15px">
-                                                <a href="handy-custom-products" class="text-white"> 採用 </a>
+                                                <a href="handy-custom-products" class="text-white"> 採用リスト </a>
                                             </span>
 
                                             <span class="badge badge-primary float-right"
                                                   style="padding: 5px 10px;font-size: 15px">
-                                                <a href="#" class="text-white"> 採用 </a>
+                                                <a href="#" class="text-white"> 発注リスト </a>
                                             </span>
                                         </th>
 
