@@ -46,7 +46,7 @@
 
                                             <span class="badge badge-primary float-right"
                                                   style="padding: 5px 10px;font-size: 15px">
-                                                <a href="#" class="text-white"> 発注リスト </a>
+                                                <a href="handy-product-orders" class="text-white"> 発注リスト </a>
                                             </span>
                                         </th>
 

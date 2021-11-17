@@ -339,7 +339,9 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::post('/save-mistumury-order-quantity', 'Eestimate_itemController@saveOrderQuentity')->name('handy.receive.mitshumori.saveOrderQuentity');
     Route::post('/get-all-custom-mistumory-products', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'index'])->name('custom.mitsumury.get.products'); // Oni for new design handy
     Route::post('/get-all-custom-master-products', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'allCustomProductsMaster']); // Oni for new design handy
+    Route::get('/get-all-mistumury-product-orders', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'allCustomProductsMaster']); // Oni for new design handy
     Route::get('/handy-custom-products', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'custom_products_master'])->name('custom_products_master'); // Oni for new design handy
+    Route::get('/handy-product-orders', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'custom_product_order_master'])->name('custom_product_order_master'); // Oni for new design handy
 
 
 });

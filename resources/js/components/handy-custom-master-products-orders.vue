@@ -6,7 +6,7 @@
                 <div class="well" style="border: 3px solid #428bca;">
                     <div class="header col-md-12 col-xs-12" style="font-size: 18px; padding: 10px;">
                         <span class="pull-left">
-                            スーパー見積り
+                             発注リスト
                         </span>
                         <!-- <button id="handy_shipment_item_insert" class="btn btn-primary pull-right" style="float:right"> 送信</button>&nbsp;-->
                         <a :href="base_url+'/android_home'" class="btn btn-primary pull-right top-button"
@@ -23,54 +23,10 @@
 
                     </div>
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
-                        <!--<div class="input-group m-0 my-1">
-                            <input type="tel" class="form-control" placeholder="JANコードスキャン（13桁）"
-                                   style="border-radius: 0px;padding: 5px;font-size: 16px;" autofocus
-                                   v-model="jan_code" id="jan_"
-                                   name="scan_by_jan_for_stock_detail"
-                                   v-on:keyup="checkAndGetData($event)"
-                                   @blur="checkAndGetData($event)"
-                                   @paste="checkAndGetData($event)"
-                                   @input="checkAndGetData($event)"
-                                   aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">次へ</button>
-                            </div>
-                        </div>-->
+
                         <div class="form-group m-0">
 
-                            <!--                            <input type="tel" id="jan_input" class="form-control custom-input"-->
-                            <!--                                   v-model="jan_code"-->
-                            <!--                                   style="padding: 5px 10px !important;height: 45px !important; margin: 5px 0 !important;"-->
-                            <!--                                   name="scan_by_jan_for_stock_detail"-->
-                            <!--                                   v-on:keyup="checkAndGetData($event)"-->
-                            <!--                                   @blur="checkAndGetData($event)"-->
-                            <!--                                   @paste="checkAndGetData($event)"-->
-                            <!--                                   @input="checkAndGetData($event)"-->
-                            <!--                                   placeholder="JANコードスキャン（13桁）" autofocus>-->
-
-
-                            <!--                                    <button type="button" @click="alertForIos" onclick="$('#jan_input').focus()"-->
-                            <!--                                            class="hide btn custom-btn btn-primary text-right show_inline search-button-ios "-->
-                            <!--                                            style="float: left;width: 100px">-->
-                            <!--                                        音声-->
-                            <!--                                    </button>-->
-                            <!--                                    <text-recognition :base_url="base_url"-->
-                            <!--                                                      @getSearchData="getSearchData"-->
-                            <!--                                                      @clearInput="clearInput"></text-recognition>-->
-
-                            <!--                                    <button type="button" @click="getBarCodeScan()"-->
-                            <!--                                            class="pr-0 ml-1 btn custom-btn btn-primary text-right show_inline search-button"-->
-                            <!--                                            style="padding:0;float: left;width: 70px !important;">-->
-                            <!--                                        <i class="fa fa-barcode" style="font-size: 40px"></i>-->
-                            <!--                                    </button>-->
-                            <!--                            <button type="button" v-on:click="getOrderDataByJan()"-->
-                            <!--                                    style="margin: 0px;width: 80px !important; height: 40px;height: 30px !important;line-height: 18px !important;font-size: 18px !important;"-->
-                            <!--                                    class="btn custom-btn btn-primary pull-right text-right show_inline">-->
-                            <!--                                次へ-->
-                            <!--                            </button>-->
                         </div>
-
 
                     </div>
 
@@ -99,34 +55,37 @@
                                         <!--                                        </th>-->
                                     </tr>
                                     <tr data-v-c9953dda="">
-
                                         <th class="p-0" style="border: none !important;">
-                                            <input class="form-check-input check-all m-0" id="flexCheck"
+                                            <input class="form-check-input check-all m-0" id="flexCheck_"
                                                    style="height: 20px;width: 20px"
                                                    @click="selectAll()" v-model="allSelected" type="checkbox" value="">
                                             <label class="form-check-label " style="margin-left: 30px;font-weight: bold"
-                                                   for="flexCheck">
+                                                   for="flexCheck_">
                                                 全て
                                             </label>
                                         </th>
                                         <th colspan="2" class="p-0" style="border: none !important;">
-                                            <select class="form-control" aria-label="Default select example" v-model="shop_id"
+                                            <select class="form-control" aria-label="Default select example"
+                                                    v-model="shop_id"
                                                     style="width: 100px;">
-                                                <option v-for="shop in shops" :value="shop.customer_shop_id">{{ shop.shop_name }}</option>
+                                                <option v-for="shop in shops" :value="shop.customer_shop_id">
+                                                    {{ shop.shop_name }}
+                                                </option>
                                             </select>
 
                                         </th>
                                         <th colspan="2"
                                             style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
-
                                             <span class="badge badge-success float-right ml-2"
                                                   style="font-size: 15px">
-                                                <a href="handy-receive-custom-mitshumori" class="text-white"> 新見積 </a>
+                                                <a href="handy_receive_mitshumori" class="text-white"> 戻る </a>
                                             </span>
+
                                             <span class="badge badge-success float-right" v-if="productJans.length > 0"
                                                   style="padding: 7px 15px;font-size: 15px"
                                                   @click="orderToTonya()">発注</span>
                                         </th>
+
                                         <!--                                        <th colspan="2" style="width: 50px; text-align: center; padding: 5px;">-->
                                         <!--                                            ％-->
                                         <!--                                        </th>-->
@@ -153,14 +112,14 @@
                                     </thead>
                                     <tbody data-v-c9953dda="" class="physicaltbody">
                                     <template v-for="(product,i) in products">
-                                        <tr>
+                                        <tr :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
                                             <td rowspan="2" data-v-c9953dda="" style="position:relative;">
                                                 <!--<input data-v-c9953dda="" type="tel" id="special-price"
                                                        v-model="product.sale_selling_price"
                                                        class="form-control  " @click="selectItem($event)"
                                                        @keypress="pressEnterAndSave($event,'cost')"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
-                                                <img :src="'public/backend/images/products/'+product.jan+'.png'"
+                                                <img :src="product.image"
                                                      class="img-thumbnail custom-img"
                                                      alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                                      style="cursor: pointer" width="100px">
@@ -168,7 +127,7 @@
                                                        v-model="productJans" :value="product">
                                             </td>
                                             <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
-                                                <input data-v-c9953dda="" type="tel" id="cost"
+                                                <input data-v-c9953dda="" type="tel" id="cost_"
                                                        @click="selectItem($event)"
                                                        class="form-control  " v-model="product.cost_price"
                                                        @blur="blurAndSave()"
@@ -177,7 +136,7 @@
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                             </td>
                                             <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
-                                                <input data-v-c9953dda="" type="tel" id="sell"
+                                                <input data-v-c9953dda="" type="tel" id="sell_"
                                                        @click="selectItem($event)"
                                                        class="form-control  " v-model="product.selling_price"
                                                        @keypress="pressEnterAndSave($event,'profit_margin')" readonly
@@ -186,7 +145,7 @@
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">
                                             </td>
                                             <td :class="checkDateOlderHour(product.updated_at) ? 'back-ground' : ''">
-                                                <input data-v-c9953dda="" type="tel" id="profit"
+                                                <input data-v-c9953dda="" type="tel" id="profit_"
                                                        @click="selectItem($event)"
                                                        :value="product.selling_price - product.cost_price"
                                                        class="form-control  " readonly
@@ -214,7 +173,7 @@
                                                        v-model="product.order_point_case_quantity"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
                                                        type="number" value="1">
-                                                <br>(ケース)
+                                                (ケース)
                                             </td>
                                             <td class="text-center" style="font-size: 13px">
                                                 <input type="number" class="form-control"
@@ -224,7 +183,7 @@
                                                        v-model="product.order_point_ball_quantity"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
                                                        value="1">
-                                                <br>(ボール)
+                                                (ボール)
                                             </td>
                                             <td class="text-center" style="font-size: 13px">
                                                 <input type="number" class="form-control"
@@ -234,13 +193,13 @@
                                                        v-model="product.order_point_unit_quantity"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
                                                        value="1">
-                                                <br>(バラ)
+                                                (バラ)
                                             </td>
                                             <td class="text-center">
                                                 <span class="badge badge-success" style="cursor: pointer;margin:2px"
                                                       @click="orderToTonya(product)">発注</span>
-                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"
-                                                      @click="storeToMaster(product)">採用</span>
+<!--                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"-->
+<!--                                                      @click="storeToMaster(product)">採用</span>-->
                                             </td>
                                         </tr>
                                     </template>
@@ -273,7 +232,7 @@
                         </div>
                         <div>
                             <img
-                                :src="'public/backend/images/products/'+preview_product.jan+'.png'"
+                                :src="preview_product.image"
                                 class="img-thumbnail custom-img-preview" alt="Cinque Terre"
                                 style="cursor: pointer">
                         </div>
@@ -304,27 +263,30 @@
                                         <input data-v-c9953dda="" type="tel" id="special-price"
                                                v-model="preview_product.sale_selling_price"
                                                class="form-control  " @click="selectItem($event)"
-                                               @keypress="pressEnterAndSave($event,'cost')" readonly
+                                               readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                        <!--                                        @keypress="pressEnterAndSave($event,'cost')"-->
                                     </td>
                                     <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="cost_" @click="selectItem($event)"
+                                        <input data-v-c9953dda="" type="tel" id="cost" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.cost"
-                                               @blur="blurAndSave()"
-                                               @keypress="pressEnterAndSave($event,'sell')"
-                                               @keyup="calculatePrice('cost')" readonly
+                                               readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                        <!--                                        @blur="blurAndSave()"-->
+                                        <!--                                        @keypress="pressEnterAndSave($event,'sell')"-->
+                                        <!--                                        @keyup="calculatePrice('cost')"-->
                                     </td>
                                     <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="sell_" @click="selectItem($event)"
+                                        <input data-v-c9953dda="" type="tel" id="sell" @click="selectItem($event)"
                                                class="form-control  " v-model="preview_product.sell"
-                                               @keypress="pressEnterAndSave($event,'profit_margin')"
-                                               @blur="blurAndSave()"
-                                               @keyup="calculatePrice('sell')" readonly
+                                               readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                        <!--                                        @keypress="pressEnterAndSave($event,'profit_margin')"-->
+                                        <!--                                        @blur="blurAndSave()"-->
+                                        <!--                                        @keyup="calculatePrice('sell')"-->
                                     </td>
                                     <td data-v-c9953dda="">
-                                        <input data-v-c9953dda="" type="tel" id="profit_" @click="selectItem($event)"
+                                        <input data-v-c9953dda="" type="tel" id="profit" @click="selectItem($event)"
                                                class="form-control  " :value="preview_product.sell-preview_product.cost"
                                                readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
@@ -334,16 +296,26 @@
                                     <td data-v-c9953dda="">
                                         <input data-v-c9953dda="" type="tel" id="profit_margin"
                                                @click="selectItem($event)"
-                                               @blur="blurAndSave()"
-                                               @keypress="pressEnterAndSave($event,'special-price')"
                                                class="form-control  " v-model="preview_product.profit_margin"
-                                               @keyup="calculatePrice('profit_margin')" readonly
+                                               readonly
                                                style="border-radius: 0px; text-align: center; padding: 7px 0px;">
+                                        <!--                                        @blur="blurAndSave()"-->
+                                        <!--                                        @keypress="pressEnterAndSave($event,'special-price')"-->
+                                        <!--                                        @keyup="calculatePrice('profit_margin')"-->
                                     </td>
 
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="detail-pro">
+                            {{ preview_product.jan }}
+                        </div>
+                        <div class="detail-pro">
+                            {{ preview_product.vendor_name }}
+                        </div>
+                        <div class="detail-pro">
+                            {{ preview_product.created_at }}
                         </div>
                         <div class="form-group" style="display: none">
                             <select class="form-control" id="vendprs" v-model="maker_id"
@@ -396,7 +368,7 @@ import {StreamBarcodeReader} from "vue-barcode-reader";
 
 export default {
     props: ['base_url'],
-    name: "handy-mistumury",
+    name: "handy-custom-master-products-orders",
     data() {
         return {
             jan_code: '',
@@ -415,7 +387,7 @@ export default {
             productJans: [],
             allSelected: false,
             shops: [],
-            shop_id : null
+            shop_id: null
 
         }
     },
@@ -424,7 +396,7 @@ export default {
         this.images = ['57.jpg', 'cocacola.jpeg', 's-l1600.jpg', 'fish.jpeg', '4901005109803.jpg', '69813_11.png', '69813_11.png', 'Whocoded.jpg'];
         $('#jan_').focus()
         $('#jan_').select()
-        this.handi_navi = '商品を押してください';
+        this.handi_navi = '採用リスト確認お願いします';
         $('#handy-navi').show();
         this.getVendorList();
         this.getProducts();
@@ -438,7 +410,7 @@ export default {
             //     _this.orderBy = 'DESC';
             // }
 
-            axios.post(this.base_url + '/get-all-products-from-estimation', {orderBy: _this.orderBy})
+            axios.post(this.base_url + '/get-all-custom-master-products', {orderBy: _this.orderBy})
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;
@@ -449,6 +421,10 @@ export default {
                         product.selling_price = product.selling_price;
                         product.gross_profit = product.gross_profit;
                         product.gross_profit_margin = product.gross_profit_margin;
+                        product.order_point_case_quantity = product.vendor_item ? product.vendor_item.order_point_case_quantity : 0;
+                        product.order_point_ball_quantity = product.vendor_item ? product.vendor_item.order_point_ball_quantity : 0;
+                        product.order_point_unit_quantity = product.vendor_item ? product.vendor_item.order_point_unit_quantity : 0;
+
                         return product;
                     })
                     console.log(_this.products);
@@ -496,7 +472,7 @@ export default {
             // $('#handy-navi').show();
         },
         viewInfoForImage(product, img) {
-            product.item_name = product.janinfo.name;
+            product.item_name = product.name;
             // product.img = img;
             product.profit_margin = product.gross_profit_margin;
             this.previewProductInfoWithImage(product);
@@ -980,12 +956,13 @@ export default {
                 let data_array = [];
                 if (product == null) {
                     _this.productJans.map(function (pro) {
+                        console.log(pro)
                         let data = [
                             pro.order_point_case_quantity,
                             pro.order_point_ball_quantity,
                             pro.order_point_unit_quantity,
                             pro.customer_id,
-                            pro.vendor_item_id,
+                            pro.jan,
                             dtes,
                             Math.floor(100000 + Math.random() * 900000),
                             _this.shop_id
@@ -998,7 +975,7 @@ export default {
                         product.order_point_ball_quantity,
                         product.order_point_unit_quantity,
                         product.customer_id,
-                        product.vendor_item_id,
+                        product.jan,
                         dtes,
                         Math.floor(100000 + Math.random() * 900000),
                         _this.shop_id
@@ -1007,11 +984,16 @@ export default {
                 }
 
 
-                axios.post(this.base_url + '/vendor_order_insert_handy', {'data_array': data_array})
+                axios.post(this.base_url + '/vendor_order_insert_from_custom_mistumury_handy', {'data_array': data_array})
                     .then(function (res) {
+                        if (res.data.message == '502') {
+                            $('#handy-navi').show()
+                            _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。。</li>';
+                        } else {
+                            $('#handy-navi').show()
+                            _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+                        }
 
-                        $('#handy-navi').show()
-                        _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
 
                         // _this.hideModelAndClearInput()
                     })
@@ -1033,7 +1015,7 @@ export default {
                     jan: product.jan
                 }
 
-                axios.post(_this.base_url + '/handy_vendor_master_update_from_mistumury', data)
+                axios.post(_this.base_url + '/handy_vendor_master_update_from_custom_mistumury', data)
                     .then(function (response) {
                         // _this.getOrderDataByJan();
                         _this.loader = 0
@@ -1044,7 +1026,6 @@ export default {
                     .catch(function (e) {
                         console.log(e)
                     })
-
 
             }, 100)
         },
@@ -1064,11 +1045,16 @@ export default {
             var compareDatesBoolean = (now - date) < hour;
             return compareDatesBoolean;
         },
+        //
+        pressAndSave(e, index, type) {
+            if (e.keyCode == 13) {
+                $('#' + type + index).focus()
+                $('#' + type + index).select()
+            }
+        },
         // save order quantity
         updateOrderQuantity(product, index, type) {
             let _this = this;
-
-
             axios.post(_this.base_url + '/save-mistumury-order-quantity',
                 {
                     jan_code: product.jan,
@@ -1076,10 +1062,15 @@ export default {
                     order_case: product.order_point_case_quantity,
                     order_ball: product.order_point_ball_quantity,
                     order_bara: product.order_point_unit_quantity,
-                    type: ''
+                    type: 'custom'
                 })
                 .then(function (response) {
-                    // _this.getProducts()
+
+                    if (response.data.status == 201) {
+                        _this.getProducts()
+                        $('#handy-navi').show()
+                        _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。。</li>';
+                    }
 
                 })
                 .then(function (er) {
@@ -1093,12 +1084,6 @@ export default {
 
         },
         //
-        pressAndSave(e, index, type) {
-            if (e.keyCode == 13) {
-                $('#' + type + index).focus()
-                $('#' + type + index).select()
-            }
-        }
     },
     watch: {
         productJans: function (val) {
@@ -1113,6 +1098,14 @@ export default {
 </script>
 
 <style scoped>
+
+.detail-pro {
+    font-size: 16px;
+    text-align: left;
+    padding: 5px 10px;
+    background: rgba(255, 229, 250, 0.5);
+    border: 1px solid #d6d6d6;
+}
 
 .well {
     padding: 0 !important;

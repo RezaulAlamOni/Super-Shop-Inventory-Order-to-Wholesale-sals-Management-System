@@ -71,6 +71,15 @@ class CustomMisthsumuryProductController extends Controller
 
     }
 
+    public function custom_product_order_master()
+    {
+        $title = "Dashboard";
+        $active = 'handy_receive_custom_mitshumori';
+        return view('backend.handy_pages.custom_product_orders', compact('title', 'active'));
+//
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
