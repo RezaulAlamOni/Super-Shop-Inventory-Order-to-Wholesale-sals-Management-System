@@ -85,7 +85,7 @@ class Eestimate_itemController extends Controller
             $images = '';
             foreach ($item_info as $item) {
 
-                $img_src = $app_url . '/public/backend/images/products/20000011.png';
+                $img_src = $app_url . '/public/backend/images/products/'.$item['jan'].'.png';
                 $images .= '<img src="'.$img_src.'" alt="Cinque Terre" class="img-thumbnail custom-img-preview" style="cursor: pointer;">';
 
 
