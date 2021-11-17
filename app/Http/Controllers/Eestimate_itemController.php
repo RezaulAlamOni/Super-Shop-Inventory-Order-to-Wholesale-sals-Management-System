@@ -119,6 +119,7 @@ class Eestimate_itemController extends Controller
 
             $message = $message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました<br>'.$images;
             $this->sendMailToSuper($customer, $message);
+            $message_ = '';
         }
 
         return response()->json(['status' => 200, 'message' => "successfully sent to super"]);
@@ -180,6 +181,7 @@ class Eestimate_itemController extends Controller
 
             $message_ = $message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました。<br>'.$images;
             $this->sendMailToSuper($customer, $message_);
+            $message_ = '';
         }
 
         return response()->json(['status' => 200, 'message' => "successfully sent to super"]);
