@@ -62,6 +62,29 @@ class CustomMisthsumuryProductController extends Controller
         return  response()->json(['products'=> $products]);
     }
 
+    public function allCustomProductOrders(Request $request)
+    {
+        $orderBy = $request->orderBy;
+        $user_id = Auth::user()->id;
+        $cus_info = customer::where('user_id',$user_id)->first();
+
+        if($cus_info){
+            $products = CustomMisthsumuryProduct::query()->where('customer_id',$cus_info->customer_id)
+                ->whereHas('vendor_item')
+                ->orderBy('updated_at',$orderBy)->get();
+        }else{
+            $products =array();
+        }
+        try {
+            $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/customer-shops/".$cus_info->customer_id;
+            $shops = Http::get($url);
+            return  response()->json(['products'=> $products,'shops' => $shops['shops']]);
+        } catch (\Exception $exception) {
+
+        }
+        return  response()->json(['products'=> $products]);
+    }
+
     public function custom_products_master()
     {
         $title = "Dashboard";
