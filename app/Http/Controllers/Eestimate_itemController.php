@@ -22,6 +22,7 @@ use App\vendor_item;
 use App\estimate_item;
 use Session;
 use Auth;
+
 class Eestimate_itemController extends Controller
 {
     /**
@@ -33,29 +34,29 @@ class Eestimate_itemController extends Controller
     {
         //
         $orderBy = $request->orderBy;
-        $user_id=Auth::user()->id;
-        $cus_info = customer::where('user_id',$user_id)->first();
-        if($cus_info){
-            $products = estimate_item::with('janinfo')->where('customer_id',$cus_info->customer_id)->groupBy('jan')->orderBy('updated_at',$orderBy)->get();
-        }else{
-            $products =array();
+        $user_id = Auth::user()->id;
+        $cus_info = customer::where('user_id', $user_id)->first();
+        if ($cus_info) {
+            $products = estimate_item::with('janinfo')->where('customer_id', $cus_info->customer_id)->groupBy('jan')->orderBy('updated_at', $orderBy)->get();
+        } else {
+            $products = array();
         }
 
         try {
 
-            $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/customer-shops/".$cus_info->customer_id;
+            $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/customer-shops/" . $cus_info->customer_id;
             $shops = Http::get($url);
-            return  response()->json(['products'=> $products,'shops' => $shops['shops']]);
+            return response()->json(['products' => $products, 'shops' => $shops['shops']]);
         } catch (\Exception $exception) {
 
         }
-        return  response()->json(['products'=> $products]);
+        return response()->json(['products' => $products]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -65,58 +66,68 @@ class Eestimate_itemController extends Controller
         $super_info = $request->super_info;
         $message = $request->message;
 
-        if(empty($super_info)){
+        if (empty($super_info)) {
             return response()->json(['status' => 401, 'message' => "Super not found"]);
         }
-        if(empty($item_info)){
+        if (empty($item_info)) {
             return response()->json(['status' => 401, 'message' => "Item not found"]);
         }
-        foreach($super_info as $super){
-            $customer =  customer::find($super);
+        $app_url = config('app.url');
+        $base_url = 'https://ryutu-van.dev.jacos.jp';
+//        'public/backend/images/products/20000011.png';
+        foreach ($super_info as $super) {
+            $customer = customer::find($super);
 
             // send pusher notification to super
 
-           event(new \App\Events\MyEvent(['message'=>'','user_id' => $customer->user_id]));
-           $msg = '';
-            foreach($item_info as $item){
-                $item_insertedarr = $item;
-                $item_insertedarr['customer_id']=$super;
-                unset( $item_insertedarr['janinfo'],$item_insertedarr['img'],$item_insertedarr['vendor_item_id'] );
+            event(new \App\Events\MyEvent(['message' => '', 'user_id' => $customer->user_id]));
+            $msg = '';
+            $images = '';
+            foreach ($item_info as $item) {
 
-                $exitsItme = estimate_item::where(['customer_id'=>$super,'jan'=>$item_insertedarr['jan']])->first();
-                $exitsVendor = vendor_item::where(['jan'=>$item_insertedarr['jan']])->first();
-                $exitsJan = jan::where('jan',$item_insertedarr['jan'])->first();
-                if($exitsItme){
-                    estimate_item::where(['customer_id'=>$super,'jan'=>$item_insertedarr['jan']])->update($item_insertedarr);
-                }else{
+                $img_src = $app_url . '/public/backend/images/products/20000011.png';
+                $images .= '<img src="'.$img_src.'" alt="Cinque Terre" class="img-thumbnail custom-img-preview" style="cursor: pointer;">';
+
+
+                $item_insertedarr = $item;
+                $item_insertedarr['customer_id'] = $super;
+                unset($item_insertedarr['janinfo'], $item_insertedarr['img'], $item_insertedarr['vendor_item_id']);
+
+                $exitsItme = estimate_item::where(['customer_id' => $super, 'jan' => $item_insertedarr['jan']])->first();
+                $exitsVendor = vendor_item::where(['jan' => $item_insertedarr['jan']])->first();
+                $exitsJan = jan::where('jan', $item_insertedarr['jan'])->first();
+                if ($exitsItme) {
+                    estimate_item::where(['customer_id' => $super, 'jan' => $item_insertedarr['jan']])->update($item_insertedarr);
+                } else {
                     estimate_item::insert($item_insertedarr);
                 }
-                if(!$exitsVendor){
+                if (!$exitsVendor) {
                     vendor_item::insert($item_insertedarr);
                 }
                 $janInfo = $item['janinfo'];
-                unset( $janInfo['jan_id']);
-                if($exitsJan){
-                    jan::where('jan',$janInfo['jan'])->update($janInfo);
-                }else{
+                unset($janInfo['jan_id']);
+                if ($exitsJan) {
+                    jan::where('jan', $janInfo['jan'])->update($janInfo);
+                } else {
                     jan::insert($janInfo);
                 }
 
-                $jan = jan::where('jan',$janInfo['jan'])->pluck('name');
-                $msg .= $jan[0].', ';
+                $jan = jan::where('jan', $janInfo['jan'])->pluck('name');
+                $msg .= $jan[0] . ', ';
             }
             //send main to super
 
-            $message = $message . " " . '問屋から「 '. $msg .' 」の見積受け取りました。';
-            $this->sendMailToSuper($customer,$message);
+            $message = $message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました<br>'.$images;
+            $this->sendMailToSuper($customer, $message);
         }
 
         return response()->json(['status' => 200, 'message' => "successfully sent to super"]);
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function customEstimate(Request $request)
@@ -126,21 +137,28 @@ class Eestimate_itemController extends Controller
         $super_info = $request->super_info;
         $message = $request->message;
 
-        if(empty($super_info)){
+        if (empty($super_info)) {
             return response()->json(['status' => 401, 'message' => "Super not found"]);
         }
-        if(empty($item_info)){
+        if (empty($item_info)) {
             return response()->json(['status' => 401, 'message' => "Item not found"]);
         }
-        foreach($super_info as $super){
-            $customer =  customer::find($super);
+        $images = '';
+        foreach ($super_info as $super) {
+            $customer = customer::find($super);
 
             // send pusher notification to super
 
-           event(new \App\Events\MyEvent(['message'=>'','user_id' => $customer->user_id]));
-           $msg = '';
-            foreach($item_info as $item){
-                CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'],'customer_id' => $customer->user_id],[
+            event(new \App\Events\MyEvent(['message' => '', 'user_id' => $customer->user_id]));
+            $msg = '';
+            $base_url = 'https://ryutu-van.dev.jacos.jp';
+            foreach ($item_info as $item) {
+                if ($item->image_url) {
+                    $img_src = $base_url . $item->image_url;
+                    $images  .= '<img src="'.$img_src.'" alt="Cinque Terre" class="img-thumbnail custom-img-preview" style="cursor: pointer;">';
+                }
+
+                CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'], 'customer_id' => $customer->user_id], [
                     'name' => $item['name'],
                     'jan' => $item['jan'],
                     'vendor_id' => $item['vendor_id'],
@@ -156,12 +174,12 @@ class Eestimate_itemController extends Controller
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
-                $msg = $item['name'].', ';
+                $msg = $item['name'] . ', ';
             }
             //send main to super
 
-            $message_ = $message . " " . '問屋から「 '. $msg .' 」の見積受け取りました。';
-            $this->sendMailToSuper($customer,$message_);
+            $message_ = $message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました。<br>'.$images;
+            $this->sendMailToSuper($customer, $message_);
         }
 
         return response()->json(['status' => 200, 'message' => "successfully sent to super"]);
@@ -170,7 +188,7 @@ class Eestimate_itemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -181,8 +199,8 @@ class Eestimate_itemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -193,7 +211,7 @@ class Eestimate_itemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -201,7 +219,7 @@ class Eestimate_itemController extends Controller
         //
     }
 
-    public function sendMailToSuper($customer,$message)
+    public function sendMailToSuper($customer, $message)
     {
         $ch = curl_init();
         $post_array = array(
@@ -222,14 +240,14 @@ class Eestimate_itemController extends Controller
 //        $url = "https://keipro.development.dhaka10.dev.jacos.jp/mail/index.php/api/File_send/mail_send";
         $url = "https://keipro.development.dhaka10.dev.jacos.jp/mail/index.php/api/File_send/mail_send_to_super";
 //        $url = "http://localhost/mail/index.php/api/File_send/mail_send_to_super";
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
-        curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT ,3);
-        curl_setopt($ch,CURLOPT_TIMEOUT, 500);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);                //0 for a get request
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 500);
         $response = curl_exec($ch);
-        curl_close ($ch);
+        curl_close($ch);
     }
 
     public function saveOrderQuentity(Request $request)
@@ -241,24 +259,24 @@ class Eestimate_itemController extends Controller
         $type = $request->type;
 
         if ($type == 'custom') {
-            $item = vendor_item::query()->where('jan',$request->jan_code);;
+            $item = vendor_item::query()->where('jan', $request->jan_code);;
             if ($item->first()) {
                 $item->update([
                     'order_point_case_quantity' => $order_case,
                     'order_point_ball_quantity' => $order_ball,
                     'order_point_unit_quantity' => $order_bara,
                 ]);
-                return response()->json(['status'=>200 ,'type'=>'Custom']);
+                return response()->json(['status' => 200, 'type' => 'Custom']);
             }
 
-            return response()->json(['status'=>201 ,'type'=>'Custom']);
+            return response()->json(['status' => 201, 'type' => 'Custom']);
         }
 
-        $item = estimate_item::query()->where('vendor_item_id',$mistumury_id)->first();
+        $item = estimate_item::query()->where('vendor_item_id', $mistumury_id)->first();
         if (!$item) {
-            return response()->json(['status'=>201]);
+            return response()->json(['status' => 201]);
         }
-        estimate_item::query()->where('vendor_item_id',$mistumury_id)
+        estimate_item::query()->where('vendor_item_id', $mistumury_id)
             ->update([
                 'order_point_case_quantity' => $order_case,
                 'order_point_ball_quantity' => $order_ball,
@@ -266,6 +284,6 @@ class Eestimate_itemController extends Controller
                 'updated_at' => $item->updated_at
             ]);
 
-        return response()->json(['status'=>200]);
+        return response()->json(['status' => 200]);
     }
 }
