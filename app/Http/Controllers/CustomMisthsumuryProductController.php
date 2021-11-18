@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\customer;
 use App\CustomMisthsumuryProduct;
+use App\jan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -18,12 +19,18 @@ class CustomMisthsumuryProductController extends Controller
     public function index(Request $request)
     {
         $orderBy = $request->orderBy;
+        $jans = $request->jans;
+        $jans = explode(',',$jans);
+
         $user_id = Auth::user()->id;
         $cus_info = customer::where('user_id',$user_id)->first();
 
         if($cus_info){
-            $products = CustomMisthsumuryProduct::where('customer_id',$cus_info->customer_id)->with('vendor_item')
-                ->orderBy('updated_at',$orderBy)->get();
+            $products = CustomMisthsumuryProduct::where('customer_id',$cus_info->customer_id)->with('vendor_item');
+            if (strlen($request->jans) > 0) {
+                $products = $products->whereIn('jan',$jans);
+            }
+            $products = $products->orderBy('updated_at',$orderBy)->get();
         }else{
             $products =array();
         }

@@ -35,9 +35,15 @@ class Eestimate_itemController extends Controller
         //
         $orderBy = $request->orderBy;
         $user_id = Auth::user()->id;
+        $jans = $request->jans;
+        $jans = explode(',',$jans);
         $cus_info = customer::where('user_id', $user_id)->first();
         if ($cus_info) {
-            $products = estimate_item::with('janinfo')->where('customer_id', $cus_info->customer_id)->groupBy('jan')->orderBy('updated_at', $orderBy)->get();
+            $products = estimate_item::with('janinfo')->where('customer_id', $cus_info->customer_id);
+            if (strlen($request->jans) > 0) {
+                $products = $products->whereIn('jan',$jans);
+            }
+            $products = $products->groupBy('jan')->orderBy('updated_at', $orderBy)->get();
         } else {
             $products = array();
         }
@@ -159,7 +165,7 @@ class Eestimate_itemController extends Controller
             foreach ($item_info as $item) {
                 if ($item['image_url']) {
                     $img_src = $base_url . $item['image_url'];
-                    $images  .= '<img src="'.$img_src.'" alt="Cinque Terre" class="img-thumbnail custom-img-preview" style="cursor: pointer;">';
+                    $images  .= '<img src="'.$img_src.'" alt="Cinque Terre" class="img-thumbnail custom-img-preview" style="cursor: pointer;"> ';
                 }
                 array_push($jans,$item['jan']);
                 CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'], 'customer_id' => $customer->user_id], [
