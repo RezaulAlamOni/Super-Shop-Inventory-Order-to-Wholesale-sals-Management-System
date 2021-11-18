@@ -160,7 +160,7 @@
                                                        class="form-control  " @click="selectItem($event)"
                                                        @keypress="pressEnterAndSave($event,'cost')"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
-                                                <img :href="base_url+'/public/backend/images/products/'+product.jan+'.png'"
+                                                <img :src="base_url+'/public/backend/images/products/'+product.jan+'.png'"
                                                      class="img-thumbnail custom-img"
                                                      alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                                      style="cursor: pointer" width="100px">
@@ -273,7 +273,7 @@
                         </div>
                         <div>
                             <img
-                                :href="base_url+'/public/backend/images/products/'+preview_product.jan+'.png'"
+                                :src="base_url+'/public/backend/images/products/'+preview_product.jan+'.png'"
                                 class="img-thumbnail custom-img-preview" alt="Cinque Terre"
                                 style="cursor: pointer">
                         </div>
