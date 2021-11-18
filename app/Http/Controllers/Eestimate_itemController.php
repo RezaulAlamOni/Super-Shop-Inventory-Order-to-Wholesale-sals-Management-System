@@ -117,7 +117,7 @@ class Eestimate_itemController extends Controller
                 $msg .= $jan[0] . ', ';
             }
             //send main to super
-            $button = '<a href="'.config('app.url').'/handy_receive_mitshumori?jans='.implode(',', $jans).'" target="_blank"><button class="btn btn-success btn-sm" >発注</button></a>';
+            $button = '<a href="'.config('app.url').'/handy_receive_mitshumori/'.implode(',', $jans).'" target="_blank"><button class="btn btn-success btn-sm" >発注</button></a>';
 
             $message = $button.'<br>'.$message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました<br>'.$images;
             $this->sendMailToSuper($customer, $message);
@@ -181,7 +181,7 @@ class Eestimate_itemController extends Controller
                 $msg = $item['name'] . ', ';
             }
             //send main to super
-            $button = '<a href="'.config('app.url').'/handy-receive-custom-mitshumori?jans='.implode(',', $jans).'" target="_blank"><button class="btn btn-success btn-sm" >発注</button></a>';
+            $button = '<a href="'.config('app.url').'/handy-receive-custom-mitshumori/'.implode(',', $jans).'" target="_blank"><button class="btn btn-success btn-sm" >発注</button></a>';
 
             $message_ = $button.'<br>'.$message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました。<br>'.$images;
             $this->sendMailToSuper($customer, $message_);

@@ -10,6 +10,6 @@
 
 @section('content')
 
-    <handy-mitshu-mori-received-item base_url="{{config('app.url')}}"></handy-mitshu-mori-received-item>
+    <handy-mitshu-mori-received-item base_url="{{config('app.url')}}"  jans="{{ $jans }}"></handy-mitshu-mori-received-item>
 
 @endsection

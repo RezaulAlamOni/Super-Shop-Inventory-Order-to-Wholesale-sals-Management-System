@@ -367,7 +367,7 @@ import TextRecognition from "./text-recognition";
 import {StreamBarcodeReader} from "vue-barcode-reader";
 
 export default {
-    props: ['base_url'],
+    props: ['base_url','jans'],
     name: "handy-custom-mistumury",
     data() {
         return {
@@ -410,7 +410,7 @@ export default {
             //     _this.orderBy = 'DESC';
             // }
 
-            axios.post(this.base_url + '/get-all-custom-mistumory-products', {orderBy: _this.orderBy})
+            axios.post(this.base_url + '/get-all-custom-mistumory-products', {orderBy: _this.orderBy,jans : _this.jans})
                 .then(function (res) {
                     let data = res.data;
                     _this.products = data.products;

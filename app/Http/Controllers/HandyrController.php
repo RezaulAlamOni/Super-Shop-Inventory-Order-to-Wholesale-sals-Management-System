@@ -1054,19 +1054,19 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
 //        return view('backend.handy_pages.handy_store_order', compact('title', 'active'));
     }
 
-    public function handy_receive_mitshumori()
+    public function handy_receive_mitshumori($jans = null)
     {
         $title = "Dashboard";
         $active = 'handy_receive_mitshumori';
-        return view('backend.handy_pages.handy_receive_mitshumori', compact('title', 'active'));
+        return view('backend.handy_pages.handy_receive_mitshumori', compact('title', 'active','jans'));
 //        return view('backend.handy_pages.handy_store_order', compact('title', 'active'));
     }
 
-    public function custom_mitsumury_receive()
+    public function custom_mitsumury_receive($jans = null)
     {
         $title = "Dashboard";
         $active = 'handy_receive_custom_mitshumori';
-        return view('backend.handy_pages.handy_receive_custom_mitshumori', compact('title', 'active'));
+        return view('backend.handy_pages.handy_receive_custom_mitshumori', compact('title', 'active','jans'));
 //        return view('backend.handy_pages.handy_store_order', compact('title', 'active'));
     }
 
