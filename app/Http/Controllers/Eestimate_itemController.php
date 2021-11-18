@@ -83,11 +83,12 @@ class Eestimate_itemController extends Controller
             event(new \App\Events\MyEvent(['message' => '', 'user_id' => $customer->user_id]));
             $msg = '';
             $images = '';
+            $jans = [];
             foreach ($item_info as $item) {
 
                 $img_src = $app_url . '/public/backend/images/products/'.$item['jan'].'.png';
                 $images .= '<img src="'.$img_src.'" alt="Cinque Terre" class="img-thumbnail custom-img-preview" style="cursor: pointer;">';
-
+               array_push($jans,$item['jan']);
 
                 $item_insertedarr = $item;
                 $item_insertedarr['customer_id'] = $super;
@@ -116,10 +117,11 @@ class Eestimate_itemController extends Controller
                 $msg .= $jan[0] . ', ';
             }
             //send main to super
+            $button = '<a href="'.config('app.url').'/handy_receive_mitshumori?jans='.implode(',', $jans).'" target="_blank"><button class="btn btn-success btn-sm" >発注</button></a>';
 
-            $message = $message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました<br>'.$images;
+            $message = $button.'<br>'.$message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました<br>'.$images;
             $this->sendMailToSuper($customer, $message);
-            $message_ = '';
+            $message = '';
         }
 
         return response()->json(['status' => 200, 'message' => "successfully sent to super"]);
@@ -153,12 +155,13 @@ class Eestimate_itemController extends Controller
             event(new \App\Events\MyEvent(['message' => '', 'user_id' => $customer->user_id]));
             $msg = '';
             $base_url = 'https://ryutu-van.dev.jacos.jp';
+            $jans = [];
             foreach ($item_info as $item) {
-                if ($item->image_url) {
-                    $img_src = $base_url . $item->image_url;
+                if ($item['image_url']) {
+                    $img_src = $base_url . $item['image_url'];
                     $images  .= '<img src="'.$img_src.'" alt="Cinque Terre" class="img-thumbnail custom-img-preview" style="cursor: pointer;">';
                 }
-
+                array_push($jans,$item['jan']);
                 CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'], 'customer_id' => $customer->user_id], [
                     'name' => $item['name'],
                     'jan' => $item['jan'],
@@ -178,8 +181,9 @@ class Eestimate_itemController extends Controller
                 $msg = $item['name'] . ', ';
             }
             //send main to super
+            $button = '<a href="'.config('app.url').'/handy-receive-custom-mitshumori?jans='.implode(',', $jans).'" target="_blank"><button class="btn btn-success btn-sm" >発注</button></a>';
 
-            $message_ = $message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました。<br>'.$images;
+            $message_ = $button.'<br>'.$message . " " . '問屋から「 ' . $msg . ' 」の見積受け取りました。<br>'.$images;
             $this->sendMailToSuper($customer, $message_);
             $message_ = '';
         }
