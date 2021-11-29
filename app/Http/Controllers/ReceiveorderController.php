@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\customer;
 use Illuminate\Http\Request;
 use App\jan;
 use App\stock_item;
@@ -9,6 +10,8 @@ use App\vendor_item;
 use App\vendor;
 use App\vendor_order;
 use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Mail;
 
 class ReceiveorderController extends Controller
@@ -186,6 +189,12 @@ array_multisort($tStockTotal, SORT_DESC, $arr);
                 $where = 'where vi_all.jan="' . $jan . '"';
             }
         }
+
+        $user_id = Auth::user()->id;
+        $cus_info = customer::where('user_id', $user_id)->first();
+        $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/customer-shops/" . $cus_info->customer_id;
+        $shops = Http::get($url);
+
         $result = DB::select("SELECT
         vi_all.*,
         va.today_case_arrival_qty,
@@ -264,10 +273,10 @@ SELECT vendor_orders.order_case_quantity,vendor_orders.order_ball_quantity,vendo
         }
         //print_r($arr);
         if (count($arr) > 0) {
-            return response()->json(['status' => 200, 'data' => $arr,'get_last_order_info'=>$get_last_order_info]);
+            return response()->json(['status' => 200,'shops' => $shops['shops'], 'data' => $arr,'get_last_order_info'=>$get_last_order_info]);
         } else {
             $product = jan::where('jan', $jan)->get();
-            return response()->json(['status' => 200, 'data' => $product,'get_last_order_info'=>$get_last_order_info]);
+            return response()->json(['status' => 200,'shops' => $shops['shops'], 'data' => $product,'get_last_order_info'=>$get_last_order_info]);
         }
     }
 

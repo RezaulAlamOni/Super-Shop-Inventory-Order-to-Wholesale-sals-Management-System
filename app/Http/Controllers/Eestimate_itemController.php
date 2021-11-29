@@ -34,7 +34,7 @@ class Eestimate_itemController extends Controller
     {
         //
         $orderBy = $request->orderBy;
-        $user_id = Auth::user()->id;
+        $user_id = \Illuminate\Support\Facades\Auth::user()->id;
         $jans = $request->jans;
         $jans = explode(',',$jans);
         $cus_info = customer::where('user_id', $user_id)->first();
