@@ -485,7 +485,7 @@ export default {
                     _this.boll_order,
                     _this.bara_order,
                     _this.order_data.vendor_id,
-                    _this.order_data.vendor_item_id,
+                    _this.order_data.jan,
                     dtes,
                     Math.floor(100000 + Math.random() * 900000),
                     _this.shop_id
