@@ -985,7 +985,7 @@ export default {
                             pro.order_point_ball_quantity,
                             pro.order_point_unit_quantity,
                             pro.customer_id,
-                            pro.vendor_item_id,
+                            pro.jan,
                             dtes,
                             Math.floor(100000 + Math.random() * 900000),
                             _this.shop_id
@@ -998,7 +998,7 @@ export default {
                         product.order_point_ball_quantity,
                         product.order_point_unit_quantity,
                         product.customer_id,
-                        product.vendor_item_id,
+                        product.jan,
                         dtes,
                         Math.floor(100000 + Math.random() * 900000),
                         _this.shop_id

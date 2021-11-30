@@ -898,32 +898,18 @@ class VendorController extends Controller
         $inserted_voucher_numbers = array();
         $data = [];
         foreach ($data_array as $key => $val) {
-            $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $val[4]])->first();
-            $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_item_id', $val[4])->first();
+            $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_items.jan', $val[4])->first();
+            if ($item_info) {
+                $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $item_info->vendor_item_id])->first();
 
-            $case_order_qty = ($val[0] == '' ? 0 : $val[0]);
-            $ball_order_qty = ($val[1] == '' ? 0 : $val[1]);
-            $unit_order_qty = ($val[2] == '' ? 0 : $val[2]);
+                $case_order_qty = ($val[0] == '' ? 0 : $val[0]);
+                $ball_order_qty = ($val[1] == '' ? 0 : $val[1]);
+                $unit_order_qty = ($val[2] == '' ? 0 : $val[2]);
 
-            $totalLotInventory = (($case_order_qty * $item_info->case_inputs) + ($ball_order_qty * $item_info->ball_inputs) + $unit_order_qty);
-            if (!$check_order_exist) {
+                $totalLotInventory = (($case_order_qty * $item_info->case_inputs) + ($ball_order_qty * $item_info->ball_inputs) + $unit_order_qty);
+                if (!$check_order_exist) {
 
-                $order_id = vendor_order::insertGetId([
-                    'order_case_quantity' => $case_order_qty,
-                    'order_ball_quantity' => $ball_order_qty,
-                    'order_unit_quantity' => $unit_order_qty,
-                    'vendor_id' => $val[3],
-                    'shipment_date' => $val[5],
-                    'voucher_number' => $val[6],
-                    'destination' => 0,
-                    'vendor_item_id' => $val[4],
-                    'unit_cost_price' => $item_info->cost_price,
-                    'quantity' => $totalLotInventory,
-                    'source' => 0]);
-                $order_ = vendor_order::where('vendor_order_id', $order_id)->first();
-            } else {
-                $order_id = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)
-                    ->update([
+                    $order_id = vendor_order::insertGetId([
                         'order_case_quantity' => $case_order_qty,
                         'order_ball_quantity' => $ball_order_qty,
                         'order_unit_quantity' => $unit_order_qty,
@@ -931,18 +917,33 @@ class VendorController extends Controller
                         'shipment_date' => $val[5],
                         'voucher_number' => $val[6],
                         'destination' => 0,
-                        'vendor_item_id' => $val[4],
+                        'vendor_item_id' => $item_info->vendor_item_id,
                         'unit_cost_price' => $item_info->cost_price,
                         'quantity' => $totalLotInventory,
-                        'source' => 0,
-                        'order_date' => date('Y-m-d H:i:s')
-                    ]);
-                $order_ = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)->first();
+                        'source' => 0]);
+                    $order_ = vendor_order::where('vendor_order_id', $order_id)->first();
+                } else {
+                    $order_id = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)
+                        ->update([
+                            'order_case_quantity' => $case_order_qty,
+                            'order_ball_quantity' => $ball_order_qty,
+                            'order_unit_quantity' => $unit_order_qty,
+                            'vendor_id' => $val[3],
+                            'shipment_date' => $val[5],
+                            'voucher_number' => $val[6],
+                            'destination' => 0,
+                            'vendor_item_id' => $item_info->vendor_item_id,
+                            'unit_cost_price' => $item_info->cost_price,
+                            'quantity' => $totalLotInventory,
+                            'source' => 0,
+                            'order_date' => date('Y-m-d H:i:s')
+                        ]);
+                    $order_ = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)->first();
+                }
+                $order_->item_ifo = $item_info;
+                $order_->shop_id = $val[7];
+                array_push($data, $order_);
             }
-
-            $order_->item_ifo = $item_info;
-            $order_->shop_id = $val[7];
-            array_push($data, $order_);
 
         }
 
