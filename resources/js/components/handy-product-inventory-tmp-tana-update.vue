@@ -381,7 +381,7 @@ export default {
                         }
                     } else {
 
-                        _this.handi_navi = '<li>このjanコードはマスターに見つかりません</li>';
+                        _this.handi_navi = '<li>このJANコードはマスターに見つかりません</li>';
                         $('#handy-navi').show()
                     }
 
