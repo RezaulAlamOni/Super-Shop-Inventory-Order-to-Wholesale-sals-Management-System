@@ -18,6 +18,7 @@ class CreateVendorItemsTable extends Migration
             $table->integer('vendor_id')->comment('Vendor Id');
             $table->integer('maker_id')->comment('maker Id');
             $table->integer('customer_id')->nullable()->comment('customer Id');
+            $table->integer('customer_shop_id')->nullable()->comment('customer shp Id');
             $table->string('jan',15)->comment('Vendor Jan');
             $table->enum('order_class', ['basic', 'sale','spot'])->default('basic')->comment('Vendor Class');
             $table->decimal('cost_price',9,2)->comment('Vendor Cost Price');
