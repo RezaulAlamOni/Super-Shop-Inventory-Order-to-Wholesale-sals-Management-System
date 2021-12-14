@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 use App\customer;
+use App\customer_shop;
 use App\vendor;
 use App\users_details;
 use Auth;
@@ -45,6 +46,29 @@ class User extends Authenticatable
         }
         return $image_name;
     }
+    public function getShopIdAttribute()
+    {
+        $user_id= Auth::user()->id;
+        $user_details = customer_shop::where('user_id', $user_id)->first();
+        if($user_details){
+            $shop_id = $user_details->customer_shop_id;
+        } else {
+            $shop_id = null;
+        }
+        return $shop_id;
+    }
+    public function getCustomerIdAttribute()
+    {
+        $user_id= Auth::user()->id;
+        $user_details = customer_shop::where('user_id', $user_id)->first();
+        if($user_details){
+            $customer_id = $user_details->customer_id;
+        } else {
+            $customer_id = null;
+        }
+        return $customer_id;
+    }
+    
     public function customer(){
         return $this->hasOne(customer::class);
     }
