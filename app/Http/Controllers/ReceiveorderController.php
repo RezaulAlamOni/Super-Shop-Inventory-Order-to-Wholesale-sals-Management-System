@@ -89,6 +89,22 @@ class ReceiveorderController extends Controller
                 $where = 'where vi_all.vendor_id="' . $id . '"';
             }
         }
+        /*
+        if($where!=''){
+            if(auth()->user()->user_type=='shop'){
+                $customer_id = auth()->user()->CustomerId;
+               
+                $shop_id = auth()->user()->ShopId;
+                $where .=  ' and vi_all.customer_shop_id="' . $shop_id . '"';
+            }
+        }else{
+            if(auth()->user()->user_type=='shop'){
+                $customer_id = auth()->user()->CustomerId;
+               
+                $shop_id = auth()->user()->ShopId;
+                $where .=  ' where vi_all.customer_shop_id="' . $shop_id . '"';
+            }
+        }*/
         $result = DB::select("SELECT
         vi_all.*,
         va.today_case_arrival_qty,
