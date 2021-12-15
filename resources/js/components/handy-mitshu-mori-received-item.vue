@@ -1113,7 +1113,7 @@ export default {
         placeValueToInputField(text){
             let _this = this;
             setTimeout(function () {
-                if (_this.speech_start) {
+                if (_this.speech_start && !isNaN(text)) {
                     if (_this.selected_input == "case") {
                         _this.product.order_point_case_quantity = text;
                     } else if (_this.selected_input == "ball") {
