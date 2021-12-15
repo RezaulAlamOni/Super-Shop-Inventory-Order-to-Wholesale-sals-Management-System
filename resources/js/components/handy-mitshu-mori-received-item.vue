@@ -73,6 +73,7 @@
 
 
                     </div>
+                    <vue-speech lang="ja-JP" :resume="speech_start" style="display: none" @onTranscriptionEnd="getText"/>
 
                     <div class=" col-centereds">
                         <div>
@@ -209,7 +210,7 @@
                                             <td class="text-center" style="font-size: 13px">
                                                 <input class="form-control "
                                                        @keypress="pressAndSave($event,i,'ball')"
-                                                       @click="selectItem($event)"
+                                                       @click="selectItem($event,'case',i,product)"
                                                        @blur="updateOrderQuantity(product,i,'ball')" :id="'case'+i"
                                                        v-model="product.order_point_case_quantity"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
@@ -219,7 +220,7 @@
                                             <td class="text-center" style="font-size: 13px">
                                                 <input type="number" class="form-control"
                                                        @keypress="pressAndSave($event,i,'bara')"
-                                                       @click="selectItem($event)"
+                                                       @click="selectItem($event,'ball',i,product)"
                                                        @blur="updateOrderQuantity(product,i,'bara')" :id="'ball'+i"
                                                        v-model="product.order_point_ball_quantity"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
@@ -229,7 +230,7 @@
                                             <td class="text-center" style="font-size: 13px">
                                                 <input type="number" class="form-control"
                                                        @keypress="pressAndSave($event,i,'case')"
-                                                       @click="selectItem($event)"
+                                                       @click="selectItem($event,'bara',i,product)"
                                                        @blur="updateOrderQuantity(product,i,'case')" :id="'bara'+i"
                                                        v-model="product.order_point_unit_quantity"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;border-bottom: 1px solid gray !important;background: transparent;"
@@ -395,12 +396,14 @@ import TextRecognition from "./text-recognition";
 import {StreamBarcodeReader} from "vue-barcode-reader";
 
 export default {
+    components: {TextRecognition, StreamBarcodeReader},
     props: ['base_url','jans'],
     name: "handy-mistumury",
     data() {
         return {
             jan_code: '',
             order_data: [],
+            speech_start : 0,
             select_status: 0,
             products: [],
             selected_products: [],
@@ -415,7 +418,9 @@ export default {
             productJans: [],
             allSelected: false,
             shops: [],
-            shop_id : null
+            shop_id : null,
+            selected_input : '',
+            product : null
 
         }
     },
@@ -658,8 +663,11 @@ export default {
 
 
         },
-        selectItem(e) {
+        selectItem(e,type,i,product) {
+            this.selected_input = type
+            this.product = product;
             e.target.select()
+            this.startSpeech();
         },
         pressEnterAndSave(e, type) {
             let _this = this;
@@ -1098,7 +1106,42 @@ export default {
                 $('#' + type + index).focus()
                 $('#' + type + index).select()
             }
-        }
+        },
+        clearInput() {
+            this.jan_code = ""
+        },
+        placeValueToInputField(text){
+            let _this = this;
+            setTimeout(function () {
+                if (_this.speech_start) {
+                    if (_this.selected_input == "case") {
+                        _this.product.order_point_case_quantity = text;
+                    } else if (_this.selected_input == "ball") {
+                        _this.product.order_point_ball_quantity = text;
+                    } else {
+                        _this.product.order_point_unit_quantity = text;
+                    }
+
+                    _this.updateOrderQuantity( _this.product,0,0);
+
+                    _this.speech_start = 0;
+                    _this.product = null;
+                    _this.selected_input = '';
+                }
+
+
+            },50)
+        },
+        getText({lastSentence, transcription}) {
+            let _this = this;
+            this.placeValueToInputField(lastSentence);
+
+        },
+        startSpeech() {
+            let _this = this
+            _this.speech_start = (_this.speech_start === 0) ? 1 : 0;
+        },
+
     },
     watch: {
         productJans: function (val) {
