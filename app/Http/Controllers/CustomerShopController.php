@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\customer_shop;
+use App\Jobs\shopUserCreateJob;
+
+
 
 class CustomerShopController extends Controller
 {
@@ -94,12 +97,25 @@ class CustomerShopController extends Controller
             if(customer_shop::where('shop_no',$shop_code)->where('customer_id',$customer_id)->first()){
                 return response()->json(['message' => 'Customer shop code duplicated','class_name'=>'alert-danger']);
             }
+            $user_array = [
+                'name' => $shop_name,
+                'email' => $shop_code.'@jacos.co.jp',
+                'user_type' => 'shop',
+                'password' => Hash::make($shop_code),
+            ];
+            $user_id = User::insertGetId($user_array);
+            $shop_array['user_id']=$user_id;
             customer_shop::insert($shop_array);
+            dispatch::shopUserCreateJob($user_array,$shop_array);
             return response()->json(['message' => 'success','class_name'=>'alert-success','mesg'=>'店舗の登録が完了しました']);
         }
 
 
 
+    }
+    public function shopUserCreate(Request $request){
+
+        return response()->json(['message' => 'success','class_name'=>'alert-success','mesg'=>'店舗の登録が完了しました']);
     }
     /**
      * Store a newly created resource in storage.
