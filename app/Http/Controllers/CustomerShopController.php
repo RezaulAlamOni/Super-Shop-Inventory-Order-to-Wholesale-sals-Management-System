@@ -106,7 +106,7 @@ class CustomerShopController extends Controller
             $user_id = User::insertGetId($user_array);
             $shop_array['user_id']=$user_id;
             customer_shop::insert($shop_array);
-            dispatch::shopUserCreateJob($user_array,$shop_array);
+            shopUserCreateJob::dispatch($user_array,$shop_array);
             return response()->json(['message' => 'success','class_name'=>'alert-success','mesg'=>'店舗の登録が完了しました']);
         }
 

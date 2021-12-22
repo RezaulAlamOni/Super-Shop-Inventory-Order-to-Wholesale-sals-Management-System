@@ -5,7 +5,7 @@ namespace App\Jobs;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\User;
 use App\customer_shop;
-
+use Log;
 class shopUserCreateJob
 {
     use Dispatchable;
@@ -29,13 +29,18 @@ class shopUserCreateJob
      */
     public function handle()
     {
+        try{
+            Log::info('insert shop secondary');
         $User = new User;
         $customer_shop = new customer_shop;
 
-        $User->setConnection('tonyav1');
-        $customer_shop->setConnection('tonyav1');
+        $User->setConnection('superv1');
+        $customer_shop->setConnection('superv1');
         $user_id = $User->insertGetId($this->user_info);
         $this->shop_info['user_id']=$user_id;
         $customer_shop->insert($this->shop_info);
+        }catch(\Exception $e){
+            Log::info($e->getMessage());
+        }
     }
 }

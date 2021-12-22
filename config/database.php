@@ -56,7 +56,7 @@ return [
             'engine' => null,
         ],
 
-        'tonyav1' => [
+        'superv1' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
