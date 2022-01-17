@@ -1029,6 +1029,8 @@ class VendorController extends Controller
         }
         if (count($data)) {
 
+            event(new \App\Events\MyEvent(['message' => '', 'user_id' => 'super']));
+
             $ch = curl_init();
             $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/orders";
 //        $url = "http://localhost/rv3_tonyav1/api/orders";
