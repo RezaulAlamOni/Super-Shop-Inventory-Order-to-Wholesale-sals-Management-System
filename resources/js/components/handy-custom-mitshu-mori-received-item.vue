@@ -76,10 +76,10 @@
                                         </th>
                                         <th colspan="2"
                                             style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
-                                            <span class="badge badge-success float-right ml-2"
-                                                  style="font-size: 15px">
-                                                <a :href="base_url+'/handy_receive_mitshumori'" class="text-white"> 戻る </a>
-                                            </span>
+<!--                                            <span class="badge badge-success float-right ml-2"-->
+<!--                                                  style="font-size: 15px">-->
+<!--                                                <a :href="base_url+'/handy_receive_mitshumori'" class="text-white"> 戻る </a>-->
+<!--                                            </span>-->
 
                                             <span class="badge badge-success float-right" v-if="productJans.length > 0"
                                                   style="padding: 7px 15px;font-size: 15px"
