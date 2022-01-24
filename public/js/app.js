@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-inventory-inquiry","1":"handy-product-order-place-kouri","2":"handy-custom-master-products","3":"handy-vandor-master","4":"handy-product-order-receive","5":"handy-product-order-place","6":"handy-product-inventory-tmp-tana-update","7":"handy-product-inventory-return","8":"handy-mitsumury","9":"handy-customer-master","10":"handy-product-custom-mistumory","11":"barcode-scan","12":"handy-product-order-mail","13":"handy-product-order-confirm-kouri","14":"handy-product-online-order-kouri","15":"handy-order-shipment-list","16":"admin-super-manage","17":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"8903a7078dbddba91d0b","1":"9f51a39ea04b92bc724f","2":"fe53594028e888e3d86f","3":"f12d919befddc03e1733","4":"d6547c9b82bbcd574f9a","5":"0e873cdf49f5ed7dae83","6":"f215594cb12140f030b9","7":"53c1f862e9bec98a6e29","8":"78066e81a38f04244899","9":"7a4eed1973a7a6b74568","10":"f20ccfd336d79974a423","11":"37660b3c0a5312846fef","12":"d1458027e97cecc32e81","13":"6c60f34fd3571c095bb4","14":"c19699cad86d99d882d8","15":"4e7b122945c651032dff","16":"96642b83ada284522f43","17":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
+/******/ 		script.src = __webpack_require__.p + "js/build_component/" + ({"0":"handy-product-inventory-inquiry","1":"handy-product-order-place-kouri","2":"handy-custom-master-products","3":"handy-vandor-master","4":"handy-product-order-receive","5":"handy-product-order-place","6":"handy-product-inventory-tmp-tana-update","7":"handy-product-inventory-return","8":"handy-mitsumury","9":"handy-customer-master","10":"handy-product-custom-mistumory","11":"barcode-scan","12":"handy-product-order-mail","13":"handy-product-order-confirm-kouri","14":"handy-product-online-order-kouri","15":"handy-order-shipment-list","16":"admin-super-manage","17":"example-component"}[chunkId]||chunkId) + ".js?id=" + {"0":"645eaa86f998c31160ba","1":"adfc00cd8e5558cda921","2":"477d2b6e0118b9088b89","3":"fc1fcbf5cc5e3ff74107","4":"5a5bb3f55a607713caf3","5":"8f318d5e4ff647a197d9","6":"cb591977a52abff0644d","7":"178fe7ecb250f6fa58e9","8":"cd77a1b4ade8c0a6efa9","9":"b8284a19ba1c01d42e63","10":"4b8808dfa72b0e17f501","11":"8b63738db2396ecea4e1","12":"cc4c25da127c26e1dbe4","13":"a4620cf2eea58a3b7b3a","14":"4f49654bf1969cbc96e0","15":"bd82fe5af251aeb7c570","16":"9501bc9846a22645412a","17":"bc0e4a76e132e1aaf7cf"}[chunkId] + "";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -6088,6 +6088,89 @@ module.exports = {
 
 })));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/lib/css-base.js":
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
 
 
 /***/ }),
