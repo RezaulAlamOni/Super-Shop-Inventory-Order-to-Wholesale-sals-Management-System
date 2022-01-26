@@ -198,8 +198,8 @@
                                             <td class="text-center">
                                                 <span class="badge badge-success" style="cursor: pointer;margin:2px"
                                                       @click="orderToTonya(product)">発注</span>
-                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"
-                                                      @click="storeToMaster(product)">採用</span>
+<!--                                                <span class="badge badge-primary" style="cursor: pointer;margin:2px"-->
+<!--                                                      @click="storeToMaster(product)">採用</span>-->
                                             </td>
                                         </tr>
                                     </template>
@@ -951,60 +951,64 @@ export default {
         orderToTonya(product = null) {
             let _this = this;
             _this.loader = 1;
-            setTimeout(function () {
-                var dtes = $.datepicker.formatDate('yy-mm-dd', new Date());
-                let data_array = [];
-                if (product == null) {
-                    _this.productJans.map(function (pro) {
-                        console.log(pro)
+            if (product && product.order_point_case_quantity <= 0 && product.order_point_ball_quantity  <= 0 && product.order_point_unit_quantity <= 0) {
+                _this.storeToMaster(product);
+            } else {
+                setTimeout(function () {
+                    var dtes = $.datepicker.formatDate('yy-mm-dd', new Date());
+                    let data_array = [];
+                    if (product == null) {
+                        _this.productJans.map(function (pro) {
+                            let data = [
+                                pro.order_point_case_quantity,
+                                pro.order_point_ball_quantity,
+                                pro.order_point_unit_quantity,
+                                pro.customer_id,
+                                pro.jan,
+                                dtes,
+                                Math.floor(100000 + Math.random() * 900000),
+                                _this.shop_id
+                            ]
+                            data_array.push(data)
+                        })
+                    } else {
                         let data = [
-                            pro.order_point_case_quantity,
-                            pro.order_point_ball_quantity,
-                            pro.order_point_unit_quantity,
-                            pro.customer_id,
-                            pro.jan,
+                            product.order_point_case_quantity,
+                            product.order_point_ball_quantity,
+                            product.order_point_unit_quantity,
+                            product.customer_id,
+                            product.jan,
                             dtes,
                             Math.floor(100000 + Math.random() * 900000),
                             _this.shop_id
                         ]
                         data_array.push(data)
-                    })
-                } else {
-                    let data = [
-                        product.order_point_case_quantity,
-                        product.order_point_ball_quantity,
-                        product.order_point_unit_quantity,
-                        product.customer_id,
-                        product.jan,
-                        dtes,
-                        Math.floor(100000 + Math.random() * 900000),
-                        _this.shop_id
-                    ]
-                    data_array.push(data)
-                }
+                    }
 
 
-                axios.post(this.base_url + '/vendor_order_insert_from_custom_mistumury_handy', {'data_array': data_array})
-                    .then(function (res) {
-                        if (res.data.message == '502') {
-                            $('#handy-navi').show()
-                            _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。。</li>';
-                        } else {
-                            $('#handy-navi').show()
-                            _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
-                        }
+                    axios.post(this.base_url + '/vendor_order_insert_from_custom_mistumury_handy', {'data_array': data_array})
+                        .then(function (res) {
+                            if (res.data.message == '502') {
+                                $('#handy-navi').show()
+                                _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。</li>';
+                            } else {
+                                $('#handy-navi').show()
+                                _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
+                            }
 
 
-                        // _this.hideModelAndClearInput()
-                    })
-                    .then(function (er) {
+                            // _this.hideModelAndClearInput()
+                        })
+                        .then(function (er) {
 
-                    })
-                    .finally(function () {
-                        $('.loading_image_custom').hide()
-                        _this.loader = 0
-                    })
-            }, 500)
+                        })
+                        .finally(function () {
+                            $('.loading_image_custom').hide()
+                            _this.loader = 0
+                        })
+                }, 500)
+            }
+
         },
         storeToMaster(product = null) {
 
@@ -1020,8 +1024,11 @@ export default {
                         // _this.getOrderDataByJan();
                         _this.loader = 0
                         _this.getProducts();
-                        _this.handi_navi = '<li>マスターに登録されました。</li>';
-                        $('#handy-navi').show()
+                        // _this.handi_navi = '<li>マスターに登録されました。</li>';
+                        // $('#handy-navi').show()
+                        setTimeout(function () {
+                            _this.orderToTonya(product);
+                        },2000)
                     })
                     .catch(function (e) {
                         console.log(e)
