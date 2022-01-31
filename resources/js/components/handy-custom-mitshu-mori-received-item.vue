@@ -951,10 +951,7 @@ export default {
         orderToTonya(product = null) {
             let _this = this;
             _this.loader = 1;
-            if (product && product.order_point_case_quantity <= 0 && product.order_point_ball_quantity  <= 0 && product.order_point_unit_quantity <= 0) {
-                _this.storeToMaster(product);
-            } else {
-                setTimeout(function () {
+            setTimeout(function () {
                     var dtes = $.datepicker.formatDate('yy-mm-dd', new Date());
                     let data_array = [];
                     if (product == null) {
@@ -1007,7 +1004,7 @@ export default {
                             _this.loader = 0
                         })
                 }, 500)
-            }
+
 
         },
         storeToMaster(product = null) {
@@ -1074,7 +1071,8 @@ export default {
                 .then(function (response) {
 
                     if (response.data.status == 201) {
-                        _this.getProducts()
+                        _this.storeToMaster(product);
+                        // _this.getProducts()
                         $('#handy-navi').show()
                         _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。。</li>';
                     }
