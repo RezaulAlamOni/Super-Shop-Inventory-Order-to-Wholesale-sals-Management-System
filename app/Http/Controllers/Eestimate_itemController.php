@@ -171,24 +171,42 @@ class Eestimate_itemController extends Controller
                     $images  .= '<img src="'.$img_src.'" alt="Cinque Terre" class="img-thumbnail custom-img-preview" style="cursor: pointer;"> ';
                 }
                 array_push($jans,$item['jan']);
-                foreach ($customer_shops as $customer_shop) {
-                    CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'], 'customer_id' => $customer->user_id, 'customer_shop_id' => $customer_shop], [
-                        'name' => $item['name'],
-                        'jan' => $item['jan'],
-                        'vendor_id' => $item['vendor_id'],
-                        'vendor_name' => $item['vendor_name'],
-                        'cost_price' => $item['cost_price'],
-                        'selling_price' => $item['selling_price'],
-                        'gross_profit' => $item['selling_price'] - $item['cost_price'],
-                        'gross_profit_margin' => $item['gross_profit_margin'],
-                        'case_unit' => $item['case_unit'],
-                        'ball_unit' => $item['ball_unit'],
-                        'image' => $item['image_url'],
-                        'customer_id' => $customer->customer_id,
-                        'created_at' => now(),
-                        'updated_at' => now()
-                    ]);
-                }
+//                foreach ($customer_shops as $customer_shop) {
+//                    CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'], 'customer_id' => $customer->user_id, 'customer_shop_id' => $customer_shop], [
+//                        'name' => $item['name'],
+//                        'jan' => $item['jan'],
+//                        'vendor_id' => $item['vendor_id'],
+//                        'vendor_name' => $item['vendor_name'],
+//                        'cost_price' => $item['cost_price'],
+//                        'selling_price' => $item['selling_price'],
+//                        'gross_profit' => $item['selling_price'] - $item['cost_price'],
+//                        'gross_profit_margin' => $item['gross_profit_margin'],
+//                        'case_unit' => $item['case_unit'],
+//                        'ball_unit' => $item['ball_unit'],
+//                        'image' => $item['image_url'],
+//                        'customer_id' => $customer->customer_id,
+//                        'created_at' => now(),
+//                        'updated_at' => now()
+//                    ]);
+//
+//                }
+                CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'], 'customer_id' => $customer->user_id], [
+                    'name' => $item['name'],
+                    'jan' => $item['jan'],
+                    'vendor_id' => $item['vendor_id'],
+                    'vendor_name' => $item['vendor_name'],
+                    'cost_price' => $item['cost_price'],
+                    'selling_price' => $item['selling_price'],
+                    'gross_profit' => $item['selling_price'] - $item['cost_price'],
+                    'gross_profit_margin' => $item['gross_profit_margin'],
+                    'case_unit' => $item['case_unit'],
+                    'ball_unit' => $item['ball_unit'],
+                    'image' => $item['image_url'],
+                    'customer_id' => $customer->customer_id,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+
 
                 $msg = $item['name'] . ', ';
             }
