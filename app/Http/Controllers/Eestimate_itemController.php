@@ -190,15 +190,21 @@ class Eestimate_itemController extends Controller
 //                    ]);
 //
 //                }
+                try {
+                    $price = $item['prices'][$super['c_id']];
+                } catch (\Exception $exceptio){
+                    $price = null;
+                }
                 CustomMisthsumuryProduct::updateOrInsert(['name' => $item['name'], 'customer_id' => $customer->user_id], [
                     'name' => $item['name'],
                     'jan' => $item['jan'],
                     'vendor_id' => $item['vendor_id'],
                     'vendor_name' => $item['vendor_name'],
-                    'cost_price' => $item['cost_price'],
-                    'selling_price' => $item['selling_price'],
-                    'gross_profit' => $item['selling_price'] - $item['cost_price'],
-                    'gross_profit_margin' => $item['gross_profit_margin'],
+                    'cost_price' => $price ? $price-20 : $item['cost_price'],
+                    'selling_price' =>$price ? $price : $item['selling_price'],
+                    'gross_profit' =>$price ? 20 : $item['gross_profit'],
+                    'gross_profit_margin' =>$price ? (20/($price-20))*100 : $item['gross_profit_margin'],
+
                     'case_unit' => $item['case_unit'],
                     'ball_unit' => $item['ball_unit'],
                     'image' => $item['image_url'],
