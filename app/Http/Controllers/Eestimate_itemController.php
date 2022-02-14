@@ -191,7 +191,8 @@ class Eestimate_itemController extends Controller
 //
 //                }
                 try {
-                    $price = $item['prices'][$super['c_id']];
+//                    $price = $item['prices'][$super['c_id']];
+                    $price = $super['price'];
                 } catch (\Exception $exceptio){
                     $price = null;
                 }
@@ -200,8 +201,8 @@ class Eestimate_itemController extends Controller
                     'jan' => $item['jan'],
                     'vendor_id' => $item['vendor_id'],
                     'vendor_name' => $item['vendor_name'],
-                    'cost_price' => $price ? $price-20 : $item['cost_price'],
-                    'selling_price' =>$price ? $price : $item['selling_price'],
+                    'cost_price' => $price,
+                    'selling_price' =>$price+20,
                     'gross_profit' =>$price ? 20 : $item['gross_profit'],
                     'gross_profit_margin' =>$price ? (20/($price-20))*100 : $item['gross_profit_margin'],
 
