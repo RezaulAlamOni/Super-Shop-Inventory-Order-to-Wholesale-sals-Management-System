@@ -223,8 +223,7 @@ SELECT vendor_orders.status as order_status,vendor_orders.vendor_order_id,vendor
     {
         $jan = $request->jan;
         $vendor_items = vendor_item::where('jan', $jan)->first();
-        $item = CustomMisthsumuryProduct::where('jan', $jan)->first();
-//        dd($item);
+        $item = CustomMisthsumuryProduct::where('jan', $jan)->orderBy('id','desc')->first();
         if (!empty($item)) {
             $vendor_data_ins_array = array(
                 'maker_id' => 0,
