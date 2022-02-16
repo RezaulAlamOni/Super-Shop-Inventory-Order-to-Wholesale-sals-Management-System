@@ -25,14 +25,27 @@
                     <div id="stock_detail_by_jan_form" class="p_scn_form text-right mt-0">
 
                         <div class="form-group m-0">
-
+                            <div class="form-group row mb-0">
+                                    <span class="text-warning" style="width: 100%; text-align: center;">
+                                        枠の中にクリックしてから <br> JANコードスキャンしてください
+                                    </span>
+                                <div class="col-md-12">
+                                    <input type="tel" id="jan_input_" class="form-control custom-input"
+                                           v-model="jan_code" style="margin: 0 !important;"
+                                           name="scan_by_jan_for_stock_detail"
+                                           v-on:keyup="checkAndGetData($event)"
+                                           @paste="checkAndGetData($event)"
+                                           @input="checkAndGetData($event)"
+                                           @blur="checkAndGetData($event)"
+                                           placeholder="JANコードスキャン（13桁）" :autofocus="true">
+                                </div>
+                            </div>
                         </div>
 
                     </div>
 
                     <div class=" col-centereds">
                         <div>
-
                             <div class="productInfos">
                                 <table data-v-c9953dda="" class="table table-bordered physical_handy_tabls">
                                     <thead data-v-c9953dda="">
@@ -120,7 +133,7 @@
                                                        @keypress="pressEnterAndSave($event,'cost')"
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
                                                 <img :src="product.image"
-                                                     class="img-thumbnail custom-img"
+                                                     class="img-thumbnail custom-img" :id="product.jan"
                                                      alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
                                                      style="cursor: pointer" width="100px">
                                                 <input class="form-check-input form-check-input__" type="checkbox"
@@ -590,20 +603,29 @@ export default {
 
             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
                 if (reg.test(this.jan_code)) {
-                    this.insertToJanList()
+                    if ($('#'+this.jan_code)[0]) {
+                        $('#'+this.jan_code).click()
+                    }
                 }
             }
             if (e.keyCode === 13) {
                 if (reg.test(this.jan_code) && this.jan_code.length >= 8) {
-                    this.insertToJanList()
+                    if ($('#'+this.jan_code)[0]) {
+                        $('#'+this.jan_code).click()
+                    }
+                    // this.insertToJanList()
                 }
             }
             if (!reg.test(this.jan_code)) {
                 setTimeout(function () {
-                    _this.getSearchData(_this.jan_code);
+                    if ($('#'+this.jan_code)[0]) {
+                        $('#'+this.jan_code).click()
+                    }
+                    // this.insertToJanList()
                 }, 1200)
             }
 
+            this.jan_code = '';
         },
         getSearchData(text) {
             let _this = this;
