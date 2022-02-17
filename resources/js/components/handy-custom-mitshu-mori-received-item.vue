@@ -89,10 +89,11 @@
                                         </th>
                                         <th colspan="2"
                                             style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
-<!--                                            <span class="badge badge-success float-right ml-2"-->
-<!--                                                  style="font-size: 15px">-->
+                                            <span class="badge badge-success float-right ml-2"
+                                                  style="font-size: 15px">
 <!--                                                <a :href="base_url+'/handy_receive_mitshumori'" class="text-white"> 戻る </a>-->
-<!--                                            </span>-->
+                                                <a href="#" class="text-white" @click="getProducts()"> 戻る </a>
+                                            </span>
 
                                             <span class="badge badge-success float-right" v-if="productJans.length > 0"
                                                   style="padding: 7px 15px;font-size: 15px"
@@ -597,35 +598,45 @@ export default {
             let _this = this;
 
             if (this.loader === 1 || this.jan_code.length <= 0) {
+                // _this.jans = this.jan_code;
+                // _this.getProducts();
                 return false;
             }
             let reg = /^\d+$/;
+            _this.jans = _this.jan_code;
 
             if (this.jan_code.length >= 13 || this.jan_code.length == 8) {
                 if (reg.test(this.jan_code)) {
-                    if ($('#'+this.jan_code)[0]) {
-                        $('#'+this.jan_code).click()
-                    }
+
+                        // $('#'+this.jan_code).click()
+                        _this.getProducts();
+
                 }
             }
             if (e.keyCode === 13) {
                 if (reg.test(this.jan_code) && this.jan_code.length >= 8) {
-                    if ($('#'+this.jan_code)[0]) {
-                        $('#'+this.jan_code).click()
-                    }
+                    // if ($('#'+this.jan_code)[0]) {
+                        // $('#'+this.jan_code).click()
+                        _this.getProducts();
+                    // }
                     // this.insertToJanList()
                 }
             }
             if (!reg.test(this.jan_code)) {
                 setTimeout(function () {
-                    if ($('#'+this.jan_code)[0]) {
-                        $('#'+this.jan_code).click()
-                    }
+
+                        // $('#'+this.jan_code).click()
+                        _this.getProducts();
+
                     // this.insertToJanList()
                 }, 1200)
             }
 
-            this.jan_code = '';
+            setTimeout(function () {
+                _this.jan_code = '';
+                _this.jans = ''
+            },400)
+
         },
         getSearchData(text) {
             let _this = this;
