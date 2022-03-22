@@ -11,7 +11,7 @@
 # php/composer already installed
 
 # git clone
-git clone https://repo.dev.jacos.jp/gitbucket/git/y_sakaki/ryutu-van_re.git
+git clone
 
 composer install
 
