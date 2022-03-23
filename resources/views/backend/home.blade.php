@@ -11,7 +11,7 @@
 	<div class="page-header custom_header_bottom row no-gutters py-4 mb-3">
 	<div class="col-md-2">
 
-		<h4 class="owner_title"> スーパー用 </h4>
+		<h4 class="owner_title"> {{$frontend_title}} </h4>
 	</div>
 		<div class="col-10 col-sm-10 text-center text-sm-right mb-15">
 

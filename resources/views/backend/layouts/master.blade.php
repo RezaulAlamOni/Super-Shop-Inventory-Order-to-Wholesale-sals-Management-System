@@ -100,7 +100,7 @@
 {{--                    </div>--}}
                     <div class="modal-body text-center">
                         <p style="font-size: 16px">新しい見積受けました、見積ページのピンク色に変わっている部分 確認お願いします.</p>
-                        <a  href="{{ route('handy.receive.mitshumori') }}" type="button" class="btn btn-success">
+                        <a  href="{{ route('custom.mitsumury.receive') }}" type="button" class="btn btn-success">
                             見積り
                         </a>
                     </div>

@@ -85,6 +85,12 @@
                                                 </span>
                                                 </p>
                                             </div>
+                                            <div class="form-group">
+                                                <select class="form-control" aria-label="Default select example" v-model="shop_id"
+                                                        style="">
+                                                    <option v-for="shop in shops" :value="shop.customer_shop_id">{{ shop.shop_name }}</option>
+                                                </select>
+                                            </div>
                                             <div class="form-group" style="margin-bottom: 0">
                                                 <div class="col-md-12 col-xs-12 padding_0">
                                                     <table class="table table-bordered physical_handy_tabls">
@@ -323,6 +329,8 @@ export default {
             handi_navi: '',
             barCodeScan: 0,
             search_data: [],
+            shop_id : null,
+            shops : []
         }
     },
     mounted() {
@@ -353,7 +361,8 @@ export default {
                         res = res.data
                         _this.order_data = res.data[0]
                         _this.input_type = _this.order_data.order_lot_inputs;
-
+                        _this.shops = res.shops;
+                        _this.shop_id = res.shops[0].customer_shop_id;
                         if(Object.keys(res.get_last_order_info).length>0){
                         _this.case_order = res.get_last_order_info.order_case_quantity;//_this.order_data.order_lot_case_quantity;
                         _this.boll_order = res.get_last_order_info.order_ball_quantity;//_this.order_data.order_lot_ball_quantity;
@@ -476,9 +485,10 @@ export default {
                     _this.boll_order,
                     _this.bara_order,
                     _this.order_data.vendor_id,
-                    _this.order_data.vendor_item_id,
+                    _this.order_data.jan,
                     dtes,
-                    Math.floor(100000 + Math.random() * 900000)
+                    Math.floor(100000 + Math.random() * 900000),
+                    _this.shop_id
                 ]
                 data_array.push(data)
                 // return false

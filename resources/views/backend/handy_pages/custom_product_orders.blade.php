@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    <title>見積り</title>
+    <title> 発注リスト</title>
 @endsection
 <style>
     td>input {
@@ -10,6 +10,6 @@
 
 @section('content')
 
-    <handy-mitshu-mori-received-item base_url="{{config('app.url')}}"  jans="{{ $jans }}"></handy-mitshu-mori-received-item>
+    <handy-custom-master-products-orders base_url="{{config('app.url')}}"></handy-custom-master-products-orders>
 
 @endsection

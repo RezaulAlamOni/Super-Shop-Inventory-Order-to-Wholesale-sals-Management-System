@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use DB;
+use function Composer\Autoload\includeFile;
 
 class VendorController extends Controller
 {
@@ -186,9 +187,9 @@ class VendorController extends Controller
         // }
         // return $maker_id;
         $janLenght = strlen($jan_code);
-        if($janLenght=='8'){
+        if ($janLenght == '8') {
             $maker_code = substr($jan_code, 0, 5);
-        }else{
+        } else {
             $maker_code = substr($jan_code, 2, 5);
         }
         $m_infos = array();
@@ -211,9 +212,9 @@ class VendorController extends Controller
     public function get_maker_info_by_maker_code($jan_code, $data_resource, $vendor_item_data, $api_data)
     {
         $janLenght = strlen($jan_code);
-        if($janLenght=='8'){
+        if ($janLenght == '8') {
             $maker_code = substr($jan_code, 0, 5);
-        }else{
+        } else {
             $maker_code = substr($jan_code, 2, 5);
         }
         $m_infos = array();
@@ -292,7 +293,7 @@ class VendorController extends Controller
             //print_r($api_response->data);exit;
             $api_data_check = json_decode(json_encode($api_response->data));
 
-            if (is_null($api_data_check->jan_code) || $api_data_check->jan_code=='') {
+            if (is_null($api_data_check->jan_code) || $api_data_check->jan_code == '') {
                 $api_data = 'invalid_jan_code';
                 $data_resource = 'api_invalid';
                 return $result = response()->json(['api_data' => $api_data, 'data_resource' => $data_resource, 'vendor_item_data' => $vendor_item_data]);
@@ -355,9 +356,9 @@ class VendorController extends Controller
         $jan_code = $request->jan_code;
 
         $janLenght = strlen($jan_code);
-        if($janLenght=='8'){
+        if ($janLenght == '8') {
             $maker_code = substr($jan_code, 0, 5);
-        }else{
+        } else {
             $maker_code = substr($jan_code, 2, 5);
         }
 
@@ -384,7 +385,7 @@ class VendorController extends Controller
         $selling_price = $price + (($price * $profit_percent) / 100);
         $selling_price = round($selling_price, 2);
         // $profit = $selling_price - $price;
-        $profit = ($profit_percent/$selling_price)*100;
+        $profit = ($profit_percent / $selling_price) * 100;
         $profit = round($profit, 2);
 
 
@@ -471,14 +472,14 @@ class VendorController extends Controller
         );
         $add_to = $this->add_auto_customer_item($customer_item_array);
         /* add to customer item */
-        Log::info(['product-insert'=>'Product insert by '.auth()->id()]);
+        Log::info(['product-insert' => 'Product insert by ' . auth()->id()]);
         if ($vendor_item_id == null) {
             if (vendor_item::where('jan', $jan_code)->first()) {
                 return $result = response()->json(['message' => __('messages.jan_code_exists')]);
             } else {
                 if (vendor_item::where('jan', $jan_code)->first()) {
                     return $result = response()->json(['message' => __('messages.jan_code_exists')]);
-                }else{
+                } else {
                     vendor_item::insert($vendor_data_ins_array);
                     return $result = response()->json(['message' => 'insert_success']);
                 }
@@ -520,9 +521,9 @@ class VendorController extends Controller
         $vendor_item_id = $request->vendor_item_id;
         $vendor_info = vendor_item::where('vendor_item_id', $vendor_item_id)->first();
         $janLenght = strlen($vendor_info->jan);
-        if($janLenght=='8'){
+        if ($janLenght == '8') {
             $maker_code = substr($vendor_info->jan, 0, 5);
-        }else{
+        } else {
             $maker_code = substr($vendor_info->jan, 2, 5);
         }
         //$vendor_name = $this->get_vendor_name_by_vendor_id($vendor_id);
@@ -552,9 +553,8 @@ class VendorController extends Controller
         $selling_price = $data['cost_price'] + (($data['cost_price'] * $gross_profit_margin) / 100);
         $selling_price = round($selling_price, 2);
         // $gross_profit = $selling_price - $data['cost_price'];
-        $gross_profit = ($gross_profit_margin/$selling_price)*100;
+        $gross_profit = ($gross_profit_margin / $selling_price) * 100;
         $gross_profit = round($gross_profit, 2);
-
 
 
         $customer_data_ins_array = array(
@@ -585,7 +585,8 @@ class VendorController extends Controller
         }
     }
 
-    public function update_vendor_item_estimate_items(Request $request) {
+    public function update_vendor_item_estimate_items(Request $request)
+    {
         $jan = $request->jan;
         $price = $request->price;
         $selling_price = $request->selling_price;
@@ -602,7 +603,7 @@ class VendorController extends Controller
                 'gross_profit' => $gross_profit,
                 'sale_selling_price' => $sale_selling_price
             ]);
-        return  response()->json(['message' => 'update_success']);
+        return response()->json(['message' => 'update_success']);
     }
 
     public function update_vendor_master_item_content(Request $request)
@@ -625,10 +626,10 @@ class VendorController extends Controller
         jan::where('jan', '=', $vendor_info->jan)->update($jan_update_array);
 
         /*update in_cmpany*/
-        vendor_item::where('vendor_item_id', '=', $vendor_item_id)->update(['cost_price' => $price,'selling_price' => $selling_price, 'gross_profit' => $gross_profit, 'gross_profit_margin' => $gross_profit_margin]);
+        vendor_item::where('vendor_item_id', '=', $vendor_item_id)->update(['cost_price' => $price, 'selling_price' => $selling_price, 'gross_profit' => $gross_profit, 'gross_profit_margin' => $gross_profit_margin]);
 
         if (isset($request->sale_selling_price)) {
-            vendor_item::where('vendor_item_id', '=', $vendor_item_id)->update(['sale_selling_price'=>$request->sale_selling_price]);
+            vendor_item::where('vendor_item_id', '=', $vendor_item_id)->update(['sale_selling_price' => $request->sale_selling_price]);
         }
 
         $selling_price = floatval($selling_price);
@@ -838,7 +839,7 @@ class VendorController extends Controller
         $inserted_voucher_numbers = array();
         foreach ($data_array as $key => $val) {
             $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $val[4]])->first();
-            $lastOrderInfo = vendor_order::where(['status' => '入荷済み', 'vendor_item_id' => $val[4]])->orderBy('vendor_order_id','DESC')->first();
+            $lastOrderInfo = vendor_order::where(['status' => '入荷済み', 'vendor_item_id' => $val[4]])->orderBy('vendor_order_id', 'DESC')->first();
             $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_item_id', $val[4])->first();
             if ($lastOrderInfo && ($item_info->case_inputs > 0 || $item_info->ball_inputs > 0)) {
                 $case_order_qty = ($lastOrderInfo->order_case_quantity == '' ? 0 : $lastOrderInfo->order_case_quantity);
@@ -897,32 +898,95 @@ class VendorController extends Controller
         $inserted_voucher_numbers = array();
         $data = [];
         foreach ($data_array as $key => $val) {
-            $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $val[4]])->first();
-            $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_item_id', $val[4])->first();
-            $case_order_qty = ($val[0] == '' ? 0 : $val[0]);
-            $ball_order_qty = ($val[1] == '' ? 0 : $val[1]);
-            $unit_order_qty = ($val[2] == '' ? 0 : $val[2]);
+            $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_items.jan', $val[4])->first();
+            if ($item_info) {
+                $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $item_info->vendor_item_id])->first();
 
-            $totalLotInventory = (($case_order_qty * $item_info->case_inputs) + ($ball_order_qty * $item_info->ball_inputs) + $unit_order_qty);
-            if (!$check_order_exist) {
+                $case_order_qty = ($val[0] == '' ? 0 : $val[0]);
+                $ball_order_qty = ($val[1] == '' ? 0 : $val[1]);
+                $unit_order_qty = ($val[2] == '' ? 0 : $val[2]);
 
-                $order_id = vendor_order::insertGetId([
-                    'order_case_quantity' => $case_order_qty,
-                    'order_ball_quantity' => $ball_order_qty,
-                    'order_unit_quantity' => $unit_order_qty,
-                    'vendor_id' => $val[3],
-                    'shipment_date' => $val[5],
-                    'voucher_number' => $val[6],
-                    'destination' => 0,
-                    'vendor_item_id' => $val[4],
-                    'unit_cost_price' => $item_info->cost_price,
-                    'quantity' => $totalLotInventory,
-                    'source' => 0]);
-                $order_ = vendor_order::where('vendor_order_id',$order_id)->first();
+                $totalLotInventory = (($case_order_qty * $item_info->case_inputs) + ($ball_order_qty * $item_info->ball_inputs) + $unit_order_qty);
+                if (!$check_order_exist) {
+
+                    $order_id = vendor_order::insertGetId([
+                        'order_case_quantity' => $case_order_qty,
+                        'order_ball_quantity' => $ball_order_qty,
+                        'order_unit_quantity' => $unit_order_qty,
+                        'vendor_id' => $val[3],
+                        'shipment_date' => $val[5],
+                        'voucher_number' => $val[6],
+                        'destination' => 0,
+                        'vendor_item_id' => $item_info->vendor_item_id,
+                        'unit_cost_price' => $item_info->cost_price,
+                        'quantity' => $totalLotInventory,
+                        'source' => 0]);
+                    $order_ = vendor_order::where('vendor_order_id', $order_id)->first();
+                } else {
+                    $order_id = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)
+                        ->update([
+                            'order_case_quantity' => $case_order_qty,
+                            'order_ball_quantity' => $ball_order_qty,
+                            'order_unit_quantity' => $unit_order_qty,
+                            'vendor_id' => $val[3],
+                            'shipment_date' => $val[5],
+                            'voucher_number' => $val[6],
+                            'destination' => 0,
+                            'vendor_item_id' => $item_info->vendor_item_id,
+                            'unit_cost_price' => $item_info->cost_price,
+                            'quantity' => $totalLotInventory,
+                            'source' => 0,
+                            'order_date' => date('Y-m-d H:i:s')
+                        ]);
+                    $order_ = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)->first();
+                }
+                $order_->item_ifo = $item_info;
+                $order_->shop_id = $val[7];
+                array_push($data, $order_);
             }
-            else {
-                $order_id = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)
-                    ->update([
+
+        }
+
+        $ch = curl_init();
+        $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/orders";
+//        $url = "http://localhost/rv3_tonyav1/api/orders";
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);                //0 for a get request
+        curl_setopt($ch, CURLOPT_POSTFIELDS, ['data' => json_encode($data)]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        // Session::flash('message', '発注番号: ' . $voucher_string);
+        // Session::flash('class_name', 'alert-success');
+
+        Log::info(['order' => 'Order By user ' . auth()->id(), 'order_id' => $order_id]);
+
+        return response()->json(['message' => 'insert_success']);
+    }
+
+    public function vendor_order_insert_from_custom_mistumury_handy(Request $request)
+    {
+        $data_array = $request->data_array;
+        $newrrr = array();
+        $vendor_data_update_array = array();
+        $inserted_voucher_numbers = array();
+        $data = [];
+        $vendor_exits = true;
+        foreach ($data_array as $key => $val) {
+            $item_info = vendor_item::join('jans', 'jans.jan', '=', 'vendor_items.jan')->where('vendor_items.jan', $val[4])->first();
+
+           if ($item_info) {
+                $check_order_exist = vendor_order::where(['status' => '未入荷', 'vendor_item_id' => $item_info->vendor_item_id])->first();
+                $case_order_qty = ($val[0] == '' ? 0 : $val[0]);
+                $ball_order_qty = ($val[1] == '' ? 0 : $val[1]);
+                $unit_order_qty = ($val[2] == '' ? 0 : $val[2]);
+
+                $totalLotInventory = (($case_order_qty * $item_info->case_inputs) + ($ball_order_qty * $item_info->ball_inputs) + $unit_order_qty);
+                if (!$check_order_exist) {
+
+                    $order_id = vendor_order::insertGetId([
                         'order_case_quantity' => $case_order_qty,
                         'order_ball_quantity' => $ball_order_qty,
                         'order_unit_quantity' => $unit_order_qty,
@@ -933,33 +997,59 @@ class VendorController extends Controller
                         'vendor_item_id' => $val[4],
                         'unit_cost_price' => $item_info->cost_price,
                         'quantity' => $totalLotInventory,
-                        'source' => 0,
-                        'order_date' => date('Y-m-d H:i:s')
-                    ]);
-                $order_ = vendor_order::where('vendor_order_id',$check_order_exist->vendor_order_id)->first();
+                        'source' => 0]);
+                    $order_ = vendor_order::where('vendor_order_id', $order_id)->first();
+                } else {
+                    $order_id = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)
+                        ->update([
+                            'order_case_quantity' => $case_order_qty,
+                            'order_ball_quantity' => $ball_order_qty,
+                            'order_unit_quantity' => $unit_order_qty,
+                            'vendor_id' => $val[3],
+                            'shipment_date' => $val[5],
+                            'voucher_number' => $val[6],
+                            'destination' => 0,
+                            'vendor_item_id' => $val[4],
+                            'unit_cost_price' => $item_info->cost_price,
+                            'quantity' => $totalLotInventory,
+                            'source' => 0,
+                            'order_date' => date('Y-m-d H:i:s')
+                        ]);
+                    $order_ = vendor_order::where('vendor_order_id', $check_order_exist->vendor_order_id)->first();
+                }
+
+                $order_->item_ifo = $item_info;
+                $order_->shop_id = $val[7];
+                array_push($data, $order_);
+
+            } else {
+                $vendor_exits = false;
             }
 
-            $order_->item_ifo = $item_info;
-            array_push($data,$order_);
-
         }
+        if (count($data)) {
 
-        $ch = curl_init();
-        $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/orders";
+            event(new \App\Events\MyEvent(['message' => '', 'user_id' => 'super']));
+
+            $ch = curl_init();
+            $url = "https://ryutu-van.dev.jacos.jp/rv3_tonyav1/api/orders";
 //        $url = "http://localhost/rv3_tonyav1/api/orders";
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_POST, 1);                //0 for a get request
-        curl_setopt($ch,CURLOPT_POSTFIELDS,['data' => json_encode($data)]);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT ,3);
-        curl_setopt($ch,CURLOPT_TIMEOUT, 20);
-        $response = curl_exec($ch);
-        curl_close ($ch);
-        // Session::flash('message', '発注番号: ' . $voucher_string);
-        // Session::flash('class_name', 'alert-success');
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);                //0 for a get request
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ['data' => json_encode($data)]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            // Session::flash('message', '発注番号: ' . $voucher_string);
+            // Session::flash('class_name', 'alert-success');
 
-        Log::info(['order'=>'Order By user '.auth()->id(),'order_id' => $order_id]);
-
+            Log::info(['order' => 'Order By user ' . auth()->id(), 'order_id' => $order_id]);
+        }
+        if (!$vendor_exits) {
+            return response()->json(['message' => '502']);
+        }
         return response()->json(['message' => 'insert_success']);
     }
 

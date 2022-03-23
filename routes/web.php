@@ -126,6 +126,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
 	Route::post('/vendor_order_insert_new', 'VendorController@vendor_order_insert_new');
 	Route::post('/vendor_order_insert_new_auto_order_by_last_order', 'VendorController@vendor_order_insert_new_auto_order_by_last_order');
 	Route::post('/vendor_order_insert_handy', 'VendorController@vendor_order_insert_handy');
+	Route::post('/vendor_order_insert_from_custom_mistumury_handy', 'VendorController@vendor_order_insert_from_custom_mistumury_handy');
 	Route::post('/vendor_order_list_by_voucher_number', 'HandyrController@vendor_order_list_by_voucher_number');
 	Route::post('/single_vendor_item', 'VendorController@singleVendorItem');
 
@@ -151,6 +152,7 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::post('/stock_item_rack_check', 'HandyrController@stock_item_rack_check');
 	Route::get('/handy_vendor_master', 'HandyrController@handy_vendor_master');
 	Route::post('/handy_vendor_master_update_from_mistumury', 'HandyrController@handy_vendor_master_update_from_mistumury');
+	Route::post('/handy_vendor_master_update_from_custom_mistumury', 'HandyrController@handy_vendor_master_update_from_custom_mistumury');
 	Route::get('/handy_order_receive', 'HandyrController@handy_order_receive');
     Route::get('/handy_order_receive_list', 'HandyrController@handy_order_receive_list');
     Route::get('/handy_order_receive_scan_jan', 'HandyrController@handy_order_receive_scan_jan');
@@ -329,12 +331,17 @@ Route::group(['middleware'=>'MyMiddleWire'],function(){
     Route::get('/online_csv_import', 'HandyrController@online_csv_import')->name('online.kouri.csvimport');
     Route::get('/handy_order_mail', 'HandyrController@handy_order_mail')->name('handy.order.mail');
     Route::get('/get_all_haccue_list/{vendor_id?}', 'ReceiveorderController@haccuListBytonyaHandy')->name('handy.order.mail');
-    Route::get('/handy_receive_mitshumori', 'HandyrController@handy_receive_mitshumori')->name('handy.receive.mitshumori');
+    Route::get('/handy_receive_mitshumori/{jans?}', 'HandyrController@handy_receive_mitshumori')->name('handy.receive.mitshumori');
     // custom mistumury receive
-    Route::get('/handy-receive-custom-mitshumori', 'HandyrController@custom_mitsumury_receive')->name('custom.mitsumury.receive'); // Oni for new design handy
+    Route::get('/handy-receive-custom-mitshumori/{jans?}', 'HandyrController@custom_mitsumury_receive')->name('custom.mitsumury.receive'); // Oni for new design handy
 
     Route::post('/get-all-products-from-estimation', 'Eestimate_itemController@index')->name('handy.receive.mitshumori.index');
+    Route::post('/save-mistumury-order-quantity', 'Eestimate_itemController@saveOrderQuentity')->name('handy.receive.mitshumori.saveOrderQuentity');
     Route::post('/get-all-custom-mistumory-products', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'index'])->name('custom.mitsumury.get.products'); // Oni for new design handy
+    Route::post('/get-all-custom-master-products', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'allCustomProductsMaster']); // Oni for new design handy
+    Route::post('/get-all-mistumury-product-orders', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'allCustomProductOrders']); // Oni for new design handy
+    Route::get('/handy-custom-products', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'custom_products_master'])->name('custom_products_master'); // Oni for new design handy
+    Route::get('/handy-product-orders', [\App\Http\Controllers\CustomMisthsumuryProductController::class,'custom_product_order_master'])->name('custom_product_order_master'); // Oni for new design handy
 
 
 });

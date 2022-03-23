@@ -17,6 +17,7 @@ class CreateCustomerShopsTable extends Migration
             $table->increments('customer_shop_id')->comment('Customer shop Id');
             $table->string('shop_no',10)->comment('Customer shop Number');
             $table->integer('customer_id')->comment('Customer Id');
+            $table->integer('user_id')->comment('user Id');
             $table->string('shop_name',80)->comment('Customer shop Name');
             $table->text('shop_address')->nullable()->comment('Customer shop address');
             $table->string('shop_postal_code',30)->nullable()->comment('Customer shop postal code');

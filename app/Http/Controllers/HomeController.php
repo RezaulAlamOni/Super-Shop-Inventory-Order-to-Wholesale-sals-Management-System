@@ -32,7 +32,13 @@ class HomeController extends Controller
     {
         $title = "Dashboard";
         $active = 'dashboard';
-        return view('backend.home', compact('title', 'active'));
+        $frontend_title = '問屋';
+        if(auth()->user()->user_type=='super'){
+            $frontend_title = 'スーパー用';
+        }else if(auth()->user()->user_type=='shop'){
+            $frontend_title = '店用';
+        }
+        return view('backend.home', compact('title', 'active','frontend_title'));
 
     }
 

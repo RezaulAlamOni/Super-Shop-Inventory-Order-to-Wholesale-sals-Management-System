@@ -96,6 +96,15 @@ class VendorMasterController extends Controller
         if($order_by_tonya == '0' && $order_by_maker_name == '0' && $num_of_order == '0'){
             $vendor_items_data_temp->orderBy('vendor_items.vendor_item_id', 'desc');
         }
+        //filter by shop and super
+        /*
+        if(auth()->user()->user_type=='shop'){
+            $customer_id = auth()->user()->CustomerId;
+           
+            $shop_id = auth()->user()->ShopId;
+            $vendor_items_data_temp->where('vendor_items.customer_shop_id', $shop_id);
+        }
+        */
         $vendor_items_data = $vendor_items_data_temp->get();
 
         return $vendor_items_data;
