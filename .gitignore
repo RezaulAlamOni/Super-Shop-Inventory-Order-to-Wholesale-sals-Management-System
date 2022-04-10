@@ -35,3 +35,5 @@ package-lock.json
 testcafe/screenshots/*
 
 !.gitkeep
+.idea
+.idea
