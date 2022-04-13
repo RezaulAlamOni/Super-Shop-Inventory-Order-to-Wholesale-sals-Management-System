@@ -87,10 +87,8 @@
                                             </select>
 
                                         </th>
-                                        <th colspan="2"
-                                            style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
-                                            <span class="badge badge-success float-right ml-2"
-                                                  style="font-size: 15px">
+                                        <th colspan="2" style="width: 50px; border: none !important; text-align: left; padding: 5px;height: 40px !important;">
+                                            <span class="badge badge-success float-right ml-2" style="font-size: 15px">
 <!--                                                <a :href="base_url+'/handy_receive_mitshumori'" class="text-white"> 戻る </a>-->
                                                 <a href="#" class="text-white" @click="getProducts()"> 戻る </a>
                                             </span>
@@ -135,7 +133,7 @@
                                                        style="border-radius: 0px; text-align: center; padding: 7px 0px;">-->
                                                 <img :src="product.image"
                                                      class="img-thumbnail custom-img" :id="product.jan"
-                                                     alt="Cinque Terre" @click="viewInfoForImage(product,product.img)"
+                                                     :alt="product.jan" @click="viewInfoForImage(product,product.img)"
                                                      style="cursor: pointer" width="100px">
                                                 <input class="form-check-input form-check-input__" type="checkbox"
                                                        v-model="productJans" :value="product">
@@ -247,7 +245,7 @@
                         <div>
                             <img
                                 :src="preview_product.image"
-                                class="img-thumbnail custom-img-preview" alt="Cinque Terre"
+                                class="img-thumbnail custom-img-preview" :alt="preview_product.jan"
                                 style="cursor: pointer">
                         </div>
                         <div>
@@ -382,7 +380,7 @@ import {StreamBarcodeReader} from "vue-barcode-reader";
 
 export default {
     props: ['base_url','jans'],
-    name: "handy-custom-mistumury",
+    name: "handy-custom-mistumury-receive",
     data() {
         return {
             jan_code: '',
@@ -999,7 +997,12 @@ export default {
                                 Math.floor(100000 + Math.random() * 900000),
                                 _this.shop_id
                             ]
-                            data_array.push(data)
+                            if (product.order_point_case_quantity == 0 && product.order_point_ball_quantity == 0 &&  product.order_point_unit_quantity == 0) {
+
+                            } else {
+                                data_array.push(data)
+                            }
+
                         })
                     } else {
                         let data = [
@@ -1012,15 +1015,24 @@ export default {
                             Math.floor(100000 + Math.random() * 900000),
                             _this.shop_id
                         ]
-                        data_array.push(data)
+                        if (product.order_point_case_quantity == 0 && product.order_point_ball_quantity == 0 &&  product.order_point_unit_quantity == 0) {
+
+                        } else {
+                            data_array.push(data)
+                        }
                     }
 
+                if (data_array.length <= 0) {
+                    $('#handy-navi').show()
+                    _this.handi_navi = '<li>発注数入力後発注お願いします。</li>';
+                    return 0;
+                }
 
                     axios.post(this.base_url + '/vendor_order_insert_from_custom_mistumury_handy', {'data_array': data_array})
                         .then(function (res) {
                             if (res.data.message == '502') {
                                 $('#handy-navi').show()
-                                _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。</li>';
+                                _this.handi_navi = '<li>発注数入力後発注お願いします。</li>';
                             } else {
                                 $('#handy-navi').show()
                                 _this.handi_navi = '<li>発注が完了しました。次のJANコードスキャンして【次へ】押してください。</li>';
@@ -1107,7 +1119,7 @@ export default {
                         _this.storeToMaster(product);
                         // _this.getProducts()
                         $('#handy-navi').show()
-                        _this.handi_navi = '<li>採用し終わったら、\n発注できるようになります。。</li>';
+                        _this.handi_navi = '<li>発注数入力後発注お願いします。</li>';
                     }
 
                 })
